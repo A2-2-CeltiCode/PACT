@@ -47,7 +47,7 @@ class Input
             default:
                 break;
         }
-
+    
         // Préparer les attributs de l'input
         $attrs = [
             'type' => $type,
@@ -55,19 +55,19 @@ class Input
             'id' => $id,
             'name' => $name,
             'value' => $value,
-            'placeholder' => $name,
+            'placeholder' => '',
             'required' => $required ? 'required' : '',
             'minlength' => $minLength,
             'maxlength' => $maxLength,
             'pattern' => $pattern
         ];
-
+    
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
             echo '<link rel="stylesheet" href="./components/Input/Input.css">';
             self::$cssIncluded = true;
         }
-
+    
         // Rendre l'input
         $input = "<input " . self::renderAttributes($attrs) . " />";
         if ($icon) {
