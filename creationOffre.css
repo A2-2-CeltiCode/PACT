@@ -1,0 +1,84 @@
+body {
+    margin: 0; 
+    
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-direction: column;
+}
+
+
+section {
+    display: flex;
+    margin: 20px 0;
+}
+form{
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-direction: column;
+}
+
+article{
+    margin:0 5vh;
+}
+
+
+
+/* Zone de dépôt */
+.drop-zone {
+    border: 2px dashed #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+    cursor: pointer;
+    width: 128px;
+    height: 128px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-zone.hover {
+    background-color: #e9f7ff;
+}
+
+/* Popup styles */
+#imagePopup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 999; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+    justify-content: center; /* Center the popup content */
+    align-items: center; /* Center the popup content */
+    text-align: center; /* Center text */
+}
+
+#popupContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Style pour chaque image prévisualisée */
+#popupImageContainer img {
+    width: 100px; /* Fixed width for popup images */
+    height: auto; /* Maintain aspect ratio */
+    margin: 5px; /* Add some spacing */
+}
+
+/* Close button styles */
+.close {
+    cursor: pointer;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
