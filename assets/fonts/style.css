@@ -1,7 +1,0 @@
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Encode Sans';
-    font-style: normal;
-    font-weight: 400;
-    src: url('assets/fonts/encode-sans-v19-latin_latin-ext-regular.woff2') format('woff2');
-}
