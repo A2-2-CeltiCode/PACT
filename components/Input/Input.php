@@ -45,6 +45,9 @@ class Input
             case 'password':
                 $pattern = $pattern ?: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}';
                 break;
+                case 'tel':
+                    $pattern = $pattern ?: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}';
+                    break;
             default:
                 break;
         }

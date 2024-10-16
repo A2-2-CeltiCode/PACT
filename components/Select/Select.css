@@ -1,0 +1,14 @@
+select {
+    width: 160px;
+    border: 1px solid var(--grey2);
+    border-radius: 4px;
+    padding: 5px;
+    outline: none;
+    background-color: transparent; /* Pour un fond transparent */
+    appearance: none; /* Supprime le style par défaut du select */
+}
+
+select:focus {
+    border: 1px solid var(--primary-member);
+    box-shadow: 0 0 5px var(--primary-member);
+}

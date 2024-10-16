@@ -21,6 +21,7 @@
 
 
 input {
+    width: 160px;
     border: 1px solid transparent;
     outline: none;
     flex-grow: 1;
