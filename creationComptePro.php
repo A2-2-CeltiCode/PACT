@@ -14,20 +14,51 @@
     <?php include "components/Button/Button.php"?>
     <?php include "components/Toast/Toast.php"?>
 
-    <?php if($_POST == NULL) { ?>
+    <?php
+    // Déclaration des variables
+    $denomination = '';
+    $siren = '';
+    $email = '';
+    $phone = '';
+    $password = '';
+    $confirmPwd = '';
+    $iban = '';
+    $passwordMismatch = false;  // Variable pour vérifier si les mots de passe sont différents
 
+    // Récupération des valeurs du formulaire et vérification
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $denomination = $_POST['denomination'];
+        $siren = $_POST['siren'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $password = $_POST['password'];
+        $confirmPwd = $_POST['confirmpwd'];
+        $iban = $_POST['iban'];
+
+        // Vérification si les mots de passe ne correspondent pas
+        if ($password !== $confirmPwd) {
+            $passwordMismatch = true;  // Flag activé si les mots de passe sont différents
+        }
+    }
+    ?>
+    <?php if (($passwordMismatch) || (empty($_POST))) { ?>
+    
     <div class="info-display">
         <img alt="Logo" src="assets/icon/logo.svg">
         <h1>Créez votre compte Professionnel</h1>
         <hr>
         <p id="necessary-fields-label">(*) - Champs Obligatoires</p>
+        <!-- Affichage du message d'erreur si les mots de passe sont différents -->
+        <?php if ($passwordMismatch) { ?>
+                <p id="passwordMismatch" style="color: red;">Les mots de passe ne correspondent pas. Veuillez les entrer à nouveau.</p>
+        <?php } ?>
         <form name="creerComptePro" action="creationComptePro.php" method="POST">
             <div>
                 <label for="informations">Vos Informations</label>
-                <?php Input::render(class: "input-box", type: "text", name: "denomination", placeholder: "Dénomination / Raison Sociale*", required: true); ?>
-                <?php Input::render(class: "input-box", type: "text", name: "siren", placeholder: "Numéro SIREN*", required: true); ?>
-                <?php Input::render(class: "input-box", type: "email", name: "email", placeholder: "Adresse Email*", required: true); ?>
-                <?php Input::render(class: "input-box", type: "text", name: "phone", placeholder: "Numéro de Téléphone", required: false); ?>
+                <?php Input::render(class: "input-box", type: "text", name: "denomination", placeholder: "Dénomination / Raison Sociale*", value: $denomination, required: true); ?>
+                <?php Input::render(class: "input-box", type: "text", name: "siren", placeholder: "Numéro SIREN*", value: $siren, required: true); ?>
+                <?php Input::render(class: "input-box", type: "email", name: "email", placeholder: "Adresse Email*", value: $email, required: true); ?>
+                <?php Input::render(class: "input-box", type: "text", name: "phone", placeholder: "Numéro de Téléphone", value: $phone, required: false); ?>
             </div>
 
             <div>
@@ -38,7 +69,7 @@
 
             <div>
                 <label for="informations">Vos Informations Bancaires</label>
-                <?php Input::render(class: "input-box", type: "text", name: "iban", placeholder: "IBAN", required: false); ?>
+                <?php Input::render(class: "input-box", type: "text", name: "iban", placeholder: "IBAN", value: $iban, required: false); ?>
                 <p>L'IBAN pourra être renseigné plus tard.</p>
             </div>
             
@@ -46,7 +77,7 @@
         </form>
         <hr>
         <p>Vous avez déjà un compte ?</p>
-        <p><a href="connexionComptePro">Connectez vous</a> avec votre compte PACT Professionel</p>
+        <p><a href="connexionComptePro.php">Connectez vous</a> avec votre compte PACT Professionel</p>
     </div>
 
     <?php 

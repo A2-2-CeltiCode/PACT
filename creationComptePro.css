@@ -56,15 +56,14 @@ div {
     margin-bottom: 5px;
 }
 
-hr {
-    margin-left: 0;
-    margin-right: 0;
-  }
+
 
 form {
     display: flex;
     flex-direction: column;
 }
+
+
 
 .info-display {
     background-color: var(--white);
@@ -76,7 +75,10 @@ form {
     border-radius: 10px;
     box-shadow: 0px 0px 25px var(--black);
 }
-
+hr {
+    display: block;
+    width: 80%;
+}
 div>p {
     text-align: center;
 }
@@ -91,9 +93,15 @@ div>p {
     align-self: center;
 }
 
+label {
+    font-size: var(--h5-font-size);
+    font-weight: var(--font-weight-semi-bold);
+
+}
+
 p {
     font-family: 'Inter';
-    font-size: var(--p-medium-font-size);
+    font-size: var(--p-small-font-size);
     color: var(--black);
     margin: 5px 0;
     font-weight: var(--font-weight-normal);
@@ -104,4 +112,9 @@ p {
     font-size: var(--p-small-font-size);
 
     margin-bottom: 10px;
+}
+
+#passwordMismatch {
+    color: var(--error);
+    font-size: var(--p-small-font-size);
 }
