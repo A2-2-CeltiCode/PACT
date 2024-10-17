@@ -43,7 +43,7 @@ class Input
                 $pattern = $pattern ?: '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$';
                 break;
             case 'password':
-                $pattern = $pattern ?: '';
+                $pattern = $pattern ?: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'; // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
                 break;
             default:
                 break;

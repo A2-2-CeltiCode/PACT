@@ -14,10 +14,8 @@
     <?php include "components/Button/Button.php"?>
     <?php include "components/Toast/Toast.php"?>
 
+    <?php if($_POST == NULL) { ?>
 
-
-    <?php if (empty($_POST)) { ?>
-    
     <div class="info-display">
         <img alt="Logo" src="assets/icon/logo.svg">
         <h1>Créez votre compte Professionnel</h1>
@@ -49,7 +47,6 @@
         <hr>
         <p>Vous avez déjà un compte ?</p>
         <p><a href="connexionComptePro">Connectez vous</a> avec votre compte PACT Professionel</p>
-
     </div>
 
     <?php 
