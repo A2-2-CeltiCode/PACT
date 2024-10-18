@@ -217,10 +217,7 @@ CREATE TABLE _restaurant(
 
 CREATE TABLE _repas(
     nomRepas   VARCHAR(50) NOT NULL,
-    valPrix    NUMERIC(5,2) NOT NULL,
-    CONSTRAINT repas_pk PRIMARY KEY(nomRepas,valPrix),
-    CONSTRAINT repas_fk_prix FOREIGN KEY (valPrix)
-        REFERENCES _prix(valPrix)
+    CONSTRAINT repas_pk PRIMARY KEY(nomRepas)
 );
 
 --

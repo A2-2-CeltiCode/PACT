@@ -6,6 +6,14 @@ INSERT INTO _option (nomOption) VALUES
 ('En relief'),
 ('A la une');
 
+-- Peupler la table _repas
+INSERT INTO _repas (nomRepas) VALUES
+('Petit-Dejeuner'),
+('Brunch'),
+('Dejeuner'),
+('Diner'),
+('Boissons');
+
 -- Peupler la table _categorie
 INSERT INTO _categorie (nomCategorie) VALUES
 ('Visite'),
