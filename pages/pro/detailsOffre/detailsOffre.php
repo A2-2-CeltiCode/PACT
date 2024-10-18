@@ -1,25 +1,34 @@
 <?php
-require_once("../offre/offer.php");
-require_once("../components/Label/Label.php");
-require_once("../components/Button/Button.php");
+require_once("../../../controlleur/offreController.php");
+require_once("../../../composants/Label/Label.php");
+require_once("../../../composants/Button/Button.php");
 
-// Création de l'instance d'offre
-$offer = new Offer(
-    $offerType = "Restauration",
-    $title = "Restaurant",
-    $description = "Les Saveurs de Bretagne",
-    $additionalDescription = "Le restaurant breton Les Saveurs de Bretagne offre une ambiance chaleureuse et authentique, avec ses poutres apparentes, ses pierres naturelles et ses décorations maritimes. Niché près de la côte, l'établissement propose un menu qui célèbre la cuisine traditionnelle bretonne : galettes de sarrasin, fruits de mer frais, et crêpes sucrées.",
-    $images = ["../assets/images/chasseur.jpg", "../assets/images/resto.png", "../assets/images/table.jpg"],
-    $pricing = 50, // Prix en euros
-    $packageType = "Standard Package",
-    $promotionType = "Premium",
-    $city = "Paris",
-    $postalCode = "75001",
-    $street = "10 Rue de l'Exemple",
-    $phoneContact = "+33 1 23 45 67 89",
-    $website = "https://www.tiktok.com/@afexix/video/7333332260483009835?is_from_webapp=1&sender_device=pc&web_id=7426315516917122593"
-);
 
+
+$server = 'servbdd.iutlan.etu.univ-rennes1.fr';
+$driver = 'pgsql';
+$dbname = 'pg_khazard';
+$user   = 'khazard';
+$pass	= 'BB1414cc7878ee11bb33-_-_';
+
+
+// Assuming you are fetching the offre based on an ID, perhaps from the URL or a form input
+$offreId = $_GET['idOffre'] ?? 1;  // Example, defaulting to 1 if not provided
+
+try
+{
+	$pdo = new PDO("pgsql:host=$server;dbname=$dbname",$user, $pass);
+}
+catch (Exception $e)
+{
+    die('Erreur : ' . $e->getMessage());
+}
+$offre = Offre::getOfferById($pdo, $offreId);
+
+if (!$offre) {
+    echo "Offer not found.";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,8 +38,8 @@ $offer = new Offer(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Offer Details</title>
-    <link rel="stylesheet" href="offerDetails.css">
-    <link rel="stylesheet" href="../style/ui.css">
+    <link rel="stylesheet" href="detailsOffre.css">
+    <link rel="stylesheet" href="../../../ui.css">
 </head>
 
 <body>
@@ -39,45 +48,41 @@ $offer = new Offer(
 
         <div class="carousel">
             <div class="carousel-images">
-                <?php foreach ($offer->getImages() as $image): ?>
-                    <img src="<?= $image; ?>" alt="Offer Image" class="carousel-image">
-                <?php endforeach; ?>
+                <!-- Assuming the Offer class has a method getImages() to return images -->
             </div>
             <button class="carousel-button prev">❮</button>
             <button class="carousel-button next">❯</button>
         </div>
 
-        
-        <div class="offer-info">
+        <div class="offre-info">
             <?php
-            Label::render("offer-title", "", "", "" . $offer->getOfferType(), "../assets/icon/restaurant.svg");
-            Label::render("", "", "", "" . $offer->getDescription()); ?>
+            // Rendering title, description, and other offre details using Labels
+            Label::render("offre-title", "", "", $offre->getTitre(), "../assets/icon/restaurant.svg");
+            Label::render("", "", "", $offre->getDescription()); 
+            ?>
             <div class="address">
                 <?php
-                Label::render("offer-infos", "", "", "" . $offer->getStreet(), "../assets/icon/location.svg");
-                Label::render("offer-infos", "", "", "" . $offer->getCity());
-                Label::render("offer-infos", "", "", "" . $offer->getPostalCode());
+                // Render address-related info (assuming the Offer class has these methods)
+                Label::render("offre-infos", "", "", $offre->getNomForfait(), "../assets/icon/location.svg");
+                Label::render("offre-infos", "", "", $offre->getNomOption());
                 ?>
             </div>
             <?php
-            Label::render("offer-infos", "", "", "" . $offer->getPackageType(), "../assets/icon/promotion.svg");
-            Label::render("offer-infos", "", "", "" . $offer->getPhoneContact(),  "../assets/icon/phone.svg");
-            Label::render("offer-infos", "", "", "<a href=\"" . $offer->getWebsite() . "\" target=\"_blank\">www.lessaveursdebretagne.com</a>",  "../assets/icon/website.svg");
-            Label::render("offer-infos", "", "", "" . $offer->getAdditionalDescription()); ?>
+            // Render other offre information like contact, package type, etc.
+            Label::render("offre-infos", "", "", $offre->getNomForfait(), "../assets/icon/promotion.svg");
+            Label::render("offre-infos", "", "", $offre->getSiteInternet(), "../assets/icon/website.svg");
+            Label::render("offre-infos", "", "", $offre->getDescriptionDetaillee()); 
+            ?>
             <ul>
-                <li><?php Label::render("offer-infos", "", "", "Type de promotion: " . $offer->getPromotionType()); ?></li>
-                <li><?php Label::render("offer-infos", "", "", "Prix: " . $offer->getPricing() . "€"); ?></li>
+                <li><?php Label::render("offre-infos", "", "", "Prix: " . $offre->getIdOffre() . "€"); ?></li>
             </ul>
-
         </div>
 
-
+        <!-- Modify button -->
         <?php Button::render("", "", "Modifier", "pro", "", "", "../StoryBook/StoryBook.php") ?>
-
     </div>
 
-
-    <script src="offerDetails.js"></script>
+    <script src="detailsOffre.js"></script>
 </body>
 
 </html>
