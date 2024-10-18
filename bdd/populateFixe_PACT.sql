@@ -1,33 +1,33 @@
 SET SCHEMA 'pact';
 
 -- Peupler la table _option
-INSERT INTO _option (nameOption) VALUES
+INSERT INTO _option (nomOption) VALUES
 ('Aucune'),
 ('En relief'),
 ('A la une');
 
--- Peupler la table _category
-INSERT INTO _category (nameCategory) VALUES
+-- Peupler la table _categorie
+INSERT INTO _categorie (nomCategorie) VALUES
 ('Visite'),
 ('Spectacle'),
 ('Activite'),
 ('Parc d''attractions'),
 ('Restaurant');
 
--- Peupler la table _fixedPrice
-INSERT INTO _fixedPrice (nameFp) VALUES
+-- Peupler la table _forfait
+INSERT INTO _forfait (nomForfait) VALUES
 ('Gratuite'),
 ('Standard'),
 ('Premium');
 
 -- Peupler la table _language
-INSERT INTO _language (nameLanguage) VALUES
+INSERT INTO _langage (nomLangage) VALUES
 ('Français'),
 ('Anglais'),
 ('Espagnol');
 
 -- Peupler la table _tag
-INSERT INTO _tag (nameTag) VALUES
+INSERT INTO _tag (nomTag) VALUES
 ('Culturel'),
 ('Patrimoine'),
 ('Histoire'),
@@ -54,8 +54,8 @@ INSERT INTO _tag (nameTag) VALUES
 ('Restauration rapide'),
 ('Crêperie');
 
--- Peupler la table _tagOther
-INSERT INTO _tagOther (nameTag) VALUES
+-- Peupler la table _tagAutre
+INSERT INTO _tagAutre (nomTag) VALUES
 ('Culturel'),
 ('Patrimoine'),
 ('Histoire'),
@@ -76,7 +76,7 @@ INSERT INTO _tagOther (nameTag) VALUES
 
 
 -- Peupler la table _tagRestaurant
-INSERT INTO _tagRestaurant (nameTag) VALUES
+INSERT INTO _tagRestaurant (nomTag) VALUES
 ('Française'),
 ('Fruits de mer'),
 ('Asiatique'),
