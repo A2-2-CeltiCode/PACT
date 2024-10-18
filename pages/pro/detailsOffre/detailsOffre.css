@@ -1,0 +1,163 @@
+/* Global Styles */
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+h1 {
+    font-family: 'Encode Sans', sans-serif;
+    font-weight: 600;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Carousel Styles */
+.carousel {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.carousel-image {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Carousel Buttons */
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fond semi-transparent noir */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    color: white;
+    /* Couleur de l'icône */
+    opacity: 0;
+    /* Caché par défaut */
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+    /* Transition douce */
+}
+
+.carousel-button.prev {
+    left: 15px;
+}
+
+.carousel-button.next {
+    right: 15px;
+}
+
+/* Afficher les boutons au survol du carrousel */
+.carousel:hover .carousel-button {
+    opacity: 1;
+    /* Visible au survol */
+}
+
+/* Style du bouton au survol */
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Légèrement plus sombre au survol */
+}
+
+/* Flèches SVG (icône) */
+.carousel-button svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    /* Garder la flèche blanche au survol */
+    transition: fill 0.3s ease;
+}
+
+.carousel-button:hover svg {
+    fill: white;
+    /* Empêche la flèche de changer de couleur au survol */
+}
+
+
+/* Offer Info Styles */
+.offer-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 512px;
+}
+
+.offer-title {
+    color: var(--grey3);
+    font-weight: var(--font-weight-semi-bold);
+}
+
+.offer-infos {
+    color: var(--grey3);
+}
+
+/* Address Block */
+.address-block {
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: 5px;
+    color: var(--grey3);
+}
+
+.address-block p {
+    margin: 5px 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    color: var(--grey3);
+}
+
+a {
+    color: var(--primary-member);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+.button-link {
+    align-self: end;
+}
+
+
+.address {
+    display: flex;
+    flex-direction: row;
+}
