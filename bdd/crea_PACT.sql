@@ -34,7 +34,8 @@ CREATE TABLE _forfait( -- a modif peut être
 --
 
 CREATE TABLE _prix(
-    valPrix  NUMERIC(5,2) UNIQUE
+    valPrix  NUMERIC(5,2),
+    CONSTRAINT prix_pk PRIMARY KEY(valPrix)
 );
 
 --
@@ -42,7 +43,8 @@ CREATE TABLE _prix(
 --
 
 CREATE TABLE _duree(
-    tempsEnMinutes   INTEGER UNIQUE
+    tempsEnMinutes   INTEGER,
+    CONSTRAINT duree_pk PRIMARY KEY(tempsEnMinutes)
 );
 
 --
@@ -73,7 +75,7 @@ CREATE TABLE _comptePro (
     idCompte              SERIAL,
     denominationSociale   VARCHAR(50) NOT NULL,  
     raisonSocialePro      VARCHAR(50) NOT NULL,
-    banqueRib               VARCHAR(35),
+    banqueRib             VARCHAR(35),
     CONSTRAINT comptePro_pk PRIMARY KEY(idCompte),
     CONSTRAINT comptePro_fk_compte FOREIGN KEY (idCompte) 
         REFERENCES _compte(idCompte)
@@ -98,6 +100,7 @@ CREATE TABLE _compteProPrive (
 
 CREATE TABLE _offre(
     idOffre                 SERIAL,
+    idCompte                SERIAL,
     titre                   VARCHAR(50) NOT NULL,
     description             VARCHAR(50) NOT NULL,
     descriptionDetaillee    VARCHAR(50),
@@ -105,9 +108,11 @@ CREATE TABLE _offre(
     nomOption               VARCHAR(50),
     nomForfait              VARCHAR(50),
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
-    CONSTRAINT option_fk_offre FOREIGN KEY (nomOption)
+    CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
+        REFERENCES _comptePro(idCompte),
+    CONSTRAINT offre_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption),
-    CONSTRAINT forfait_fk_offre FOREIGN KEY (nomForfait)
+    CONSTRAINT offre_fk_forfait FOREIGN KEY (nomForfait)
         REFERENCES _forfait(nomForfait)
 );
 

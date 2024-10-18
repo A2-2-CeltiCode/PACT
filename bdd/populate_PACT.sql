@@ -34,10 +34,10 @@ INSERT INTO _comptePro (idCompte, denominationSociale, raisonSocialePro, banqueR
 (3, 'Société B', 'Entreprise B', 'FR7612345678901234567890124');
 
 -- Peupler la table _offre
-INSERT INTO _offre (nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet) VALUES
-('Aucune', 'Gratuite', 'Visite de Paris', 'Découvrez les merveilles de Paris', 'Une visite guidée de 2 heures', 'http://example.com/paris'),
-('En relief', 'Standard', 'Spectacle à Lyon', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/lyon'),
-('A la une', 'Premium', 'Parc d''Angers', 'Parc incroyable', 'Parc proposant des attractions insane', 'http://example.com/angers');
+INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet) VALUES
+(2,'Aucune', 'Gratuite', 'Visite de Paris', 'Découvrez les merveilles de Paris', 'Une visite guidée de 2 heures', 'http://example.com/paris'),
+(2,'En relief', 'Standard', 'Spectacle à Lyon', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/lyon'),
+(3,'A la une', 'Premium', 'Parc d''Angers', 'Parc incroyable', 'Parc proposant des attractions insane', 'http://example.com/angers');
 
 -- Peupler la table _image
 INSERT INTO _image (idOffre, nomImage) VALUES
