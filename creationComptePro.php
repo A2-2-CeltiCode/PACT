@@ -7,6 +7,8 @@
     <title>Créez un Compte Professionel PACT</title>
     <link rel="stylesheet" href="./creationComptePro.css">
     <link rel="stylesheet" href="./variables.css">
+
+    <script src="creationComptePro.js" defer></script>
 </head>
 
 <body>
@@ -16,7 +18,9 @@
 
     <?php
     // Déclaration des variables
+    $estPrive = true;
     $denomination = '';
+    $raisonS = '';
     $siren = '';
     $email = '';
     $telephone = '';
@@ -31,6 +35,7 @@
     // Récupération des valeurs du formulaire et vérification
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $denomination = $_POST['denomination'];
+        $raisonS = $_POST['raisonS'];
         $siren = $_POST['siren'];
         $email = $_POST['email'];
         $telephone = $_POST['telephone'];
@@ -54,13 +59,22 @@
             <p id="necessary-fields-label">(*) - Champs Obligatoires</p>
             <!-- Affichage du message d'erreur si les mots de passe sont différents -->
             <?php if ($mdpDifferents) { ?>
-                            <p class="messagesErreurs">Les mots de passe ne correspondent pas. Veuillez les entrer à nouveau.</p>
+                <p class="messagesErreurs">Les mots de passe ne correspondent pas. Veuillez les entrer à nouveau.</p>
             <?php } ?>
             <form name="creerComptePro" action="creationComptePro.php" method="POST">
                 <div>
                     <label for="informations">Vos Informations</label>
-                    <?php Input::render(class: "input-box", type: "text", name: "denomination", placeholder: "Dénomination / Raison Sociale*", value: $denomination, required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "siren", placeholder: "Numéro SIREN*", value: $siren, required: true); ?>
+                    <?php Input::render(class: "input-box", type: "text", name: "denomination", placeholder: "Dénomination*", value: $denomination, required: true); ?>
+                    <?php Input::render(class: "input-box", type: "text", name: "raisonS", placeholder: "Raison Sociale*", value: $raisonS, required: true); ?>
+                    <!-- Case à cocher "Entreprise privée" -->
+                    <p for="estPrive">
+                        <input type="checkbox" id="estPrive" name="estPrive" onclick="toggleSirenField()"> Entreprise privée
+                    </p>
+                    <!-- Champ SIREN qui s'affiche uniquement si "Entreprise privée" est coché -->
+                    <div id="champSiren" style="display: none;">
+                        <?php Input::render(class: "input-box", type: "text", name: "siren", placeholder: "Numéro SIREN*", value: $siren, required: true); ?>
+                    </div>
+                    <br>
                     <?php Input::render(class: "input-box", type: "email", name: "email", placeholder: "Adresse Email*", value: $email, required: true); ?>
                     <?php Input::render(class: "input-box", type: "text", name: "telephone", placeholder: "Numéro de Téléphone", value: $telephone, required: false); ?>
                 </div>
@@ -86,7 +100,7 @@
 
         <?php 
             } else {
-                $nouvelUtilisateur = $_POST['denomination'].";".$_POST['siren'].";".$_POST['email'].";".$_POST['telephone'].";".$_POST['motDePasse'].";".$_POST['iban'];
+                $nouvelUtilisateur = $_POST['denomination'].";".$_POST['raisonS'].";".$_POST['siren'].";".$_POST['email'].";".$_POST['telephone'].";".$_POST['motDePasse'].";".$_POST['iban'];
                 file_put_contents("user_data.csv", "\n".$nouvelUtilisateur);
                 ?>
                 <div class="info-display">
