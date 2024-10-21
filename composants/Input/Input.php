@@ -65,7 +65,7 @@ class Input
     
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./components/Input/Input.css">';
+            echo '<link rel="stylesheet" href="./Input.css">';
             self::$cssIncluded = true;
         }
     

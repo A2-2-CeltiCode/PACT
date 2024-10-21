@@ -54,10 +54,6 @@
             <h1>Créez votre compte Professionnel</h1>
             <hr>
             <p id="necessary-fields-label">(*) - Champs Obligatoires</p>
-            <!-- Affichage du message d'erreur si les mots de passe sont différents -->
-            <?php if ($mdpDifferents) { ?>
-                <p class="messagesErreurs">Les mots de passe ne correspondent pas. Veuillez les entrer à nouveau.</p>
-            <?php } ?>
             <form name="creerComptePro" action="creationComptePro.php" method="POST" onsubmit="return formValide()">
                 <div>
                     <label for="informations">Vos Informations</label>
@@ -98,7 +94,7 @@
                     <p class="form-texte">L'IBAN pourra être renseigné plus tard.</p>
                 </div>
                 
-                <?php Button::render(class: "sign-upButton", submit: true, type: "pro", text: "S'inscrire") ?>
+                <?php Button::render(class: "sign-upButton", submit: true, type: "pro", text: "S'inscrire"); ?>
             </form>
             <hr>
             <p>Vous avez déjà un compte ?</p>
@@ -114,8 +110,7 @@
                     <h1>Tout est prêt !</h1>
                     <hr>
                     <p>Votre compte à été créé. Veuillez-vous connecter</p>
-                    <?php Button::render(text: "Se connecter", type: ButtonType::Pro, onClick: "renderToast('COMPTE CREE AHA', 'success')"); ?>
-                    <?php Toast::render("", ToastType::WARNING); ?>
+                    <?php Button::render(text: "Se connecter", type: ButtonType::Pro); ?>
                 </div>
 
                 <?php
