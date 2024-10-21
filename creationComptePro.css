@@ -40,6 +40,7 @@
 
 
 body {
+    font-family: 'Encode Sans', 'Inter';
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,6 +63,7 @@ form {
 }
 
 .info-display {
+    margin: 2% 0;
     background-color: var(--white);
     display: flex;
     flex-direction: column;
@@ -93,6 +95,7 @@ hr {
 }
 
 label {
+    margin-bottom: 50px;
     font-size: var(--h5-font-size);
     font-weight: var(--font-weight-semi-bold);
 
@@ -113,7 +116,7 @@ p {
     margin-bottom: 10px;
 }
 
-#iban-texte {
+.form-texte {
     text-align: center;
 }
 
