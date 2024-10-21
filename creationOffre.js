@@ -1,60 +1,41 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const dropZone = document.getElementById('drop-zone');
-    const fileInput = document.getElementById('fileInput');
-    const successMessage = document.getElementById('successMessage');
-    const maxFiles = 5; // Limite du nombre d'images
+document.addEventListener("DOMContentLoaded", function () {
+    const selectElement = document.querySelector('select[name="typeOffre"]');
+    const sections = document.querySelectorAll('.section');
 
-    // Événement pour le clic sur la zone de dépôt
-    dropZone.addEventListener('click', () => {
-        fileInput.click();
-    });
-
-    // Empêcher le comportement par défaut (ouvrir le fichier)
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, preventDefaults, false);
-    });
-
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
+    // Fonction pour masquer toutes les sections
+    function hideAllSections() {
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
     }
 
-    // Ajouter une classe quand un fichier est survolé
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, () => {
-            dropZone.classList.add('dragover');
-        }, false);
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, () => {
-            dropZone.classList.remove('dragover');
-        }, false);
-    });
-
-    // Gérer le dépôt du fichier
-    dropZone.addEventListener('drop', (e) => {
-        const files = e.dataTransfer.files;
-
-        if (files.length > maxFiles) {
-            successMessage.style.display = 'none'; // Masquer le message de succès
-            alert(`Vous ne pouvez déposer que ${maxFiles} images maximum.`);
-            return;
+    // Fonction pour afficher la section correspondante
+    function showSection(typeOffre) {
+        hideAllSections(); // On masque toutes les sections d'abord
+        const section = document.getElementById(typeOffre);
+        if (section) {
+            section.style.display = 'block';
         }
+    }
 
-        fileInput.files = files;
-        successMessage.style.display = 'block'; // Afficher le message de succès
+    // Événement déclenché lorsque le type d'offre est modifié
+    selectElement.addEventListener('change', function () {
+        const selectedValue = this.value;
+        showSection(selectedValue);
     });
 
-    // Gérer le changement d'état du file input
-    fileInput.addEventListener('change', () => {
-        if (fileInput.files.length > maxFiles) {
-            successMessage.style.display = 'none'; // Masquer le message de succès
-            alert(`Vous ne pouvez sélectionner que ${maxFiles} images maximum.`);
-            fileInput.value = ''; // Réinitialiser l'input si la limite est dépassée
-            return;
-        }
+    // On cache toutes les sections au début
+    hideAllSections();
+});
 
-        successMessage.style.display = 'block'; // Afficher le message de succès
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        const input = document.getElementById('adressePostale').value;
+        const regex = /^[0-9]+/; // Regex pour une adresse postale simple
+
+        if (!regex.test(input)) {
+            event.preventDefault(); // Empêche l'envoi du formulaire
+                alert("Veuillez entrer une adresse postale valide."); // Affiche un message d'erreur
+        }
     });
 });

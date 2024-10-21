@@ -1,7 +1,6 @@
-/* Style général pour l'input, le textarea et le select */
+/* Style général pour l'input et le textarea */
 .input-wrapper,
-.textarea-wrapper,
-.select-wrapper {
+.textarea-wrapper {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
@@ -9,8 +8,7 @@
 }
 
 .input-wrapper input,
-.textarea-wrapper textarea,
-.select-wrapper select {
+.textarea-wrapper textarea {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid #ccc;
@@ -18,15 +16,12 @@
     font-size: 16px;
     font-family: Arial, sans-serif;
     outline: none;
+    resize: vertical; /* Permet de redimensionner verticalement */
     transition: border-color 0.3s;
-    appearance: none; /* Pour masquer les flèches du select */
-    background-color: white;
-    cursor: pointer;
 }
 
 .input-wrapper input:focus,
-.textarea-wrapper textarea:focus,
-.select-wrapper select:focus {
+.textarea-wrapper textarea:focus {
     border-color: #007BFF;
     box-shadow: 0 0 0 1px #007BFF;
 }
@@ -52,26 +47,4 @@
     max-height: 300px; /* Hauteur maximale */
     padding: 10px;
     resize: vertical; /* Permet uniquement le redimensionnement vertical */
-}
-
-/* Styles spécifiques pour le select */
-.select-wrapper select {
-    height: 40px;
-    line-height: 1.5;
-    padding-right: 30px; /* Espace pour l'icône de la flèche */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 16px;
-}
-
-.select-wrapper select:hover {
-    border-color: #0056b3;
-}
-
-/* Pour masquer l'apparence native du select sur certains navigateurs */
-.select-wrapper select {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
 }
