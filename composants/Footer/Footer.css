@@ -1,0 +1,57 @@
+footer {
+    background-color: #d3d3d3;
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+}
+
+footer button {
+    background-color: transparent;
+    border: 1px solid black;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+footer .liens-importants {
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+footer .liens-importants a {
+    margin: 0 15px;
+    color: black;
+    text-decoration: none;
+}
+
+footer .icones-reseaux-sociaux {
+    margin: 10px 0;
+}
+
+footer .icones-reseaux-sociaux i {
+    font-size: 24px;
+    margin: 0 10px;
+    color: black;
+    text-decoration: none;
+}
+
+footer p {
+    margin: 10px 0 0;
+    font-size: 12px;
+}
+
+footer .remonter-page {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: #2d7d46;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}

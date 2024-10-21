@@ -2,6 +2,9 @@
 require_once("../../../controlleur/offreController.php");
 require_once("../../../composants/Label/Label.php");
 require_once("../../../composants/Button/Button.php");
+require_once("../../../composants/Footer/Footer.php");
+require_once("../../../composants/Header/Header.php");
+
 
 /*
 
@@ -54,6 +57,7 @@ $offre = new Offre(
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 
+<?php  Header::render();?>
 <body>
     <h1>Détails de l'offre</h1>
     <div class="container">
