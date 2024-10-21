@@ -52,11 +52,9 @@
             <img class="image-offre" alt="Image offre" src="../../ressources/icone/cate.jpg" />
 
             <div class="description">
-                <h2>
-                    <!-- Icône de restaurant avec texte de titre -->
-                    <img src="../../ressources/icone/restaurant.svg" alt="Logo restaurant" style="vertical-align: middle; height: 40px;">
-                    Saveur de Bretagne
-                </h2>
+                
+                <?php Label::render("nom-restau", "", "", "Saveur de Bretagne", "../../ressources/icone/restaurant.svg"); ?>
+
                 <!-- Description du restaurant -->
                 <p>Le restaurant breton "Les Saveurs de Bretagne" offre une ambiance chaleureuse et authentique, avec ses poutres apparentes, ses pierres naturelles et ses décorations maritimes. Niché près de la côte, l'établissement propose un menu qui célèbre la cuisine traditionnelle bretonne : galettes de sarrasin, fruits de mer frais, et crêpes sucrées.</p>
 
