@@ -67,7 +67,7 @@ class Input
         ];
 
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./components/Input/Input.css">';
+            echo '<link rel="stylesheet" href="../../../composants/Input/Input.css">';
             self::$cssIncluded = true;
         }
 

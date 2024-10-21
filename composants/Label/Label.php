@@ -28,7 +28,7 @@ class Label
     ) {
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="../../components/Label/Label.css">';
+            echo '<link rel="stylesheet" href="../../../composants/Label/Label.css">';
             self::$cssIncluded = true;
         }
 
