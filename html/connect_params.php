@@ -1,7 +1,7 @@
 <?php
-$server = 'localhost';
+$server = 'postgresdb,';
 $driver = 'pgsql';
-$dbname = 'postgres';
-$user = 'postgres';
-$pass = '842163';
+$dbname = 'sae3';
+$user = 'sae';
+$pass = 'linc-keRRy-gor1lles';
 echo "nuh huh"
