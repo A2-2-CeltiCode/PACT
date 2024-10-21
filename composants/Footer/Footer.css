@@ -1,7 +1,5 @@
 @import url('../../ui.css');
 
-
-
 footer {
     background-color: var(--grey1);
     text-align: center;
@@ -16,17 +14,18 @@ footer {
         font-weight: var(--font-weight-semi-bold);
         cursor: pointer;
         border-radius: 5px;
-        transition-duration: 500ms;
+        transition-duration: 350ms;
 
         &:hover {
             background-color: var(--black);
             color: var(--white);
         }
     }
+    
 
     .liens {
         margin: 15px 0;
-        font-size: 14px;
+        font-size: var(--p-small-font-size);
 
         a {
             margin: 0 15px;

@@ -6,6 +6,7 @@
 class Footer
 {
 
+    private static $cssIncluded = false;
     /**
      * @brief Génère le footer HTML.
      * 
@@ -13,7 +14,12 @@ class Footer
      */
     public static function render()
     {
+        
+
+        if (!self::$cssIncluded) {
             echo '<link rel="stylesheet" href="../../../composants/Footer/Footer.css">';
+            self::$cssIncluded = true;
+        }
 
         echo '
         <footer>
