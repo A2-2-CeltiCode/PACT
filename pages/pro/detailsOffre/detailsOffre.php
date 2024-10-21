@@ -2,8 +2,9 @@
 require_once("../../../controlleur/offreController.php");
 require_once("../../../composants/Label/Label.php");
 require_once("../../../composants/Button/Button.php");
-require_once("../../../composants/Footer/Footer.php");
+require_once("../../../composants/Input/Input.php");
 require_once("../../../composants/Header/Header.php");
+require_once("../../../composants/Footer/Footer.php");
 
 
 /*
@@ -74,6 +75,8 @@ $offre = new Offre(
             <?php
             // Rendering title, description, and other offre details using Labels
             Label::render("offre-title", "", "", $offre->getTitre(), "../assets/icon/restaurant.svg");
+            
+
             Label::render("", "", "", $offre->getDescription());
             ?>
             <div class="address">
@@ -100,5 +103,6 @@ $offre = new Offre(
 
     <script src="detailsOffre.js"></script>
 </body>
+<?php  Footer::render();?>
 
 </html>

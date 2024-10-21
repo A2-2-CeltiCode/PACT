@@ -27,13 +27,13 @@ class Footer
             </div>
             <div class="icones-reseaux-sociaux">
                 <a href="https://www.facebook.com/">
-                    <img src="assets/icon/facebook.svg" alt="Icon facebook" style="vertical-align: middle;">
+                    <img src="../../../ressources/icone/facebook.svg" alt="Icon facebook" style="vertical-align: middle;">
                 </a>
                 <a href="https://x.com/TripEnArvorPACT">
-                    <img src="assets/icon/twitter.svg" alt="Icon X" style="vertical-align: middle;">
+                    <img src="../../../ressources/icone/twitter.svg" alt="Icon X" style="vertical-align: middle;">
                 </a>
                 <a href="https://www.instagram.com/pactlannion/">
-                    <img src="assets/icon/instagram.svg" alt="Icon instagram" style="vertical-align: middle;">
+                    <img src="../../../ressources/icone/instagram.svg" alt="Icon instagram" style="vertical-align: middle;">
                 </a>
             </div>
             <p>© 2024 PACT, Inc.</p>

@@ -1,3 +1,8 @@
+@import url('../../ui.css');
+
+
+
+
 .entete-logo {
     display: flex;
     align-items: center;
@@ -9,7 +14,7 @@
 
 .entete-logo .texte-logo {
     font-size: 30px;
-    color: #28a745; 
+    color: var(--primary-guest); 
     font-weight: bold;
     margin-left: 10px; 
 }
@@ -55,7 +60,7 @@
 }
 
 .entete-connexion button {
-    background-color: #28a745;
+    background-color:var(--primary-guest);
     color: #fff;
     padding: 8px 16px;
     border: none;

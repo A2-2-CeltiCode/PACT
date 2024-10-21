@@ -1,8 +1,11 @@
+@import url('../../ui.css');
+
 footer {
     background-color: #d3d3d3;
     text-align: center;
     padding: 20px 0;
     position: relative;
+    margin: 0;
 }
 
 footer button {
