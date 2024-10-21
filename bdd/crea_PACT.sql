@@ -105,15 +105,20 @@ CREATE TABLE _offre(
     description             VARCHAR(50) NOT NULL,
     descriptionDetaillee    VARCHAR(50),
     siteInternet            VARCHAR(50),
-    nomOption               VARCHAR(50),
-    nomForfait              VARCHAR(50),
+    nomOption               VARCHAR(50) NOT NULL,
+    nomForfait              VARCHAR(50) NOT NULL,
+    estEnLigne              BOOLEAN NOT NULL,
+    codePostal              INTEGER NOT NULL,
+    ville                   VARCHAR(50) NOT NULL,
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
     CONSTRAINT offre_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption),
     CONSTRAINT offre_fk_forfait FOREIGN KEY (nomForfait)
-        REFERENCES _forfait(nomForfait)
+        REFERENCES _forfait(nomForfait),
+    CONSTRAINT offre_fk_adresse FOREIGN KEY (codePostal,ville)
+        REFERENCES _adresse(codePostal,ville)
 );
 
 CREATE TABLE _image(
@@ -272,9 +277,8 @@ CREATE TABLE _guideeVisite (
 CREATE TABLE _proposeRestaurant (
     idOffre      SERIAL,
     nomRepas      VARCHAR(50),
-    valPrix    NUMERIC(5,2) NOT NULL,
-    CONSTRAINT proposeRestaurant_fk_repas FOREIGN KEY (nomRepas,valPrix)
-        REFERENCES _repas(nomRepas,valPrix),
+    CONSTRAINT proposeRestaurant_fk_repas FOREIGN KEY (nomRepas)
+        REFERENCES _repas(nomRepas),
     CONSTRAINT proposeRestaurant_fk_restaurant FOREIGN KEY (idOffre)
         REFERENCES _restaurant(idOffre)
 );

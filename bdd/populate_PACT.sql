@@ -33,17 +33,23 @@ INSERT INTO _comptePro (idCompte, denominationSociale, raisonSocialePro, banqueR
 (2, 'Société A', 'Entreprise A', 'FR7612345678901234567890123'),
 (3, 'Société B', 'Entreprise B', 'FR7612345678901234567890124');
 
+INSERT INTO _compteProPrive (idCompte,numSiren) VALUES
+(2, 'numerosiren1');
+
+INSERT INTO _compteProPublic (idCompte) VALUES
+(3);
+
 -- Peupler la table _offre
-INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet) VALUES
-(2,'Aucune', 'Gratuite', 'Visite de Paris', 'Découvrez les merveilles de Paris', 'Une visite guidée de 2 heures', 'http://example.com/paris'),
-(2,'En relief', 'Standard', 'Spectacle à Lyon', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/lyon'),
-(3,'A la une', 'Premium', 'Parc d''Angers', 'Parc incroyable', 'Parc proposant des attractions insane', 'http://example.com/angers');
+INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne,codePostal,ville) VALUES
+(2,'Aucune', 'Gratuite', 'Visite de Paris', 'Découvrez les merveilles de Paris', 'Une visite guidée de 2 heures', 'http://example.com/paris', TRUE, 75001, 'Paris'),
+(2,'En relief', 'Standard', 'Spectacle à Lyon', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/lyon', FALSE, 69001, 'Lyon'),
+(3,'A la une', 'Premium', 'Parc d''Angers', 'Parc incroyable', 'Parc proposant des attractions insane', 'http://example.com/angers', TRUE, 13001, 'Marseille');
 
 -- Peupler la table _image
 INSERT INTO _image (idOffre, nomImage) VALUES
-(1, 'paris.jpg'),
-(2, 'lyon.jpg'),
-(3, 'angers.jpg');
+(3, 'paris.jpg'),
+(1, 'lyon.jpg'),
+(2, 'angers.jpg');
 
 -- Peupler la table _spectacle
 INSERT INTO _spectacle (idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite) VALUES
@@ -56,6 +62,10 @@ INSERT INTO _parcAttractions (idOffre, nomCategorie, valPrix, planParc, nbAttrac
 -- Peupler la table _visitE
 INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee) VALUES
 (2, 20, 60, 'Visite', TRUE);
+
+INSERT INTO _guideeVisite (IdOffre,nomLangage) VALUES
+(2,'Français'),
+(2,'Espagnol');
 
 -- Peupler la table _possedeSpectacle
 INSERT INTO _possedeSpectacle (idOffre, nomTag) VALUES
