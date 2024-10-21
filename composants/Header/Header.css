@@ -24,7 +24,7 @@ body > header {
             }
 
             span {
-                font-size: var(-h3-font-size);
+                font-size: var(--h2-font-size);
                 color: var(--primary-guest);
                 font-weight: bold;
                 margin-left: 10px;
