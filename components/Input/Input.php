@@ -34,6 +34,7 @@ class Input
         $minLength = null,
         $maxLength = null,
         $pattern = "",
+        $placeholder= "",
         $icon = ""
     ) {
         // Définir le modèle par défaut selon le type
@@ -44,6 +45,9 @@ class Input
             case 'password':
                 $pattern = $pattern ?: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}';
                 break;
+                case 'tel':
+                    $pattern = $pattern ?: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}';
+                    break;
             default:
                 break;
         }
@@ -55,7 +59,7 @@ class Input
             'id' => $id,
             'name' => $name,
             'value' => $value,
-            'placeholder' => '',
+            'placeholder' => $placeholder,
             'required' => $required ? 'required' : '',
             'minlength' => $minLength,
             'maxlength' => $maxLength,
@@ -108,3 +112,4 @@ class Input
         return trim($result);
     }
 }
+

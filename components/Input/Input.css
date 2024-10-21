@@ -1,34 +1,77 @@
-/* Importer le fichier variables.css */
-@import url('../../variables.css');
-
-.input-wrapper {
-    width: fit-content;
+/* Style général pour l'input, le textarea et le select */
+.input-wrapper,
+.textarea-wrapper,
+.select-wrapper {
     display: flex;
     align-items: center;
-    border: 1px solid var(--grey2);
-    border-radius: 4px;
-    padding: 5px;
+    margin-bottom: 15px;
+    position: relative;
 }
 
+.input-wrapper input,
+.textarea-wrapper textarea,
+.select-wrapper select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none; /* Pour masquer les flèches du select */
+    background-color: white;
+    cursor: pointer;
+}
+
+.input-wrapper input:focus,
+.textarea-wrapper textarea:focus,
+.select-wrapper select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 1px #007BFF;
+}
+
+/* Styles pour l'icône dans l'input */
 .input-icon {
-    font-family: 'Inter';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 20px;
     height: 20px;
-    margin-right: 5px;
-    pointer-events: none;
-    fill: var(--primary-member);
+    fill: #888;
 }
 
-
-input {
-    border: 1px solid transparent;
-    outline: none;
-    flex-grow: 1;
-    padding: 5px;
+.input-wrapper .input-icon + input {
+    padding-left: 40px; /* Ajuste le padding pour l'input avec icône */
 }
 
+/* Styles spécifiques pour le textarea */
+.textarea-wrapper textarea {
+    min-height: 100px; /* Hauteur minimale */
+    max-height: 300px; /* Hauteur maximale */
+    padding: 10px;
+    resize: vertical; /* Permet uniquement le redimensionnement vertical */
+}
 
-.input-wrapper:focus-within {
-    border: 1px solid var(--primary-member);
-    box-shadow: 0 0 5px var(--primary-member);
+/* Styles spécifiques pour le select */
+.select-wrapper select {
+    height: 40px;
+    line-height: 1.5;
+    padding-right: 30px; /* Espace pour l'icône de la flèche */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+.select-wrapper select:hover {
+    border-color: #0056b3;
+}
+
+/* Pour masquer l'apparence native du select sur certains navigateurs */
+.select-wrapper select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
