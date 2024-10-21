@@ -1,59 +1,69 @@
 @import url('../../ui.css');
 
+
+
 footer {
     background-color: var(--grey1);
     text-align: center;
     padding: 20px 0;
     position: relative;
-}
 
-footer button {
-    background-color: transparent;
-    border: 1px solid var(--black);
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
+    button {
+        color: var(--black);
+        background-color: var(--grey1);
+        border: 1px solid var(--black);
+        padding: 10px 20px;
+        font-weight: var(--font-weight-semi-bold);
+        cursor: pointer;
+        border-radius: 5px;
+        transition-duration: 500ms;
 
-footer .liens-importants {
-    margin: 15px 0;
-    font-size: 14px;
-}
+        &:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+    }
 
-footer .liens-importants a {
-    margin: 0 15px;
-    color: var(--black);
-    text-decoration: none;
-}
+    .liens {
+        margin: 15px 0;
+        font-size: 14px;
 
-footer .icones-reseaux-sociaux {
-    margin: 10px 0;
-}
+        a {
+            margin: 0 15px;
+            color: var(--black);
+            text-decoration: none;
+        }
+    }
 
-footer .icones-reseaux-sociaux i {
-    font-size: var(--h4-font-size);
-    margin: 0 10px;
-    color: var(--black);
-    text-decoration: none;
-}
+    .icones-reseaux {
+        margin: 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-footer p {
-    margin: 10px 0 0;
-    font-size: var(--p-small-font-size);
-}
+        div {
+            margin: 10px;
+        }
+    }
 
-footer .remonter-page {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    background-color: var(--primary-guest);
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    cursor: pointer;
-    text-decoration: none;
+    p {
+        margin: 10px 0 0;
+        font-size: var(--p-small-font-size);
+    }
+
+    .remonte-page {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        background-color: var(--primary-guest);
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+    }
 }
