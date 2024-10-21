@@ -50,7 +50,7 @@ for ($i = 0; $i < 16; $i++) {
     <script src="script-header.js"></script>
 </header>
 <div>
-    <?php Input::render(class: "barre_recherche", placeholder: "  Recherche activitées, restaurants, lieux ...",
+    <?php Input::render(class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
         icon: "assets/icon/recherche.svg") ?>
 </div>
 <main>
