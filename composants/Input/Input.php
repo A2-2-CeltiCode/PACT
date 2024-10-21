@@ -1,28 +1,33 @@
 <?php
-
 /**
- * @brief Classe pour gérer les éléments de saisie HTML.
- *
- * Cette classe fournit une méthode statique pour rendre divers types d'éléments de saisie
- * HTML, avec des options pour personnaliser les attributs et l'apparence.
+ * @class Input
+ * @brief Classe utilitaire pour générer des champs de formulaire HTML.
  */
 class Input
 {
-    private static $cssIncluded = false; ///< Indicateur pour l'inclusion CSS.
+    /**
+     * @var bool $cssIncluded
+     * @brief Indicateur pour savoir si la CSS a déjà été incluse.
+     */
+    private static $cssIncluded = false;
 
     /**
-     * @brief Affiche un input HTML.
-     *
-     * @param string $class Classes CSS supplémentaires pour le champ de saisie.
-     * @param string $id ID HTML pour le champ de saisie.
-     * @param string $type Type d'input (text, email, password, etc.).
-     * @param string $name Nom du champ de saisie.
-     * @param bool $required Indique si le champ est requis.
-     * @param string $value Valeur initiale du champ.
-     * @param int|null $minLength Longueur minimale de la saisie.
-     * @param int|null $maxLength Longueur maximale de la saisie.
-     * @param string $pattern Modèle de validation pour le champ.
-     * @param string $icon Chemin vers l'icône SVG à afficher à gauche du champ.
+     * @brief Génère un champ de formulaire HTML.
+     * 
+     * @param string $class       Classe CSS du champ (optionnel).
+     * @param string $id          ID du champ (optionnel).
+     * @param string $type        Type du champ (ex: "text", "email", "password").
+     * @param string $name        Nom du champ (optionnel).
+     * @param bool $required      Si le champ est requis ou non (optionnel).
+     * @param string $value       Valeur initiale (optionnel).
+     * @param int|null $minLength Longueur minimale (optionnel).
+     * @param int|null $maxLength Longueur maximale (optionnel).
+     * @param string $pattern     Modèle regex à respecter (optionnel).
+     * @param string $placeholder Texte indicatif (optionnel).
+     * @param string $icon        Chemin de l'icône SVG (optionnel).
+     * @param string $tooltip     Infobulle (optionnel).
+     * 
+     * @return void
      */
     public static function render(
         $class = "",
@@ -34,10 +39,10 @@ class Input
         $minLength = null,
         $maxLength = null,
         $pattern = "",
-        $placeholder= "",
-        $icon = ""
+        $placeholder = "",
+        $icon = "",
+        $tooltip = ""
     ) {
-        // Définir le modèle par défaut selon le type
         switch ($type) {
             case 'email':
                 $pattern = $pattern ?: '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$';
@@ -45,11 +50,8 @@ class Input
             case 'password':
                 $pattern = $pattern ?: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}';
                 break;
-            default:
-                break;
         }
-    
-        // Préparer les attributs de l'input
+
         $attrs = [
             'type' => $type,
             'class' => $class,
@@ -60,16 +62,15 @@ class Input
             'required' => $required ? 'required' : '',
             'minlength' => $minLength,
             'maxlength' => $maxLength,
-            'pattern' => $pattern
+            'pattern' => $pattern,
+            'title' => $tooltip
         ];
-    
-        // Inclure CSS une seule fois
+
         if (!self::$cssIncluded) {
             echo '<link rel="stylesheet" href="./components/Input/Input.css">';
             self::$cssIncluded = true;
         }
-    
-        // Rendre l'input
+
         $input = "<input " . self::renderAttributes($attrs) . " />";
         if ($icon) {
             $svgContent = self::cleanSvgContent(file_get_contents($icon));
@@ -80,9 +81,9 @@ class Input
     }
 
     /**
-     * @brief Nettoyer le contenu SVG pour l'affichage.
-     *
-     * @param string $svgContent Contenu SVG à nettoyer.
+     * @brief Nettoie le contenu SVG.
+     * 
+     * @param string $svgContent Contenu SVG brut.
      * @return string Contenu SVG nettoyé.
      */
     private static function cleanSvgContent($svgContent)
@@ -91,10 +92,10 @@ class Input
     }
 
     /**
-     * @brief Retourne les attributs d'un élément sous forme de chaîne.
-     *
-     * @param array $attrs Tableau d'attributs à rendre.
-     * @return string Attributs rendus sous forme de chaîne.
+     * @brief Génère une chaîne d'attributs HTML à partir d'un tableau.
+     * 
+     * @param array $attrs Attributs HTML.
+     * @return string Chaîne d'attributs HTML.
      */
     private static function renderAttributes($attrs)
     {
