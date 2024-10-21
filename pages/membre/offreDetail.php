@@ -2,7 +2,8 @@
 <html lang="fr">
 
 <!-- Inclusion du fichier PHP pour le composant d'entrée (input) -->
-<?php include "../../composants/Input/Input.php"; ?>
+<?php require_once "../../composants/Input/Input.php";
+      require_once "../../composants/Label/Label.php"; ?>
 
 <head>
     <meta charset="UTF-8">
