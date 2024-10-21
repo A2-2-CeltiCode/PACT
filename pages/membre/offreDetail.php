@@ -52,33 +52,21 @@
             <img class="image-offre" alt="Image offre" src="../../ressources/icone/cate.jpg" />
 
             <div class="description">
-                
-                <?php Label::render("nom-restau", "", "", "Saveur de Bretagne", "../../ressources/icone/restaurant.svg"); ?>
 
-                <!-- Description du restaurant -->
-                <p>Le restaurant breton "Les Saveurs de Bretagne" offre une ambiance chaleureuse et authentique, avec ses poutres apparentes, ses pierres naturelles et ses décorations maritimes. Niché près de la côte, l'établissement propose un menu qui célèbre la cuisine traditionnelle bretonne : galettes de sarrasin, fruits de mer frais, et crêpes sucrées.</p>
+                <?php Label::render("nom-restau", "", "", "Saveur de Bretagne", "../../ressources/icone/restaurant.svg");
+                      Label::render("", "", "", 'Le restaurant breton "Les Saveurs de Bretagne" offre une ambiance chaleureuse et authentique, avec ses poutres apparentes, ses pierres naturelles et ses décorations maritimes. Niché près de la côte, l établissement propose un menu qui célèbre la cuisine traditionnelle bretonne : galettes de sarrasin, fruits de mer frais, et crêpes sucrées.');
+                      Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../ressources/icone/horloge.svg"); ?>
 
-                <h3>
-                    <!-- Icône d'horloge et horaires -->
-                    <img src="../../ressources/icone/horloge.svg" alt="Logo horloge" style="vertical-align: middle; height: 40px;">
-                    11h-15h & 19h-23h
-                </h3>
-
-                <h3>
-                    <!-- Icône de navigation et lien vers le site web -->
-                    <img src="../../ressources/icone/naviguer.svg" alt="Logo site web" style="vertical-align: middle; height: 40px;">
-                    <a href="https://www.lesfilsamaman.com/restaurants/rennes/?utm_source=google&utm_medium=organic&utm_campaign=mybusiness-website">Site du restaurant</a>
-                </h3>
-
-                <h3>
-                    <!-- Icône de localisation et adresse -->
-                    <img src="../../ressources/icone/localisateur.svg" alt="Logo position" style="vertical-align: middle; height: 40px;">
-                    Lannion (22300) 3 rue bidule
-                </h3>
+                 <a href="https://www.lesfilsamaman.com/restaurants/rennes/?utm_source=google&utm_medium=organic&utm_campaign=mybusiness-website">
+                    <?php Label::render("bas_desc", "", "", "Site du restaurant", "../../ressources/icone/naviguer.svg");?>
+                </a>
+                <?php 
+                    Label::render("bas_desc", "", "", "Lannion (22300) 3 rue bidule", "../../ressources/icone/localisateur.svg"); 
+                ?>
 
                 <!-- Liste imbriquée pour les informations supplémentaires -->
                 <ul>
-                    <li>Infos complémentaires
+                    <li>Infos complémentaires :
                         <ul>
                             <li>Déjeuner</li>
                             <li>Tag : Française - Crêperie</li>

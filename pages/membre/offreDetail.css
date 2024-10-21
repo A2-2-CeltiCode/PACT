@@ -53,13 +53,12 @@ body {
     background-color: white;
     font-size: small;
 }
-.description h2 {
+.nom-restau {
     margin: 25px 0px 0px 0px;
+    font-size: x-large;
 }
-
-.description h2 img, .description h3 img  {
-    height: 20px !important;
-    fill: #1C8901 ;
+.bas_desc{
+    font-size: large;
 }
 
 .image-offre, .description, .colonne-droite {
