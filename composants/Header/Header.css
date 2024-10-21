@@ -1,8 +1,5 @@
 @import url('../../ui.css');
 
-
-
-
 .entete-logo {
     display: flex;
     align-items: center;
@@ -13,10 +10,10 @@
 }
 
 .entete-logo .texte-logo {
-    font-size: 30px;
+    font-size: var(--h2-font-size);
     color: var(--primary-guest); 
     font-weight: bold;
-    margin-left: 10px; 
+    margin-left: 10px;
 }
 
 .entete {
@@ -26,7 +23,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0px 20px;
-    background-color: #fff;
+    background-color: var(--white);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 60px;
     z-index: 1000;
@@ -39,7 +36,7 @@
 .entete-navigation a {
     margin: 0 10px;
     text-decoration: none;
-    color: #333;
+    color: var(--grey3);
     font-weight: bold;
 }
 
@@ -55,13 +52,13 @@
 
 .entete-langue select {
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--grey2);
     border-radius: 4px;
 }
 
 .entete-connexion button {
     background-color:var(--primary-guest);
-    color: #fff;
+    color: var(--white);
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
