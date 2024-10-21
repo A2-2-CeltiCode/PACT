@@ -16,17 +16,15 @@ class Header
             echo '<link rel="stylesheet" href="../../../composants/Header/Header.css">';
 
         echo '
-        <header class="entete">
+        <header id="entete" class="entete">
             <div class="entete-logo">
                 <!-- Logo de l\'entreprise avec texte -->
-                <img src="./assets/icon/logo.svg" alt="Logo PACT">
+                <img src="../../../ressources/icone/logo.svg" alt="Logo PACT">
                 <span class="texte-logo">PACT</span>
             </div>
             <div class="entete-recherche">
                 <!-- Composant d\'entrée pour la recherche -->
         ';
-        
-        // Utiliser le composant Input pour le champ de recherche
         Input::render(
             class: 'champ-recherche', 
             type: 'text', 
@@ -41,7 +39,7 @@ class Header
                 <a href="offre.php">Offres</a>
             </nav>
             <div class="entete-langue">
-                <img id="logo-langue" src="assets/icon/logofr.svg" alt="Français">
+                <img id="logo-langue" src="../../../ressources/icone/logofr.svg" alt="Français">
                 <select id="selecteur-langue">
                     <option value="fr">Français</option>
                     <option value="en">English</option>
@@ -53,6 +51,6 @@ class Header
                 </a>
             </div>
         </header>
-        <script src="Header.js"></script>';
+        <script src="../../../composants/Header/Header.js"></script>';
     }
 }

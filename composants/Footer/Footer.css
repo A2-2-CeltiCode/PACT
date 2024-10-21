@@ -1,5 +1,7 @@
+@import url('../../ui.css');
+
 footer {
-    background-color: #d3d3d3;
+    background-color: var(--grey1);
     text-align: center;
     padding: 20px 0;
     position: relative;
@@ -7,7 +9,7 @@ footer {
 
 footer button {
     background-color: transparent;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     padding: 10px 20px;
     font-weight: bold;
     cursor: pointer;
@@ -20,7 +22,7 @@ footer .liens-importants {
 
 footer .liens-importants a {
     margin: 0 15px;
-    color: black;
+    color: var(--black);
     text-decoration: none;
 }
 
@@ -29,22 +31,22 @@ footer .icones-reseaux-sociaux {
 }
 
 footer .icones-reseaux-sociaux i {
-    font-size: 24px;
+    font-size: var(--h4-font-size);
     margin: 0 10px;
-    color: black;
+    color: var(--black);
     text-decoration: none;
 }
 
 footer p {
     margin: 10px 0 0;
-    font-size: 12px;
+    font-size: var(--p-small-font-size);
 }
 
 footer .remonter-page {
     position: absolute;
     right: 20px;
     top: 20px;
-    background-color: #2d7d46;
+    background-color: var(--primary-guest);
     border-radius: 50%;
     width: 35px;
     height: 35px;

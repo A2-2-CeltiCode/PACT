@@ -1,5 +1,4 @@
-/* Importer le fichier variables.css */
-@import url('../../variables.css');
+@import url('../../ui.css');
 
 .input-wrapper {
     width: fit-content;
