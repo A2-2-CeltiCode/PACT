@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="conteneur">
         <!-- Logo de la page -->
-        <img alt="Logo" src="assets/icon/logo.svg" />
+        <img alt="Logo" src="ressources/icone/logo.svg" />
         
         <!-- Titre de la page -->
         <h1>Connectez-vous à votre compte professionnel</h1>
