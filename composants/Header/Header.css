@@ -1,70 +1,91 @@
 @import url('../../ui.css');
 
-.entete-logo {
-    display: flex;
-    align-items: center;
-}
 
-.entete-logo img {
-    height: 60px;
-}
-
-.entete-logo .texte-logo {
-    font-size: var(--h2-font-size);
-    color: var(--primary-guest); 
-    font-weight: bold;
-    margin-left: 10px;
-}
-
-.entete {
+body > header {
     position: sticky;
     top: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0px 20px;
+    padding: 0 20px;
     background-color: var(--white);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 60px;
     z-index: 1000;
-}
+    font-family: 'Encode Sans', serif;
 
-.entete-recherche input {
-    width: 300px;
-}
+    div {
+        &:first-of-type {
+            display: flex;
+            align-items: center;
 
-.entete-navigation a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: var(--grey3);
-    font-weight: bold;
+            img {
+                height: 60px;
+            }
+
+            span {
+                font-size: var(-h3-font-size);
+                color: var(--primary-guest);
+                font-weight: bold;
+                margin-left: 10px;
+            }
+        }
+
+        &:nth-of-type(2) input {
+            width: 300px;
+        }
+
+        &:last-of-type {
+            button {
+                background-color: var(--primary-guest);
+                color: #fff;
+                padding: 8px 16px;
+                border: none;
+                border-radius: 4px;
+
+                &:hover {
+                    background-color: #218838;
+                }
+            }
+        }
+    }
+
+    nav > a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: var(--grey3);
+        font-weight: bold;
+    }
+
+    + div {
+        background-image: url("assets/img/font-barre-recherce.png");
+        display: flex;
+        justify-content: center;
+        padding: 70px 0;
+
+        .barre_recherche {
+            width: 75vw;
+            background-color: transparent;
+        }
+
+        > div {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+    }
 }
 
 .entete-langue {
     display: flex;
     align-items: center;
-}
 
-.entete-langue img {
-    height: 20px;
-    margin-right: 5px;
-}
+    img {
+        height: 20px;
+        margin-right: 5px;
+    }
 
-.entete-langue select {
-    padding: 5px;
-    border: 1px solid var(--grey2);
-    border-radius: 4px;
-}
-
-.entete-connexion button {
-    background-color:var(--primary-guest);
-    color: var(--white);
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.entete-connexion button:hover {
-    background-color: #218838;
+    select {
+        padding: 5px;
+        border: 1px solid var(--grey2);
+        border-radius: 4px;
+    }
 }
