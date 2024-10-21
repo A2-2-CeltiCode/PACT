@@ -5,23 +5,23 @@ require_once("../../../composants/Button/Button.php");
 
 
 
-$server = 'servbdd.iutlan.etu.univ-rennes1.fr';
-$driver = 'pgsql';
-$dbname = 'pg_khazard';
-$user   = 'khazard';
-$pass	= 'BB1414cc7878ee11bb33-_-_';
+$server = '';
+$driver = '';
+$dbname = '';
+$user   = '';
+$pass	= '';
+$pdo = new PDO("$driver:host=$server;dbname=$dbname",$user, $pass);
 
 
-// Assuming you are fetching the offre based on an ID, perhaps from the URL or a form input
-$offreId = $_GET['idOffre'] ?? 1;  // Example, defaulting to 1 if not provided
+
+$offreId = $_GET['idOffre'] ?? 1;
 
 try
 {
-	$pdo = new PDO("pgsql:host=$server;dbname=$dbname",$user, $pass);
 }
 catch (Exception $e)
 {
-    die('Erreur : ' . $e->getMessage());
+    die($e->getMessage());
 }
 $offre = Offre::getOfferById($pdo, $offreId);
 
