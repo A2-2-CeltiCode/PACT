@@ -3,25 +3,25 @@ require_once("../../../controlleur/offreController.php");
 require_once("../../../composants/Label/Label.php");
 require_once("../../../composants/Button/Button.php");
 
+/*
+
+$server = '';
+$driver = '';
+$dbname = '';
+$user   = '';
+$pass	= '';
+$pdo = new PDO("$driver:host=$server;dbname=$dbname",$user, $pass);
 
 
-$server = 'servbdd.iutlan.etu.univ-rennes1.fr';
-$driver = 'pgsql';
-$dbname = 'pg_khazard';
-$user   = 'khazard';
-$pass	= 'BB1414cc7878ee11bb33-_-_';
 
-
-// Assuming you are fetching the offre based on an ID, perhaps from the URL or a form input
-$offreId = $_GET['idOffre'] ?? 1;  // Example, defaulting to 1 if not provided
+$offreId = $_GET['idOffre'] ?? 1;
 
 try
 {
-	$pdo = new PDO("pgsql:host=$server;dbname=$dbname",$user, $pass);
 }
 catch (Exception $e)
 {
-    die('Erreur : ' . $e->getMessage());
+    die($e->getMessage());
 }
 $offre = Offre::getOfferById($pdo, $offreId);
 
@@ -29,6 +29,18 @@ if (!$offre) {
     echo "Offer not found.";
     exit;
 }
+
+*/
+
+$offre = new Offre(
+    1,
+    "Offre Spéciale Restaurant",
+    "Une offre exclusive pour un dîner inoubliable.",
+    "Profitez d'un dîner complet avec entrée, plat et dessert dans un cadre magnifique.",
+    "https://restaurant-exemple.com",
+    "Option Vegan",
+    "Forfait Gourmet"
+);
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +70,7 @@ if (!$offre) {
             <?php
             // Rendering title, description, and other offre details using Labels
             Label::render("offre-title", "", "", $offre->getTitre(), "../assets/icon/restaurant.svg");
-            Label::render("", "", "", $offre->getDescription()); 
+            Label::render("", "", "", $offre->getDescription());
             ?>
             <div class="address">
                 <?php
@@ -71,7 +83,7 @@ if (!$offre) {
             // Render other offre information like contact, package type, etc.
             Label::render("offre-infos", "", "", $offre->getNomForfait(), "../assets/icon/promotion.svg");
             Label::render("offre-infos", "", "", $offre->getSiteInternet(), "../assets/icon/website.svg");
-            Label::render("offre-infos", "", "", $offre->getDescriptionDetaillee()); 
+            Label::render("offre-infos", "", "", $offre->getDescriptionDetaillee());
             ?>
             <ul>
                 <li><?php Label::render("offre-infos", "", "", "Prix: " . $offre->getIdOffre() . "€"); ?></li>
