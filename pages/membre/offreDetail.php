@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <!-- Inclusion du fichier PHP pour le composant d'entrée (input) -->
-<?php include "composants/Input/Input.php"; ?>
+<?php include "../../composants/Input/Input.php"; ?>
 
 <head>
     <meta charset="UTF-8">
