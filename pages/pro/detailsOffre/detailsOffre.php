@@ -41,10 +41,6 @@ if (!$offre) {
 
 */
 
-?>
-
-<?php
-
 $adresse = new Adresse(
     '75001',
     'Paris',
@@ -55,47 +51,47 @@ $adresse = new Adresse(
 
 $compte = new Compte(
     1,
-    'user123',
-    'password123',
-    'user@example.com',
+    'utilisateur123',
+    'motdepasse123',
+    'utilisateur@example.com',
     $adresse
 );
 
 $comptePro = new ComptePro(
     1,
-    'Restaurant XYZ',
-    'Restaurant XYZ Corp.',
+    'Restaurant Le Gourmet',
+    'Le Gourmet SARL',
     'FR76 1234 5678 9012 3456 7890 123',
     $compte
 );
 
-$option = new Option('All Inclusive');
+$option = new Option('Tout Inclus');
 $forfait = new Forfait('Forfait Standard');
 
 $offre = new Offre(
     1,
     $comptePro,
-    'Special Offer',
-    'A great special offer for all customers.',
-    'This detailed description explains all the amazing features of the offer...',
-    'http://restaurant.com',
+    'Offre Spéciale',
+    'Une offre spéciale pour tous nos clients.',
+    'Cette description détaillée explique toutes les fonctionnalités exceptionnelles de l\'offre spécial de kind of compte pro votre client il est bien en effet il ne serait pas le meilleur',
+    'http://restaurantlegourmet.com',
     $option,
     $forfait
 );
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offer Details</title>
+    <title>Détails de l'offre</title>
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 
-<?php  Header::render();?>
+<?php Header::render(); ?>
 
 <body>
     <h1>Détails de l'offre</h1>
@@ -110,29 +106,22 @@ $offre = new Offre(
 
         <div class="offre-info">
             <?php
-            Label::render("offre-title", "", "", $offre->getTitre(), "../assets/icon/restaurant.svg");
-            Label::render("offre-description", "", "", $offre->getDescription(), "../assets/icon/info.svg");
-            Label::render("offre-detail", "", "", $offre->getDescription(), "../assets/icon/details.svg");
+            Label::render("offre-title", "", "", $offre->getTitre(), "../../../ressources/icone/restaurant.svg");
+            Label::render("offre-description", "", "", $offre->getDescription());
+            Label::render("offre-detail", "", "", $offre->getDescriptionDetaillee());
             ?>
 
             <div class="address">
                 <?php
-                Label::render("offre-infos", "", "", "Adresse", "../assets/icon/location.svg");
-                Label::render("offre-infos", "", "", $offre->getComptePro()->getCompte()->getAdresse()->getAdresseEntier());
+                Label::render("offre-infos", "", "", $offre->getComptePro()->getCompte()->getAdresse()->getAdresseEntier(), "../../../ressources/icone/localisateur.svg");
                 ?>
             </div>
-
-            <div class="additional-info">
-                <?php
-                Label::render("offre-option", "", "","Option: " . $offre->getOption()->getNomOption(), "../assets/icon/option.svg");
-                Label::render("offre-forfait", "", "", "Forfait: " . $offre->getForfait()->getNomForfait(), "../assets/icon/forfait.svg");
-                Label::render("offre-website", "", "", "Site Web: ". $offre->getSiteInternet(), "../assets/icon/website.svg");
-                ?>
-            </div>
-
-            <ul>
-                <li><?php Label::render("offre-prix", "", "","Prix: ". "100" . "€", "../assets/icon/price.svg"); ?></li>
-            </ul>
+            <?php
+            Label::render("offre-website", "", "", "<a href='" . $offre->getSiteInternet() . "' target='_blank'>" . $offre->getSiteInternet() . "</a>", "../../../ressources/icone/naviguer.svg");
+            Label::render("offre-option", "", "", "Option: " . $offre->getOption()->getNomOption(), "../../../ressources/icone/info.svg");
+            Label::render("offre-forfait", "", "", "Forfait: " . $offre->getForfait()->getNomForfait(), "../../../ressources/icone/argent.svg");
+            ?>
+            <?php Label::render("offre-prix", "", "", "Prix: " . "100" . "€", "../../../ressources/icone/price.svg"); ?>
         </div>
 
         <?php Button::render("btn", "", "Modifier", "pro", "", "", "../StoryBook/StoryBook.php") ?>
@@ -140,6 +129,6 @@ $offre = new Offre(
 
     <script src="detailsOffre.js"></script>
 </body>
-<?php  Footer::render();?>
+<?php Footer::render(); ?>
 
 </html>
