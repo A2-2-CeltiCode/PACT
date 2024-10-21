@@ -1,0 +1,167 @@
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('./assets/fonts/encode-sans-v19-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('./assets/fonts/encode-sans-v19-latin_latin-ext-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: var(--font-weight-normal);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-600.woff2') format('woff2');
+}
+
+body {
+    font-family: 'Encode Sans', 'Inter';
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+.offre {
+    display: flex;
+    justify-content: space-between;
+}
+
+.description {
+    background-color: white;
+    font-size: small;
+}
+.description h2 {
+    margin: 25px 0px 0px 0px;
+}
+
+.description h2 img, .description h3 img  {
+    height: 20px !important;
+    fill: #1C8901 ;
+}
+
+.image-offre, .description, .colonne-droite {
+    flex: 1; 
+    margin: 10px 10px; 
+}
+
+.image-offre {
+    width: 325px;
+    height: 325px;
+    margin: 40px 15px 40px 40px;
+}
+
+.carte {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px;
+    padding: 0px 5px 8px 5px;
+    width: 250px;
+   
+    text-align: center;
+    position: relative;
+}
+
+.dessus-carte {
+    display: flex;
+    margin: 5px;
+}
+
+.dessus-carte img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: small;
+    margin: 10px;
+}
+
+.dessus-carte div img {
+    margin: 0;
+    height: 20px !important;
+}
+
+.dessous-carte div img, .dessous-carte a img {
+    height: 20px !important; 
+    vertical-align: middle;
+}
+
+.carte h2 {
+    font-size: 18px;
+    margin: 10px 0 5px 0;
+}
+
+.carte p {
+    color: #777;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.carte .email, .carte .telephone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.carte .email img, .carte .telephone img {
+    margin-right: 10px;
+}
+
+.carte .email a {
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid #000;
+}
+
+.carte .bouton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.carte .bouton img {
+    margin-right: 10px;
+}
+
+.carte .menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.note_etoiles{
+    height: 20px !important;
+    margin: 25px 0px 0px 0px;
+}
