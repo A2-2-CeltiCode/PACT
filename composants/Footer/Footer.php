@@ -26,7 +26,7 @@ class Footer
                 <a href="condition.php">Conditions Générales</a>
             </div>
             <div class="icones-reseaux-sociaux">
-                <a href="https://www.facebook.com/">
+                <a href="#">
                     <img src="../../../ressources/icone/facebook.svg" alt="Icon facebook" style="vertical-align: middle;">
                 </a>
                 <a href="https://x.com/TripEnArvorPACT">
@@ -37,7 +37,7 @@ class Footer
                 </a>
             </div>
             <p>© 2024 PACT, Inc.</p>
-            <a href="#entete" class="remonter-page">
+            <a href="#" class="remonte-page">
                 <i class="fas fa-arrow-up"></i>
             </a>
         </footer>';
