@@ -19,14 +19,14 @@ INSERT INTO _adresse (codePostal, ville, nomRue, numRue, numTel) VALUES
 (13001, 'Marseille', 'Rue de la Canebière', '3', '+33 4 91 23 45 67');
 
 -- Peupler la table _compte
-/*INSERT INTO _compte (login, mdp, email, codePostal, ville) VALUES
-('user1', 'password1', 'user1@example.com', 75001, 'Paris'),
-('user2', 'password2', 'user2@example.com', 69001, 'Lyon'),
-('user3', 'password3', 'user3@example.com', 13001, 'Marseille');
+INSERT INTO _compte (mdp, email, codePostal, ville) VALUES
+('password1', 'user1@example.com', 75001, 'Paris'),
+('password2', 'user2@example.com', 69001, 'Lyon'),
+('password3', 'user3@example.com', 13001, 'Marseille');
 
 -- Peupler la table _compteMembre
-INSERT INTO _compteMembre (idCompte, prenom, nom) VALUES
-(1, 'Jean', 'Dupont');
+INSERT INTO _compteMembre (idCompte,login, prenom, nom) VALUES
+(1, 'user1',  'Jean','Dupont');
 
 -- Peupler la table _comptePro
 INSERT INTO _comptePro (idCompte, denominationSociale, raisonSocialePro, banqueRib) VALUES
@@ -37,7 +37,7 @@ INSERT INTO _compteProPrive (idCompte,numSiren) VALUES
 (2, 'numerosiren1');
 
 INSERT INTO _compteProPublic (idCompte) VALUES
-(3);*/
+(3);
 
 -- Peupler la table _offre
 INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne,codePostal,ville) VALUES
