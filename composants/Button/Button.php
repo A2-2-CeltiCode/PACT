@@ -6,7 +6,10 @@
 class ButtonType {
     const Guest = 'guest';  
     const Member = 'member'; 
-    const Pro = 'pro';      
+    const Pro = 'pro';
+    const Valid = 'valid'; 
+    const Error = 'error'; 
+    const Warning = 'warning';   
 }
 
 /**
@@ -48,6 +51,15 @@ class Button
             case ButtonType::Pro:
                 $backgroundColorClass = 'bg-pro';
                 break;
+                case ButtonType::Valid:
+                    $backgroundColorClass = 'bg-valid';
+                    break;
+                    case ButtonType::Error:
+                        $backgroundColorClass = 'bg-error';
+                        break;
+                        case ButtonType::Warning:
+                            $backgroundColorClass = 'bg-warning';
+                            break;
         }
 
         // Inclure CSS une seule fois

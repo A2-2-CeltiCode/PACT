@@ -11,6 +11,12 @@
 
 <body>
     <main>
+    <?php
+        foreach (glob("../composants/*/*.php") as $filename) {
+            include $filename;
+        }
+        //Header::render();
+        ?>
         <header>
             <h1>Sommaire</h1>
             <nav>
@@ -173,11 +179,7 @@
         </section>
 
         <!-- Section des Composants -->
-        <?php
-        foreach (glob("../composants/*/*.php") as $filename) {
-            include $filename;
-        }
-        ?>
+        
         <section id="composants">
             <h2>Composants</h2>
             <div>
@@ -185,7 +187,7 @@
 
                 <p>Label:</p>
 
-                
+
                 <p>Input:</p>
                 <?php Input::render(type: "text", name: "username", required: true, icon: "./assets/icon/health.svg"); ?>
                 <p>Boutton:</p>
@@ -193,6 +195,9 @@
                     <?php Button::render(text: "Button", type: ButtonType::Member, submit: false); ?>
                     <?php Button::render(text: "Button", type: ButtonType::Guest, submit: false); ?>
                     <?php Button::render(text: "Button", type: ButtonType::Pro, submit: false); ?>
+                    <?php Button::render(text: "Button", type: ButtonType::Valid, submit: false); ?>
+                    <?php Button::render(text: "Button", type: ButtonType::Error, submit: false); ?>
+                    <?php Button::render(text: "Button", type: ButtonType::Warning, submit: false); ?>
                 </div>
 
                 <p>Boutton (Toast):</p>
@@ -203,27 +208,22 @@
                 <p>ImagePicker:</p>
 
                 <p>Range:</p>
-                
+
                 <p>barre de filtres:</p>
                 <p>SearchBar:</p>
                 <p>Card:</p>
-                <p>Card Tel:</p>
-                
+                <p>Card Tel:</p>         
+
+
                 <p>Footer:</p>
-                <p>Header:</p>
-
-
-
-                <?php include '/component/Input/Input.php' ?>
-
-
-
-                <?php Input::render(type: "email", name: " gros caca"); ?>
-
+                
+                
+                
             </div>
             <hr>
         </section>
     </main>
 </body>
+<?php Footer::render(); ?>
 
 </html>
