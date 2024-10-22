@@ -5,69 +5,30 @@ require_once("../../../composants/Input/Input.php");
 require_once("../../../composants/Header/Header.php");
 require_once("../../../composants/Footer/Footer.php");
 
-require_once("../../../controlleur/Offre/Offre.php");
-require_once("../../../controlleur/Compte/Compte.php");
-require_once("../../../controlleur/Compte/ComptePro.php");
-require_once("../../../controlleur/Option/Option.php");
-require_once("../../../controlleur/Adresse/Adresse.php");
-require_once("../../../controlleur/Forfait/Forfait.php");
-
-
-
-
 require_once("../../../bdd/connect_params.php");
+
 try {
+    // Establishing the database connection
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh = null;
+    
+    // Query to fetch offer details
+    $stmt = $dbh->query('SELECT * FROM pact._offre', PDO::FETCH_ASSOC);
+    $offre = $stmt->fetch();
+
+    if (!$offre) {
+        throw new Exception("Aucune offre trouvée");
+    }
+    
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();
+} catch (Exception $e) {
+    print "Erreur !: " . $e->getMessage() . "<br>";
+    die();
+} finally {
+    $dbh = null; // Closing the database connection
 }
 
-
-/*
-$adresse = new Adresse(
-    '75001',
-    'Paris',
-    'Rue de la Paix',
-    '12',
-    '0123456789'
-);
-
-$compte = new Compte(
-    1,
-    'utilisateur123',
-    'motdepasse123',
-    'utilisateur@example.com',
-    $adresse
-);
-
-$comptePro = new ComptePro(
-    1,
-    'Restaurant Le Gourmet',
-    'Le Gourmet SARL',
-    'FR76 1234 5678 9012 3456 7890 123',
-    $compte
-);
-
-$option = new Option('Tout Inclus');
-$forfait = new Forfait('Forfait Standard');
-
-$offre = new Offre(
-    1,
-    $comptePro,
-    'Offre Spéciale',
-    'Une offre spéciale pour tous nos clients.',
-    'Cette description détaillée explique toutes les fonctionnalités exceptionnelles de l\'offre spécial de kind of compte pro votre client il est bien en effet il ne serait pas le meilleur',
-    'http://restaurantlegourmet.com',
-    $option,
-    $forfait,
-    true,
-    $adresse->getCodePostal(),
-    $adresse->getVille()
-);
-
-*/
 ?>
 
 <!DOCTYPE html>
@@ -99,25 +60,35 @@ $offre = new Offre(
 
         <div class="offre-info">
             <?php
-            Label::render("offre-title", "", "", $offre->getTitre(), "../../../ressources/icone/restaurant.svg");
-            Label::render("offre-description", "", "", $offre->getDescription());
-            Label::render("offre-detail", "", "", $offre->getDescriptionDetaillee());
+            Label::render("offre-title", "", "", $offre['titre'], "../../../ressources/icone/restaurant.svg");
+            Label::render("offre-description", "", "", $offre['description']);
+            Label::render("offre-detail", "", "", $offre['descriptionDetaillee']);
             ?>
 
             <div class="address">
                 <?php
-                Label::render("offre-infos", "", "", $offre->getComptePro()->getCompte()->getAdresse()->getAdresseEntier(), "../../../ressources/icone/localisateur.svg");
+                $stmt_address = $dbh->query('SELECT adresse_entier FROM pact._adresse WHERE id = ' . $offre['adresse_id'], PDO::FETCH_ASSOC);
+                $adresse = $stmt_address->fetch();
+                Label::render("offre-infos", "", "", $adresse['adresse_entier'], "../../../ressources/icone/localisateur.svg");
                 ?>
             </div>
+            
             <?php
-            Label::render("offre-website", "", "", "<a href='" . $offre->getSiteInternet() . "' target='_blank'>" . $offre->getSiteInternet() . "</a>", "../../../ressources/icone/naviguer.svg");
-            Label::render("offre-option", "", "", "Option: " . $offre->getNomOption()->getNomOption(), "../../../ressources/icone/info.svg");
-            Label::render("offre-forfait", "", "", "Forfait: " . $offre->getNomForfait()->getNomForfait(), "../../../ressources/icone/argent.svg");
+            Label::render("offre-website", "", "", "<a href='" . $offre['site_internet'] . "' target='_blank'>" . $offre['site_internet'] . "</a>", "../../../ressources/icone/naviguer.svg");
+            
+            $stmt_option = $dbh->query('SELECT nom_option FROM pact._option WHERE id = ' . $offre['option_id'], PDO::FETCH_ASSOC);
+            $option = $stmt_option->fetch();
+            Label::render("offre-option", "", "", "Option: " . $option['nom_option'], "../../../ressources/icone/info.svg");
+
+            $stmt_forfait = $dbh->query('SELECT nom_forfait FROM pact._forfait WHERE id = ' . $offre['forfait_id'], PDO::FETCH_ASSOC);
+            $forfait = $stmt_forfait->fetch();
+            Label::render("offre-forfait", "", "", "Forfait: " . $forfait['nom_forfait'], "../../../ressources/icone/argent.svg");
             ?>
-            <?php Label::render("offre-prix", "", "", "Prix: " . "100" . "€", "../../../ressources/icone/price.svg"); ?>
+
+            <?php Label::render("offre-prix", "", "", "Prix: " . $offre['prix'] . "€", "../../../ressources/icone/price.svg"); ?>
         </div>
 
-        <?php Button::render("btn", "", "Modifier", "pro", "", "", "../StoryBook/StoryBook.php") ?>
+        <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", "", "../StoryBook/StoryBook.php") ?>
     </div>
 
     <script src="detailsOffre.js"></script>
