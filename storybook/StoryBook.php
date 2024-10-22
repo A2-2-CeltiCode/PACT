@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StoryBook</title>
     <link rel="stylesheet" href="./StoryBook.css">
+    <link rel="stylesheet" href="../ui.css">
 </head>
 
 <body>
@@ -173,7 +174,7 @@
 
         <!-- Section des Composants -->
         <?php
-        foreach (glob("components/*/*.php") as $filename) {
+        foreach (glob("../composants/*/*.php") as $filename) {
             include $filename;
         }
         ?>
