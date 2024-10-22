@@ -2,12 +2,12 @@
 // Démarre la session pour gérer l'authentification
 session_start();
 
-include "components\Input\Input.php";
+include "composants\Input\Input.php";
 
-$hote_base_donnees = 'localhost';
-$nom_base_donnees = 'nom_base_donnees';
-$utilisateur_base_donnees = 'nom_utilisateur';
-$mot_de_passe_base_donnees = 'mot_de_passe';
+$hote_base_donnees = 'localhost:5433';
+$nom_base_donnees = 'postgres';
+$utilisateur_base_donnees = 'postgres';
+$mot_de_passe_base_donnees = '13phenix';
 
 try {
     // Connexion à la base de données avec PDO
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="conteneur">
         <!-- Logo de la page -->
-        <img alt="Logo" src="ressources/icone/logo.svg" />
+        <img alt="Logo" src="../../ressources/icone/logo.svg" />
         
         <!-- Titre de la page -->
         <h1>Connectez-vous à votre compte professionnel</h1>
