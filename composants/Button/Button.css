@@ -4,6 +4,8 @@ button {
     padding: 15px;
     color: white;
     transition: background-color 0.2s ease;
+    height: fit-content;
+    width: fit-content;
 }
 
 .bg-guest {
