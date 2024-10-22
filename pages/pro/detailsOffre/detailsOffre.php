@@ -12,34 +12,6 @@ require_once("../../../controlleur/Option/Option.php");
 require_once("../../../controlleur/Adresse/Adresse.php");
 require_once("../../../controlleur/Forfait/Forfait.php");
 
-/*
-
-$server = '';
-$driver = '';
-$dbname = '';
-$user   = '';
-$pass	= '';
-$pdo = new PDO("$driver:host=$server;dbname=$dbname",$user, $pass);
-
-
-
-$offreId = $_GET['idOffre'] ?? 1;
-
-try
-{
-}
-catch (Exception $e)
-{
-    die($e->getMessage());
-}
-$offre = Offre::getOfferById($pdo, $offreId);
-
-if (!$offre) {
-    echo "Offer not found.";
-    exit;
-}
-
-*/
 
 $adresse = new Adresse(
     '75001',
@@ -76,7 +48,10 @@ $offre = new Offre(
     'Cette description détaillée explique toutes les fonctionnalités exceptionnelles de l\'offre spécial de kind of compte pro votre client il est bien en effet il ne serait pas le meilleur',
     'http://restaurantlegourmet.com',
     $option,
-    $forfait
+    $forfait,
+    true,
+    $adresse->getCodePostal(),
+    $adresse->getVille()
 );
 ?>
 
@@ -99,6 +74,9 @@ $offre = new Offre(
 
         <div class="carousel">
             <div class="carousel-images">
+                <img src="../../../ressources/images/restaurant1.jpg" alt="Plat gourmet" class="carousel-image">
+                <img src="../../../ressources/images/restaurant2.jpg" alt="Intérieur du restaurant" class="carousel-image">
+                <img src="../../../ressources/images/restaurant3.jpg" alt="Chef préparant un plat" class="carousel-image">
             </div>
             <button class="carousel-button prev">❮</button>
             <button class="carousel-button next">❯</button>
@@ -118,8 +96,8 @@ $offre = new Offre(
             </div>
             <?php
             Label::render("offre-website", "", "", "<a href='" . $offre->getSiteInternet() . "' target='_blank'>" . $offre->getSiteInternet() . "</a>", "../../../ressources/icone/naviguer.svg");
-            Label::render("offre-option", "", "", "Option: " . $offre->getOption()->getNomOption(), "../../../ressources/icone/info.svg");
-            Label::render("offre-forfait", "", "", "Forfait: " . $offre->getForfait()->getNomForfait(), "../../../ressources/icone/argent.svg");
+            Label::render("offre-option", "", "", "Option: " . $offre->getNomOption()->getNomOption(), "../../../ressources/icone/info.svg");
+            Label::render("offre-forfait", "", "", "Forfait: " . $offre->getNomForfait()->getNomForfait(), "../../../ressources/icone/argent.svg");
             ?>
             <?php Label::render("offre-prix", "", "", "Prix: " . "100" . "€", "../../../ressources/icone/price.svg"); ?>
         </div>

@@ -10,7 +10,7 @@
 }
 
 .carousel {
-    background-color: red;
+    background-color: var(--grey1);
     width: 30%;
     height: 30%;
     position: relative;
