@@ -74,7 +74,7 @@ FROM _possedeActivite;
 
 CREATE OR REPLACE VIEW vue_parc_attractions AS
 SELECT idCompte, idOffre, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
-       nomCategorie, codePostal, ville, nomRue, numRue, numTel, valPrix, tempsEnMinutes, ageMin, nbAttractions, planParc, estEnLigne
+       nomCategorie, codePostal, ville, nomRue, numRue, numTel, valPrix, ageMin, nbAttractions, planParc, estEnLigne
 FROM _offre NATURAL JOIN _categorie NATURAL JOIN _parcAttractions NATURAL JOIN _adresse NATURAL JOIN _option
             NATURAL JOIN _forfait NATURAL JOIN _prix;
 
@@ -86,7 +86,7 @@ FROM _possedeParcAttractions;
 
 CREATE OR REPLACE VIEW vue_restaurant AS
 SELECT idCompte, idOffre, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
-       nomCategorie, codePostal, ville, nomRue, numRue, numTel, valPrix, carteRestaurant, gammeRestaurant, estEnLigne
+       nomCategorie, codePostal, ville, nomRue, numRue, numTel, valPrix, nomGamme, estEnLigne
 FROM _offre NATURAL JOIN _categorie NATURAL JOIN _restaurant NATURAL JOIN _adresse NATURAL JOIN _option
             NATURAL JOIN _forfait NATURAL JOIN _prix;
 
