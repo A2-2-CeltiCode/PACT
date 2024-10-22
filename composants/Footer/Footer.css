@@ -1,10 +1,14 @@
 @import url('../../ui.css');
 
+
+/* ajouter en JS une condtion pour que lfooter reste ne bas de page si le contenu de la page est plus petit que la hauteur de la page actuele*/
 footer {
     background-color: var(--grey1);
     text-align: center;
     padding: 20px 0;
-    position: relative;
+    position: absolute;
+    width: 100%;
+    margin-top: auto;
 
     button {
         color: var(--black);
