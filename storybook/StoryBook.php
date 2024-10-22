@@ -186,8 +186,7 @@
 
 
                 <p>Label:</p>
-
-
+                <?php Label::render("","", "", "Voici un Label pour Restaurant", "../ressources/icone/restaurant.svg");?>
                 <p>Input:</p>
                 <?php Input::render(type: "text", name: "username", required: true, icon: "./assets/icon/health.svg"); ?>
                 <p>Boutton:</p>

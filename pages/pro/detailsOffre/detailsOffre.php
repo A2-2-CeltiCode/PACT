@@ -13,6 +13,19 @@ require_once("../../../controlleur/Adresse/Adresse.php");
 require_once("../../../controlleur/Forfait/Forfait.php");
 
 
+
+
+require_once("../../../bdd/connect_params.php");
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh = null;
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br>";
+    die();
+}
+
+
+/*
 $adresse = new Adresse(
     '75001',
     'Paris',
@@ -53,6 +66,8 @@ $offre = new Offre(
     $adresse->getCodePostal(),
     $adresse->getVille()
 );
+
+*/
 ?>
 
 <!DOCTYPE html>
