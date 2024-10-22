@@ -15,7 +15,7 @@
     height: 20px;
     margin-right: 5px;
     pointer-events: none;
-    fill: var(--primary-member);
+    fill: var(--primary-guest);
 }
 
 

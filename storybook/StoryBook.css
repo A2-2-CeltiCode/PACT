@@ -1,12 +1,16 @@
 
 body {
+    height: 100%;
     font-family: 'Inter', 'Arial';
     margin: 0;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
     background: var(--white);
 }
 
 main {
+    flex: 1;
     max-width: 1200px;
     margin: auto;
     background: var(--white);

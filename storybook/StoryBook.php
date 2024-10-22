@@ -183,12 +183,10 @@
         <section id="composants">
             <h2>Composants</h2>
             <div>
-
-
                 <p>Label:</p>
                 <?php Label::render("","", "", "Voici un Label pour Restaurant", "../ressources/icone/restaurant.svg");?>
                 <p>Input:</p>
-                <?php Input::render(type: "text", name: "username", required: true, icon: "./assets/icon/health.svg"); ?>
+                <?php Input::render(type: "text", name: "username", required: true, icon: "../ressources/icone/health.svg"); ?>
                 <p>Boutton:</p>
                 <div class="button-container">
                     <?php Button::render(text: "Button", type: ButtonType::Member, submit: false); ?>
@@ -200,8 +198,8 @@
                 </div>
 
                 <p>Boutton (Toast):</p>
-                <?php Button::render(text: "Clique Moi ;)", type: ButtonType::Member, onClick: "renderToast('Toast !', 'success')"); ?>
                 <?php Toast::render("Toast !", ToastType::SUCCESS); ?>
+                <?php Button::render(text: "Clique Moi ;)", type: ButtonType::Member, onClick: "renderToast()"); ?>
                 <p>Checkbox:</p>
                 <?php CheckBox::render(class: "my-checkbox", id: "subscribe", name: "subscribe", required: true, checked: false, text: "Subscribe to newsletter"); ?>
                 <p>ImagePicker:</p>
@@ -212,14 +210,11 @@
                 <p>SearchBar:</p>
                 <p>Card:</p>
                 <p>Card Tel:</p>         
-
-
+                
                 <p>Footer:</p>
                 
                 
-                
             </div>
-            <hr>
         </section>
     </main>
 </body>
