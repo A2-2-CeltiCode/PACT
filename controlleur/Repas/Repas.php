@@ -7,7 +7,6 @@
  */
 class Repas {
     private $nomRepas;
-    private $valPrix;
 
     /**
      * Constructeur de la classe Repas.
@@ -15,9 +14,8 @@ class Repas {
      * @param string $nomRepas
      * @param Prix $valPrix
      */
-    public function __construct($nomRepas, Prix $valPrix) {
+    public function __construct($nomRepas) {
         $this->nomRepas = $nomRepas;
-        $this->valPrix = $valPrix;
     }
 
     /**
@@ -32,20 +30,6 @@ class Repas {
      */
     public function setNomRepas($nomRepas) {
         $this->nomRepas = $nomRepas;
-    }
-
-    /**
-     * @return Prix
-     */
-    public function getValPrix() {
-        return $this->valPrix;
-    }
-
-    /**
-     * @param Prix $valPrix
-     */
-    public function setValPrix(Prix $valPrix) {
-        $this->valPrix = $valPrix;
     }
 }
 ?>

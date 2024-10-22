@@ -12,8 +12,11 @@ class Offre {
     private $description;
     private $descriptionDetaillee;
     private $siteInternet;
-    private $option;
-    private $forfait;
+    private $nomOption;
+    private $nomForfait;
+    private $estEnLigne;
+    private $codePostal;
+    private $ville;
 
     /**
      * Constructeur de la classe Offre.
@@ -26,16 +29,19 @@ class Offre {
      * @param string $siteInternet
      * @param Option $option
      * @param Forfait $forfait
+     * @param  bool $estEnLigne
+     * @param  string $codePostal
+     * @param   string $ville
      */
-    public function __construct($idOffre, ComptePro $comptePro, $titre, $description, $descriptionDetaillee, $siteInternet, Option $option, Forfait $forfait) {
+    public function __construct($idOffre, ComptePro $comptePro, $titre, $description, $descriptionDetaillee, $siteInternet, Option $nomOption, Forfait $nomForfait,  $estEnLigne, $codePostal, $ville) {
         $this->idOffre = $idOffre;
         $this->comptePro = $comptePro;
         $this->titre = $titre;
         $this->description = $description;
         $this->descriptionDetaillee = $descriptionDetaillee;
         $this->siteInternet = $siteInternet;
-        $this->option = $option;
-        $this->forfait = $forfait;
+        $this->nomOption = $nomOption;
+        $this->nomForfait = $nomForfait;
     }
 
     /**
@@ -125,29 +131,58 @@ class Offre {
     /**
      * @return Option
      */
-    public function getOption() {
-        return $this->option;
+    public function getNomOption() {
+        return $this->nomOption;
     }
 
     /**
-     * @param Option $option
+     * @param Option $nomOption
      */
-    public function setOption(Option $option) {
-        $this->option = $option;
+    public function setNomOption(Option $nomOption) {
+        $this->nomOption = $nomOption;
     }
 
+    
     /**
      * @return Forfait
      */
-    public function getForfait() {
-        return $this->forfait;
+    public function getNomForfait() {
+        return $this->nomForfait;
+    }
+    
+    /**
+     * @param Forfait $nomForfait
+     */
+    public function setNomForfait(Forfait $nomForfait) {
+        $this->nomForfait = $nomForfait;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function getEstEnLigne() {
+        return $this->estEnLigne;
     }
 
     /**
-     * @param Forfait $forfait
+     * @param bool $estEnLigne
      */
-    public function setForfait(Forfait $forfait) {
-        $this->forfait = $forfait;
+    public function setEstEnLigne($estEnLigne) {
+        $this->estEnLigne = $estEnLigne;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodePostal() {
+        return $this->codePostal;
+    }
+
+    /**
+     * @param string $codePostal
+     */
+    public function setCodePostal($codePostal) {
+        $this->codePostal = $codePostal;
     }
 }
 ?>
