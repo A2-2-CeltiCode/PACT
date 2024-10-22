@@ -86,19 +86,18 @@
                     <img src="../../ressources/icone/etoile_vide.svg" alt="Logo étoile pleine" style="vertical-align: middle;">
                     <!-- (répéter pour le nombre d'étoiles pleines et vides nécessaires) -->
                 </div>
-                <h3>€€€</h3>
+                <?php Label::render("tranche_prix", "", "", "€€€");
+                ?>
 
                 <div class="carte">
-
                     <div class="dessus-carte">
                     <!-- Informations de profil : photo, nom, localisation, contact -->
                         <img alt="Photo de profil" height="50" src="https://storage.googleapis.com/a1aa/image/X1R0j5nq39oeCyPhJsMjBx3peJ0fBncTGTd4TCy7MPRk7NPnA.jpg" width="50"/>
                         <div>
-                            <h2>Serge Sauvion</h2>
-                            <p>
-                                <img src="../../ressources/icone/localisateur.svg" alt="icone localisation" style="vertical-align: middle;">
-                                Lannion
-                            </p>
+                                            
+                            <?php Label::render("partie_haute", "", "", "Serge Sauvion");
+                             Label::render("partie_haute", "", "", "Lannion", "../../ressources/icone/localisateur.svg"); ?>
+                            
                         </div>
                     </div> 
 
