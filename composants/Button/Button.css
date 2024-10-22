@@ -4,6 +4,8 @@ button {
     padding: 15px;
     color: white;
     transition: background-color 0.2s ease;
+    height: fit-content;
+    width: fit-content;
 }
 
 .bg-guest {
@@ -16,6 +18,17 @@ button {
 
 .bg-pro {
     background-color: var(--primary-pro);
+}
+
+.bg-valid {
+    background-color: var(--valid);
+}
+
+.bg-error {
+    background-color: var(--error);
+}
+.bg-warning {
+    background-color: var(--warning);
 }
 
 
@@ -35,6 +48,16 @@ button:active {
     background-color: #5c0266;
 }
 
+.bg-valid:hover {
+    background-color: #177400;
+}
+
+.bg-error:hover {
+    background-color: #9c1414;
+}
+.bg-warning:hover {
+    background-color: #8b6002;
+}
 button:hover {
     cursor: pointer;
 }
