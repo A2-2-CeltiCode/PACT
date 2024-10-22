@@ -103,9 +103,38 @@
 
         <?php 
             } else {
+                $denomination = $_POST['denomination'];
+                $raisonS = $_POST['raisonS'];
+                $siren = $_POST['siren'];
+                $email = $_POST['email'];
+                $telephone = $_POST['telephone'];
+                $codePostal = $_POST['codePostal'];
+                $ville = $_POST['ville'];
+                $rue = $_POST['rue'];
+                $numero = $_POST['numero'];
+                $motDePasse = $_POST['motDePasse'];
+                $iban = $_POST['iban'];;
+
                 $nouvelUtilisateur = $_POST['denomination'].";".$_POST['raisonS'].";".$_POST['siren'].";".$_POST['email'].";".$_POST['telephone'].";".$_POST['codePostal'].";".$_POST['ville'].";".$_POST['rue'].";".$_POST['numero'].";".$_POST['motDePasse'].";".$_POST['iban'];
-                file_put_contents("user_data.csv", "\n".$nouvelUtilisateur);
-                ?>
+                /*file_put_contents("user_data.csv", "\n".$nouvelUtilisateur);*/
+                
+                include('./connect_params.php');
+                try {
+                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                    $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$numero', '$telephone')");
+                    $stmt->execute();
+                    /*$stmt = $dbh->prepare("INSERT INTO _compte(mdp, email,codePostal, ville) VALUES('$idOffre','$typeOffre','$duree','$prix','$ageMinimum')");
+                    $stmt->execute();
+                    $stmt = $dbh->prepare("INSERT INTO _compte(mdp, email,codePostal, ville) VALUES('$idOffre','$typeOffre','$duree','$prix','$ageMinimum')");
+                    $stmt->execute();*/
+                    $dbh = null;
+                } catch (PDOException $e) {
+                    echo "INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$numero', '$telephone')";
+                    print "Erreur !: " . $e->getMessage() . "<br/>";
+                    die();
+                }
+?>
+
                 <div class="info-display">
                     <h1>Tout est prêt !</h1>
                     <hr>

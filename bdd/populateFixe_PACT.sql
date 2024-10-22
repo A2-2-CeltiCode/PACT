@@ -6,6 +6,12 @@ INSERT INTO _option (nomOption) VALUES
 ('En relief'),
 ('A la une');
 
+-- Peupler la table _gamme
+INSERT INTO _gamme (nomGamme) VALUES
+('Leger'),
+('Moyen'),
+('Fort');
+
 -- Peupler la table _repas
 INSERT INTO _repas (nomRepas) VALUES
 ('Petit-Dejeuner'),
