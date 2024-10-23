@@ -54,11 +54,17 @@ class Header
             echo '<link rel="stylesheet" href="../../../composants/Header/Header.css">';
             self::$cssIncluded = true;
         }
-
+    
+        $headerClass = match ($type) {
+            HeaderType::Member => 'header-member',
+            HeaderType::Pro => 'header-pro',
+            default => 'header-guest'
+        };
+    
         $spanClass = 'span-pact-' . $type;
-
+    
         echo '
-        <header class="' . $type . '">
+        <header class="' . $headerClass . ' ' . $type . '">
             <div>
                 <img src="../../../ressources/icone/logo.svg" alt="Logo PACT">
                 <span class="' . $spanClass . '">PACT</span>
@@ -67,18 +73,19 @@ class Header
         Input::render(placeholder: 'Entrez une localisation...', icon: "../../../ressources/icone/test.svg");
         echo '
             </div>';
-
+    
         self::renderNav($type);
         self::renderLanguageSelector();
         self::renderAccountSection($type);
-
+    
         echo '</header>';
-
+    
         if (!self::$jsIncluded) {
             echo '<script src="../../../composants/Header/Header.js"></script>';
             self::$jsIncluded = true;
         }
     }
+    
 
     /**
      * Rend la navigation principale en fonction du type d'utilisateur.
