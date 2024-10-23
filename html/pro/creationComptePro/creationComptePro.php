@@ -12,10 +12,11 @@
 </head>
 
 <body>
-    <?php include "../../../composants/Input/Input.php"?>
-    <?php include "../../../composants/Button/Button.php"?>
+    <?php session_start();
+    include "../../../composants/Input/Input.php";
+    include "../../../composants/Button/Button.php";
 
-    <?php
+    
     // Déclaration des variables
     $estPrive = true;
     $denomination = '';
@@ -46,8 +47,7 @@
         $confirmMdp = $_POST['confirmMdp'];
         $iban = $_POST['iban'];
     }
-        ?>
-        <?php if (empty($_POST)) { ?>
+        if (empty($_POST)) { ?>
         
         <div class="info-display">
             <a href="placeholder"><p id="retour-accueil">Retour à l'accueil</p></a>
@@ -70,16 +70,16 @@
                         <p class="form-texte">SIREN requis pour les entreprises privées.</p>
                     </div>
                     
-                    <?php Input::render(class: "input-box", type: "email", name: "email", placeholder: "Adresse Email*", value: $email, required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "telephone", placeholder: "Numéro de Téléphone", value: $telephone, required: false); ?>
+                    <?php Input::render(class: "input-box", type: "email", name: "email", placeholder: "Adresse Email*", value: $email, required: true);
+                    Input::render(class: "input-box", type: "text", name: "telephone", placeholder: "Numéro de Téléphone", value: $telephone, required: false); ?>
                 </div>
                 <br>
                 <div class="div-adresse">
                     <label for="informations">Votre Adresse Postale</label>
-                    <?php Input::render(class: "input-box", type: "text", name: "codePostal", placeholder: "Code Postal*", required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "ville", placeholder: "Ville*", required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "rue", placeholder: "Rue*", required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "numero", placeholder: "Numéro", required: false); ?>
+                    <?php Input::render(class: "input-box", type: "text", name: "codePostal", placeholder: "Code Postal*", required: true);
+                    Input::render(class: "input-box", type: "text", name: "ville", placeholder: "Ville*", required: true);
+                    Input::render(class: "input-box", type: "text", name: "rue", placeholder: "Rue*", required: true);
+                    Input::render(class: "input-box", type: "text", name: "numero", placeholder: "Numéro", required: false); ?>
                 </div>
                 <br>
                 <div>
@@ -147,13 +147,6 @@
                     die();
                 }
 ?>
-
-                <div class="info-display">
-                    <h1>Tout est prêt !</h1>
-                    <hr>
-                    <p>Votre compte à été créé. Veuillez-vous connecter</p>
-                    <?php Button::render(text: "Se connecter", type: ButtonType::Pro); ?>
-                </div>
 
                 <?php
             } 
