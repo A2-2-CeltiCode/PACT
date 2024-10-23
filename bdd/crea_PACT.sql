@@ -11,12 +11,13 @@ SET SCHEMA 'pact';
 --
 
 CREATE TABLE _adresse(
+    idAdresse     SERIAL,
     codePostal    INTEGER NOT NULL,
     ville         VARCHAR(50) NOT NULL,
     nomRue        VARCHAR(50) NOT NULL,
     numRue        VARCHAR(5),
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
-    CONSTRAINT adresse_pk PRIMARY KEY(codePostal,ville)
+    CONSTRAINT adresse_pk PRIMARY KEY(idAdresse)
 );
 
 CREATE TABLE _gamme(
@@ -58,13 +59,12 @@ CREATE TABLE _duree(
 
 CREATE TABLE _compte (
     idCompte    SERIAL,
+    idAdresse   SERIAL,
     mdp         VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NOT NULL,
-    codePostal  INTEGER NOT NULL,
-    ville       VARCHAR(50) NOT NULL,
     CONSTRAINT compte_pk PRIMARY KEY(idCompte),
-    CONSTRAINT compte_fk_adresse FOREIGN KEY (codePostal,ville) 
-        REFERENCES _adresse(codePostal,ville)
+    CONSTRAINT compte_fk_adresse FOREIGN KEY (idAdresse) 
+        REFERENCES _adresse(idAdresse)
 );
 
 CREATE TABLE _compteMembre(
@@ -113,8 +113,7 @@ CREATE TABLE _offre(
     nomOption               VARCHAR(50) NOT NULL,
     nomForfait              VARCHAR(50) NOT NULL,
     estEnLigne              BOOLEAN NOT NULL,
-    codePostal              INTEGER NOT NULL,
-    ville                   VARCHAR(50) NOT NULL,
+    idAdresse               SERIAL NOT NULL,
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
@@ -122,8 +121,8 @@ CREATE TABLE _offre(
         REFERENCES _option(nomOption),
     CONSTRAINT offre_fk_forfait FOREIGN KEY (nomForfait)
         REFERENCES _forfait(nomForfait),
-    CONSTRAINT offre_fk_adresse FOREIGN KEY (codePostal,ville)
-        REFERENCES _adresse(codePostal,ville)
+    CONSTRAINT offre_fk_adresse FOREIGN KEY (idAdresse)
+        REFERENCES _adresse(idAdresse)
 );
 
 CREATE TABLE _image(
@@ -183,7 +182,7 @@ CREATE TABLE _parcAttractions(
     idOffre         SERIAL,
     nomCategorie    VARCHAR(50) NOT NULL,
     valPrix         NUMERIC(5,2) NOT NULL,
-    planParc        VARCHAR(50) NOT NULL,
+    idImage         SERIAL,
     nbAttractions   INTEGER NOT NULL,
     ageMin          INTEGER NOT NULL,
     CONSTRAINT parcAttractions_pk PRIMARY KEY (idOffre),
@@ -192,7 +191,9 @@ CREATE TABLE _parcAttractions(
     CONSTRAINT parcAttractions_fk_categorie FOREIGN KEY (nomCategorie)
         REFERENCES _categorie(nomCategorie),
     CONSTRAINT parcAttractions_fk_prix FOREIGN KEY (valPrix)
-        REFERENCES _prix(valPrix)
+        REFERENCES _prix(valPrix),
+    CONSTRAINT parcAttractions_fk_image FOREIGN KEY(idImage)
+        REFERENCES _image(idImage)
 );
 
 CREATE TABLE _visite(

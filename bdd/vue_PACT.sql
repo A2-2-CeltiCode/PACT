@@ -17,13 +17,13 @@ FROM _compte NATURAL JOIN _compteMembre NATURAL JOIN _adresse;
 -- COMPTE PRO PRIVE
 
 CREATE OR REPLACE VIEW vue_compte_pro_prive AS
-SELECT idCompte, login, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren
+SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren
 FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPrive NATURAL JOIN _adresse;
 
 -- COMPTE PRO PUBLIC
 
 CREATE OR REPLACE VIEW vue_compte_pro_public AS
-SELECT idCompte, login, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib
+SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib
 FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN _adresse;
 
 --
@@ -74,7 +74,7 @@ FROM _possedeActivite;
 
 CREATE OR REPLACE VIEW vue_parc_attractions AS
 SELECT idCompte, idOffre, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
-       nomCategorie, codePostal, ville, nomRue, numRue, numTel, valPrix, tempsEnMinutes, ageMin, nbAttractions, planParc, estEnLigne
+       nomCategorie, codePostal, ville, nomRue, numRue, numTel, valPrix, ageMin, nbAttractions, idImage, estEnLigne
 FROM _offre NATURAL JOIN _categorie NATURAL JOIN _parcAttractions NATURAL JOIN _adresse NATURAL JOIN _option
             NATURAL JOIN _forfait NATURAL JOIN _prix;
 
@@ -86,7 +86,7 @@ FROM _possedeParcAttractions;
 
 CREATE OR REPLACE VIEW vue_restaurant AS
 SELECT idCompte, idOffre, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
-       nomCategorie, codePostal, ville, nomRue, numRue, numTel, valPrix, carteRestaurant, gammeRestaurant, estEnLigne
+       nomCategorie, codePostal, ville, nomRue, numRue, numTel, valPrix, nomGamme, estEnLigne
 FROM _offre NATURAL JOIN _categorie NATURAL JOIN _restaurant NATURAL JOIN _adresse NATURAL JOIN _option
             NATURAL JOIN _forfait NATURAL JOIN _prix;
 
