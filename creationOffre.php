@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php require "components/Input/Input.php"?>
-    <?php require "components/Button/Button.php"?>
-    <?php require "components/Input/Textarea.php"?>
-    <?php require "components/Input/Select.php"?>
-    <?php require "components/InsererImage/InsererImage.php"?>
-    <?php require "components/Checkbox/Checkbox.php"?> 
-    <?php require "connect_params.php"?>
-    <?php $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
+    <?php require "components/Input/Input.php";
+    require "components/Button/Button.php";
+    require "components/InsererImage/InsererImage.php";
+    require "components/Checkbox/Checkbox.php" ;
+    require "components/Textaera/Textarea.php";
+    require "components/Select/Select.php";
+    require "connect_params.php";
+     $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
             $user, $pass);
     ?>  
     <title>Création d'une offre</title>
@@ -73,10 +73,8 @@
 
                     $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
-                    <label>Tag</label>
                     <div class="dropdown">
-                        
-                    <button onclick="toggleDropdown()">Tag</button>
+                    <button type="button" class="tag" onclick="toggleDropdown()" >Tag</button>
                     <div class="dropdown-content" id="myDropdown">
                         <?php foreach($tabTag as $tag){ 
                                 Checkbox::render(
@@ -98,29 +96,46 @@
                 
                 <div>
                     <label>Type de forfait*</label>
+                    <?php
+                        $option=null;
+                        $sql = "SELECT nomForfait FROM pact._forfait";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
+
+                        $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+                        foreach ($tabForfait as $forfait) {
+                            $option[$forfait['nomforfait']] = $forfait['nomforfait'];
+                        }
+                    ?>
                     <?php 
                         Select::render(
                             name: "typeForfait", 
                             required: true, 
-                            options: [
-                                "Standard" => "Standard",
-                                "Premium" => "Premium"
-                            ]
+                            options: $option
                         );
+                        
                         ?>
                 </div>
                 
                 <div>
                     <label>Type de promotion de l'offre*</label>
-                    <?php 
+                    <?php
+                        $option=null;
+                        $sql = "SELECT nomoption FROM pact._option";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
+    
+                        $tabOption = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+                        foreach ($tabOption as $type) {
+                            $option[$type['nomoption']] = $type['nomoption'];
+                        }
+
                         Select::render(
                             name: "typePromotion", 
                             required: true, 
-                            options: [
-                                "Aucune" => "Aucune",
-                                "En relief" => "En relief",
-                                "A la une" => "A la une"
-                            ]
+                            options: $option
                         );
                     ?>
                 </div>
@@ -133,19 +148,28 @@
 
                 <div>
                     <label>Type d'offre*</label>
-                    <?php 
+                    <?php
+                        $option=null;
+                        $sql = "SELECT nomcategorie FROM pact._categorie";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
+
+                        $tabcategorie = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+                        $option["Selectionner"]="Selectionner";
+                        foreach ($tabcategorie as $categorie) {
+                            if ($categorie['nomcategorie']!=="Parc d'attractions") {
+                                $option[$categorie['nomcategorie']] = $categorie['nomcategorie'];
+                            }else{
+                                $option["parc"]=$categorie['nomcategorie'];
+                            }
+                            
+                        }
                         Select::render(
                             name: "typeOffre", 
                             required: true, 
-                            options: [
-                                "" => "Sélectionner un type d'offre",
-                                "Activite" => "Activité",
-                                "Visite" => "Visite",
-                                "Spectacle" => "Spectacle",
-                                "ParcAttraction" => "Parc d'attraction",
-                                "Restauration" => "Restauration"
-                            ]
+                            options: $option
                         );
+                        
                     ?>
                 </div>
                 <!-- Section Activité -->
@@ -169,41 +193,30 @@
                     <?php Input::render(name: "duree2", type: "number") ?>
                     
                     <label>Visite guidée</label>
-                    <input type="radio" id="oui" name="guided" value="oui" onclick="toggleLangue(true)">
+                    <input type="radio" id="oui" name="guidee" value="true" onclick="toggleLangue(true)">
                     <label for="oui">Oui</label>
 
-                    <input type="radio" id="non" name="guided" value="non" onclick="toggleLangue(false)">
+                    <input type="radio" id="non" name="guidee" value="false" onclick="toggleLangue(false)">
                     <label for="non">Non</label>
 
                     <div id="langue" style="display: none;">
                         <?php
-                            Checkbox::render(
-                                class: "checkbox",
-                                id: "francais",
-                                name: "langue[]",
-                                value: "Français",
-                                text: "Français",
-                                required: false,
-                                checked: false
-                            );
-                            CheckBox::render(
-                                class: "checkbox",
-                                id: "anglais",
-                                name: "langue[]",
-                                value: "Anglais",
-                                text: "Anglais",
-                                required: false,
-                                checked: false
-                            );
-                            CheckBox::render(
-                                class: "checkbox",
-                                id: "espagnol",
-                                name: "langue[]",
-                                value: "Espagnol",
-                                text: "Espagnol",
-                                required: false,
-                                checked: false
-                            );
+                            $sql = "SELECT nomlangage FROM pact._langage";
+                            $stmt = $dbh->prepare($sql); 
+                            $stmt->execute();
+
+                            $tabLangue = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+                            foreach($tabLangue as $langue){
+                                CheckBox::render(
+                                    class: "checkbox",
+                                    id: $langue['nomlangage'],
+                                    name: "langue[]",
+                                    value: $langue['nomlangage'],
+                                    text: $langue['nomlangage'],
+                                    required: false,
+                                    checked: false
+                                );
+                            }
                         ?>
                     </div>
                 </div>
@@ -219,7 +232,7 @@
                 </div>
 
                 <!-- Section Parc d'Attraction -->
-                <div id="ParcAttraction" class="section" style="display:none;">
+                <div id="parc" class="section" style="display:none;">
                     <label>Prix*</label>
                     <?php Input::render(name:"prix4", type:"number") ?>
                     <label>Nombre d'attractions</label>
@@ -233,58 +246,53 @@
                 </div>
 
                 <!-- Section Restauration-->
-                <div id="Restauration" class="section" style="display:none;">
+                <div id="Restaurant" class="section" style="display:none;">
                     <div>
                         <label>Carte du Restaurant</label>
                         <?php InsererImage::render("carteRestaurant", "Glissez-déposez vos images ici",1, false);?>
                     </div>
                     <div>
                         <label>Gamme du restaurant</label>
-                        <?php 
+                        <?php
+                            $option=null;
+                            $sql = "SELECT nomGamme FROM pact._gamme";
+                            $stmt = $dbh->prepare($sql); 
+                            $stmt->execute();
+        
+                            $tabGamme = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    
+                            foreach ($tabGamme as $gamme) {
+                                $option[$gamme['nomgamme']] = $gamme['nomgamme'];
+                            }
                             Select::render(
                                 name: "gammeRestaurant", 
-                                options: [
-                                    "leger" => "€ (-25€)",
-                                    "moyen" => "€€ (25-40€)",
-                                    "fort" => "€€€ (+40€)"
-                                ]
+                                options: $option
+                                    
+                                
                             );
                         ?>
                     </div>
                     <div>
                         <label>Type de repas</label>
                         <br>
+                        <br>
                         <?php
-                        // Afficher les cases à cocher avec le texte correspondant
-                        Checkbox::render(
-                            class: "checkbox",
-                            id: "petitDej1",
-                            name: "repas[]",
-                            value: "petit_dejeuner",
-                            text: "Petit Déjeuner",
-                            required: false,
-                            checked: false
-                        );
+                        $sql = "SELECT nomrepas FROM pact._repas";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
 
-                        Checkbox::render(
-                            class: "checkbox",
-                            id: "dejeuner1",
-                            name: "repas[]",
-                            value: "dejeuner",
-                            text: "Déjeuner",
-                            required: false,
-                            checked: false
-                        );
-
-                        Checkbox::render(
-                            class: "checkbox",
-                            id: "diner1",
-                            name: "repas[]",
-                            value: "diner",
-                            text: "Dîner",
-                            required: false,
-                            checked: false
-                        );
+                        $tabnomrepas = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+                        foreach($tabnomrepas as $nomrepas){
+                            Checkbox::render(
+                                class: "checkbox",
+                                id: $nomrepas['nomrepas'] ,
+                                name: "repas[]",
+                                value: $nomrepas['nomrepas'],
+                                text: $nomrepas['nomrepas'],
+                                required: false,
+                                checked: false
+                            );
+                        }   
                         ?>
                     </div>
 
@@ -296,7 +304,7 @@
         </section> 
         <div>
             <br>
-            <?php Button::render(text: "Annuler", type: ButtonType::Pro, submit: false); ?>
+            <?php Button::render(onClick:"window.location.href = './accueil.php';", text: "Annuler", type: ButtonType::Pro, submit: false, ); ?>
             <?php Button::render(text: "Valider", type: ButtonType::Pro, submit: true); ?>
         </div>
 

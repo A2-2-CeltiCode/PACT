@@ -258,14 +258,13 @@
         insererDuree($dbh, $duree2);
         $stmt = $dbh->prepare(
             "INSERT INTO pact._visite(idOffre, nomCategorie, tempsEnMinutes, valPrix, estGuidee)
-            VALUES(:idOffre, :nomCategorie, :tempsEnMinutes, :valPrix, :estGuidee, :langue)"
+            VALUES(:idOffre, :nomCategorie, :tempsEnMinutes, :valPrix, :estGuidee)"
         );
         $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
         $stmt->bindValue(':nomCategorie', $typeOffre, PDO::PARAM_STR);
         $stmt->bindValue(':tempsEnMinutes', $duree2, PDO::PARAM_INT);
         $stmt->bindValue(':valPrix', $prix2, PDO::PARAM_STR);
         $stmt->bindValue(':estGuidee', $guidee, PDO::PARAM_BOOL);
-        $stmt->bindValue(':langue', $langue, PDO::PARAM_STR);
         $stmt->execute();
 
         foreach ($tag as $val) {

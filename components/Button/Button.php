@@ -47,7 +47,7 @@ class Button
                 break;
             case ButtonType::Pro:
                 $backgroundColorClass = 'bg-pro';
-                break;
+                break;  
         }
 
         // Inclure CSS une seule fois

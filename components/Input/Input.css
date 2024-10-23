@@ -1,14 +1,12 @@
-/* Style général pour l'input et le textarea */
-.input-wrapper,
-.textarea-wrapper {
+/* Style général pour l'input */
+.input-wrapper {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
     position: relative;
 }
 
-.input-wrapper input,
-.textarea-wrapper textarea {
+.input-wrapper input {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid #ccc;
@@ -16,12 +14,10 @@
     font-size: 16px;
     font-family: Arial, sans-serif;
     outline: none;
-    resize: vertical; /* Permet de redimensionner verticalement */
     transition: border-color 0.3s;
 }
 
-.input-wrapper input:focus,
-.textarea-wrapper textarea:focus {
+.input-wrapper input:focus {
     border-color: #007BFF;
     box-shadow: 0 0 0 1px #007BFF;
 }
@@ -39,12 +35,4 @@
 
 .input-wrapper .input-icon + input {
     padding-left: 40px; /* Ajuste le padding pour l'input avec icône */
-}
-
-/* Styles spécifiques pour le textarea */
-.textarea-wrapper textarea {
-    min-height: 100px; /* Hauteur minimale */
-    max-height: 300px; /* Hauteur maximale */
-    padding: 10px;
-    resize: vertical; /* Permet uniquement le redimensionnement vertical */
 }

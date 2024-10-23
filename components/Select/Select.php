@@ -38,7 +38,7 @@ class Select
 
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./components/Input/Select.css">';
+            echo '<link rel="stylesheet" href="./components/Select/Select.css">';
             self::$cssIncluded = true;
         }
 
