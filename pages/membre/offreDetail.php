@@ -17,34 +17,7 @@
 </head>
 
 <body>
-    <!-- En-tête du site avec le logo, la barre de recherche, la navigation et la langue -->
-    <header class="entete">
-        <div class="entete-logo">
-            <img src="../../ressources/icone/logo.svg" alt="Logo PACT">
-            <span class="texte-logo">PACT</span>
-        </div>
-        <div class="entete-recherche">
-            <!-- Composant d'entrée pour la recherche avec une localisation -->
-            <?php Input::render("text", "Entrez une localisation..."); ?>
-        </div>
-        <nav class="entete-navigation">
-            <a href="index.php">Accueil</a>
-            <a href="offre.php">Offres</a>
-        </nav>
-        <div class="entete-langue">
-            <!-- Sélecteur de langue avec icône -->
-            <img src="../../ressources/icone/logofr.svg" alt="Français">
-            <select name="langue" id="langue">
-                <option value="fr">Français</option>
-                <option value="en">English</option>
-            </select>
-        </div>
-        <div class="entete-connexion">
-            <!-- Lien vers la page de connexion avec un bouton -->
-            <a href="connexionComptePro.php" class="lien-bouton"><button>S'inscrire / Se Connecter</button></a>
-        </div>
-    </header>
-
+    <?php Header::render(HeaderType::Member); ?>
     <!-- Contenu principal avec les détails de l'offre -->
     <main>
         <div class="offre">
@@ -121,24 +94,6 @@
         </div>
     </main>
 
-    <!-- Pied de page avec des liens importants et des icônes de réseaux sociaux -->
-    <footer>
-        <!-- Bouton pour devenir membre -->
-        <a href="creationComptePro.php" class="lien-bouton"><button>DEVENIR MEMBRE</button></a>
-        <div class="liens-importants">
-            <!-- Liens vers des pages légales et informatives -->
-            <a href="mentions.php">Mentions Légales</a>
-            <a href="quiSommeNous.php">Qui sommes nous ?</a>
-            <a href="condition.php">Conditions Générales</a>
-        </div>
-        <div class="icones-reseaux-sociaux">
-            <!-- Icônes de réseaux sociaux : Facebook, Twitter, Instagram -->
-            <a href="https://www.facebook.com/?locale=fr_FR"><img src="../../ressources/icone/facebook.svg" alt="Icon facebook" style="vertical-align: middle;"></a>
-            <a href="https://x.com/TripEnArvorPACT"><img src="../../ressources/icone/twitter.svg" alt="Icon X" style="vertical-align: middle;"></a>
-            <a href="https://www.instagram.com/pactlannion/"><img src="../../ressources/icone/instagram.svg" alt="Icon instagram" style="vertical-align: middle;"></a>
-        </div>
-        <p>© 2024 PACT, Inc.</p>
-        <a href="#entete" class="remonter-page"><img src="../../ressources/icone/fleche.svg" alt="Icon fleche" style="vertical-align: middle;"></a>
-    </footer>
+    <?php Footer::render(FooterType::Guest); ?>
 </body>
 </html>
