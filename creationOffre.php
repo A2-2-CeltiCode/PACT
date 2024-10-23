@@ -66,28 +66,35 @@
 
                 <div>
                     <?php
-                    //Recupération des nomTag
+                    
                     $sql = "SELECT nomtag FROM pact._tag";
-                    $stmt = $dbh->prepare($sql); // Remplacez $pdo par $dbh
+                    $stmt = $dbh->prepare($sql); 
                     $stmt->execute();
 
-                    // Récupération des résultats sous forme de tableau 
                     $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
-                        <label>Tag</label>
+                    <label>Tag</label>
+                    <div class="dropdown">
+                        
+                    <button onclick="toggleDropdown()">Tag</button>
+                    <div class="dropdown-content" id="myDropdown">
                         <?php foreach($tabTag as $tag){ 
-                            Checkbox::render(
-                                class: "checkbox",
-                                id: $tag['nomtag'],
-                                name: "tag[]",
-                                value: $tag['nomtag'],
-                                text: $tag['nomtag'],
-                                required: false,
-                                checked: false
-                            );
-                        }?>
+                                Checkbox::render(
+                                    class: "checkbox",
+                                    id: $tag['nomtag'],
+                                    name: "tag[]",
+                                    value: $tag['nomtag'],
+                                    text: $tag['nomtag'],
+                                    required: false,
+                                    checked: false
+                                );
+                            }?>
+                    </div>
+                </div>   
                     
                 </div>
+
+
                 
                 <div>
                     <label>Type de forfait*</label>
