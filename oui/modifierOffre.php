@@ -1,62 +1,86 @@
 <?php
-$idOffre=$_POST["idOffre"];
+require "connect_params.php";
 
-if($offers["typeOffre"]=== "Activite"){
-    $sql = "SELECT * FROM vue_activite WHERE idOffre = $idOffre";
-    $stmt = $pdo->query($sql);
-    $vueOffre = $stmt->fetchAll();
+// Initialize the PDO connection
+$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
+$idOffre = 1;
+$sql = "SELECT nomCategorie FROM pact._spectacle WHERE idOffre = $idOffre";
+$stmt = $dbh->query($sql);
+$offre = $stmt->fetch();
+
+$sql = "SELECT nomCategorie FROM pact._activite WHERE idOffre = $idOffre";
+$stmt = $dbh->query($sql);
+$offre = $stmt->fetch();
+
+$sql = "SELECT nomCategorie FROM pact._parcAttractions WHERE idOffre = $idOffre";
+$stmt = $dbh->query($sql);
+$offre = $stmt->fetch();
+
+$sql = "SELECT nomCategorie FROM pact._visite WHERE idOffre = $idOffre";
+$stmt = $dbh->query($sql);
+$offre = $stmt->fetch();
+
+$sql = "SELECT nomCategorie FROM pact._restaurant WHERE idOffre = $idOffre";
+$stmt = $dbh->query($sql);
+$offre = $stmt->fetch();
+
+if ($offre["nomCategorie"] === "Activite") {
+    $sql = "SELECT * FROM pact._spectaclevue_activite WHERE idOffre = $idOffre";
+    $stmt = $dbh->query($sql);
+    $vueOffre = $stmt->fetch();
     $prix = $vueOffre["valPrix"];
     $duree = $vueOffre["tempsEnMinutes"];
     $ageMinimum = $vueOffre["ageMin"];
     $prestation = $vueOffre["prestation"];
 
-}else if($offers["typeOffre"]==="Spectacle"){
-    $sql = "SELECT * FROM vue_spectacle WHERE idOffre = $idOffre";
-    $stmt = $pdo->query($sql);
-    $vueOffre = $stmt->fetchAll();
+} else if ($offre["nomCategorie"] === "Spectacle") {
+    $sql = "SELECT * FROM pact._spectaclevue_spectacle WHERE idOffre = $idOffre";
+    $stmt = $dbh->query($sql);
+    $vueOffre = $stmt->fetch();
     $prix = $vueOffre["valPrix"];
     $duree = $vueOffre["tempsEnMinutes"];
     $capacite = $vueOffre["capacite"];
 
-}else if($offers["typeOffre"]==="ParcAttraction"){
-    $sql = "SELECT * FROM vue_parc_attractions WHERE idOffre = $idOffre";
-    $stmt = $pdo->query($sql);
-    $vueOffre = $stmt->fetchAll();
+} else if ($offre["nomCategorie"] === "ParcAttraction") {
+    $sql = "SELECT * FROM pact._spectaclevue_parc_attractions WHERE idOffre = $idOffre";
+    $stmt = $dbh->query($sql);
+    $vueOffre = $stmt->fetch();
     $prix = $vueOffre["valPrix"];
     $ageMinimum = $vueOffre["ageMin"];
     $nombreAttractions = $vueOffre["nbAttractions"]; 
     $planParc = $vueOffre["idImage"];
 
-
-}else if($offers["typeOffre"]==="Visite"){
-    $sql = "SELECT * FROM vue_visite WHERE idOffre = $idOffre";
-    $stmt = $pdo->query($sql);
-    $vueOffre = $stmt->fetchAll();
+} else if ($offre["nomCategorie"] === "Visite") {
+    $sql = "SELECT * FROM pact._spectaclevue_visite WHERE idOffre = $idOffre";
+    $stmt = $dbh->query($sql);
+    $vueOffre = $stmt->fetch();
     $prix = $vueOffre["valPrix"];
     $guidee = $vueOffre["estGuidee"];
     $duree = $vueOffre["tempsEnMinutes"];
 
-
-}else if($offers["typeOffre"]==="Restauration"){
-    $sql = "SELECT * FROM vue_restaurant WHERE idOffre = $idOffre";
-    $stmt = $pdo->query($sql);
-    $vueOffre = $stmt->fetchAll();
-    $carteRestaurant=$vueOffre["nomImage"];
+} else if ($offre["nomCategorie"] === "Restauration") {
+    $sql = "SELECT * FROM pact._spectacle   vue_restaurant WHERE idOffre = $idOffre";
+    $stmt = $dbh->query($sql);
+    $vueOffre = $stmt->fetch();
+    $carteRestaurant = $vueOffre["nomImage"];
     $gammeRestaurant = $vueOffre["nomGamme"];
-
-
 }
+
 $nomOffre = $vueOffre["titre"];
 $ville = $vueOffre["ville"];
 $codePostal = $vueOffre["codePostal"];
-$nomRue=$vueOffre["nomRue"];
-$numRue=$vueOffre["numRue"];
+$nomRue = $vueOffre["nomRue"];
+$numRue = $vueOffre["numRue"];
 $numeroTelephone = $vueOffre["numTel"];
 $siteWeb = $vueOffre["siteInternet"];
 $descriptionOffre = $vueOffre["description"];
 $descriptionDetaillee = $vueOffre["descriptionDetaillee"];
 $typeForfait = $vueOffre["nomForfait"];
 $typePromotion = $vueOffre["nomOption"];
+
+
+
 
 ?>
 
@@ -69,9 +93,8 @@ $typePromotion = $vueOffre["nomOption"];
     require "components/Checkbox/Checkbox.php" ;
     require "components/Textaera/Textarea.php";
     require "components/Select/Select.php";
-    require "connect_params.php";
-     $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
-            $user, $pass);
+    
+
     ?>  
     <title>Création d'une offre</title>
 
@@ -91,14 +114,14 @@ $typePromotion = $vueOffre["nomOption"];
             <article>
                 <div>
                     <label>Nom de l'offre*</label>
-                    <?php Input::render(name:"nomOffre", type:"text", required:"true") ?>
+                    <?php Input::render(name:"nomOffre", type:"text", required:"true" ,value:$nomOffre) ?>
                 </div>
 
                 <div>
                     <label>Information de l'offre</label>
-                    <?php Input::render(name:"ville", type:"text", required:"true", placeholder:'Ville*') ?>
-                    <?php Input::render(name:"codePostal", type:"number", required:'true', placeholder:"Code Postal*") ?>
-                    <?php Input::render(name:"adressePostale", id:"adressePostale", type:"text", placeholder:'Adresse Postale') ?>    
+                    <?php Input::render(name:"ville", type:"text", required:"true", placeholder:'Ville*' ,value:$ville) ?>
+                    <?php Input::render(name:"codePostal", type:"number", required:'true', placeholder:"Code Postal*" ,value:$codePostal) ?>
+                    <?php Input::render(name:"adressePostale", id:"adressePostale", type:"text", placeholder:'Adresse Postale' ,value:$numRue." ".$nomRue) ?>    
                    
 
                 </div>
@@ -117,7 +140,7 @@ $typePromotion = $vueOffre["nomOption"];
                                     
                 <div>
                     <label>Description de l'offre*</label>
-                    <?php Textarea::render(name:"descriptionOffre", required:"true", rows:2) ?>
+                    <?php Textarea::render(name:"descriptionOffre", required:"true", rows:2, value:$descriptionDetaillee) ?>
                 </div>
             </article>
             <article>

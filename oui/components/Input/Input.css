@@ -1,0 +1,38 @@
+/* Style général pour l'input */
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-wrapper input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 1px #007BFF;
+}
+
+/* Styles pour l'icône dans l'input */
+.input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    fill: #888;
+}
+
+.input-wrapper .input-icon + input {
+    padding-left: 40px; /* Ajuste le padding pour l'input avec icône */
+}

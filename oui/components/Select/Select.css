@@ -1,0 +1,31 @@
+/* Style général pour le select */
+.select-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: white;
+}
+
+.select-wrapper select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 1px #007BFF;
+}
+
+.select-image img {
+    width: 20px; /* Ajustez la taille de l'image selon vos besoins */
+    height: auto;
+    margin-right: 5px; /* Espace entre l'image et le select */
+}
+
