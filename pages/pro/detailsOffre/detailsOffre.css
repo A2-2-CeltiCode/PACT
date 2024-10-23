@@ -2,7 +2,7 @@
     padding: 20px;
     display: flex;
     gap: 20px;
-    max-width: 70%;
+    max-width: 60%;
     margin: 0 auto;
     background: var(--white);
     border-radius: 10px;
@@ -37,7 +37,6 @@
     width: 65%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .btn {
@@ -51,14 +50,16 @@ body {
     color: var(--grey3);
 }
 
-h1 {
+.offre-title {
     font-family: 'Encode Sans', sans-serif;
     font-weight: var(--font-weight-semi-bold);
-    text-align: center;
     color: var(--black);
-    margin-bottom: 20px;
+    font-size: var(--h1-font-size);
+    text-align: center;
+    margin: 0.5em auto;
+    display: block;
+    width: 100%;
 }
-
 a {
     color: var(--primary-member);
     text-decoration: none;
@@ -112,3 +113,32 @@ a:hover {
 .carousel-button:hover svg {
     fill: white;
 }
+
+
+.offre-description{
+    font-size: var( --h3-font-size);
+}
+
+.offre-detail{
+    color: var(--black);
+    font-weight: var(--font-weight-semi-bold);
+}
+
+.offre-prix{
+    align-self: flex-start;
+    font-size: var(--h4-font-size);
+    position: relative;
+    top: 0.5em;
+    right: -2.5em;
+    color: var(--black);
+    font-weight: var(--font-weight-semi-bold);
+}
+
+
+.offre-infos {
+    font-size:var(--p-large-font-size);
+    display: flex;
+    flex-direction: column;
+}
+
+ul{margin: 0;}

@@ -9,14 +9,26 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
+    position: fixed;
+    bottom: 0;
 }
-
+.liens-importants{
+    padding: 0.5em;
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+}
 .footer-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
     position: relative;
+}
+
+a {
+    text-decoration: none;
+    color: var(--black);
+    font-weight: var(--font-weight-semi-bold);
 }
 
 .lien-bouton {
@@ -83,7 +95,7 @@ p {
     text-align: center;
 }
 
-.scroll-up-guest{
+.scroll-up-guest {
     background-color: var(--primary-guest);
 }
 
@@ -91,6 +103,6 @@ p {
     background-color: var(--primary-member);
 }
 
-.scroll-up-pro{
+.scroll-up-pro {
     background-color: var(--primary-pro);
 }

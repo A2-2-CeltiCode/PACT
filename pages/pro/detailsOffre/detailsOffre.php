@@ -19,14 +19,38 @@ try {
     $stmt = $dbh->query('SELECT * FROM pact.vue_image_offre', PDO::FETCH_ASSOC);
     $image_offre = $stmt->fetch();
 
-    $stmt = $dbh->query('SELECT * FROM pact.vue_spectacle', PDO::FETCH_ASSOC);
-    $spectacle = $stmt->fetch();
+    $stmt = $dbh->query('SELECT * FROM pact.vue_menu_restaurant', PDO::FETCH_ASSOC);
+    $menu_restaurant = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_parc_attractions', PDO::FETCH_ASSOC);
+    $parc_attractions = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_restaurant', PDO::FETCH_ASSOC);
+    $restaurant = $stmt->fetch();
 
     $stmt = $dbh->query('SELECT * FROM pact.vue_spectacle', PDO::FETCH_ASSOC);
     $spectacle = $stmt->fetch();
 
-    $stmt = $dbh->query('SELECT * FROM pact.vue_spectacle', PDO::FETCH_ASSOC);
-    $spectacle = $stmt->fetch();
+    $stmt = $dbh->query('SELECT * FROM pact.vue_tags_activite', PDO::FETCH_ASSOC);
+    $tags_activite = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_tags_parc_attractions', PDO::FETCH_ASSOC);
+    $tags_parc_attractions = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_tags_restaurant', PDO::FETCH_ASSOC);
+    $tags_restaurant = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_tags_spectacle', PDO::FETCH_ASSOC);
+    $tags_spectacle = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_tags_visite', PDO::FETCH_ASSOC);
+    $tags_visite = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_visite', PDO::FETCH_ASSOC);
+    $visite = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_visite_guidee', PDO::FETCH_ASSOC);
+    $visite_guidee = $stmt->fetch();
 
     // Vérification si les données sont bien récupérées
     if (!$spectacle) {
@@ -55,9 +79,9 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 
-<?php Header::render(HeaderType::Member); ?>
+<?php Header::render(HeaderType::Pro); ?>
 <body>
-    <h1>Détails de l'offre</h1>
+    <?php Label::render("offre-title", "", "", $spectacle['titre']); ?>
     <div class="container">
 
         <!-- Carousel d'images -->
@@ -75,41 +99,34 @@ try {
         <div class="offre-info">
             <?php
             // Affichage du titre de l'offre
-            Label::render("offre-title", "", "", $spectacle['titre'], "../../../ressources/icone/restaurant.svg");
-            
-            // Description courte et détaillée
-            Label::render("offre-description", "", "", $spectacle['description']);
-            Label::render("offre-detail", "", "", $spectacle['descriptiondetaillee']);
-            ?>
-
-            <!-- Adresse complète -->
-            <div class="address">
+            Label::render("offre-description", "", "", $spectacle['description'], "../../../ressources/icone/spectacle.svg");?>
+            <div class="offre-infos">
                 <?php
+                Label::render("offre-detail", "", "", $spectacle['descriptiondetaillee']);
                 $adresse = $spectacle['numrue'] . " " . $spectacle['nomrue'] . ", " . $spectacle['codepostal'] . " " . $spectacle['ville'];
-                Label::render("offre-infos", "", "", $adresse, "../../../ressources/icone/localisateur.svg");
-                ?>
+            
+                Label::render("offre-adresse", "", "", $adresse, "../../../ressources/icone/localisateur.svg");
+                Label::render("offre-website", "", "", "<a href='" . $spectacle['siteinternet'] . "' target='_blank'>" . $spectacle['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
+                
+                Label::render("info-complementaire", "", "", "Infos complémentaires:", "../../../ressources/icone/info.svg");?>
+                <ul>
+                <li><?php Label::render("offre-tag", "", "", "Tag: " . $tags_spectacle['nomtag']); ?></li>
+                <li style="color:red">il faut faire des li dynamiques</li>
+                </ul>
+                
             </div>
-            
-            <!-- Site Internet -->
-            <?php
-            Label::render("offre-website", "", "", "<a href='" . $spectacle['siteinternet'] . "' target='_blank'>" . $spectacle['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
-            
-            // Option et forfait
-            Label::render("offre-option", "", "", "Option: " . $spectacle['nomoption'], "../../../ressources/icone/info.svg");
-            Label::render("offre-forfait", "", "", "Forfait: " . $spectacle['nomforfait'], "../../../ressources/icone/argent.svg");
-            ?>
-
             <!-- Prix de l'offre -->
-            <?php Label::render("offre-prix", "", "", "Prix: " . $spectacle['valprix'] . "€", "../../../ressources/icone/price.svg"); ?>
         </div>
+        <?php Label::render("offre-prix", "", "", "" . $spectacle['valprix'] . "€", "../../../ressources/icone/price.svg"); ?>
 
         <!-- Bouton pour modifier l'offre -->
         <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", "", "../StoryBook/StoryBook.php") ?>
     </div>
+    
 
     <script src="detailsOffre.js"></script>
 </body>
 
-<?php Footer::render(FooterType::Guest); ?>
+<?php Footer::render(FooterType::Pro); ?>
 
 </html>
