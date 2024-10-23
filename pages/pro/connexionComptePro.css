@@ -41,11 +41,10 @@
 body {
     font-family: 'Encode Sans', 'Inter';
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #5acce0;
+    background-color: #c084b5;
 }
 
 .conteneur {

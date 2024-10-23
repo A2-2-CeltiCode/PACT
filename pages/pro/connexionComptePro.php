@@ -11,7 +11,7 @@ $pass = '13phenix';
 
 try {
     // Connexion à la base de données
-    $dbh = new PDO("pgsql:host=$server;dbname=$dbname", $user, $pass);
+    $dbh = new PDO("pgsql:host=$server;port=5433;dbname=$dbname", $user, $pass);
     
     // Définit explicitement le schéma 'pact'
     $dbh->exec("SET search_path TO pact;");
@@ -19,17 +19,15 @@ try {
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();
 }
+
 // Vérifie si le formulaire de connexion a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupère les valeurs soumises dans le formulaire
     $identifiant_utilisateur = $_POST['username'];
     $mot_de_passe_utilisateur = $_POST['password'];
 
-    // Si la table est en majuscules, utilisez les guillemets doubles pour le nom de la table
-    // $requete_sql = 'SELECT * FROM "_comptePro" WHERE (email = :identifiant OR numsiren = :identifiant)';
-
-    // Si la table est en minuscules, utilisez cette requête
-    $requete_sql = 'SELECT * FROM _comptepro WHERE (email = :identifiant OR numsiren = :identifiant)';
+    // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
+    $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
     
     $requete_preparee = $dbh->prepare($requete_sql);
     $requete_preparee->bindParam(':identifiant', $identifiant_utilisateur);
@@ -37,8 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
-        // Vérifie la correspondance du mot de passe
-        if (password_verify($mot_de_passe_utilisateur, $compte['mdp'])) {
+        // Comparaison simple des mots de passe (sans hachage)
+        if ($mot_de_passe_utilisateur === $compte['mdp']) {
             // Si les informations sont correctes, démarrer la session
             $_SESSION['utilisateur_connecte'] = true;
             $_SESSION['identifiant_utilisateur'] = $compte['email'];
@@ -49,9 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: tableauDeBord.php');
             exit();
         } else {
+            // Mot de passe incorrect
             $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
         }
     } else {
+        // Aucun compte trouvé avec cet email
         $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
     }
 }
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <img alt="Logo" src="../../ressources/icone/logo.svg" />
         
         <!-- Titre de la page -->
-        <h1>Connectez-vous à votre compte professionnel</h1>
+        <h1>Connectez-vous à votre compte</h1>
         <div class="soulignement"></div>
 
         <!-- Afficher le message d'erreur s'il y en a un -->
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="post" action="">
             <div class="groupe-champ">
                 <label for="username">Votre identifiant</label>
-                <?php Input::render(class : "conect" , type : "text", name:"username", placeholder:"Adresse e-mail / Numéro SIREN", required : true)  ?>
+                <?php Input::render(class : "conect" , type : "text", name:"username", placeholder:"Adresse e-mail", required : true)  ?>
 
             </div>
             <div class="groupe-champ toggle-mot-de-passe">
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <!-- Lien pour créer un compte -->
         <div class="inscription">
-            Vous n'avez pas de compte ? <a href="creationComptePro.php">Créez un compte</a> PACT professionnel dès maintenant
+            Vous n'avez pas de compte ? <a href="creationComptePro.php">Créez un compte dès maintenant</a>
         </div>
     </div>
 </body>
