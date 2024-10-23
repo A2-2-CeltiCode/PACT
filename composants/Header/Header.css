@@ -97,3 +97,13 @@ body>header {
 .input-icon {
     fill: var(--primary-guest);
 }
+
+
+.header-member .input-icon {
+    fill: var(--primary-member);
+}
+
+
+.header-pro .input-icon {
+    fill: var(--primary-pro);
+}
