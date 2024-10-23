@@ -79,7 +79,7 @@ body {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 5px;
-    padding: 10px ;
+    padding: 10px;
     width: 250px;
     border: 1px solid #ccc;
     text-align: center;
@@ -89,7 +89,7 @@ body {
 }
 
 .carte div {
-    margin: 10px 0;
+    margin: 5px 0; /* Réduit la marge entre les éléments dans la carte */
 }
 
 .carte h2 {
@@ -107,7 +107,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px 0;
+    margin: 5px 0; /* Réduit la marge entre les éléments */
     font-size: 14px;
 }
 
