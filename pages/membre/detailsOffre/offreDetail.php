@@ -89,8 +89,9 @@ if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
                 ?>
 
                 <a href="<?php echo $offre['siteinternet']; ?>">
-                    <?php Label::render("bas_desc", "", "", "Site du restaurant", "../../../ressources/icone/naviguer.svg"); ?>
+                    <?php Label::render("bas_desc", "", "", "Site de l'offre", "../../../ressources/icone/naviguer.svg"); ?>
                 </a>
+                <br>
                 <?php 
                     Label::render("bas_desc", "", "", $offre['ville'] . ' (' . $offre['codepostal'] . ')', "../../../ressources/icone/localisateur.svg"); 
                 ?>
