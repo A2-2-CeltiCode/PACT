@@ -7,7 +7,7 @@
     <title>Créez un Compte Professionel PACT</title>
     <link rel="stylesheet" href="./creationComptePro.css">
     <link rel="stylesheet" href="../../../variables.css">
-
+    
     <script src="creationComptePro.js" defer></script>
 </head>
 
