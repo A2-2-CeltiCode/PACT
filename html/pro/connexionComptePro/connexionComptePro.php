@@ -4,7 +4,6 @@ session_start();
 
 require_once "../../../composants/Input/Input.php";
 require_once "../../../composants/Button/Button.php";
-
 require_once('./connect_params.php');
 
 try {
