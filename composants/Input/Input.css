@@ -1,5 +1,4 @@
-/* Importer le fichier variables.css */
-@import url('../../variables.css');
+@import url('../../ui.css');
 
 .input-wrapper {
     width: fit-content;
@@ -16,7 +15,6 @@
     height: 20px;
     margin-right: 5px;
     pointer-events: none;
-    fill: var(--primary-member);
 }
 
 
