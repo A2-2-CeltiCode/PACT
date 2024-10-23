@@ -7,6 +7,7 @@ require_once("../../../composants/Footer/Footer.php");
 
 require_once("../../../bdd/connect_params.php");
 
+
 try {
     // Establishing the database connection
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -30,7 +31,6 @@ try {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -42,8 +42,7 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 
-<?php Header::render(); ?>
-
+<?php Header::render(HeaderType::Member); ?>
 <body>
     <h1>Détails de l'offre</h1>
     <div class="container">
@@ -93,6 +92,8 @@ try {
 
     <script src="detailsOffre.js"></script>
 </body>
-<?php Footer::render(); ?>
+
+
+<?php Footer::render(FooterType::Guest); ?>
 
 </html>

@@ -1,6 +1,6 @@
 @import url('../../ui.css');
 
-body > header {
+body>header {
     position: sticky;
     top: 0;
     display: flex;
@@ -24,7 +24,6 @@ body > header {
 
             span {
                 font-size: var(--h2-font-size);
-                color: var(--primary-guest);
                 font-weight: bold;
                 margin-left: 10px;
             }
@@ -36,27 +35,20 @@ body > header {
 
         &:last-of-type {
             button {
-                background-color: var(--primary-guest);
-                color: #fff;
                 padding: 8px 16px;
-                border: none;
                 border-radius: 4px;
-
-                &:hover {
-                    background-color: #218838;
-                }
             }
         }
     }
 
-    nav > a {
+    nav>a {
         margin: 0 10px;
         text-decoration: none;
         color: var(--grey3);
         font-weight: bold;
     }
 
-    + div {
+    +div {
         background-image: url("assets/img/font-barre-recherce.png");
         display: flex;
         justify-content: center;
@@ -67,7 +59,7 @@ body > header {
             background-color: transparent;
         }
 
-        > div {
+        >div {
             background-color: rgba(255, 255, 255, 0.7);
         }
     }
@@ -87,4 +79,21 @@ body > header {
         border: 1px solid var(--grey2);
         border-radius: 4px;
     }
+}
+
+
+.span-pact-guest {
+    color: var(--primary-guest);
+}
+
+.span-pact-member {
+    color: var(--primary-member);
+}
+
+.span-pact-pro {
+    color: var(--primary-pro);
+}
+
+.input-icon {
+    fill: var(--primary-guest);
 }

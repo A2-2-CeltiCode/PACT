@@ -19,7 +19,7 @@ footer {
     position: relative;
 }
 
-button {
+.lien-bouton {
     color: var(--black);
     background-color: var(--grey1);
     border: 1px solid var(--black);
@@ -81,4 +81,16 @@ p {
 .footer-content {
     flex-grow: 1;
     text-align: center;
+}
+
+.scroll-up-guest{
+    background-color: var(--primary-guest);
+}
+
+.scroll-up-member {
+    background-color: var(--primary-member);
+}
+
+.scroll-up-pro{
+    background-color: var(--primary-pro);
 }
