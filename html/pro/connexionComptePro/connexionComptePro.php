@@ -7,6 +7,53 @@ require_once "../../../composants/Button/Button.php";
 
 require_once('./connect_params.php');
 
+try {
+    // Connexion à la base de données
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    
+    // Définit explicitement le schéma 'pact'
+    $dbh->exec("SET search_path TO pact;");
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br>";
+    die();
+}
+
+// Vérifie si le formulaire de connexion a été soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupère les valeurs soumises dans le formulaire
+    $identifiant_utilisateur = $_POST['username'];
+    $mot_de_passe_utilisateur = $_POST['password'];
+
+    // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
+    $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
+    
+    $requete_preparee = $dbh->prepare($requete_sql);
+    $requete_preparee->bindParam(':identifiant', $identifiant_utilisateur);
+    $requete_preparee->execute();
+    
+    // Vérifie si un compte correspondant a été trouvé
+    if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
+        // Comparaison simple des mots de passe (sans hachage)
+        if ($mot_de_passe_utilisateur === $compte['mdp']) {
+            // Si les informations sont correctes, démarrer la session
+            $_SESSION['utilisateur_connecte'] = true;
+            $_SESSION['identifiant_utilisateur'] = $compte['email'];
+            // Sauvegarder l'ID du compte dans la session
+            $_SESSION['id_compte_utilisateur'] = $compte['idcompte'];
+            
+            // Redirige vers le tableau de bord
+            header('Location: tableauDeBord.php');
+            exit();
+        } else {
+            // Mot de passe incorrect
+            $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
+        }
+    } else {
+        // Aucun compte trouvé avec cet email
+        $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
