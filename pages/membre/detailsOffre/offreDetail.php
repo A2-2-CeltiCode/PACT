@@ -123,11 +123,11 @@ if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
                         <!-- Affichage de la dénomination sociale -->
                         <?php 
                             if (isset($offre['denominationsociale'])) {
-                                Label::render("partie_haute", "", "", $offre['denominationsociale']);
+                                Label::render("", "", "", $offre['denominationsociale']);
                             }
                             // Afficher la ville du compte (table _compte) en dessous de la dénomination sociale
                             if (isset($offre['compteville'])) {
-                                Label::render("partie_haute", "", "", $offre['compteville'], "../../../ressources/icone/localisateur.svg");
+                                Label::render("", "", "", $offre['compteville'], "../../../ressources/icone/localisateur.svg");
                             }
                         ?>
 
