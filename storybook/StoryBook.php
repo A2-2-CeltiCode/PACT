@@ -189,31 +189,25 @@
                 <?php Input::render(type: "text", name: "username", required: true, icon: "../ressources/icone/health.svg"); ?>
                 <p>Boutton:</p>
                 <div class="button-container">
-                    <?php Button::render(text: "Button", type: ButtonType::Member, submit: false); ?>
-                    <?php Button::render(text: "Button", type: ButtonType::Guest, submit: false); ?>
-                    <?php Button::render(text: "Button", type: ButtonType::Pro, submit: false); ?>
-                    <?php Button::render(text: "Button", type: ButtonType::Valid, submit: false); ?>
-                    <?php Button::render(text: "Button", type: ButtonType::Error, submit: false); ?>
-                    <?php Button::render(text: "Button", type: ButtonType::Warning, submit: false); ?>
+                    <?php Button::render(text: "Membre", type: ButtonType::Member, submit: false); ?>
+                    <?php Button::render(text: "Visiteur", type: ButtonType::Guest, submit: false); ?>
+                    <?php Button::render(text: "Pro", type: ButtonType::Pro, submit: false); ?>
+                    <?php Button::render(text: "Valide", type: ButtonType::Valid, submit: false); ?>
+                    <?php Button::render(text: "Erreur", type: ButtonType::Error, submit: false); ?>
+                    <?php Button::render(text: "Attention", type: ButtonType::Warning, submit: false); ?>
                 </div>
 
                 <p>Boutton (Toast):</p>
                 <?php Toast::render("Toast !", ToastType::SUCCESS); ?>
                 <?php Button::render(text: "Clique Moi ;)", type: ButtonType::Member, onClick: "renderToast()"); ?>
                 <p>Checkbox:</p>
-                <?php CheckBox::render(class: "my-checkbox", id: "subscribe", name: "subscribe", required: true, checked: false, text: "Subscribe to newsletter"); ?>
+                <?php CheckBox::render(class: "", id: "", name: "", required: true, checked: false, text: "Une checkBox"); ?>
                 <p>ImagePicker:</p>
-
                 <p>Range:</p>
-
                 <p>barre de filtres:</p>
                 <p>SearchBar:</p>
                 <p>Card:</p>
-                <p>Card Tel:</p>         
-                
-                <p>Footer:</p>
-                
-                
+                <p>Card Tel:</p>     
             </div>
         </section>
     </main>

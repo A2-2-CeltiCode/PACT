@@ -3,7 +3,6 @@ body {
     height: 100%;
     font-family: 'Inter', 'Arial';
     margin: 0;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     background: var(--white);
@@ -32,12 +31,12 @@ nav ul {
 nav a {
     font-size: 18px;
     font-weight: var(--font-weight-semi-bold);
-    color: var(--black);
+    color: rgb(76, 111, 207);
     text-decoration: none;
 }
 
 nav a:hover {
-    color: var(--grey3);
+    color: var(--grey2);
 }
 
 .color-container {
