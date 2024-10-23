@@ -2,42 +2,48 @@
 // Démarre la session pour gérer l'authentification
 session_start();
 
-include "composants\Input\Input.php";
+include "../../composants/Input/Input.php";
 
-$hote_base_donnees = 'localhost:5433';
-$nom_base_donnees = 'postgres';
-$utilisateur_base_donnees = 'postgres';
-$mot_de_passe_base_donnees = '13phenix';
+$server = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$pass = '13phenix';
 
 try {
-    // Connexion à la base de données avec PDO
-    $connexion_base_donnees = new PDO("postgres:host=$hote_base_donnees;dbname=$nom_base_donnees;charset=utf8", $utilisateur_base_donnees, $mot_de_passe_base_donnees);
-    $connexion_base_donnees->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $erreur_connexion) {
-    die("Erreur de connexion : " . $erreur_connexion->getMessage());
+    // Connexion à la base de données
+    $dbh = new PDO("pgsql:host=$server;dbname=$dbname", $user, $pass);
+    
+    // Définit explicitement le schéma 'pact'
+    $dbh->exec("SET search_path TO pact;");
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br>";
+    die();
 }
-
 // Vérifie si le formulaire de connexion a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupère les valeurs soumises dans le formulaire
     $identifiant_utilisateur = $_POST['username'];
     $mot_de_passe_utilisateur = $_POST['password'];
 
-    // Prépare la requête SQL pour vérifier l'identifiant et le mot de passe dans la table ComptePro
-    $requete_sql = "SELECT * FROM ComptePro WHERE (email = :identifiant OR siren = :identifiant)";
-    $requete_preparee = $connexion_base_donnees->prepare($requete_sql);
+    // Si la table est en majuscules, utilisez les guillemets doubles pour le nom de la table
+    // $requete_sql = 'SELECT * FROM "_comptePro" WHERE (email = :identifiant OR numsiren = :identifiant)';
+
+    // Si la table est en minuscules, utilisez cette requête
+    $requete_sql = 'SELECT * FROM _comptepro WHERE (email = :identifiant OR numsiren = :identifiant)';
+    
+    $requete_preparee = $dbh->prepare($requete_sql);
     $requete_preparee->bindParam(':identifiant', $identifiant_utilisateur);
     $requete_preparee->execute();
     
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
         // Vérifie la correspondance du mot de passe
-        if (password_verify($mot_de_passe_utilisateur, $compte['password'])) {
+        if (password_verify($mot_de_passe_utilisateur, $compte['mdp'])) {
             // Si les informations sont correctes, démarrer la session
             $_SESSION['utilisateur_connecte'] = true;
             $_SESSION['identifiant_utilisateur'] = $compte['email'];
             // Sauvegarder l'ID du compte dans la session
-            $_SESSION['id_compte_utilisateur'] = $compte['id']; // Assurez-vous que la colonne 'id' est présente dans la table
+            $_SESSION['id_compte_utilisateur'] = $compte['idcompte'];
             
             // Redirige vers le tableau de bord
             header('Location: tableauDeBord.php');
@@ -56,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Page de Connexion</title>
     <link rel="stylesheet" href="connexionComptePro.css">
-
 </head>
 <body>
     <div class="conteneur">
