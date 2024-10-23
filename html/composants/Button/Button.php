@@ -41,10 +41,10 @@ class Button
         $backgroundColorClass = '';
         switch ($type) {
             case ButtonType::Guest:
-                $backgroundColorClass = 'bg-guest';
+                $backgroundColorClass = 'bg-visiteur';
                 break;
             case ButtonType::Member:
-                $backgroundColorClass = 'bg-member';
+                $backgroundColorClass = 'bg-membre';
                 break;
             case ButtonType::Pro:
                 $backgroundColorClass = 'bg-pro';
