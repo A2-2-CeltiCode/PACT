@@ -21,7 +21,7 @@ CREATE TABLE _adresse(
 );
 
 CREATE TABLE _gamme(
-    nomGamme    VARCHAR(10),
+    nomGamme    VARCHAR(20),
     CONSTRAINT gamme_pk PRIMARY KEY(nomGamme)
 );
 
@@ -216,7 +216,7 @@ CREATE TABLE _visite(
 CREATE TABLE _restaurant(
     idOffre           SERIAL,
     nomCategorie      VARCHAR(50) NOT NULL,
-    nomGamme          VARCHAR(50) NOT NULL,
+    nomGamme          VARCHAR(20) NOT NULL,
     idImage           SERIAL NOT NULL,
     CONSTRAINT restaurant_pk PRIMARY KEY (idOffre),
     CONSTRAINT restaurant_fk_offre FOREIGN KEY (idOffre)

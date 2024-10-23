@@ -8,9 +8,9 @@ INSERT INTO _option (nomOption) VALUES
 
 -- Peupler la table _gamme
 INSERT INTO _gamme (nomGamme) VALUES
-('Leger'),
-('Moyen'),
-('Fort');
+('€ (-25€)'),
+('€€ (25-40€)'),
+('€€€ (+40€)');
 
 -- Peupler la table _repas
 INSERT INTO _repas (nomRepas) VALUES
