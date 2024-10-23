@@ -49,7 +49,7 @@ require_once('./connect_params.php');
         </form>
         <!-- Lien pour créer un compte -->
         <div class="inscription">
-            Vous n'avez pas de compte ? <a href="creationComptePro.php">Créez un compte dès maintenant</a>
+            Vous n'avez pas de compte ? <a href="../creationComptePro/creationComptePro.php">Créez un compte dès maintenant</a>
         </div>
     </div>
 </body>

@@ -99,7 +99,7 @@
             </form>
             <hr>
             <p>Vous avez déjà un compte ?</p>
-            <p><a href="connexionComptePro.php">Connectez vous</a> avec votre compte PACT Professionel</p>
+            <p><a href="../connexionComptePro/connexionComptePro.php">Connectez vous</a> avec votre compte PACT Professionel</p>
         </div>
 
         <?php 
