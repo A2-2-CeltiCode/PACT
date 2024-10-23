@@ -109,12 +109,6 @@ try {
 
     <script src="detailsOffre.js"></script>
 </body>
-<<<<<<< HEAD
-
-
-<?php Footer::render(FooterType::Guest); ?>
-=======
->>>>>>> 146fd56 (prise en compte de la BDD)
 
 <?php Footer::render(FooterType::Guest); ?>
 
