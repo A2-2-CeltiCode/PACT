@@ -1,6 +1,3 @@
-/* Importer le fichier variables.css */
-@import url('../../variables.css');
-
 .input-wrapper {
     width: fit-content;
     display: flex;

@@ -1,0 +1,97 @@
+body > header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: var(--blanc);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 60px;
+    z-index: 1000;
+    font-family: 'Encode Sans', serif;
+
+    div {
+        &:first-of-type {
+            display: flex;
+            align-items: center;
+
+            img {
+                height: 60px;
+            }
+
+            span {
+                font-size: var(--h2-font-size);
+                font-weight: bold;
+                margin-left: 10px;
+            }
+        }
+
+        &:nth-of-type(2) input {
+            width: 300px;
+        }
+
+        &:last-of-type {
+            button {
+                padding: 8px 16px;
+                border-radius: 4px;
+            }
+        }
+    }
+
+    nav > a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: var(--gris3);
+        font-weight: bold;
+    }
+
+    + div {
+        background-image: url("../../ressources/img/font-barre-recherce.png");
+        display: flex;
+        justify-content: center;
+        padding: 70px 0;
+
+        .barre_recherche {
+            width: 75vw;
+            background-color: transparent;
+        }
+
+        > div {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+    }
+}
+
+.entete-langue {
+    display: flex;
+    align-items: center;
+
+    img {
+        height: 20px;
+        margin-right: 5px;
+    }
+
+    select {
+        padding: 5px;
+        border: 1px solid var(--gris2);
+        border-radius: 4px;
+    }
+}
+
+
+.span-pact-guest {
+    color: var(--primaire-visiteur);
+}
+
+.span-pact-member {
+    color: var(--primaire-membre);
+}
+
+.span-pact-pro {
+    color: var(--primaire-pro);
+}
+
+.input-icon {
+    fill: var(--primaire-visiteur);
+}

@@ -27,7 +27,6 @@ class Offre
                                 string  $nomProprietaire,
                                 ?string $duree,
                                 ?string $note = null) {
-        //TODO: fix type name
         $this->nom = $nom;
         $this->typeO = str_replace([" ", "'"], '_', strtolower($typeO));
         $this->ville = $ville;
@@ -38,11 +37,11 @@ class Offre
     }
 
     public function __toString(): string {
-        $svgIcon = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/assets/icon/$this->typeO.svg");
-        $svgNote = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/assets/icon/note.svg");
-        $svgProprio = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/assets/icon/user.svg");
-        $svgClock = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/assets/icon/clock.svg");
-        $svgPin = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/assets/icon/mapPin.svg");
+        $svgIcon = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/$this->typeO.svg");
+        $svgNote = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/note.svg");
+        $svgProprio = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/user.svg");
+        $svgClock = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/clock.svg");
+        $svgPin = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/mapPin.svg");
         $d = '';
         if (!is_null($this->duree)) {
             if ($this->duree < 60) {
@@ -61,7 +60,7 @@ STRING;
         }
         return <<<STRING
 <div class="offre">
-    <img alt="" src="/assets/img/offres/$this->imageO.png">
+    <img alt="" src="/ressources/img/offres/$this->imageO.png">
     <div>
         <div>
             $svgIcon

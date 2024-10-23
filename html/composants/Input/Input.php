@@ -63,7 +63,7 @@ class Input
         $input = "<input " . self::renderAttributes($attrs) . " />";
         if ($icon) {
             $svgContent = self::cleanSvgContent(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $icon));
-            echo "<div class='input-wrapper'><div class='input-icon'>{$svgContent}</div>$input</div>";
+            echo "<div class='input-wrapper'><div class='input-icone'>{$svgContent}</div>$input</div>";
         } else {
             echo "<div class='input-wrapper'>$input</div>";
         }

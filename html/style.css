@@ -1,47 +1,4 @@
-/* encode-sans-regular - latin_latin-ext */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Encode Sans';
-    font-style: normal;
-    font-weight: var(--font-weight-normal);
-    src: url('assets/fonts/encode-sans-v19-latin_latin-ext-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* encode-sans-600 - latin_latin-ext */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Encode Sans';
-    font-style: normal;
-    font-weight: var(--font-weight-semi-bold);
-    src: url('assets/fonts/encode-sans-v19-latin_latin-ext-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-regular - latin_latin-ext */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: var(--font-weight-normal);
-    src: url('assets/fonts/inter-v18-latin_latin-ext-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-italic - latin_latin-ext */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Inter';
-    font-style: italic;
-    font-weight: var(--font-weight-normal);
-    src: url('assets/fonts/inter-v18-latin_latin-ext-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-600 - latin_latin-ext */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: var(--font-weight-semi-bold);
-    src: url('assets/fonts/inter-v18-latin_latin-ext-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
+@import url("/ui.css");
 
 :root {
     scroll-behavior: smooth;
@@ -60,14 +17,18 @@ body {
     border-radius: 5px;
     display: inline-block;
 
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    p {
+        font-size: var(--p-small-font-size);
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
 
     background: white;
 
     margin: 16px;
 
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
+
 
     img {
         border-radius: 5px 5px 0 0;
@@ -97,99 +58,9 @@ body {
     }
 }
 
-body > header {
-    position: sticky;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    height: 60px;
-    z-index: 1000;
-    font-family: 'Encode Sans', serif;
-
-    div {
-        &:first-of-type {
-            display: flex;
-            align-items: center;
-
-            img {
-                height: 60px;
-            }
-
-            span {
-                font-size: 30px;
-                color: #28a745;
-                font-weight: bold;
-                margin-left: 10px;
-            }
-        }
-
-        &:nth-of-type(2) input {
-            width: 300px;
-        }
-
-        &:last-of-type {
-            button {
-                background-color: #28a745;
-                color: #fff;
-                padding: 8px 16px;
-                border: none;
-                border-radius: 4px;
-
-                &:hover {
-                    background-color: #218838;
-                }
-            }
-        }
-    }
-
-    nav > a {
-        margin: 0 10px;
-        text-decoration: none;
-        color: #333;
-        font-weight: bold;
-    }
-
-    + div {
-        background-image: url("assets/img/font-barre-recherce.png");
-        display: flex;
-        justify-content: center;
-        padding: 70px 0;
-
-        .barre_recherche {
-            width: 75vw;
-            background-color: transparent;
-        }
-
-        > div {
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-    }
-}
-
-.entete-langue {
-    display: flex;
-    align-items: center;
-
-    img {
-        height: 20px;
-        margin-right: 5px;
-    }
-
-    select {
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-}
-
 main {
     margin-top: 64px;
     margin-bottom: 64px;
-
 
     > div {
         h2 {
@@ -208,70 +79,5 @@ main {
                 display: none; /* Safari et Chrome */
             }
         }
-    }
-}
-
-footer {
-    background-color: #d3d3d3;
-    text-align: center;
-    padding: 20px 0;
-    position: relative;
-
-    button {
-        background-color: #d3d3d3;
-        border: 1px solid black;
-        padding: 10px 20px;
-        font-weight: bold;
-        cursor: pointer;
-        border-radius: 5px;
-        transition-duration: 500ms;
-
-        &:hover {
-            background-color: #000;
-            color: #d3d3d3;
-        }
-    }
-
-    .liens {
-        margin: 15px 0;
-        font-size: 14px;
-
-        a {
-            margin: 0 15px;
-            color: black;
-            text-decoration: none;
-        }
-    }
-
-    .icones-reseaux {
-        margin: 10px 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        div {
-            margin: 10px;
-        }
-    }
-
-    p {
-        margin: 10px 0 0;
-        font-size: 12px;
-    }
-
-    .remonte-page {
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        background-color: #2d7d46;
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        /*cursor: pointer;*/
-        text-decoration: none;
     }
 }

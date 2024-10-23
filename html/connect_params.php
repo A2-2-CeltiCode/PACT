@@ -3,5 +3,5 @@
 $server = 'localhost';
 $driver = 'pgsql';
 $dbname = 'postgres';
-$user = 'postgres';
-$pass = '842163';
+$dbuser = 'postgres';
+$dbpass = '842163';

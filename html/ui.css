@@ -1,0 +1,119 @@
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/inter-v18-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/inter-v18-latin_latin-ext-italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('/ressources/polices/inter-v18-latin_latin-ext-600.woff2') format('woff2');
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Encode Sans', sans-serif;
+    margin-bottom: 10px;
+    font-weight: var(--font-weight-semi-bold);
+}
+
+h1 {
+    font-size: var(--h1-font-size);
+}
+
+h2 {
+    font-size: var(--h2-font-size);
+}
+
+h3 {
+    font-size: var(--h3-font-size);
+}
+
+h4 {
+    font-size: var(--h4-font-size);
+}
+
+h5 {
+    font-size: var(--h5-font-size);
+}
+
+p {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--p-medium-font-size);
+    color: var(--noir);
+    margin: 5px 0;
+    font-weight: var(--font-weight-normal);
+}
+
+p.large {
+    font-size: var(--p-large-font-size);
+}
+
+p.medium {
+    font-size: var(--p-medium-font-size);
+}
+
+p.small {
+    font-size: var(--p-small-font-size);
+}
+
+.semi-bold {
+    font-weight: var(--font-weight-semi-bold);
+}
+
+:root {
+    /* Couleurs */
+    --noir: #000000;
+    --gris3: #5B5B5B;
+    --gris2: #A1A1A1;
+    --gris1: #DADADA;
+    --blanc: #ffffff;
+    --primaire-membre: #086DBA;
+    --primaire-visiteur: #1A7A44;
+    --primaire-pro: #6C0277;
+    --secondaire-pro: #C115A1;
+    --valide: #1C8901;
+    --erreur: #B81E1E;
+    --avertissement: #996900;
+
+    /* Tailles de police */
+    --h1-font-size: 48px;
+    --h2-font-size: 32px;
+    --h3-font-size: 28px;
+    --h4-font-size: 24px;
+    --h5-font-size: 20px;
+    --p-large-font-size: 20px;
+    --p-medium-font-size: 16px;
+    --p-small-font-size: 12px;
+
+    /* Poids de police */
+    --font-weight-normal: 400;
+    --font-weight-semi-bold: 600;
+}

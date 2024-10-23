@@ -40,13 +40,13 @@ class Button
         // Définir la couleur de fond selon le type de bouton
         $backgroundColorClass = '';
         switch ($type) {
-            case \ButtonType::Guest:
+            case ButtonType::Guest:
                 $backgroundColorClass = 'bg-guest';
                 break;
-            case \ButtonType::Member:
+            case ButtonType::Member:
                 $backgroundColorClass = 'bg-member';
                 break;
-            case \ButtonType::Pro:
+            case ButtonType::Pro:
                 $backgroundColorClass = 'bg-pro';
                 break;
         }
