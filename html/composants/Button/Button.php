@@ -3,6 +3,8 @@
 /**
  * Types de boutons.
  */
+
+namespace composants\Button;
 class ButtonType
 {
     const Guest = 'guest';
@@ -15,7 +17,7 @@ class ButtonType
  */
 class Button
 {
-    private static $cssIncluded = false;
+    private static bool $cssIncluded = false;
 
     /**
      * Affiche un bouton HTML.
@@ -27,31 +29,31 @@ class Button
      * @param string $onClick Fonction JavaScript à appeler.
      * @param bool   $submit  Bouton de soumission ?
      */
-    public static function render($class = "",
-                                  $id = "",
-                                  $text = "",
-                                  $type = "",
-                                  $onClick = "",
-                                  $submit = false) {
+    public static function render(string $class = "",
+                                  string $id = "",
+                                  string $text = "",
+                                  string $type = "",
+                                  string $onClick = "",
+                                  bool   $submit = false): void {
         $isSubmit = $submit ? 'submit' : 'button';
 
         // Définir la couleur de fond selon le type de bouton
         $backgroundColorClass = '';
         switch ($type) {
-            case ButtonType::Guest:
+            case \ButtonType::Guest:
                 $backgroundColorClass = 'bg-guest';
                 break;
-            case ButtonType::Member:
+            case \ButtonType::Member:
                 $backgroundColorClass = 'bg-member';
                 break;
-            case ButtonType::Pro:
+            case \ButtonType::Pro:
                 $backgroundColorClass = 'bg-pro';
                 break;
         }
 
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./composants/Button/Button.css">';
+            echo '<link rel="stylesheet" href="/composants/Button/Button.css">';
             self::$cssIncluded = true;
         }
 

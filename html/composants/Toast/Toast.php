@@ -1,5 +1,7 @@
 <?php
 
+namespace composants\Toast;
+
 /**
  * Types de Toast.
  */
@@ -28,13 +30,13 @@ class Toast
                                   $type = ToastType::SUCCESS) {
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./composants/Toast/Toast.css">';
+            echo '<link rel="stylesheet" href="/composants/Toast/Toast.css">';
             self::$cssIncluded = true;
         }
 
         // Inclure JavaScript une seule fois
         if (!self::$jsIncluded) {
-            echo '<script src="./components/Toast/Toast.js"></script>';
+            echo '<script src="/components/Toast/Toast.js"></script>';
             self::$jsIncluded = true;
         }
 

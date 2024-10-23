@@ -1,5 +1,6 @@
 <?php
 
+namespace composants\Input;
 /**
  * @brief Classe pour gérer les éléments de saisie HTML.
  *
@@ -54,14 +55,14 @@ class Input
 
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./composants/Input/Input.css">';
+            echo '<link rel="stylesheet" href="/composants/Input/Input.css">';
             self::$cssIncluded = true;
         }
 
         // Rendre l'input
         $input = "<input " . self::renderAttributes($attrs) . " />";
         if ($icon) {
-            $svgContent = self::cleanSvgContent(file_get_contents($icon));
+            $svgContent = self::cleanSvgContent(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $icon));
             echo "<div class='input-wrapper'><div class='input-icon'>{$svgContent}</div>$input</div>";
         } else {
             echo "<div class='input-wrapper'>$input</div>";
