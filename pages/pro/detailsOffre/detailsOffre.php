@@ -9,14 +9,27 @@ require_once("../../../bdd/connect_params.php");
 
 
 try {
-    // Establishing the database connection
+    // Établir la connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     
-    // Query to fetch offer details
-    $stmt = $dbh->query('SELECT * FROM pact._offre', PDO::FETCH_ASSOC);
-    $offre = $stmt->fetch();
+    // Requête pour récupérer les détails de l'offre
+    $stmt = $dbh->query('SELECT * FROM pact.vue_activite', PDO::FETCH_ASSOC);
+    $activite = $stmt->fetch();
+    
+    $stmt = $dbh->query('SELECT * FROM pact.vue_image_offre', PDO::FETCH_ASSOC);
+    $image_offre = $stmt->fetch();
 
-    if (!$offre) {
+    $stmt = $dbh->query('SELECT * FROM pact.vue_spectacle', PDO::FETCH_ASSOC);
+    $spectacle = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_spectacle', PDO::FETCH_ASSOC);
+    $spectacle = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_spectacle', PDO::FETCH_ASSOC);
+    $spectacle = $stmt->fetch();
+
+    // Vérification si les données sont bien récupérées
+    if (!$spectacle) {
         throw new Exception("Aucune offre trouvée");
     }
     
@@ -27,7 +40,7 @@ try {
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();
 } finally {
-    $dbh = null; // Closing the database connection
+    $dbh = null;
 }
 
 ?>
@@ -47,6 +60,7 @@ try {
     <h1>Détails de l'offre</h1>
     <div class="container">
 
+        <!-- Carousel d'images -->
         <div class="carousel">
             <div class="carousel-images">
                 <img src="../../../ressources/images/restaurant1.jpg" alt="Plat gourmet" class="carousel-image">
@@ -57,42 +71,50 @@ try {
             <button class="carousel-button next">❯</button>
         </div>
 
+        <!-- Informations de l'offre -->
         <div class="offre-info">
             <?php
-            Label::render("offre-title", "", "", $offre['titre'], "../../../ressources/icone/restaurant.svg");
-            Label::render("offre-description", "", "", $offre['description']);
-            Label::render("offre-detail", "", "", $offre['descriptionDetaillee']);
+            // Affichage du titre de l'offre
+            Label::render("offre-title", "", "", $spectacle['titre'], "../../../ressources/icone/restaurant.svg");
+            
+            // Description courte et détaillée
+            Label::render("offre-description", "", "", $spectacle['description']);
+            Label::render("offre-detail", "", "", $spectacle['descriptiondetaillee']);
             ?>
 
+            <!-- Adresse complète -->
             <div class="address">
                 <?php
-                $stmt_address = $dbh->query('SELECT adresse_entier FROM pact._adresse WHERE id = ' . $offre['adresse_id'], PDO::FETCH_ASSOC);
-                $adresse = $stmt_address->fetch();
-                Label::render("offre-infos", "", "", $adresse['adresse_entier'], "../../../ressources/icone/localisateur.svg");
+                $adresse = $spectacle['numrue'] . " " . $spectacle['nomrue'] . ", " . $spectacle['codepostal'] . " " . $spectacle['ville'];
+                Label::render("offre-infos", "", "", $adresse, "../../../ressources/icone/localisateur.svg");
                 ?>
             </div>
             
+            <!-- Site Internet -->
             <?php
-            Label::render("offre-website", "", "", "<a href='" . $offre['site_internet'] . "' target='_blank'>" . $offre['site_internet'] . "</a>", "../../../ressources/icone/naviguer.svg");
+            Label::render("offre-website", "", "", "<a href='" . $spectacle['siteinternet'] . "' target='_blank'>" . $spectacle['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
             
-            $stmt_option = $dbh->query('SELECT nom_option FROM pact._option WHERE id = ' . $offre['option_id'], PDO::FETCH_ASSOC);
-            $option = $stmt_option->fetch();
-            Label::render("offre-option", "", "", "Option: " . $option['nom_option'], "../../../ressources/icone/info.svg");
-
-            $stmt_forfait = $dbh->query('SELECT nom_forfait FROM pact._forfait WHERE id = ' . $offre['forfait_id'], PDO::FETCH_ASSOC);
-            $forfait = $stmt_forfait->fetch();
-            Label::render("offre-forfait", "", "", "Forfait: " . $forfait['nom_forfait'], "../../../ressources/icone/argent.svg");
+            // Option et forfait
+            Label::render("offre-option", "", "", "Option: " . $spectacle['nomoption'], "../../../ressources/icone/info.svg");
+            Label::render("offre-forfait", "", "", "Forfait: " . $spectacle['nomforfait'], "../../../ressources/icone/argent.svg");
             ?>
 
-            <?php Label::render("offre-prix", "", "", "Prix: " . $offre['prix'] . "€", "../../../ressources/icone/price.svg"); ?>
+            <!-- Prix de l'offre -->
+            <?php Label::render("offre-prix", "", "", "Prix: " . $spectacle['valprix'] . "€", "../../../ressources/icone/price.svg"); ?>
         </div>
 
+        <!-- Bouton pour modifier l'offre -->
         <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", "", "../StoryBook/StoryBook.php") ?>
     </div>
 
     <script src="detailsOffre.js"></script>
 </body>
+<<<<<<< HEAD
 
+
+<?php Footer::render(FooterType::Guest); ?>
+=======
+>>>>>>> 146fd56 (prise en compte de la BDD)
 
 <?php Footer::render(FooterType::Guest); ?>
 
