@@ -64,31 +64,7 @@
                     <?php Textarea::render(name:"descriptionDetaillee", rows:7) ?>
                 </div>
 
-                <div>
-                    <?php
-                    
-                    $sql = "SELECT nomtag FROM pact._tag";
-                    $stmt = $dbh->prepare($sql); 
-                    $stmt->execute();
-
-                    $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    ?>
-                    <div class="dropdown">
-                    <button type="button" class="tag" onclick="toggleDropdown()" >Tag</button>
-                    <div class="dropdown-content" id="myDropdown">
-                        <?php foreach($tabTag as $tag){ 
-                                Checkbox::render(
-                                    class: "checkbox",
-                                    id: $tag['nomtag'],
-                                    name: "tag[]",
-                                    value: $tag['nomtag'],
-                                    text: $tag['nomtag'],
-                                    required: false,
-                                    checked: false
-                                );
-                            }?>
-                    </div>
-                </div>   
+                   
                     
                 </div>
 
@@ -174,6 +150,29 @@
                 </div>
                 <!-- Section Activité -->
                 <div id="Activite" class="section" style="display:none;">
+                    <div>
+                        <?php
+                        
+                        $sql = "SELECT nomtag FROM pact._tagAutre";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
+                        $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        ?>
+                        <div class="dropdown">
+                        <button type="button" class="tag" onclick="toggleDropdown()" >Tag</button>
+                        <div class="dropdown-content" id="myDropdown">
+                            <?php foreach($tabTag as $tag){ 
+                                    Checkbox::render(
+                                        class: "checkbox",
+                                        id: $tag['nomtag'],
+                                        name: "tag[]",
+                                        value: $tag['nomtag'],
+                                        text: $tag['nomtag'],
+                                        required: false,
+                                        checked: false
+                                    );
+                                }?>
+                    </div>
                     <label>Prix*</label>
                     <?php Input::render(name:"prix1", type:"number") ?>
                     <label>Âge minimum</label>
@@ -185,7 +184,31 @@
                 </div>
 
                 <!-- Section Visite -->
+                 
                 <div id="Visite" class="section" style="display:none;">
+                    <div>
+                        <?php
+                        
+                        $sql = "SELECT nomtag FROM pact._tagAutre";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
+                        $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        ?>
+                        <div class="dropdown">
+                        <button type="button" class="tag" onclick="toggleDropdown()" >Tag</button>
+                        <div class="dropdown-content" id="myDropdown">
+                            <?php foreach($tabTag as $tag){ 
+                                    Checkbox::render(
+                                        class: "checkbox",
+                                        id: $tag['nomtag'],
+                                        name: "tag[]",
+                                        value: $tag['nomtag'],
+                                        text: $tag['nomtag'],
+                                        required: false,
+                                        checked: false
+                                    );
+                                }?>
+                    </div>
                     <label>Prix*</label>
                     <?php Input::render(name:"prix2", type:"number") ?>
                     
@@ -223,6 +246,29 @@
 
                 <!-- Section Spectacle -->
                 <div id="Spectacle" class="section" style="display:none;">
+                    <div>
+                        <?php
+                        
+                        $sql = "SELECT nomtag FROM pact._tagAutre";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
+                        $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        ?>
+                        <div class="dropdown">
+                        <button type="button" class="tag" onclick="toggleDropdown()" >Tag</button>
+                        <div class="dropdown-content" id="myDropdown">
+                            <?php foreach($tabTag as $tag){ 
+                                    Checkbox::render(
+                                        class: "checkbox",
+                                        id: $tag['nomtag'],
+                                        name: "tag[]",
+                                        value: $tag['nomtag'],
+                                        text: $tag['nomtag'],
+                                        required: false,
+                                        checked: false
+                                    );
+                                }?>
+                    </div>
                     <label>Prix*</label>
                     <?php Input::render(name:"prix3", type:"number") ?>
                     <label>Capacité d'accueil</label>
@@ -233,6 +279,29 @@
 
                 <!-- Section Parc d'Attraction -->
                 <div id="parc" class="section" style="display:none;">
+                    <div>
+                        <?php
+                        
+                        $sql = "SELECT nomtag FROM pact._tagAutre";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
+                        $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        ?>
+                        <div class="dropdown">
+                        <button type="button" class="tag" onclick="toggleDropdown()" >Tag</button>
+                        <div class="dropdown-content" id="myDropdown">
+                            <?php foreach($tabTag as $tag){ 
+                                    Checkbox::render(
+                                        class: "checkbox",
+                                        id: $tag['nomtag'],
+                                        name: "tag[]",
+                                        value: $tag['nomtag'],
+                                        text: $tag['nomtag'],
+                                        required: false,
+                                        checked: false
+                                    );
+                                }?>
+                    </div>
                     <label>Prix*</label>
                     <?php Input::render(name:"prix4", type:"number") ?>
                     <label>Nombre d'attractions</label>
@@ -247,6 +316,30 @@
 
                 <!-- Section Restauration-->
                 <div id="Restaurant" class="section" style="display:none;">
+                    <div>
+                        <?php
+                        
+                        $sql = "SELECT nomtag FROM pact._tagRestaurant";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
+
+                        $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        ?>
+                        <div class="dropdown">
+                        <button type="button" class="tag" onclick="toggleDropdown()" >Tag</button>
+                        <div class="dropdown-content" id="myDropdown">
+                            <?php foreach($tabTag as $tag){ 
+                                    Checkbox::render(
+                                        class: "checkbox",
+                                        id: $tag['nomtag'],
+                                        name: "tag[]",
+                                        value: $tag['nomtag'],
+                                        text: $tag['nomtag'],
+                                        required: false,
+                                        checked: false
+                                    );
+                                }?>
+                    </div>
                     <div>
                         <label>Carte du Restaurant</label>
                         <?php InsererImage::render("carteRestaurant", "Glissez-déposez vos images ici",1, false);?>
@@ -295,6 +388,9 @@
                         }   
                         ?>
                     </div>
+
+                    
+                </div>
 
 
         
