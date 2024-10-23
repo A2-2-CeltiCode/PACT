@@ -217,13 +217,16 @@ CREATE TABLE _restaurant(
     idOffre           SERIAL,
     nomCategorie      VARCHAR(50) NOT NULL,
     nomGamme          VARCHAR(50) NOT NULL,
+    idImage           SERIAL NOT NULL,
     CONSTRAINT restaurant_pk PRIMARY KEY (idOffre),
     CONSTRAINT restaurant_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
     CONSTRAINT restaurant_fk_categorie FOREIGN KEY (nomCategorie)
         REFERENCES _categorie(nomCategorie),
     CONSTRAINT restaurant_fk_gamme FOREIGN KEY (nomGamme)
-        REFERENCES _gamme(nomGamme)
+        REFERENCES _gamme(nomGamme),
+    CONSTRAINT restaurant_fk_image FOREIGN KEY (idImage)
+        REFERENCES _image(idImage)
 );
 
 CREATE TABLE _repas(
