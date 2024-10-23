@@ -1,3 +1,45 @@
+<?php
+// Connexion à la base de données
+$server = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$pass = '13phenix';
+
+try {
+    $dbh = new PDO("pgsql:host=$server;port=5433;dbname=$dbname", $user, $pass);
+    // Définit explicitement le schéma 'pact'
+    $dbh->exec("SET search_path TO pact;");
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br>";
+    die();
+}
+
+// Récupérer l'ID de l'offre depuis l'URL ou autre paramètre
+$idOffre = isset($_GET['idOffre']) ? intval($_GET['idOffre']) : 1; // Par défaut, affiche l'offre avec idOffre 1
+
+// Requête pour récupérer les détails de l'offre, les informations du compte et la dénomination sociale du compte pro lié
+$requete_sql = '
+    SELECT o.titre, o.description, o.siteinternet, o.nomoption, o.nomforfait, o.codepostal, o.ville, 
+           c.email, c.ville AS compteVille, c.idcompte, c.codepostal AS compteCodePostal,
+           cp.denominationsociale
+    FROM pact._offre o
+    JOIN pact._compte c ON o.idcompte = c.idcompte
+    LEFT JOIN pact._comptepro cp ON c.idcompte = cp.idcompte
+    WHERE o.idoffre = :idOffre
+';
+
+$requete_preparee = $dbh->prepare($requete_sql);
+$requete_preparee->bindParam(':idOffre', $idOffre, PDO::PARAM_INT);
+$requete_preparee->execute();
+$offre = $requete_preparee->fetch(PDO::FETCH_ASSOC);
+
+// Si aucune offre n'est trouvée, on affiche un message d'erreur
+if (!$offre) {
+    echo "Aucune offre trouvée pour cet identifiant.";
+    die();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -17,7 +59,7 @@
 </head>
 
 <body>
-    <?php Header::render(HeaderType::Member); ?>
+    <?php //Header::render(HeaderType::Member); ?>
     <!-- Contenu principal avec les détails de l'offre -->
     <main>
         <div class="offre">
@@ -26,23 +68,26 @@
 
             <div class="description">
 
-                <?php Label::render("nom-restau", "", "", "Saveur de Bretagne", "../../ressources/icone/restaurant.svg");
-                      Label::render("", "", "", 'Le restaurant breton "Les Saveurs de Bretagne" offre une ambiance chaleureuse et authentique, avec ses poutres apparentes, ses pierres naturelles et ses décorations maritimes. Niché près de la côte, l établissement propose un menu qui célèbre la cuisine traditionnelle bretonne : galettes de sarrasin, fruits de mer frais, et crêpes sucrées.');
-                      Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../ressources/icone/horloge.svg"); ?>
+                <!-- Affichage dynamique des informations de l'offre -->
+                <?php 
+                    Label::render("nom-restau", "", "", $offre['titre'], "../../ressources/icone/restaurant.svg");
+                    Label::render("", "", "", $offre['description']);
+                    Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../ressources/icone/horloge.svg"); 
+                ?>
 
-                 <a href="https://www.lesfilsamaman.com/restaurants/rennes/?utm_source=google&utm_medium=organic&utm_campaign=mybusiness-website">
-                    <?php Label::render("bas_desc", "", "", "Site du restaurant", "../../ressources/icone/naviguer.svg");?>
+                <a href="<?php echo $offre['siteinternet']; ?>">
+                    <?php Label::render("bas_desc", "", "", "Site du restaurant", "../../ressources/icone/naviguer.svg"); ?>
                 </a>
                 <?php 
-                    Label::render("bas_desc", "", "", "Lannion (22300) 3 rue bidule", "../../ressources/icone/localisateur.svg"); 
+                    Label::render("bas_desc", "", "", $offre['ville'] . ' (' . $offre['codepostal'] . ')', "../../ressources/icone/localisateur.svg"); 
                 ?>
 
                 <!-- Liste imbriquée pour les informations supplémentaires -->
                 <ul>
                     <li>Infos complémentaires :
                         <ul>
-                            <li>Déjeuner</li>
-                            <li>Tag : Française - Crêperie</li>
+                            <li><?php echo $offre['nomoption']; ?></li>
+                            <li>Forfait : <?php echo $offre['nomforfait']; ?></li>
                         </ul>
                     </li>
                 </ul>
@@ -57,34 +102,38 @@
                     <img src="../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine" style="vertical-align: middle;">
                     <img src="../../ressources/icone/etoile_mid.svg" alt="Logo étoile pleine" style="vertical-align: middle;">
                     <img src="../../ressources/icone/etoile_vide.svg" alt="Logo étoile pleine" style="vertical-align: middle;">
-                    <!-- (répéter pour le nombre d'étoiles pleines et vides nécessaires) -->
                 </div>
-                <?php Label::render("tranche_prix", "", "", "€€€");
-                ?>
+                <?php Label::render("tranche_prix", "", "", "€€€"); ?>
 
                 <div class="carte">
                     <div class="dessus-carte">
-                    <!-- Informations de profil : photo, nom, localisation, contact -->
+                        <!-- Informations de profil : photo, nom, localisation, contact -->
                         <img alt="Photo de profil" height="50" src="https://storage.googleapis.com/a1aa/image/X1R0j5nq39oeCyPhJsMjBx3peJ0fBncTGTd4TCy7MPRk7NPnA.jpg" width="50"/>
                         <div>
-                                            
-                            <?php Label::render("partie_haute", "", "", "Serge Sauvion");
-                             Label::render("partie_haute", "", "", "Lannion", "../../ressources/icone/localisateur.svg"); ?>
-                            
+                            <!-- Affichage de la dénomination sociale à la place du nom -->
+                            <?php 
+                                if (isset($offre['denominationsociale'])) {
+                                    Label::render("partie_haute", "", "", $offre['denominationsociale']);
+                                }
+                                // Afficher la ville du compte (table _compte) en dessous de la dénomination sociale
+                                if (isset($offre['compteVille'])) {
+                                    Label::render("partie_haute", "", "", $offre['compteVille'], "../../ressources/icone/localisateur.svg");
+                                }
+                            ?>
                         </div>
                     </div> 
 
                     <div class="dessous-carte">
                         <div class="email">
                             <img src="../../ressources/icone/lettre.svg" alt="icone lettre" style="vertical-align: middle;">
-                            <a href="mailto:serge@gmail.com">serge@gmail.com</a>
+                            <a href="mailto:<?php echo $offre['email']; ?>"><?php echo $offre['email']; ?></a>
                         </div>
                         <div class="telephone">
                             <img src="../../ressources/icone/telephone.svg" alt="icone téléphone" style="vertical-align: middle;">
-                            <span>(671) 555-0110</span>
+                            <span>(Numéro de téléphone à ajouter si disponible)</span>
                         </div>
                         <!-- Bouton d'envoi de mail -->
-                        <a class="bouton" href="mailto:serge@gmail.com">
+                        <a class="bouton" href="mailto:<?php echo $offre['email']; ?>">
                             <img src="../../ressources/icone/lettre.svg" alt="icone lettre" style="vertical-align: middle;">
                             Envoyer un Mail
                         </a>
@@ -94,6 +143,6 @@
         </div>
     </main>
 
-    <?php Footer::render(FooterType::Guest); ?>
+    <?php //Footer::render(FooterType::Guest); ?>
 </body>
 </html>
