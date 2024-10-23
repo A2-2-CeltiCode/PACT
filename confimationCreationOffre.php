@@ -132,7 +132,7 @@
     foreach ($_FILES['monDropZone']['name'] as $key => $val) {
         $nomImage = $_FILES['monDropZone']['name'][$key];
         $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
-        $location = 'images/' . $idOffre . '/';
+        $location = '../../ressources/'.$idOffre .'/images'.'/';
         
         if (!file_exists($location)) {
             mkdir($location, 0777, true);
@@ -211,7 +211,7 @@
 
         $nomImage = $_FILES['planParc']['name'][$key];
         $tmp_name = $_FILES['planParc']['tmp_name'][$key];
-        $location = 'images/' . $idOffre . '/carte'.'/';
+        $location = '../../ressources/'.$idOffre .'/carte'.'/';
         
         if (!file_exists($location)) {
             mkdir($location, 0777, true);
@@ -283,7 +283,7 @@
 
         $nomImage = $_FILES['carteRestaurant']['name'][$key];
         $tmp_name = $_FILES['carteRestaurant']['tmp_name'][$key];
-        $location = 'images/' . $idOffre . '/carte'.'/';
+        $location = '../../ressources/'.$idOffre .'/carte'.'/';
         
         if (!file_exists($location)) {
             mkdir($location, 0777, true);
