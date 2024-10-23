@@ -1,3 +1,4 @@
+
 --
 -- SCHEMA
 --
@@ -11,12 +12,18 @@ SET SCHEMA 'pact';
 --
 
 CREATE TABLE _adresse(
+    idAdresse     SERIAL,
     codePostal    INTEGER NOT NULL,
     ville         VARCHAR(50) NOT NULL,
     nomRue        VARCHAR(50) NOT NULL,
     numRue        VARCHAR(5),
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
-    CONSTRAINT adresse_pk PRIMARY KEY(codePostal,ville)
+    CONSTRAINT adresse_pk PRIMARY KEY(idAdresse)
+);
+
+CREATE TABLE _gamme(
+    nomGamme    VARCHAR(10),
+    CONSTRAINT gamme_pk PRIMARY KEY(nomGamme)
 );
 
 CREATE TABLE _option(
@@ -53,19 +60,18 @@ CREATE TABLE _duree(
 
 CREATE TABLE _compte (
     idCompte    SERIAL,
-    login       VARCHAR(255) NOT NULL UNIQUE,
+    idAdresse   SERIAL,
     mdp         VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NOT NULL,
-    codePostal  INTEGER NOT NULL,
-    ville       VARCHAR(50) NOT NULL,
     CONSTRAINT compte_pk PRIMARY KEY(idCompte),
-    CONSTRAINT compte_fk_adresse FOREIGN KEY (codePostal,ville) 
-        REFERENCES _adresse(codePostal,ville)
+    CONSTRAINT compte_fk_adresse FOREIGN KEY (idAdresse) 
+        REFERENCES _adresse(idAdresse)
 );
 
 CREATE TABLE _compteMembre(
     idCompte  SERIAL,
-    prenom    VARCHAR(50) NOT NULL,  
+    login     VARCHAR(255) NOT NULL UNIQUE,
+    prenom    VARCHAR(50) NOT NULL,
     nom       VARCHAR(50) NOT NULL,
     CONSTRAINT compteMembre_fk_compte FOREIGN KEY (idCompte) 
         REFERENCES _compte(idCompte)
@@ -105,15 +111,19 @@ CREATE TABLE _offre(
     description             VARCHAR(50) NOT NULL,
     descriptionDetaillee    VARCHAR(50),
     siteInternet            VARCHAR(50),
-    nomOption               VARCHAR(50),
-    nomForfait              VARCHAR(50),
+    nomOption               VARCHAR(50) NOT NULL,
+    nomForfait              VARCHAR(50) NOT NULL,
+    estEnLigne              BOOLEAN NOT NULL,
+    idAdresse               SERIAL NOT NULL,
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
     CONSTRAINT offre_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption),
     CONSTRAINT offre_fk_forfait FOREIGN KEY (nomForfait)
-        REFERENCES _forfait(nomForfait)
+        REFERENCES _forfait(nomForfait),
+    CONSTRAINT offre_fk_adresse FOREIGN KEY (idAdresse)
+        REFERENCES _adresse(idAdresse)
 );
 
 CREATE TABLE _image(
@@ -172,9 +182,8 @@ CREATE TABLE _activite(
 CREATE TABLE _parcAttractions(
     idOffre         SERIAL,
     nomCategorie    VARCHAR(50) NOT NULL,
-    tempsEnMinutes  INTEGER UNIQUE,
     valPrix         NUMERIC(5,2) NOT NULL,
-    planParc        VARCHAR(50) NOT NULL,
+    idImage         SERIAL,
     nbAttractions   INTEGER NOT NULL,
     ageMin          INTEGER NOT NULL,
     CONSTRAINT parcAttractions_pk PRIMARY KEY (idOffre),
@@ -183,7 +192,9 @@ CREATE TABLE _parcAttractions(
     CONSTRAINT parcAttractions_fk_categorie FOREIGN KEY (nomCategorie)
         REFERENCES _categorie(nomCategorie),
     CONSTRAINT parcAttractions_fk_prix FOREIGN KEY (valPrix)
-        REFERENCES _prix(valPrix)
+        REFERENCES _prix(valPrix),
+    CONSTRAINT parcAttractions_fk_image FOREIGN KEY(idImage)
+        REFERENCES _image(idImage)
 );
 
 CREATE TABLE _visite(
@@ -206,21 +217,19 @@ CREATE TABLE _visite(
 CREATE TABLE _restaurant(
     idOffre           SERIAL,
     nomCategorie      VARCHAR(50) NOT NULL,
-    carteRestaurant   VARCHAR(50) NOT NULL,
-    gammeRestaurant   VARCHAR(50) NOT NULL,
+    nomGamme          VARCHAR(50) NOT NULL,
     CONSTRAINT restaurant_pk PRIMARY KEY (idOffre),
     CONSTRAINT restaurant_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
     CONSTRAINT restaurant_fk_categorie FOREIGN KEY (nomCategorie)
-        REFERENCES _categorie(nomCategorie)
+        REFERENCES _categorie(nomCategorie),
+    CONSTRAINT restaurant_fk_gamme FOREIGN KEY (nomGamme)
+        REFERENCES _gamme(nomGamme)
 );
 
 CREATE TABLE _repas(
     nomRepas   VARCHAR(50) NOT NULL,
-    valPrix    NUMERIC(5,2) NOT NULL,
-    CONSTRAINT repas_pk PRIMARY KEY(nomRepas,valPrix),
-    CONSTRAINT repas_fk_prix FOREIGN KEY (valPrix)
-        REFERENCES _prix(valPrix)
+    CONSTRAINT repas_pk PRIMARY KEY(nomRepas)
 );
 
 --
@@ -274,10 +283,9 @@ CREATE TABLE _guideeVisite (
 
 CREATE TABLE _proposeRestaurant (
     idOffre      SERIAL,
-    nomRepas      VARCHAR(50),
-    valPrix    NUMERIC(5,2) NOT NULL,
-    CONSTRAINT proposeRestaurant_fk_repas FOREIGN KEY (nomRepas,valPrix)
-        REFERENCES _repas(nomRepas,valPrix),
+    nomRepas     VARCHAR(50),
+    CONSTRAINT proposeRestaurant_fk_repas FOREIGN KEY (nomRepas)
+        REFERENCES _repas(nomRepas),
     CONSTRAINT proposeRestaurant_fk_restaurant FOREIGN KEY (idOffre)
         REFERENCES _restaurant(idOffre)
 );
@@ -289,7 +297,7 @@ CREATE TABLE _proposeRestaurant (
 
 CREATE TABLE _possedeSpectacle (
     idOffre      SERIAL,
-    nomTag      VARCHAR(50),
+    nomTag       VARCHAR(50),
     CONSTRAINT possedeSpectacle_fk_spectacle FOREIGN KEY (idOffre)
         REFERENCES _spectacle(idOffre),
     CONSTRAINT possedeSpectacle_fk_tagAutre FOREIGN KEY (nomTag)
@@ -298,7 +306,7 @@ CREATE TABLE _possedeSpectacle (
 
 CREATE TABLE _possedeActivite (
     idOffre      SERIAL,
-    nomTag      VARCHAR(50),
+    nomTag       VARCHAR(50),
     CONSTRAINT possedeActivite_fk_activite FOREIGN KEY (idOffre)
         REFERENCES _activite(idOffre),
     CONSTRAINT possedeActivite_fk_tagAutre FOREIGN KEY (nomTag)

@@ -110,3 +110,24 @@ p {
     color: var(--error);
     font-size: var(--p-small-font-size);
 }
+
+
+<div>
+                    <?php
+                    //Recupération des nomTag
+                    $sql = "SELECT nomTag FROM _tag";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+
+                    // Récupération des résultats sous forme de tableau 
+                    $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    ?>
+                    <fieldset>
+                        <label>Tag</label>
+                        <?php foreach($tabTag as $tag){ ?>
+                        <div>
+                            <input type="checkbox" id=<?php echo($tag); ?> value=<?php echo($tag); ?>name='tag[]'/>
+                        </div>
+                        <?php }?>
+                    </fieldset>
+                </div>
