@@ -52,7 +52,10 @@ body {
 .description {
     background-color: white;
     font-size: small;
+    display: flex;
+    flex-direction: column;
 }
+
 .nom-restau {
     margin: 25px 0px 0px 0px;
     font-size: x-large;
@@ -76,34 +79,17 @@ body {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 5px;
-    padding: 0px 5px 8px 5px;
+    padding: 10px ;
     width: 250px;
-   
+    border: 1px solid #ccc;
     text-align: center;
-    position: relative;
-}
-
-.dessus-carte {
     display: flex;
-    margin: 5px;
+    flex-direction: column;
+    align-items: center;
 }
 
-.dessus-carte img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: small;
-    margin: 10px;
-}
-
-.dessus-carte div img {
-    margin: 0;
-    height: 20px !important;
-}
-
-.dessous-carte div img, .dessous-carte a img {
-    height: 20px !important; 
-    vertical-align: middle;
+.carte div {
+    margin: 10px 0;
 }
 
 .carte h2 {
@@ -152,15 +138,24 @@ body {
     margin-right: 10px;
 }
 
-.carte .menu {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
 .note_etoiles{
     height: 20px !important;
     margin: 25px 0px 0px 0px;
+}
+
+.description label, .description ul {
+    margin-bottom: 10px;
+}
+
+.note_etoiles img {
+    margin-right: 5px;
+}
+
+.telephone {
+    margin-top: 10px;
+}
+
+.bouton img {
+    margin-right: 5px;
+    vertical-align: middle;
 }
