@@ -123,6 +123,7 @@
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                     $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$numero', '$telephone')");
                     $stmt->execute();
+                    
                     /*$stmt = $dbh->prepare("INSERT INTO _compte(mdp, email,codePostal, ville) VALUES('$idOffre','$typeOffre','$duree','$prix','$ageMinimum')");
                     $stmt->execute();
                     $stmt = $dbh->prepare("INSERT INTO _compte(mdp, email,codePostal, ville) VALUES('$idOffre','$typeOffre','$duree','$prix','$ageMinimum')");
