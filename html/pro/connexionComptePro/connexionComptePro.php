@@ -2,55 +2,11 @@
 // Démarre la session pour gérer l'authentification
 session_start();
 
-include "../../../composants/Input/Input.php";
+require_once "../../../composants/Input/Input.php";
+require_once "../../../composants/Button/Button.php";
 
-include('./connect_params.php');
-try {
-    // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    
-    // Définit explicitement le schéma 'pact'
-    $dbh->exec("SET search_path TO pact;");
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br>";
-    die();
-}
+require_once('./connect_params.php');
 
-// Vérifie si le formulaire de connexion a été soumis
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupère les valeurs soumises dans le formulaire
-    $identifiant_utilisateur = $_POST['username'];
-    $mot_de_passe_utilisateur = $_POST['password'];
-
-    // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
-    $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
-    
-    $requete_preparee = $dbh->prepare($requete_sql);
-    $requete_preparee->bindParam(':identifiant', $identifiant_utilisateur);
-    $requete_preparee->execute();
-    
-    // Vérifie si un compte correspondant a été trouvé
-    if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
-        // Comparaison simple des mots de passe (sans hachage)
-        if ($mot_de_passe_utilisateur === $compte['mdp']) {
-            // Si les informations sont correctes, démarrer la session
-            $_SESSION['utilisateur_connecte'] = true;
-            $_SESSION['identifiant_utilisateur'] = $compte['email'];
-            // Sauvegarder l'ID du compte dans la session
-            $_SESSION['id_compte_utilisateur'] = $compte['idcompte'];
-            
-            // Redirige vers le tableau de bord
-            header('Location: tableauDeBord.php');
-            exit();
-        } else {
-            // Mot de passe incorrect
-            $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
-        }
-    } else {
-        // Aucun compte trouvé avec cet email
-        $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Page de Connexion</title>
     <link rel="stylesheet" href="connexionComptePro.css">
+    <link rel="stylesheet" href="../../../variables.css">
 </head>
 <body>
     <div class="conteneur">
@@ -66,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <!-- Titre de la page -->
         <h1>Connectez-vous à votre compte</h1>
-        <div class="soulignement"></div>
+        <hr>
 
         <!-- Afficher le message d'erreur s'il y en a un -->
         <?php if (isset($message_erreur_connexion)): ?>
@@ -85,10 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php Input::render(class : "conect" , type : "password", name:"password", placeholder:"Mot de passe", required : true)  ?>
         
             </div>
-            <a class="lien-mdp-oublie" href="#">Mot de passe oublié ?</a>
-            <button class="bouton-connexion" type="submit">Se connecter</button>
+            <div class="connecte">
+                <a class="lien-mdp-oublie" href="#">Mot de passe oublié ?</a>
+                <?php Button::render(class: "bouton-connexion", submit: true, type: "pro", text: "Se connecter"); ?>
+            </div>
         </form>
-        
         <!-- Lien pour créer un compte -->
         <div class="inscription">
             Vous n'avez pas de compte ? <a href="creationComptePro.php">Créez un compte dès maintenant</a>
