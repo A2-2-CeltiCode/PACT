@@ -82,7 +82,7 @@ if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
             <div class="description">
                 <!-- Affichage dynamique des informations de l'offre -->
                 <?php 
-                    Label::render("nom-restau", "", "", $offre['titre'], "../../../ressources/icone/restaurant.svg");
+                    Label::render("nom-restau", "", "", $offre['titre']);
                     // Affichage de la description détaillée
                     Label::render("", "", "", isset($offre['descriptiondetaillee']) ? $offre['descriptiondetaillee'] : "Description non disponible");
                     Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../../ressources/icone/horloge.svg"); 
