@@ -22,7 +22,7 @@
 
     
     
-    <form class="info-display" id="myForm", method="post" action="confimationCreationOffre.php" enctype="multipart/form-data">
+    <form class="info-display" id="myForm" method="post" action="confimationCreationOffre.php" enctype="multipart/form-data">
         <h1>Créez votre Offre</h1>
         <section>
             
@@ -74,7 +74,7 @@
                     <label>Type de forfait*</label>
                     <?php
                         $option=null;
-                        $sql = "SELECT nomForfait FROM pact._forfait";
+                        $sql = "SELECT nomforfait FROM pact._forfait";
                         $stmt = $dbh->prepare($sql); 
                         $stmt->execute();
 
