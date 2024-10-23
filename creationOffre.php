@@ -6,7 +6,11 @@
     <?php require "components/Input/Textarea.php"?>
     <?php require "components/Input/Select.php"?>
     <?php require "components/InsererImage/InsererImage.php"?>
-    <?php require "components/Checkbox/Checkbox.php"?>
+    <?php require "components/Checkbox/Checkbox.php"?> 
+    <?php require "connect_params.php"?>
+    <?php $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
+            $user, $pass);
+    ?>  
     <title>Création d'une offre</title>
 
     <script src="creationOffre.js"></script>
@@ -59,7 +63,31 @@
                     <label>Description Détaille</label>
                     <?php Textarea::render(name:"descriptionDetaillee", rows:7) ?>
                 </div>
-                
+
+                <div>
+                    <?php
+                    //Recupération des nomTag
+                    $sql = "SELECT nomtag FROM pact._tag";
+                    $stmt = $dbh->prepare($sql); // Remplacez $pdo par $dbh
+                    $stmt->execute();
+
+                    // Récupération des résultats sous forme de tableau 
+                    $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    ?>
+                        <label>Tag</label>
+                        <?php foreach($tabTag as $tag){ 
+                            Checkbox::render(
+                                class: "checkbox",
+                                id: $tag['nomtag'],
+                                name: "tag[]",
+                                value: $tag['nomtag'],
+                                text: $tag['nomtag'],
+                                required: false,
+                                checked: false
+                            );
+                        }?>
+                    
+                </div>
                 
                 <div>
                     <label>Type de forfait*</label>
@@ -83,8 +111,8 @@
                             required: true, 
                             options: [
                                 "Aucune" => "Aucune",
-                                "Relief" => "Relief",
-                                "aLaUne" => "À la une"
+                                "En relief" => "En relief",
+                                "A la une" => "A la une"
                             ]
                         );
                     ?>
@@ -116,22 +144,22 @@
                 <!-- Section Activité -->
                 <div id="Activite" class="section" style="display:none;">
                     <label>Prix*</label>
-                    <?php Input::render(name:"prix", type:"number") ?>
+                    <?php Input::render(name:"prix1", type:"number") ?>
                     <label>Âge minimum</label>
-                    <?php Input::render(name: "ageMinimum", type: "number") ?>
+                    <?php Input::render(name: "ageMinimum1", type: "number") ?>
                     <label>Prestation </label>
                     <?php Input::render(name: "prestation", type: "text") ?>
                     <label>Durée de l'activité</label>
-                    <?php Input::render(name: "duree", type: "number") ?>
+                    <?php Input::render(name: "duree1", type: "number") ?>
                 </div>
 
                 <!-- Section Visite -->
                 <div id="Visite" class="section" style="display:none;">
                     <label>Prix*</label>
-                    <?php Input::render(name:"prix", type:"number") ?>
+                    <?php Input::render(name:"prix2", type:"number") ?>
                     
                     <label>Durée de la visite</label>
-                    <?php Input::render(name: "duree", type: "number") ?>
+                    <?php Input::render(name: "duree2", type: "number") ?>
                     
                     <label>Visite guidée</label>
                     <input type="radio" id="oui" name="guided" value="oui" onclick="toggleLangue(true)">
@@ -146,7 +174,7 @@
                                 class: "checkbox",
                                 id: "francais",
                                 name: "langue[]",
-                                value: "francais",
+                                value: "Français",
                                 text: "Français",
                                 required: false,
                                 checked: false
@@ -155,7 +183,7 @@
                                 class: "checkbox",
                                 id: "anglais",
                                 name: "langue[]",
-                                value: "anglais",
+                                value: "Anglais",
                                 text: "Anglais",
                                 required: false,
                                 checked: false
@@ -164,7 +192,7 @@
                                 class: "checkbox",
                                 id: "espagnol",
                                 name: "langue[]",
-                                value: "espagnol",
+                                value: "Espagnol",
                                 text: "Espagnol",
                                 required: false,
                                 checked: false
@@ -176,17 +204,17 @@
                 <!-- Section Spectacle -->
                 <div id="Spectacle" class="section" style="display:none;">
                     <label>Prix*</label>
-                    <?php Input::render(name:"prix", type:"number") ?>
+                    <?php Input::render(name:"prix3", type:"number") ?>
                     <label>Capacité d'accueil</label>
                     <?php Input::render(name: "capacite", type: "number");?>
                     <label>Durée du spectacle</label>
-                    <?php Input::render(name: "duree", type: "number");?>
+                    <?php Input::render(name: "duree3", type: "number");?>
                 </div>
 
                 <!-- Section Parc d'Attraction -->
                 <div id="ParcAttraction" class="section" style="display:none;">
                     <label>Prix*</label>
-                    <?php Input::render(name:"prix", type:"number") ?>
+                    <?php Input::render(name:"prix4", type:"number") ?>
                     <label>Nombre d'attractions</label>
                     <?php Input::render(name: "nombreAttractions", type: "number");?>
                     <div>
@@ -194,7 +222,7 @@
                         <?php InsererImage::render("planParc", "Glissez-déposez vos images ici",1, false);?>
                     </div>
                     <label>Âge minimum</label>
-                    <?php Input::render(name: "ageMinimum", type: "number") ?>
+                    <?php Input::render(name: "ageMinimum2", type: "number") ?>
                 </div>
 
                 <!-- Section Restauration-->
@@ -264,6 +292,7 @@
             <?php Button::render(text: "Annuler", type: ButtonType::Pro, submit: false); ?>
             <?php Button::render(text: "Valider", type: ButtonType::Pro, submit: true); ?>
         </div>
+
     </form>
     <script src="creationOffre.js"></script>
 </body>
