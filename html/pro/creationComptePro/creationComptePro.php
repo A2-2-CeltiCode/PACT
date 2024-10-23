@@ -37,11 +37,11 @@
         $raisonS = $_POST['raisonS'];
         $siren = $_POST['siren'];
         $email = $_POST['email'];
-        $telephone = $_POST['telephone'];
-        $codePostal = $_POST['codePostal'];
-        $ville = $_POST['ville'];
-        $numero = $_POST['numero'];
-        $rue = $_POST['rue'];
+        $telephone = $_POST['telephone']; //
+        $codePostal = $_POST['codePostal']; //
+        $ville = $_POST['ville']; //
+        $numero = $_POST['numero']; //
+        $rue = $_POST['rue']; //
         $motDePasse = $_POST['motDePasse'];
         $confirmMdp = $_POST['confirmMdp'];
         $iban = $_POST['iban'];
@@ -106,31 +106,42 @@
                 $denomination = $_POST['denomination'];
                 $raisonS = $_POST['raisonS'];
                 $siren = $_POST['siren'];
-                $email = $_POST['email'];
-                $telephone = $_POST['telephone'];
-                $codePostal = $_POST['codePostal'];
+                $email = $_POST['email'];           
+                $telephone = $_POST['telephone'];      
+                $codePostal = $_POST['codePostal']; 
                 $ville = $_POST['ville'];
                 $rue = $_POST['rue'];
                 $numero = $_POST['numero'];
                 $motDePasse = $_POST['motDePasse'];
-                $iban = $_POST['iban'];;
-
-                $nouvelUtilisateur = $_POST['denomination'].";".$_POST['raisonS'].";".$_POST['siren'].";".$_POST['email'].";".$_POST['telephone'].";".$_POST['codePostal'].";".$_POST['ville'].";".$_POST['rue'].";".$_POST['numero'].";".$_POST['motDePasse'].";".$_POST['iban'];
-                /*file_put_contents("user_data.csv", "\n".$nouvelUtilisateur);*/
+                $iban = $_POST['iban'];
                 
                 include('./connect_params.php');
                 try {
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
                     $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$numero', '$telephone')");
                     $stmt->execute();
+                    $idAdresse = $dbh->lastInsertId();
                     
-                    /*$stmt = $dbh->prepare("INSERT INTO _compte(mdp, email,codePostal, ville) VALUES('$idOffre','$typeOffre','$duree','$prix','$ageMinimum')");
+                    $stmt = $dbh->prepare("INSERT INTO pact._compte(idAdresse, mdp, email) VALUES('$idAdresse','$motDePasse','$email')");
                     $stmt->execute();
-                    $stmt = $dbh->prepare("INSERT INTO _compte(mdp, email,codePostal, ville) VALUES('$idOffre','$typeOffre','$duree','$prix','$ageMinimum')");
-                    $stmt->execute();*/
+                    $idCompte = $dbh->lastInsertId();
+
+                    $stmt = $dbh->prepare("INSERT INTO pact._comptePro(idCompte,denominationSociale, raisonSocialePro,banqueRib) VALUES('$idCompte','$denomination','$raisonS','$iban')");
+                    $stmt->execute();
+
+                    if(strlen($siren) > 0){
+                        $stmt = $dbh->prepare("INSERT INTO pact._compteProPrive(idCompte,numSiren) VALUES('$idCompte','$siren')");
+                        $stmt->execute();
+                    }
+                    else{
+                        $stmt = $dbh->prepare("INSERT INTO pact._compteProPublic(idCompte) VALUES('$idCompte')");
+                        $stmt->execute();
+                    }
+
                     $dbh = null;
+                    
                 } catch (PDOException $e) {
-                    echo "INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$numero', '$telephone')";
                     print "Erreur !: " . $e->getMessage() . "<br/>";
                     die();
                 }
