@@ -48,7 +48,7 @@ if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
     $imagePath = "../../../ressources/images/" . $offre['nomimage'];
 }
 
-// Étape 1 : Déterminer le type de l'offre
+//Déterminer le type de l'offre
 $typeOffre = '';
 $tags = [];
 
@@ -65,7 +65,7 @@ foreach ($tablesTypes as $table) {
     }
 }
 
-// Étape 2 : Récupérer les tags associés selon le type d'offre
+//Récupérer les tags associés selon le type d'offre
 if ($typeOffre == '_spectacle') {
     $sqlTags = "SELECT nomtag FROM pact._possedespectacle WHERE idoffre = :idOffre";
 } elseif ($typeOffre == '_activite') {
