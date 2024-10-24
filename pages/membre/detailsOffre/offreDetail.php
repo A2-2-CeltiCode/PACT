@@ -17,7 +17,7 @@ try {
 // Récupérer l'ID de l'offre depuis l'URL ou autre paramètre
 $idOffre = isset($_GET['idOffre']) ? intval($_GET['idOffre']) : 1; // Par défaut, affiche l'offre avec idOffre 1
 
-// Requête pour récupérer les détails de l'offre, y compris la description détaillée, l'image associée et le numéro de téléphone
+// Requête pour récupérer les détails de l'offre
 $requete_sql = '
     SELECT o.titre, o.descriptiondetaillee, o.siteinternet, o.nomoption, o.nomforfait, a.codepostal, a.ville, 
            a.numtel, c.email, a.ville AS compteville, cp.idcompte, a.codepostal AS comptecodepostal,
@@ -44,15 +44,50 @@ if (!$offre) {
 // Chemin par défaut si aucune image n'est trouvée
 $imagePath = "../../../ressources/icone/default.jpg";
 if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
-    // Chemin de l'image de l'offre (modifiez le chemin si nécessaire pour correspondre à votre structure de fichiers)
     $imagePath = "../../../ressources/images/" . $offre['nomimage'];
+}
+
+// Étape 1 : Déterminer le type de l'offre
+$typeOffre = '';
+$tags = [];
+
+// On vérifie dans quelle table spécifique l'offre se trouve
+$tablesTypes = ['_spectacle', '_activite', '_parcattractions', '_visite', '_restaurant'];
+foreach ($tablesTypes as $table) {
+    $sqlType = "SELECT 1 FROM pact.$table WHERE idoffre = :idOffre LIMIT 1";
+    $stmtType = $dbh->prepare($sqlType);
+    $stmtType->bindParam(':idOffre', $idOffre, PDO::PARAM_INT);
+    $stmtType->execute();
+    if ($stmtType->fetch()) {
+        $typeOffre = $table;
+        break;
+    }
+}
+
+// Étape 2 : Récupérer les tags associés selon le type d'offre
+if ($typeOffre == '_spectacle') {
+    $sqlTags = "SELECT nomtag FROM pact._possedespectacle WHERE idoffre = :idOffre";
+} elseif ($typeOffre == '_activite') {
+    $sqlTags = "SELECT nomtag FROM pact._possedeactivite WHERE idoffre = :idOffre";
+} elseif ($typeOffre == '_parcattractions') {
+    $sqlTags = "SELECT nomtag FROM pact._possedeparcattractions WHERE idoffre = :idOffre";
+} elseif ($typeOffre == '_visite') {
+    $sqlTags = "SELECT nomtag FROM pact._possedepossedevisite WHERE idoffre = :idOffre";
+} elseif ($typeOffre == '_restaurant') {
+    $sqlTags = "SELECT nomtag FROM pact._possederestaurant WHERE idoffre = :idOffre";
+}
+
+if (!empty($sqlTags)) {
+    $stmtTags = $dbh->prepare($sqlTags);
+    $stmtTags->bindParam(':idOffre', $idOffre, PDO::PARAM_INT);
+    $stmtTags->execute();
+    $tags = $stmtTags->fetchAll(PDO::FETCH_COLUMN);
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 
-<!-- Inclusion du fichier PHP pour les composants réutilisables -->
 <?php require_once("../../../composants/Label/Label.php");
       require_once("../../../composants/Button/Button.php");
       require_once("../../../composants/Input/Input.php");
@@ -73,29 +108,21 @@ if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
  
 <body>
     <?php Header::render(HeaderType::Member); ?>   
-    <!-- Contenu principal avec les détails de l'offre -->
     <main>
         <div class="offre">
-            <!-- Image principale de l'offre -->
             <img class="image-offre" alt="Image offre" src="<?php echo $imagePath; ?>" />
-
             <div class="description">
-                <!-- Affichage dynamique des informations de l'offre -->
                 <?php 
                     Label::render("nom-restau", "", "", $offre['titre']);
-                    // Affichage de la description détaillée
                     Label::render("", "", "", isset($offre['descriptiondetaillee']) ? $offre['descriptiondetaillee'] : "Description non disponible");
                     Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../../ressources/icone/horloge.svg"); 
                 ?>
-
                 <a href="<?php echo $offre['siteinternet']; ?>">
                     <?php Label::render("bas_desc", "", "", "Site du restaurant", "../../../ressources/icone/naviguer.svg"); ?>
                 </a>
                 <?php 
                     Label::render("bas_desc", "", "", $offre['ville'] . ' (' . $offre['codepostal'] . ')', "../../../ressources/icone/localisateur.svg"); 
                 ?>
-
-                <!-- Liste imbriquée pour les informations supplémentaires -->
                 <ul>
                     <li>Infos complémentaires :
                         <ul>
@@ -103,45 +130,47 @@ if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
                             <li>Forfait : <?php echo $offre['nomforfait']; ?></li>
                         </ul>
                     </li>
+                    <!-- Ajout des tags associés -->
+                    <?php if (!empty($tags)): ?>
+                        <li>Tags associés :
+                            <ul>
+                                <?php foreach ($tags as $tag): ?>
+                                    <li><?php echo htmlspecialchars($tag); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
-
-            <!-- Section droite avec note en étoiles et information de contact -->
             <div class="colonne-droite">
                 <div class="note_etoiles">
-                    <!-- Icônes d'étoiles pour la note -->
-                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine" style="vertical-align: middle;">
-                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine" style="vertical-align: middle;">
-                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine" style="vertical-align: middle;">
-                    <img src="../../../ressources/icone/etoile_mid.svg" alt="Logo étoile pleine" style="vertical-align: middle;">
-                    <img src="../../../ressources/icone/etoile_vide.svg" alt="Logo étoile pleine" style="vertical-align: middle;">
+                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine">
+                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine">
+                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine">
+                    <img src="../../../ressources/icone/etoile_mid.svg" alt="Logo étoile pleine">
+                    <img src="../../../ressources/icone/etoile_vide.svg" alt="Logo étoile pleine">
                 </div>
                 <?php Label::render("tranche_prix", "", "", "€€€"); ?>
 
                 <div class="carte">
-                    
-                        <!-- Affichage de la dénomination sociale -->
-                        <?php 
-                            if (isset($offre['denominationsociale'])) {
-                                Label::render("", "", "", $offre['denominationsociale']);
-                            }
-                            // Afficher la ville du compte (table _compte) en dessous de la dénomination sociale
-                            if (isset($offre['compteville'])) {
-                                Label::render("", "", "", $offre['compteville'], "../../../ressources/icone/localisateur.svg");
-                            }
-                        ?>
-
+                    <?php 
+                        if (isset($offre['denominationsociale'])) {
+                            Label::render("", "", "", $offre['denominationsociale']);
+                        }
+                        if (isset($offre['compteville'])) {
+                            Label::render("", "", "", $offre['compteville'], "../../../ressources/icone/localisateur.svg");
+                        }
+                    ?>
                     <div class="email">
-                        <img src="../../../ressources/icone/lettre.svg" alt="icone lettre" style="vertical-align: middle;">
+                        <img src="../../../ressources/icone/lettre.svg" alt="icone lettre">
                         <a href="mailto:<?php echo $offre['email']; ?>"><?php echo $offre['email']; ?></a>
                     </div>
                     <div class="telephone">
-                        <img src="../../../ressources/icone/telephone.svg" alt="icone téléphone" style="vertical-align: middle;">
+                        <img src="../../../ressources/icone/telephone.svg" alt="icone téléphone">
                         <span><?php echo isset($offre['numtel']) ? $offre['numtel'] : '(Numéro de téléphone non disponible)'; ?></span>
                     </div>
-                    <!-- Bouton d'envoi de mail -->
                     <a class="bouton" href="mailto:<?php echo $offre['email']; ?>">
-                        <img src="../../../ressources/icone/lettre.svg" alt="icone lettre" style="vertical-align: middle;">
+                        <img src="../../../ressources/icone/lettre.svg" alt="icone lettre">
                         Envoyer un Mail
                     </a>
                 </div>
