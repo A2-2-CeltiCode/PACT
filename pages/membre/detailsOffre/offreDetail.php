@@ -42,9 +42,9 @@ if (!$offre) {
 }
 
 // Chemin par défaut si aucune image n'est trouvée
-$imagePath = "../../../ressources/icone/default.jpg";
+$imagePath = "../../ressources/icone/default.jpg";
 if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
-    $imagePath = "../../../ressources/images/" . $offre['nomimage'];
+    $imagePath = "../../ressources/images/" . $offre['nomimage'];
 }
 
 // Étape 1 : Déterminer le type de l'offre
@@ -88,11 +88,11 @@ if (!empty($sqlTags)) {
 <!DOCTYPE html>
 <html lang="fr">
 
-<?php require_once("../../../composants/Label/Label.php");
-      require_once("../../../composants/Button/Button.php");
-      require_once("../../../composants/Input/Input.php");
-      require_once("../../../composants/Header/Header.php");
-      require_once("../../../composants/Footer/Footer.php");
+<?php require_once("../../composants/Label/Label.php");
+      require_once("../../composants/Button/Button.php");
+      require_once("../../composants/Input/Input.php");
+      require_once("../../composants/Header/Header.php");
+      require_once("../../composants/Footer/Footer.php");
 ?>
 
 <head>
@@ -102,7 +102,7 @@ if (!empty($sqlTags)) {
 
     <!-- Liens vers les fichiers CSS pour le style général et spécifique -->
     <link rel="stylesheet" href="offreDetail.css">
-    <link rel="stylesheet" href="../../../ui.css">
+    <link rel="stylesheet" href="../../ui.css">
 </head>
 
  
@@ -115,10 +115,10 @@ if (!empty($sqlTags)) {
                 <?php 
                     Label::render("nom-restau", "", "", $offre['titre']);
                     Label::render("", "", "", isset($offre['descriptiondetaillee']) ? $offre['descriptiondetaillee'] : "Description non disponible");
-                    Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../../ressources/icone/horloge.svg"); 
+                    Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../ressources/icone/horloge.svg"); 
                 ?>
                 <a href="<?php echo $offre['siteinternet']; ?>">
-                    <?php Label::render("bas_desc", "", "", "Site du restaurant", "../../../ressources/icone/naviguer.svg"); ?>
+                    <?php Label::render("bas_desc", "", "", "Site du restaurant", "../../ressources/icone/naviguer.svg"); ?>
                 </a>
                 <?php 
                     Label::render("bas_desc", "", "", $offre['ville'] . ' (' . $offre['codepostal'] . ')', "../../../ressources/icone/localisateur.svg"); 
@@ -144,11 +144,11 @@ if (!empty($sqlTags)) {
             </div>
             <div class="colonne-droite">
                 <div class="note_etoiles">
-                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine">
-                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine">
-                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine">
-                    <img src="../../../ressources/icone/etoile_mid.svg" alt="Logo étoile pleine">
-                    <img src="../../../ressources/icone/etoile_vide.svg" alt="Logo étoile pleine">
+                    <img src="../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine">
+                    <img src="../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine">
+                    <img src="../../ressources/icone/etoile_pleine.svg" alt="Logo étoile pleine">
+                    <img src="../../ressources/icone/etoile_mid.svg" alt="Logo étoile pleine">
+                    <img src="../../ressources/icone/etoile_vide.svg" alt="Logo étoile pleine">
                 </div>
                 <?php Label::render("tranche_prix", "", "", "€€€"); ?>
 
@@ -162,15 +162,15 @@ if (!empty($sqlTags)) {
                         }
                     ?>
                     <div class="email">
-                        <img src="../../../ressources/icone/lettre.svg" alt="icone lettre">
+                        <img src="../../ressources/icone/lettre.svg" alt="icone lettre">
                         <a href="mailto:<?php echo $offre['email']; ?>"><?php echo $offre['email']; ?></a>
                     </div>
                     <div class="telephone">
-                        <img src="../../../ressources/icone/telephone.svg" alt="icone téléphone">
+                        <img src="../../ressources/icone/telephone.svg" alt="icone téléphone">
                         <span><?php echo isset($offre['numtel']) ? $offre['numtel'] : '(Numéro de téléphone non disponible)'; ?></span>
                     </div>
                     <a class="bouton" href="mailto:<?php echo $offre['email']; ?>">
-                        <img src="../../../ressources/icone/lettre.svg" alt="icone lettre">
+                        <img src="../../ressources/icone/lettre.svg" alt="icone lettre">
                         Envoyer un Mail
                     </a>
                 </div>
