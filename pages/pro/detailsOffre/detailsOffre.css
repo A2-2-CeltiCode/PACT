@@ -37,14 +37,24 @@ body {
 }
 
 .carousel-image {
+    display: grid;
+    place-items:center;
     width: 22em;
     height: 22em;
     object-fit: cover;
     border-radius: 10px;
 }
+.carousel-button.desactive{
+    display: none;
+}
+
+.carousel-button:has(~ .carousel-images > .pas-images){
+    display: none;
+}
 
 .carousel-button {
-    position: absolute;
+    z-index: 2;
+    position:absolute;
     top: 45%;
     background-color: rgba(0, 0, 0, 0.5);
     border: none;

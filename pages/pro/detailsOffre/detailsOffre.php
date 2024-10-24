@@ -48,7 +48,6 @@ try {
     if (!$offre) {
         throw new Exception("Aucune offre trouvée");
     }
-
 } catch (PDOException $e) {
     // Gestion des erreurs de connexion à la base de données
     print "Erreur !: " . $e->getMessage() . "<br>";
@@ -78,16 +77,24 @@ try {
     <div class="container">
         <div>
             <div class="carousel">
-                <div class="carousel-images">
-                    <?php 
-                        // Affichage des images de l'offre
-                        foreach ($images as $imageArray): ?>
-                            <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>"
-                                 class="carousel-image">
-                        <?php endforeach; ?>
-                </div>
-                <button class="carousel-button prev">❮</button>
+
+                <button class="carousel-button prev desactive">❮</button>
                 <button class="carousel-button next">❯</button>
+                <div class="carousel-images">
+                    <?php
+                    // Affichage des images de l'offre
+                    foreach ($images as $imageArray):
+                        $path_img = "../../../ressources/" . $idOffre . "/images/" . $imageArray['nomimage'];
+                        if (!file_exists($path_img)): ?>
+                            <div class="carousel-image pas-images"><svg xmlns="http://www.w3.org/2000/svg" height="10em" viewBox="0 -960 960 960" width="10em" fill="#000000">
+                                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z" />
+                                </svg></div>
+
+                        <?php else: ?>
+                            <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>" class="carousel-image">
+                        <?php endif ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
             <?php if ($typeOffre !== 'restaurant'): ?>
                 <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
@@ -118,12 +125,12 @@ try {
             }
             $tagsString = rtrim($tagsString, ', ');
             if (!empty($tagsString)) {
-                ?><br><?php
-                Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
-                ?><br><?php
-            }
-            Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
-            ?>
+            ?><br><?php
+                    Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
+                    ?><br><?php
+                            }
+                            Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
+                                ?>
             <ul>
                 <?php
                 // Affichage des informations spécifiques en fonction du type d'offre
@@ -133,14 +140,14 @@ try {
                         break;
                     case 'spectacle':
                         Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
-                        Label::render("", "", "", "Capacité: " . $capacite['capacite'], "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg");
                         break;
                     case 'parc_attractions':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'], "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg");
                         Label::render("", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg");
                         break;
                     case 'activite':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'], "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg");
                         Label::render("", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
                         Label::render("", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg");
                         break;
@@ -159,10 +166,10 @@ try {
             <div class="forfait-info">
                 <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg"); ?>
             </div>
-            
+
             <!-- Formulaire pour modifier l'offre -->
             <form action="../modifierOffre/modifierOffre.html" method="POST">
-                <input type="hidden" name="idOffre" value=<?php echo $idOffre;?>>
+                <input type="hidden" name="idOffre" value=<?php echo $idOffre; ?>>
                 <div class="modifier-button">
                     <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", true); ?>
                 </div>
