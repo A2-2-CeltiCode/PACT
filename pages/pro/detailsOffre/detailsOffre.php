@@ -43,7 +43,8 @@ try {
     $adresse = $dbh->query('SELECT codepostal, ville, nomrue, numrue FROM pact._offre NATURAL JOIN pact._adresse WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $tags = $dbh->query('SELECT * FROM pact.vue_tags_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
     $images = $dbh->query('SELECT nomimage FROM pact._image WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
-
+    $plan;
+    $carte;
     // Vérification de l'existence de l'offre
     if (!$offre) {
         throw new Exception("Aucune offre trouvée");
