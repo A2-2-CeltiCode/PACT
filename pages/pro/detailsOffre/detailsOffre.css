@@ -37,6 +37,8 @@ body {
 }
 
 .carousel-image {
+    min-width: 22em;
+    min-height: 22em;
     display: grid;
     place-items:center;
     width: 22em;
