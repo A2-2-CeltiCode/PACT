@@ -102,7 +102,6 @@
                 </div>
                 
                 <?php Button::render(class: "sign-upButton", submit: true, type: "pro", text: "S'inscrire");
-                exit();
                 ?>
             </form>
             <hr>
