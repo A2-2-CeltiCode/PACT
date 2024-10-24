@@ -1,7 +1,6 @@
 --
 -- SCHEMA
 --
-
 SET SCHEMA 'pact';
 
 --

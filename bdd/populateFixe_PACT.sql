@@ -30,7 +30,7 @@ INSERT INTO _categorie (nomCategorie) VALUES
 
 -- Peupler la table _forfait
 INSERT INTO _forfait (nomForfait) VALUES
-('Gratuite'),
+('Gratuit'),
 ('Standard'),
 ('Premium');
 
