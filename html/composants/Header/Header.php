@@ -59,7 +59,8 @@ class Header
      */
     public static function render(string $type = HeaderType::Guest): void {
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close,menu" />';
+            echo '<link rel="stylesheet"
+                        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back_ios_new,arrow_forward_ios,close,menu" />';
             echo '<link rel="stylesheet" href="/composants/Header/Header.css">';
             self::$cssIncluded = true;
         }
@@ -83,7 +84,7 @@ class Header
         self::renderNav($type);
         self::renderLanguageSelector();
         self::renderAccountSection($type);
-        self::renderBurger();
+        self::renderBurger($type);
 
         if (!self::$jsIncluded) {
             echo '<script src="/composants/Header/Header.js"></script>';
@@ -98,7 +99,7 @@ class Header
      *
      * @param string $type Le type d'utilisateur (Guest, Member, Pro).
      */
-    private static function renderNav($type) {
+    private static function renderNav(string $type): void {
         echo '<nav>';
         if ($type == HeaderType::Guest) {
             echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
@@ -117,12 +118,12 @@ class Header
     /**
      * Rend le sélecteur de langue pour l'en-tête.
      */
-    private static function renderLanguageSelector() {
+    private static function renderLanguageSelector(): void {
         echo '
         <div class="entete-langue">
-            <img id="logo-langue" src="/ressources/icone/logofr.svg" alt="Français">
+            <img class="logo-langue" src="/ressources/icone/logofr.svg" alt="Français">
             <label for="selecteur-langue"></label>
-            <select id="selecteur-langue">
+            <select class="selecteur-langue">
                 <option value="fr">Français</option>
                 <option value="en">English</option>
             </select>
@@ -134,7 +135,7 @@ class Header
      *
      * @param string $type Le type d'utilisateur (Guest, Member, Pro).
      */
-    private static function renderAccountSection($type) {
+    private static function renderAccountSection(string $type): void {
         echo '<div>';
         if ($type == HeaderType::Guest) {
             Button::render($class = '', $id = 'guest-button', $text = 'S\'inscrire / Se Connecter',
@@ -150,19 +151,37 @@ class Header
         echo '</div>';
     }
 
-    private static function renderBurger() {
+    /**
+     * render le menu burger
+     *
+     * @param string $type
+     *
+     * @return void
+     */
+    private static function renderBurger(string $type): void {
+        echo '<div class="menu">';
+        Input::render(placeholder: 'Entrez une localisation...', icon: "/ressources/icone/test.svg");
+        if ($type == HeaderType::Guest) {
+            echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
+            echo '<a href="offre.php">Offres</a>';
+        } elseif ($type == HeaderType::Member) {
+            echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
+            echo '<a href="offre.php">Offres</a>';
+            echo '<a href="offre.php">Favoris</a>';
+        } elseif ($type == HeaderType::Pro) {
+            echo '<a href="dashboardPro.php">Mes Offres</a>';
+            echo '<a href="publierOffre.php">Créer une Offre</a>';
+        }
+        self::renderLanguageSelector();
+        self::renderAccountSection($type);
         echo <<<EOF
-<ul class="menu">
-    <li><a class="menuItem" href="#">Home</a></li>
-    <li><a class="menuItem" href="#">Profile</a></li>
-    <li><a class="menuItem" href="#">About</a></li>
-   <li><a class="menuItem" href="#">Contacts</a></li>
- </ul>
+ </div>
  <button class="hamburger">
     <!-- material icons https://material.io/resources/icons/ -->
     <span class="menuIcon material-symbols-outlined">menu</span>
     <span class="closeIcon material-symbols-outlined">close</span>
   </button>
+  <div id="overlay"></div>
 EOF;
 
     }

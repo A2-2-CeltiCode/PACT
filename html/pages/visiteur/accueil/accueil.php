@@ -76,36 +76,73 @@ foreach ($offresSql as $item) {
 <main>
     <div>
         <h2>Autour de vous</h2>
-        <div>
+        <div class="carrousel">
             <?php
             foreach ($offreProches as $item) {
                 echo $item;
             }
             ?>
+        </div>
+        <div>
+            <button>
+                <span class="material-symbols-outlined">
+                    arrow_back_ios_new
+                </span>
+            </button>
+            <button>
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </button>
         </div>
     </div>
     <div>
         <h2>Les plus recommandées</h2>
-        <div>
+        <div class="carrousel">
             <?php
             foreach ($offreProches as $item) {
                 echo $item;
             }
             ?>
         </div>
+        <div>
+            <button>
+                <span class="material-symbols-outlined">
+                    arrow_back_ios_new
+                </span>
+            </button>
+            <button>
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </button>
+        </div>
     </div>
     <div>
         <h2>Les mieux noté!</h2>
-        <div>
+        <div class="carrousel">
             <?php
             foreach ($offreProches as $item) {
                 echo $item;
             }
             ?>
+        </div>
+        <div>
+            <button>
+                <span class="material-symbols-outlined">
+                    arrow_back_ios_new
+                </span>
+            </button>
+            <button>
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </button>
         </div>
     </div>
 </main>
 <?php Footer::render(); ?>
 </body>
+<script src="accueil.js"></script>
 </html>
 

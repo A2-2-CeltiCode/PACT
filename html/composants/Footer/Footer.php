@@ -70,7 +70,7 @@ class Footer
         }
 
         Button::render($class = 'lien-bouton', $id = 'footer-button', $text = $buttonText, $type = $buttonType,
-            $onClick = "window.location.href='creationComptePro.php'");
+            $onClick = "window.location.href='/pages/pro/creationComptePro/creationComptePro.php'");
 
         echo <<<EOF
             <div class="liens-importants">

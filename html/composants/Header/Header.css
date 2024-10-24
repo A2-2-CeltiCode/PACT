@@ -96,6 +96,11 @@ body > header {
     display: none;
 }
 
+.noscroll {
+    overflow: hidden;
+    /*filter: blur(5px);*/
+}
+
 
 @media screen and (max-width: 1024px) {
     body > header {
@@ -116,12 +121,12 @@ body > header {
                 display: none;
             }
 
-            &:last-of-type {
+            &:nth-of-type(5) {
                 display: none;
             }
         }
 
-        nav, .entete-langue, [class^='span-pact-'] {
+        > nav, > .entete-langue, [class^='span-pact-'] {
             display: none;
         }
 
@@ -147,19 +152,42 @@ body > header {
 
     .menu {
         position: fixed;
-        display: inline;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 50vh;
         transform: translateX(200%);
         transition: transform 0.2s;
         top: 0;
         right: 0;
         z-index: 99;
-        list-style: none;
-        padding-top: 4rem;
+        padding: 4rem 2rem 1rem;
+        background-color: var(--blanc);
+        border-radius: 5px;
+
+        > a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: var(--gris3);
+            font-weight: bold;
+        }
+    }
+
+    #overlay {
+        background-color: var(--gris3);
+        filter: opacity(50%);
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 90;
+        visibility: hidden;
     }
 
 
     .showMenu {
-        display: inline;
         transform: translateX(0);
     }
 

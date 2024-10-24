@@ -62,7 +62,11 @@ header + div {
     background-image: url("/ressources/img/font-barre-recherce.png");
     display: flex;
     justify-content: center;
-    padding: 70px 0;
+    align-items: center;
+    /*padding: 70px 0;*/
+    min-height: 55px;
+    height: 15vh;
+    background-position: center;
 
     .barre_recherche {
         width: 75vw;
@@ -71,12 +75,7 @@ header + div {
 
     > div {
         background-color: rgba(255, 255, 255, 0.7);
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    header + div {
-        display: none;
+        height: 43px;
     }
 }
 
@@ -101,5 +100,42 @@ main {
                 display: none; /* Safari et Chrome */
             }
         }
+    }
+}
+
+.carrousel {
+    scroll-behavior: smooth;
+
+    + div {
+        display: flex;
+        justify-content: space-between;
+        padding-right: 128px;
+
+        button {
+            position: relative;
+            border-radius: 500px;
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--noir);
+            background-color: var(--gris1);
+
+            &:first-child {
+
+            }
+
+            .material-symbols-outlined {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                font-size: 32px;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    header + div, .carrousel + div {
+        display: none;
     }
 }
