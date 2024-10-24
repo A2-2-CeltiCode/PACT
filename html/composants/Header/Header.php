@@ -73,7 +73,7 @@ class Header
                 <img src="/ressources/icone/logo.svg" alt="Logo PACT">
                 <span class="' . $spanClass . '">PACT</span>
             </div>';
-        Input::render(class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
+        Input::render(class: "barre_recherche", placeholder: "Recherche activité, restaurant, lieu...",
             icon: "/ressources/icone/recherche.svg");
         echo '
             <div>';

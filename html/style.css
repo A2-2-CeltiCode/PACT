@@ -138,8 +138,4 @@ main {
     header + div, .carrousel + div {
         display: none;
     }
-
-    header {
-        overflow-x: hidden;
-    }
 }

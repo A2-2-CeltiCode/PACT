@@ -105,6 +105,7 @@ body > header {
 @media screen and (max-width: 1024px) {
     body > header {
 
+        overflow-x: hidden;
         padding: 0 5px;
 
         & > .input-wrapper {
@@ -112,9 +113,13 @@ body > header {
         }
 
         > div {
+            > img {
+                width: 10vw;
+
+            }
 
             &:nth-of-type(2) input {
-                width: 260px;
+                width: 50vw;
             }
 
             &:nth-of-type(3) .input-wrapper {
