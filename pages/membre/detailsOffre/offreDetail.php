@@ -116,7 +116,7 @@ if (!empty($sqlTags)) {
                 <?php 
                     Label::render("nom-restau", "", "", $offre['titre']);
                     Label::render("", "", "", isset($offre['descriptiondetaillee']) ? $offre['descriptiondetaillee'] : "Description non disponible");
-                    Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../../ressources/icone/horloge.svg"); 
+                    //Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../../ressources/icone/horloge.svg"); 
                 ?>
                 <a href="<?php echo $offre['siteinternet']; ?>">
                     <?php Label::render("bas_desc", "", "", "Site du restaurant", "../../../ressources/icone/naviguer.svg"); ?>
