@@ -5,9 +5,9 @@ session_start();
 use \composants\Input\Input;
 use \composants\Button\Button;
 
-include $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
-include $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
-include $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
+require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
 try {
     // Connexion à la base de données

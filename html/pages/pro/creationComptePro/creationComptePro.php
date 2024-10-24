@@ -18,9 +18,9 @@
     use \composants\Input\Input;
     use \composants\Button\Button;
 
-    include $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
-    include $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
-    include $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
     // Déclaration des variables
     $estPrive = true;
@@ -123,7 +123,7 @@
                 $motDePasse = $_POST['motDePasse'];
                 $iban = $_POST['iban'];
                 
-                include($_SERVER["DOCUMENT_ROOT"] . '/connect_params.php');
+                require_once($_SERVER["DOCUMENT_ROOT"] . '/connect_params.php');
                 try {
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 

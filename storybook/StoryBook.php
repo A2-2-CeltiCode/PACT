@@ -174,7 +174,7 @@
         <!-- Section des Composants -->
         <?php
         foreach (glob("components/*/*.php") as $filename) {
-            include $filename;
+            require_once $filename;
         }
         ?>
         <section id="composants">
@@ -213,7 +213,7 @@
 
 
 
-                <?php include '/component/Input/Input.php' ?>
+                <?php require_once '/component/Input/Input.php' ?>
 
 
 
