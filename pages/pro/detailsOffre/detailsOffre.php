@@ -7,8 +7,8 @@ require_once("../../../composants/Footer/Footer.php");
 
 require_once("../../../bdd/connect_params.php");
 
-$idOffre = '1';
-$typeOffre = 'spectacle';
+$idOffre = '3';
+$typeOffre = 'parc_attractions';
 
 try {
     // Établir la connexion à la base de données
@@ -20,7 +20,7 @@ try {
         case 'spectacle':
             $typeOffre = 'spectacle';
             break;
-        case 'parc-attractions':
+        case 'parc_attractions':
             $typeOffre = 'parc_attractions';
             break;
         case 'activite':
@@ -31,9 +31,40 @@ try {
             break;
         
         default:
-            die('Aucune offre n\'a été donnée');
+            die('Aucune offre n\'a été trouvée');
             break;
     }
+
+    // Requête pour récupérer le temsp en mine de la séance de spectacle
+    $stmt = $dbh->query('SELECT prestation FROM pact.vue_activite WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+    $prestation = $stmt->fetch();
+
+
+
+
+        // Requête pour récupérer le temsp en mine de la séance de spectacle
+        $stmt = $dbh->query('SELECT tempsenminutes FROM pact.vue_activite WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+        $minutesActivite = $stmt->fetch();
+
+            // Requête pour récupérer l'age minimum pour un parc d'attraction ageMinimum
+            $stmt = $dbh->query('SELECT agemin FROM pact.vue_activite WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+            $ageMinimumActivite = $stmt->fetch();
+
+        // Requête pour récupérer l'age minimum pour un parc d'attraction ageMinimum
+        $stmt = $dbh->query('SELECT agemin FROM pact.vue_parc_attractions WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+        $ageMinimumParc = $stmt->fetch();
+
+            // Requête pour récupérer le nombre d'attration dans un parc d'attraction
+    $stmt = $dbh->query('SELECT nbattractions FROM pact.vue_parc_attractions WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+    $nbAttraction = $stmt->fetch();
+
+    // Requête pour récupérer la gamme du restaurant
+    $stmt = $dbh->query('SELECT nomgamme FROM pact.vue_restaurant WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+    $gammeRestaurant = $stmt->fetch();
+
+    // Requête pour récupérer le temsp en mine de la séance de spectacle
+    $stmt = $dbh->query('SELECT tempsenminutes FROM pact.vue_spectacle WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+    $minutesSpectacle = $stmt->fetch();
     
     
     // Requête pour récupérer les détails de l'offre
@@ -116,30 +147,73 @@ try {
             <!-- Site Internet -->
             <?php
             Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
-            
-            // Option et forfait
-            Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg");
-            Label::render("offre-option", "", "", "Information complémentaires: ", "../../../ressources/icone/info.svg");
+            ?>
+
+<?php
+            Label::render("offre-option", "", "", "Option: " . $offre['nomoption'], "../../../ressources/icone/yeux.svg");
             ?>
 
             <?php 
-            // Tags
-            if ($tags!=[] && strcmp($typeOffre,'restaurant')!=0) {
-                echo "<ul> <li> Tags: ";
+                // Tags
+            if ($tags!=[]) {
+                $tagsString = '';
                 foreach ($tags as $tag) {
-                    echo ($tag['nomtag']) . " ";
+                    $tagsString .= $tag['nomtag'] . " ";
                 }
-                echo "  </li> </ul>";
-            }
-            elseif (strcmp($typeOffre,'restaurant')==0) {
-                
-            }
+                $tagsString = trim($tagsString);
+            Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
 
+            // Option et forfait
+            Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
+                
+                switch ($typeOffre) {
+                    case 'restaurant':
+                        echo '<li>';
+                        Label::render("", "", "", "Gamme Restaurant: " . $gammeRestaurant, "../../../ressources/icone/gamme.svg");
+                        echo '</li>';
+                        // afficher le menu du restaurant en file que l'on peut télécharger en pdf
+                        
+                        break;
+                    case 'spectacle':
+                        echo '<li>';
+                        Label::render("", "", "", "Durée(min): " . $minutesSpectacle['tempsenminutes'], "../../../ressources/icone/timer.svg");
+                        echo '</li>';
+                        break;
+                    case 'parc_attractions':
+                        echo '<li>';
+                        print_r($prestation);
+                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'], "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Nombre d'attraction: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg");
+                        echo '</li>';
+                        break;
+                    case 'activite':
+                        echo '<li>';
+                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'], "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Durée(min): " . $minutesActivite['tempsenminutes'], "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Prestation " . $prestation[''], "../../../ressources/icone/timer.svg");
+                        echo '</li>';
+                        break;
+                    case 'visite':
+                        echo '<li>';
+                        echo '</li>';
+                        break;
+                    
+                    default:
+                        die("Aucune offre n\'a été trouvée");
+                        break;
+                }        
+                echo "</ul>";
+            }
             ?>
 
             <!-- Prix de l'offre -->
-            <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€", "../../../ressources/icone/price.svg"); ?>
+             
+            <?php
+            if (strcmp($typeOffre,'restaurant')!=0) {
+                Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€", "../../../ressources/icone/euro.svg");
+            }?>
         </div>
+        <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg");?>
 
         <!-- Bouton pour modifier l'offre -->
         <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", "", "../StoryBook/StoryBook.php") ?>

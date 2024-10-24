@@ -1,4 +1,5 @@
 .container {
+    font-size: 14px;
     padding: 20px;
     display: flex;
     gap: 20px;
@@ -125,21 +126,10 @@ a:hover {
     height: 20px;
     fill: var(--primary-pro);
 }
-
-.offre-prix{
-    color: var(--black);
-    font-weight: var(--font-weight-semi-bold);
-    font-size: var(--h4-font-size);
-    width: fit-content;
-    position: relative;
-    bottom:80%;
-    left: 85%;}
-
-
 .offre-detail{
     color: var(--grey3);
 }
 
-ul{
+li{
     list-style: none;
 }
