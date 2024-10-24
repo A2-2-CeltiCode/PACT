@@ -112,7 +112,7 @@ function toggleLangue(show) {
     }
 }
 
-function toggleDropdown() {
-    var dropdown = document.getElementById("myDropdown");
+function toggleDropdown(dropdownId) {
+    var dropdown = document.getElementById(dropdownId);
     dropdown.classList.toggle("show");
 }
