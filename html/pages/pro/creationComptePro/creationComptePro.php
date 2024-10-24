@@ -56,7 +56,7 @@
         
         <div class="info-display">
             <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
-            <a href="accueil.php"><img alt="Logo" src="../../../ressources/icone/logo.svg"></a>
+            <a href="/pages/visiteur/accueil/accueil.php"><img alt="Logo" src="../../../ressources/icone/logo.svg"></a>
             <h1>Créez votre compte Professionnel</h1>
             <hr>
             <p id="necessary-fields-label">(*) - Champs Obligatoires</p>
