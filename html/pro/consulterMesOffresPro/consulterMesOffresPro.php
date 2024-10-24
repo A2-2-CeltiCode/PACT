@@ -12,7 +12,7 @@
         $pass = "6969";
 
         try{
-            $dbh = new PDO( "pgsql:host=$server;port:5432;dbname=$dbname", $user,$pass);
+            $dbh = new PDO( "pgsql:host=$server;port=5432;dbname=$dbname", $user,$pass);
 
             $dbh->exec(statement:"SET search_path TO pact");
         }catch(PDOException $e){
@@ -27,28 +27,46 @@
         'SELECT 
             i.nomImage as image,
             o.titre,
-            o.ville as lieu,
+            o.idadresse,
             cp.denominationSociale as guide,
-            o.estenligne as enligne
+            o.estenligne as enligne,
+            ad.ville as lieu,
+            COALESCE(pa.valprix, ppa.valprix, pv.valprix, ps.valprix) as prix,
+            COALESCE(pa.tempsenminutes, pv.tempsenminutes, ps.tempsenminutes) as duree,
+            COALESCE(pa.nomcategorie,  ppa.nomcategorie,ps.nomcategorie, pv.nomcategorie) as nomoffre
         FROM 
             _image i
         JOIN 
             _offre o ON i.idOffre = o.idOffre
         JOIN 
-            _comptePro cp ON o.idCompte = cp.idCompte';
+            _comptePro cp ON o.idCompte = cp.idCompte
+        JOIN
+            _adresse ad ON o.idadresse = ad.idadresse
+        LEFT JOIN 
+            _activite pa ON o.idOffre = pa.idOffre
+        LEFT JOIN 
+            _parcattractions ppa ON o.idOffre = ppa.idOffre
+        LEFT JOIN 
+            _restaurant pr ON o.idOffre = pr.idOffre
+        LEFT JOIN 
+            _visite pv ON o.idOffre = pv.idOffre
+        LEFT JOIN 
+            _spectacle ps ON o.idOffre = ps.idOffre
+        ';
         
 
 
-        $requete_preparee = $dbh->prepare($requete_sql);
-        $requete_preparee->bindParam(':idOffre',  $idOffre,type:PDO::PARAM_INT);
+        $requete_preparee = $dbh->prepare($requeteSql);
         $requete_preparee->execute();
-        $offres = $requete_preparee->fetch(PDO::FETCH_ASSOC);
+        $offres = $requete_preparee->fetchAll(PDO::FETCH_ASSOC);
+        
 
 
         $offresEnLigne = [];
         $offresHorsLigne = [];
+
         foreach ($offres as $offre) {
-            if ($offre['enligne']) {
+            if (isset($offre['enligne']) && $offre['enligne']) {
                 $offresEnLigne[] = $offre;
             } else {
                 $offresHorsLigne[] = $offre;
@@ -90,7 +108,11 @@
                         <div class="contenuecarte">
                             <div class="card-header">
                                 <div>
-                                    <img class="color-svgtitle" src="imagesMesOffresPro/map.svg"><span>Visite</span>
+                                <?php 
+                                $typeO = str_replace([" ", "'"], '_', strtolower($offre['nomoffre']));
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/$typeO.svg");
+                                ?>
+                                    <span><?php echo $offre['nomoffre']; ?></span>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -103,13 +125,13 @@
                                         <img class="color-svg" src="imagesMesOffresPro/location.svg"><?php echo $offre['lieu']; ?>
                                     </div>
                                     <div class="composantdetail">
-                                        <img class="color-svg" src="imagesMesOffresPro/schedule.svg"><?php echo $offre['duree']; ?>
+                                        <img class="color-svg" src="imagesMesOffresPro/schedule.svg"><?php echo $offre['duree'],"min"; ?>
                                     </div>
                                 </div>
                             </div>
                             <hr class="solid">
                             <div class="card-footer">
-                                <span class="prix"><strong><?php echo $offre['prix']; ?></strong></span>
+                                <span class="prix"><strong><?php echo $offre['prix'], '€'; ?></strong></span>
                                 <div class="composantdetail">
                                     <img class="color-svg" src="imagesMesOffresPro/bubble.svg"> 
                                     <span id="marginCommentaire"><?php echo "null"; ?></span>
@@ -138,7 +160,13 @@
                         <div class="contenuecarte">
                             <div class="card-header">
                                 <div>
-                                    <img class="color-svgtitle" src="imagesMesOffresPro/map.svg"><span>Visite</span>
+
+                                <?php 
+                                $typeO = str_replace([" ", "'"], '_', strtolower($offre['nomoffre']));
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/$typeO.svg");
+                                ?> 
+                                
+                                <span><?php echo $offre['nomoffre']; ?></span>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -151,13 +179,13 @@
                                         <img class="color-svg" src="imagesMesOffresPro/location.svg"><?php echo $offre['lieu']; ?>
                                     </div>
                                     <div class="composantdetail">
-                                        <img class="color-svg" src="imagesMesOffresPro/schedule.svg"><?php echo $offre['duree']; ?>
+                                        <img class="color-svg" src="imagesMesOffresPro/schedule.svg"><?php echo $offre['duree'],"min"; ?>
                                     </div>
                                 </div>
                             </div>
                             <hr class="solid">
                             <div class="card-footer">
-                                <span class="prix"><strong><?php echo $offre['prix']; ?></strong></span>
+                                <span class="prix"><strong><?php echo $offre['prix'],"€"; ?></strong></span>
                                 <div class="composantdetail">
                                     <img class="color-svg" src="imagesMesOffresPro/bubble.svg"> 
                                     <span id="marginCommentaire"><?php echo "null"; ?></span>
