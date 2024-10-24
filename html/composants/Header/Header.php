@@ -99,10 +99,10 @@ class Header
     private static function renderNav($type) {
         echo '<nav>';
         if ($type == HeaderType::Guest) {
-            echo '<a href="index.php">Accueil</a>';
+            echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
             echo '<a href="offre.php">Offres</a>';
         } elseif ($type == HeaderType::Member) {
-            echo '<a href="index.php">Accueil</a>';
+            echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
             echo '<a href="offre.php">Offres</a>';
             echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
