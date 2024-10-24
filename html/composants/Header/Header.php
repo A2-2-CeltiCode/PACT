@@ -43,21 +43,21 @@ class Header
      *
      * @var bool
      */
-    private static $cssIncluded = false;
+    private static bool $cssIncluded = false;
 
     /**
      * Indique si le JS a été inclus.
      *
      * @var bool
      */
-    private static $jsIncluded = false;
+    private static bool $jsIncluded = false;
 
     /**
      * Rend l'en-tête avec les éléments nécessaires (CSS, JavaScript, etc.) pour un utilisateur donné.
      *
      * @param string $type Le type d'utilisateur (Guest, Member, Pro). Par défaut, 'guest'.
      */
-    public static function render($type = HeaderType::Guest) {
+    public static function render(string $type = HeaderType::Guest): void {
         if (!self::$cssIncluded) {
             echo '<link rel="stylesheet" href="/composants/Header/Header.css">';
             self::$cssIncluded = true;
@@ -70,9 +70,12 @@ class Header
             <div>
                 <img src="/ressources/icone/logo.svg" alt="Logo PACT">
                 <span class="' . $spanClass . '">PACT</span>
-            </div>
+            </div>';
+        Input::render(class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
+            icon: "/ressources/icone/recherche.svg");
+        echo '
             <div>';
-        Input::render(placeholder: 'Entrez une localisation...', icon: "../../../ressources/icone/test.svg");
+        Input::render(placeholder: 'Entrez une localisation...', icon: "/ressources/icone/test.svg");
         echo '
             </div>';
 
@@ -84,7 +87,7 @@ class Header
             echo '<script src="/composants/Header/Header.js"></script>';
             self::$jsIncluded = true;
         }
-        
+
         echo '</header>';
     }
 

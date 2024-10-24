@@ -3,6 +3,9 @@
 <head>
     <title>PACT</title>
     <link rel="stylesheet" href="/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <?php
 
     use composants\Input\Input;
@@ -27,9 +30,9 @@ try {
 SELECT titre                                                                       AS nom,
        nomcategorie                                                                AS type,
        ville,
-       (SELECT idimage
-        FROM pact.vue_image_offre
-        WHERE pact.vue_image_offre.idoffre = offre.idoffre FETCH FIRST 1 ROW ONLY) AS idimage,
+       (SELECT nomimage as idimage
+        FROM pact._image
+        WHERE pact._image.idoffre = offre.idoffre FETCH FIRST 1 ROW ONLY) as idimage,
        COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
        tempsenminutes                                                              AS duree
 FROM (SELECT titre, nomcategorie, ville, tempsenminutes, idoffre, idcompte
