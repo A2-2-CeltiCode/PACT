@@ -168,11 +168,26 @@ try {
             <div class="forfait-info">
                 <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg"); ?>
             </div>
-            <div class="download-button">
-                <a href="../../../ressources/<?php echo $idOffre; ?>/carte/<?php echo $carte['nomimage']; ?>" download>
-                    <?php Button::render("btn", "", "Télécharger l'image", ButtonType::Pro, "", false); ?>
-                </a>
-            </div>
+            <?php
+            switch ($typeOffre) {
+                case 'restaurant': ?>
+                    <div class="download-button">
+                        <a href="../../../ressources/<?php echo $idOffre; ?>/menu/<?php echo $menu['nomimage']; ?>" download>
+                            <?php Button::render("btn", "", "Télécharger menu", ButtonType::Pro, "", false); ?>
+                        </a>
+                    </div>
+            <?php break;
+            case 'parc_attractions': ?>
+                <div class="download-button">
+                    <a href="../../../ressources/<?php echo $idOffre; ?>/carte/<?php echo $carte['nomimage']; ?>" download>
+                        <?php Button::render("btn", "", "Télécharger carte", ButtonType::Pro, "", false); ?>
+                    </a>
+                </div>
+        <?php break;
+                case 'default':
+                    break;
+            }
+            ?>
 
             <!-- Formulaire pour modifier l'offre -->
             <form action="../modifierOffre/modifierOffre.php" method="POST">
