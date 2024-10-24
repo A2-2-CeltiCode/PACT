@@ -73,7 +73,7 @@
                     <!-- Champ SIREN qui s'affiche uniquement si "Entreprise privée" est coché -->
                     <div id="champSiren" style="display: none;">
                         <?php Input::render(class: "input-box", type: "text", name: "siren", placeholder: "Numéro SIREN*", value: $siren, required: false); ?>
-                        <p class="form-texte">SIREN requis pour les entreprises privées.</p>
+                        <p class="form-texte small">SIREN requis pour les entreprises privées.</p>
                     </div>
                     
                     <?php Input::render(class: "input-box", type: "email", name: "email", placeholder: "Adresse Email*", value: $email, required: true); ?>
@@ -92,20 +92,20 @@
                     <label for="informations">Créez un mot de passe</label>
                     <?php Input::render(class: "input-box", type: "password", name: "motDePasse", placeholder: "Mot de Passe*", required: true); ?>
                     <?php Input::render(class: "input-box", type: "password", name: "confirmMdp", placeholder: "Confirmer le Mot de Passe*", required: true); ?>
-                    <p>Le mot de passe doit comporter au moins :<br>- 8 caractères<br>- 1 majuscule<br>- 1 minuscule<br>- 1 chiffre<br>- 1 caractère spécial (@$!%*?&).</p>
+                    <p class="small">Le mot de passe doit comporter au moins :<br>- 8 caractères<br>- 1 majuscule<br>- 1 minuscule<br>- 1 chiffre<br>- 1 caractère spécial (@$!%*?&).</p>
                 </div>
                 <br>
                 <div>
                     <label for="informations">Vos Informations Bancaires</label>
                     <?php Input::render(class: "input-box", type: "text", name: "iban", placeholder: "IBAN", value: $iban, required: false); ?>
-                    <p class="form-texte">L'IBAN pourra être renseigné plus tard.</p>
+                    <p class="form-texte small">L'IBAN pourra être renseigné plus tard.</p>
                 </div>
                 
                 <?php Button::render(class: "sign-upButton", submit: true, type: "pro", text: "S'inscrire");?>
             </form>
             <hr>
-            <p>Vous avez déjà un compte ?</p>
-            <p><a href="../connexionComptePro/connexionComptePro.php">Connectez vous</a> avec votre compte PACT Professionel</p>
+            <p class="small">Vous avez déjà un compte ?</p>
+            <p class="small"><a href="../connexionComptePro/connexionComptePro.php">Connectez vous</a> avec votre compte PACT Professionel</p>
             <?php exit();?>
         </div>
 
