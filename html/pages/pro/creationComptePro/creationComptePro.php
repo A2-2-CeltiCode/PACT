@@ -6,18 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créez un Compte Professionel PACT</title>
     <link rel="stylesheet" href="./creationComptePro.css">
-    <link rel="stylesheet" href="../../../variables.css">
+    <link rel="stylesheet" href="/ui.css">
     
     <script src="creationComptePro.js" defer></script>
 </head>
 
 <body>
     
-    <?php session_start();
-    include "../../../composants/Input/Input.php"?>
-    <?php include "../../../composants/Button/Button.php"?>
-
     <?php
+
+    use \composants\Input\Input;
+    use \composants\Button\Button;
+
+    include $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+    include $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
+    include $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+    
     // Déclaration des variables
     $estPrive = true;
     $denomination = '';
@@ -120,7 +124,7 @@
                 $motDePasse = $_POST['motDePasse'];
                 $iban = $_POST['iban'];
                 
-                include('../connect_params.php');
+                
                 try {
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
@@ -155,6 +159,6 @@
             
             }
         ?>
-        <script>window.location.href = '../info.php';</script>
+        <script>window.location.href = '/pages/visiteur/accueil/accueil.php';</script>
     </body>
 </html>
