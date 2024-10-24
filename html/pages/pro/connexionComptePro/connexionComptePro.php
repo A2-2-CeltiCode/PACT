@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="conteneur">
-        <a href="placeholder"><p id="retour-accueil">Retour à l'accueil</p></a>
+        <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
         <!-- Logo de la page -->
         <img alt="Logo" src="/ressources/icone/logo.svg" />
         
