@@ -101,12 +101,12 @@
                     <p class="form-texte">L'IBAN pourra être renseigné plus tard.</p>
                 </div>
                 
-                <?php Button::render(class: "sign-upButton", submit: true, type: "pro", text: "S'inscrire");
-                ?>
+                <?php Button::render(class: "sign-upButton", submit: true, type: "pro", text: "S'inscrire");?>
             </form>
             <hr>
             <p>Vous avez déjà un compte ?</p>
             <p><a href="../connexionComptePro/connexionComptePro.php">Connectez vous</a> avec votre compte PACT Professionel</p>
+            <?php exit();?>
         </div>
 
         <?php 
