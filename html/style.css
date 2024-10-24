@@ -58,6 +58,28 @@ body {
     }
 }
 
+header + div {
+    background-image: url("/ressources/img/font-barre-recherce.png");
+    display: flex;
+    justify-content: center;
+    padding: 70px 0;
+
+    .barre_recherche {
+        width: 75vw;
+        background-color: transparent;
+    }
+
+    > div {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    header + div {
+        display: none;
+    }
+}
+
 main {
     margin-top: 64px;
     margin-bottom: 64px;

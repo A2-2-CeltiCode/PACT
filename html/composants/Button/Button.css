@@ -1,6 +1,6 @@
 @import url("/ui.css");
 
-button {
+.button {
     border-radius: 8px;
     border: none;
     padding: 15px;

@@ -10,6 +10,7 @@ class Offre
     private ?float $note;
     private ?string $duree;
     private string $nomProprietaire;
+    private string $idoffre;
 
     /**
      * @param string      $nom
@@ -17,6 +18,7 @@ class Offre
      * @param string      $ville
      * @param string      $imageO nom du fichier image
      * @param string      $nomProprietaire
+     * @param string      $idoffre
      * @param string|null $duree  durée de l'offre en minute
      * @param string|null $note
      */
@@ -25,6 +27,7 @@ class Offre
                                 string  $ville,
                                 string  $imageO,
                                 string  $nomProprietaire,
+                                string  $idoffre,
                                 ?string $duree,
                                 ?string $note = null) {
         $this->nom = $nom;
@@ -33,6 +36,7 @@ class Offre
         $this->imageO = $imageO;
         $this->note = floatval($note);
         $this->nomProprietaire = $nomProprietaire;
+        $this->idoffre = $idoffre;
         $this->duree = is_null($duree) ? null : intval($duree);
     }
 
@@ -58,9 +62,11 @@ class Offre
 STRING;
 
         }
+        $image = "/ressources/img/offres/$this->idoffre/$this->imageO";
+        $image = file_exists($_SERVER['DOCUMENT_ROOT'] . $image) ? $image : "https://placehold.co/512/png?text=image\\nmanquante";
         return <<<STRING
 <div class="offre">
-    <img alt="" src="/ressources/img/offres/$this->imageO.png">
+    <img alt="" src="$image">
     <div>
         <div>
             $svgIcon

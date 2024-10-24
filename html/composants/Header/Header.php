@@ -59,6 +59,7 @@ class Header
      */
     public static function render(string $type = HeaderType::Guest): void {
         if (!self::$cssIncluded) {
+            echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close,menu" />';
             echo '<link rel="stylesheet" href="/composants/Header/Header.css">';
             self::$cssIncluded = true;
         }
@@ -82,6 +83,7 @@ class Header
         self::renderNav($type);
         self::renderLanguageSelector();
         self::renderAccountSection($type);
+        self::renderBurger();
 
         if (!self::$jsIncluded) {
             echo '<script src="/composants/Header/Header.js"></script>';
@@ -136,7 +138,8 @@ class Header
         echo '<div>';
         if ($type == HeaderType::Guest) {
             Button::render($class = '', $id = 'guest-button', $text = 'S\'inscrire / Se Connecter',
-                $type = ButtonType::Guest, $onClick = "window.location.href='/pages/pro/connexionComptePro/connexionComptePro.php'");
+                $type = ButtonType::Guest,
+                $onClick = "window.location.href='/pages/pro/connexionComptePro/connexionComptePro.php'");
         } elseif ($type == HeaderType::Member) {
             Button::render($class = '', $id = 'member-button', $text = 'Mon Compte', $type = ButtonType::Member,
                 $onClick = "window.location.href='monCompte.php'");
@@ -145,5 +148,22 @@ class Header
                 $onClick = "window.location.href='espacePro.php'");
         }
         echo '</div>';
+    }
+
+    private static function renderBurger() {
+        echo <<<EOF
+<ul class="menu">
+    <li><a class="menuItem" href="#">Home</a></li>
+    <li><a class="menuItem" href="#">Profile</a></li>
+    <li><a class="menuItem" href="#">About</a></li>
+   <li><a class="menuItem" href="#">Contacts</a></li>
+ </ul>
+ <button class="hamburger">
+    <!-- material icons https://material.io/resources/icons/ -->
+    <span class="menuIcon material-symbols-outlined">menu</span>
+    <span class="closeIcon material-symbols-outlined">close</span>
+  </button>
+EOF;
+
     }
 }

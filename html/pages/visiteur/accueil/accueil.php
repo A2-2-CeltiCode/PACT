@@ -33,6 +33,7 @@ SELECT titre                                                                    
        (SELECT nomimage as idimage
         FROM pact._image
         WHERE pact._image.idoffre = offre.idoffre FETCH FIRST 1 ROW ONLY) as idimage,
+       idoffre,
        COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
        tempsenminutes                                                              AS duree
 FROM (SELECT titre, nomcategorie, ville, tempsenminutes, idoffre, idcompte
@@ -62,7 +63,7 @@ STRING
 $offreProches = [];
 foreach ($offresSql as $item) {
     $offreProches[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
-        $item['duree']);
+        $item['idoffre'], $item['duree']);
 }
 ?>
 

@@ -57,21 +57,6 @@ body > header {
         font-weight: bold;
     }
 
-    + div {
-        background-image: url("../../ressources/img/font-barre-recherce.png");
-        display: flex;
-        justify-content: center;
-        padding: 70px 0;
-
-        .barre_recherche {
-            width: 75vw;
-            background-color: transparent;
-        }
-
-        > div {
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-    }
 }
 
 .entete-langue {
@@ -107,18 +92,75 @@ body > header {
     fill: var(--primaire-visiteur);
 }
 
+.hamburger, .menu {
+    display: none;
+}
+
+
 @media screen and (max-width: 1024px) {
     body > header {
+
+        padding: 0 5px;
 
         & > .input-wrapper {
             display: flex;
         }
 
-        div {
+        > div {
+
+            &:nth-of-type(2) input {
+                width: 260px;
+            }
+
             &:nth-of-type(3) .input-wrapper {
+                display: none;
+            }
+
+            &:last-of-type {
                 display: none;
             }
         }
 
+        nav, .entete-langue, [class^='span-pact-'] {
+            display: none;
+        }
+
     }
+
+    .hamburger {
+        display: inline;
+        z-index: 100;
+        padding-top: 4px;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    .menuIcon {
+        font-size: 32px;
+    }
+
+    .closeIcon {
+        display: none;
+        font-size: 32px;
+    }
+
+    .menu {
+        position: fixed;
+        display: inline;
+        transform: translateX(200%);
+        transition: transform 0.2s;
+        top: 0;
+        right: 0;
+        z-index: 99;
+        list-style: none;
+        padding-top: 4rem;
+    }
+
+
+    .showMenu {
+        display: inline;
+        transform: translateX(0);
+    }
+
 }
