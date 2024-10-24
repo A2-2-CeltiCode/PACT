@@ -1,7 +1,15 @@
 <?php
 
-class CheckBox {
-    public static function render($class = "", $id = "", $name = '', $required = false, $checked = false, $text = '') {
+namespace composants\Checkbox;
+
+class CheckBox
+{
+    public static function render($class = "",
+                                  $id = "",
+                                  $name = '',
+                                  $required = false,
+                                  $checked = false,
+                                  $text = ''): void {
         $requiredAttribute = $required ? ' required' : '';
         $checkedAttribute = $checked ? ' checked' : '';
 
@@ -9,4 +17,5 @@ class CheckBox {
         echo "<label for=\"{$id}\">{$text}</label>";
     }
 }
+
 ?>

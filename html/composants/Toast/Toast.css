@@ -12,15 +12,15 @@
 }
 
 .toast.success {
-    background-color: var(--primary-member); /* Change this to your desired color */
+    background-color: var(--primaire-membre);
 }
 
 .toast.error {
-    background-color: var(--error);
+    background-color: var(--erreur);
 }
 
 .toast.warning {
-    background-color: var(--warning);
+    background-color: var(--avertissement);
 }
 
 /* Animation for showing toast */

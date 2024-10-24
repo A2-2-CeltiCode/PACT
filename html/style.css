@@ -1,0 +1,83 @@
+@import url("/ui.css");
+
+:root {
+    scroll-behavior: smooth;
+}
+
+html {
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.offre {
+    /*border: 1px solid black;*/
+    border-radius: 5px;
+    display: inline-block;
+
+    p {
+        font-size: var(--p-small-font-size);
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+
+    background: white;
+
+    margin: 16px;
+
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
+
+
+    img {
+        border-radius: 5px 5px 0 0;
+        width: 300px;
+    }
+
+    > div {
+        /*border: 1px solid red;
+        background: aqua;*/
+        display: flex;
+        justify-content: space-between;
+        padding: 0 5px;
+
+        > div {
+            display: flex;
+            align-items: center;
+
+            svg {
+                margin: 5px;
+            }
+
+            div {
+                margin: 5px;
+            }
+        }
+
+    }
+}
+
+main {
+    margin-top: 64px;
+    margin-bottom: 64px;
+
+    > div {
+        h2 {
+            margin-left: 7vw;
+        }
+
+        > div {
+            padding-left: 9vw;
+            white-space: nowrap;
+            overflow: auto;
+            /* cache la scrollbar */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+            scrollbar-width: none; /* Firefox */
+
+            &::-webkit-scrollbar {
+                display: none; /* Safari et Chrome */
+            }
+        }
+    }
+}

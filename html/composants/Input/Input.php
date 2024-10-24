@@ -1,5 +1,6 @@
 <?php
 
+namespace composants\Input;
 /**
  * @brief Classe pour gérer les éléments de saisie HTML.
  *
@@ -8,35 +9,33 @@
  */
 class Input
 {
-    private static $cssIncluded = false; ///< Indicateur pour l'inclusion CSS.
+    private static bool $cssIncluded = false; ///< Indicateur pour l'inclusion CSS.
 
     /**
      * @brief Affiche un input HTML.
      *
-     * @param string $class Classes CSS supplémentaires pour le champ de saisie.
-     * @param string $id ID HTML pour le champ de saisie.
-     * @param string $type Type d'input (text, email, password, etc.).
-     * @param string $name Nom du champ de saisie.
-     * @param bool $required Indique si le champ est requis.
-     * @param string $value Valeur initiale du champ.
+     * @param string   $class     Classes CSS supplémentaires pour le champ de saisie.
+     * @param string   $id        ID HTML pour le champ de saisie.
+     * @param string   $type      Type d'input (text, email, password, etc.).
+     * @param string   $name      Nom du champ de saisie.
+     * @param bool     $required  Indique si le champ est requis.
+     * @param string   $value     Valeur initiale du champ.
      * @param int|null $minLength Longueur minimale de la saisie.
      * @param int|null $maxLength Longueur maximale de la saisie.
-     * @param string $pattern Modèle de validation pour le champ.
-     * @param string $icon Chemin vers l'icône SVG à afficher à gauche du champ.
+     * @param string   $pattern   Modèle de validation pour le champ.
+     * @param string   $icon      Chemin vers l'icône SVG à afficher à gauche du champ.
      */
-    public static function render(
-        $class = "",
-        $id = "",
-        $type = "text",
-        $name = "",
-        $required = false,
-        $value = "",
-        $minLength = null,
-        $maxLength = null,
-        $pattern = "",
-        $placeholder= "",
-        $icon = ""
-    ) {
+    public static function render(string $class = "",
+                                  string $id = "",
+                                  string $type = "text",
+                                  string $name = "",
+                                  bool   $required = false,
+                                  string $value = "",
+                                  ?int   $minLength = null,
+                                  ?int   $maxLength = null,
+                                  string $pattern = "",
+                                         $placeholder = "",
+                                  string $icon = ""): void {
         // Définir le modèle par défaut selon le type
         switch ($type) {
             case 'email':
@@ -48,56 +47,36 @@ class Input
             default:
                 break;
         }
-    
+
         // Préparer les attributs de l'input
-        $attrs = [
-            'type' => $type,
-            'class' => $class,
-            'id' => $id,
-            'name' => $name,
-            'value' => $value,
-            'placeholder' => $placeholder,
-            'required' => $required ? 'required' : '',
-            'minlength' => $minLength,
-            'maxlength' => $maxLength,
-            'pattern' => $pattern
-        ];
-    
+        $attrs = ['type' => $type, 'class' => $class, 'id' => $id, 'name' => $name, 'value' => $value,
+            'placeholder' => $placeholder, 'required' => $required ? 'required' : '', 'minlength' => $minLength,
+            'maxlength' => $maxLength, 'pattern' => $pattern];
+
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./components/Input/Input.css">';
+            echo '<link rel="stylesheet" href="/composants/Input/Input.css">';
             self::$cssIncluded = true;
         }
-    
+
         // Rendre l'input
         $input = "<input " . self::renderAttributes($attrs) . " />";
         if ($icon) {
-            $svgContent = self::cleanSvgContent(file_get_contents($icon));
-            echo "<div class='input-wrapper'><div class='input-icon'>{$svgContent}</div>$input</div>";
+            $svgContent = self::cleanSvgContent(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $icon));
+            echo "<div class='input-wrapper'><div class='input-icone'>{$svgContent}</div>$input</div>";
         } else {
             echo "<div class='input-wrapper'>$input</div>";
         }
     }
 
     /**
-     * @brief Nettoyer le contenu SVG pour l'affichage.
-     *
-     * @param string $svgContent Contenu SVG à nettoyer.
-     * @return string Contenu SVG nettoyé.
-     */
-    private static function cleanSvgContent($svgContent)
-    {
-        return preg_replace(['/viewBox="[^"]*"/', '/<text[^>]*>.*?<\/text>/s'], ['viewBox="0 0 100 100"', ''], $svgContent);
-    }
-
-    /**
      * @brief Retourne les attributs d'un élément sous forme de chaîne.
      *
      * @param array $attrs Tableau d'attributs à rendre.
+     *
      * @return string Attributs rendus sous forme de chaîne.
      */
-    private static function renderAttributes($attrs)
-    {
+    private static function renderAttributes(array $attrs): string {
         $result = '';
 
         foreach ($attrs as $key => $value) {
@@ -107,5 +86,17 @@ class Input
         }
 
         return trim($result);
+    }
+
+    /**
+     * @brief Nettoyer le contenu SVG pour l'affichage.
+     *
+     * @param string $svgContent Contenu SVG à nettoyer.
+     *
+     * @return string Contenu SVG nettoyé.
+     */
+    private static function cleanSvgContent(string $svgContent): string {
+        return preg_replace(['/viewBox="[^"]*"/', '/<text[^>]*>.*?<\/text>/s'], ['viewBox="0 0 100 100"', ''],
+            $svgContent);
     }
 }

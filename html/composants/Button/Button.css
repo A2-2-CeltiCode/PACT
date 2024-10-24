@@ -1,34 +1,23 @@
+@import url("/ui.css");
+
 button {
     border-radius: 8px;
     border: none;
     padding: 15px;
     color: white;
     transition: background-color 0.2s ease;
-    height: fit-content;
-    width: fit-content;
 }
 
-.bg-guest {
-    background-color: var(--primary-guest);
+.bg-visiteur {
+    background-color: var(--primaire-visiteur);
 }
 
-.bg-member {
-    background-color: var(--primary-member);
+.bg-membre {
+    background-color: var(--primaire-membre);
 }
 
 .bg-pro {
-    background-color: var(--primary-pro);
-}
-
-.bg-valid {
-    background-color: var(--valid);
-}
-
-.bg-error {
-    background-color: var(--error);
-}
-.bg-warning {
-    background-color: var(--warning);
+    background-color: var(--primaire-pro);
 }
 
 
@@ -36,11 +25,11 @@ button:active {
     transform: scale(0.97);
 }
 
-.bg-guest:hover {
+.bg-visiteur:hover {
     background-color: #156638;
 }
 
-.bg-member:hover {
+.bg-membre:hover {
     background-color: #075ea0;
 }
 
@@ -48,16 +37,6 @@ button:active {
     background-color: #5c0266;
 }
 
-.bg-valid:hover {
-    background-color: #177400;
-}
-
-.bg-error:hover {
-    background-color: #9c1414;
-}
-.bg-warning:hover {
-    background-color: #8b6002;
-}
 button:hover {
     cursor: pointer;
 }

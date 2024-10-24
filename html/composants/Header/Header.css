@@ -1,17 +1,22 @@
-@import url('../../ui.css');
+@import url("/ui.css");
 
-body>header {
+/*@media (min-width:1025px)*/
+body > header {
     position: sticky;
     top: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-    background-color: var(--white);
+    background-color: var(--blanc);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 60px;
     z-index: 1000;
     font-family: 'Encode Sans', serif;
+
+    & > .input-wrapper {
+        display: none;
+    }
 
     div {
         &:first-of-type {
@@ -19,7 +24,7 @@ body>header {
             align-items: center;
 
             img {
-                height: 60px;
+                height: 56px;
             }
 
             span {
@@ -33,6 +38,10 @@ body>header {
             width: 300px;
         }
 
+        &:nth-of-type(3) .input-wrapper {
+            min-width: 500px;
+        }
+
         &:last-of-type {
             button {
                 padding: 8px 16px;
@@ -41,15 +50,15 @@ body>header {
         }
     }
 
-    nav>a {
+    nav > a {
         margin: 0 10px;
         text-decoration: none;
-        color: var(--grey3);
+        color: var(--gris3);
         font-weight: bold;
     }
 
-    +div {
-        background-image: url("assets/img/font-barre-recherce.png");
+    + div {
+        background-image: url("../../ressources/img/font-barre-recherce.png");
         display: flex;
         justify-content: center;
         padding: 70px 0;
@@ -59,7 +68,7 @@ body>header {
             background-color: transparent;
         }
 
-        >div {
+        > div {
             background-color: rgba(255, 255, 255, 0.7);
         }
     }
@@ -76,34 +85,40 @@ body>header {
 
     select {
         padding: 5px;
-        border: 1px solid var(--grey2);
+        border: 1px solid var(--gris2);
         border-radius: 4px;
     }
 }
 
 
 .span-pact-guest {
-    color: var(--primary-guest);
+    color: var(--primaire-visiteur);
 }
 
 .span-pact-member {
-    color: var(--primary-member);
+    color: var(--primaire-membre);
 }
 
 .span-pact-pro {
-    color: var(--primary-pro);
+    color: var(--primaire-pro);
 }
 
 .input-icon {
-    fill: var(--primary-guest);
+    fill: var(--primaire-visiteur);
 }
 
+@media screen and (max-width: 1024px) {
+    body > header {
 
-.header-member .input-icon {
-    fill: var(--primary-member);
-}
+        & > .input-wrapper {
+            display: flex;
+        }
 
+        div {
+            &:nth-of-type(3) .input-wrapper {
+                display: none;
+            }
+        }
 
-.header-pro .input-icon {
-    fill: var(--primary-pro);
+    }
 }
