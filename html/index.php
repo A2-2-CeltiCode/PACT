@@ -1,3 +1,3 @@
 <?php
-header("Location: /visiteur/accueil/accueil.php");
+header("Location: /pages/visiteur/accueil/accueil.php");
 exit;
