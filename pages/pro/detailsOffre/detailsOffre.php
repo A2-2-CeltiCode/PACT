@@ -42,9 +42,9 @@ try {
     $offre = $dbh->query('SELECT * FROM pact.vue_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $adresse = $dbh->query('SELECT codepostal, ville, nomrue, numrue FROM pact._offre NATURAL JOIN pact._adresse WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $tags = $dbh->query('SELECT * FROM pact.vue_tags_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
-    $images = $dbh->query('SELECT nomimage FROM pact._image WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
-    $plan;
-    $carte;
+    $images = $dbh->query('SELECT _image.idImage, _image.nomImage FROM pact._image JOIN pact._offre ON _image.idOffre = _offre.idOffre WHERE _offre.idOffre = ' . $idOffre . ' AND _image.idImage NOT IN (SELECT _parcAttractions.idImage FROM pact._parcAttractions WHERE idOffre = _offre.idOffre) AND _image.idImage NOT IN (SELECT _restaurant.idImage FROM pact._restaurant WHERE idOffre = _offre.idOffre)', PDO::FETCH_ASSOC)->fetchAll();
+    $carte = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._parcAttractions JOIN pact._image ON pact._parcAttractions.idImage = pact._image.idImage WHERE pact._parcAttractions.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
+    $menu = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._restaurant JOIN pact._image ON pact._restaurant.idImage = pact._image.idImage WHERE pact._restaurant.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     // Vérification de l'existence de l'offre
     if (!$offre) {
         throw new Exception("Aucune offre trouvée");
@@ -129,9 +129,9 @@ try {
             ?><br><?php
                     Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
                     ?><br><?php
-                            }
-                            Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
-                                ?>
+                        }
+                        Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
+                            ?>
             <ul>
                 <?php
                 // Affichage des informations spécifiques en fonction du type d'offre
@@ -163,19 +163,31 @@ try {
             </ul>
         </div>
 
+
         <div class="offre-package-modification">
             <div class="forfait-info">
                 <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg"); ?>
             </div>
+            <div class="download-button">
+                <a href="../../../ressources/<?php echo $idOffre; ?>/carte/<?php echo $carte['nomimage']; ?>" download>
+                    <?php Button::render("btn", "", "Télécharger l'image", ButtonType::Pro, "", false); ?>
+                </a>
+            </div>
 
             <!-- Formulaire pour modifier l'offre -->
             <form action="../modifierOffre/modifierOffre.php" method="POST">
-                <input type="hidden" name="idOffre" value=<?php echo $idOffre; ?>>
+                <input type="hidden" name="idOffre" value="<?php echo $idOffre; ?>">
                 <div class="modifier-button">
                     <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", true); ?>
                 </div>
             </form>
+
+            <!-- Lien pour télécharger l'image -->
+            <?php if (isset($carte['nomimage'])): ?>
+
+            <?php endif; ?>
         </div>
+
 
     </div>
 
