@@ -12,7 +12,9 @@
 </head>
 
 <body>
-    <?php include "../../../composants/Input/Input.php"?>
+    
+    <?php session_start();
+    include "../../../composants/Input/Input.php"?>
     <?php include "../../../composants/Button/Button.php"?>
 
     <?php
@@ -118,7 +120,7 @@
                 $motDePasse = $_POST['motDePasse'];
                 $iban = $_POST['iban'];
                 
-                include('./connect_params.php');
+                include('../connect_params.php');
                 try {
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
@@ -129,6 +131,8 @@
                     $stmt = $dbh->prepare("INSERT INTO pact._compte(idAdresse, mdp, email) VALUES('$idAdresse','$motDePasse','$email')");
                     $stmt->execute();
                     $idCompte = $dbh->lastInsertId();
+
+                    $_SESSION['idCompte'] = $idCompte;
 
                     $stmt = $dbh->prepare("INSERT INTO pact._comptePro(idCompte,denominationSociale, raisonSocialePro,banqueRib) VALUES('$idCompte','$denomination','$raisonS','$iban')");
                     $stmt->execute();

@@ -4,7 +4,7 @@ session_start();
 
 require_once "../../../composants/Input/Input.php";
 require_once "../../../composants/Button/Button.php";
-require_once('./connect_params.php');
+require_once('../connect_params.php');
 
 try {
     // Connexion à la base de données
@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['utilisateur_connecte'] = true;
             $_SESSION['identifiant_utilisateur'] = $compte['email'];
             // Sauvegarder l'ID du compte dans la session
-            $_SESSION['id_compte_utilisateur'] = $compte['idcompte'];
+            $_SESSION['idCompte'] = $compte['idcompte'];
             
             // Redirige vers le tableau de bord
-            header("Location: ../info.php");
+            header("Location: ../../visiteur/accueil/accueil.php");
             exit();
         } else {
             // Mot de passe incorrect
