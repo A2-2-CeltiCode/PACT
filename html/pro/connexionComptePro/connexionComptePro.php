@@ -2,8 +2,8 @@
 // Démarre la session pour gérer l'authentification
 session_start();
 
-require_once "../../../composants/Input/Input.php";
-require_once "../../../composants/Button/Button.php";
+require_once "../../composants/Input/Input.php";
+require_once "../../composants/Button/Button.php";
 require_once('./connect_params.php');
 
 try {
@@ -60,13 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Page de Connexion</title>
     <link rel="stylesheet" href="connexionComptePro.css">
-    <link rel="stylesheet" href="../../../variables.css">
+    <link rel="stylesheet" href="../../variables.css">
 </head>
 <body>
     <div class="conteneur">
         <a href="placeholder"><p id="retour-accueil">Retour à l'accueil</p></a>
         <!-- Logo de la page -->
-        <img alt="Logo" src="../../../ressources/icone/logo.svg" />
+        <img alt="Logo" src="../../ressources/icone/logo.svg" />
         
         <!-- Titre de la page -->
         <h1>Connectez-vous à votre compte</h1>
