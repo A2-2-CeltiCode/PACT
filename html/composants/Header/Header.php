@@ -136,7 +136,7 @@ class Header
         echo '<div>';
         if ($type == HeaderType::Guest) {
             Button::render($class = '', $id = 'guest-button', $text = 'S\'inscrire / Se Connecter',
-                $type = ButtonType::Guest, $onClick = "window.location.href='connexionComptePro.php'");
+                $type = ButtonType::Guest, $onClick = "window.location.href='/pages/pro/connexionComptePro/connexionComptePro.php'");
         } elseif ($type == HeaderType::Member) {
             Button::render($class = '', $id = 'member-button', $text = 'Mon Compte', $type = ButtonType::Member,
                 $onClick = "window.location.href='monCompte.php'");
