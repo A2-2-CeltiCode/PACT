@@ -95,7 +95,9 @@
                     <p class="form-texte">L'IBAN pourra être renseigné plus tard.</p>
                 </div>
                 
-                <?php Button::render(class: "sign-upButton", submit: true, type: "pro", text: "S'inscrire"); ?>
+                <?php Button::render(class: "sign-upButton", submit: true, type: "pro", text: "S'inscrire");
+                exit();
+                ?>
             </form>
             <hr>
             <p>Vous avez déjà un compte ?</p>
@@ -146,17 +148,9 @@
                     print "Erreur !: " . $e->getMessage() . "<br/>";
                     die();
                 }
-?>
-
-                <div class="info-display">
-                    <h1>Tout est prêt !</h1>
-                    <hr>
-                    <p>Votre compte à été créé. Veuillez-vous connecter</p>
-                    <?php Button::render(text: "Se connecter", type: ButtonType::Pro); ?>
-                </div>
-
-                <?php
-            } 
+            
+            }
         ?>
+        <script>window.location.href = '../info.php';</script>
     </body>
 </html>

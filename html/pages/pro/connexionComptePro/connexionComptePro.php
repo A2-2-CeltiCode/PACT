@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['id_compte_utilisateur'] = $compte['idcompte'];
             
             // Redirige vers le tableau de bord
-            header('Location: tableauDeBord.php');
+            header("Location: ../info.php");
             exit();
         } else {
             // Mot de passe incorrect
