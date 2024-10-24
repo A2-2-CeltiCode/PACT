@@ -49,14 +49,14 @@ body {
 
 .conteneur {
     margin: 2% 0;
-    background-color: var(--white);
+    background-color: var(--blanc);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 10px 70px 40px 70px;
     border-radius: 10px;
-    box-shadow: 0px 0px 25px var(--black);
+    box-shadow: 0px 0px 25px var(--noir);
 }
 
 .conteneur img {

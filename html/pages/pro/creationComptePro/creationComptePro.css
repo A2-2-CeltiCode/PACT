@@ -64,14 +64,14 @@ form {
 
 .info-display {
     margin: 2% 0;
-    background-color: var(--white);
+    background-color: var(--blanc);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 10px 70px 40px 70px;
     border-radius: 10px;
-    box-shadow: 0px 0px 25px var(--black);
+    box-shadow: 0px 0px 25px var(--noir);
 }
 
 hr {
@@ -81,7 +81,7 @@ hr {
 
 .messagesErreurs {
     text-align: center;
-    color: var(--error);
+    color: var(--erreur);
 }
 
 .input-box {
@@ -104,13 +104,13 @@ label {
 p {
     font-family: 'Inter';
     font-size: var(--p-small-font-size);
-    color: var(--black);
+    color: var(--noir);
     margin: 5px 0;
     font-weight: var(--font-weight-normal);
 }
 
 #necessary-fields-label {
-    color: var(--grey3);
+    color: var(--gris3);
     font-size: var(--p-small-font-size);
 
     margin-bottom: 10px;
@@ -121,6 +121,6 @@ p {
 }
 
 #passwordMismatch {
-    color: var(--error);
+    color: var(--erreur);
     font-size: var(--p-small-font-size);
 }
