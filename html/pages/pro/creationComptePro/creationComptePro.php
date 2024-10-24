@@ -124,7 +124,7 @@
                 $motDePasse = $_POST['motDePasse'];
                 $iban = $_POST['iban'];
                 
-                include('./connect_params.php');
+                include($_SERVER["DOCUMENT_ROOT"] . '/connect_params.php');
                 try {
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
