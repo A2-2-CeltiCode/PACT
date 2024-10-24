@@ -43,11 +43,11 @@
         $raisonS = $_POST['raisonS'];
         $siren = $_POST['siren'];
         $email = $_POST['email'];
-        $telephone = $_POST['telephone']; //
-        $codePostal = $_POST['codePostal']; //
-        $ville = $_POST['ville']; //
-        $numero = $_POST['numero']; //
-        $rue = $_POST['rue']; //
+        $telephone = $_POST['telephone'];
+        $codePostal = $_POST['codePostal'];
+        $ville = $_POST['ville'];
+        $numero = $_POST['numero'];
+        $rue = $_POST['rue'];
         $motDePasse = $_POST['motDePasse'];
         $confirmMdp = $_POST['confirmMdp'];
         $iban = $_POST['iban'];
