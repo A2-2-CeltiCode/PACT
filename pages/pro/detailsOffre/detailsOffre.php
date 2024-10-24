@@ -168,7 +168,7 @@ try {
             </div>
 
             <!-- Formulaire pour modifier l'offre -->
-            <form action="../modifierOffre/modifierOffre.html" method="POST">
+            <form action="../modifierOffre/modifierOffre.php" method="POST">
                 <input type="hidden" name="idOffre" value=<?php echo $idOffre; ?>>
                 <div class="modifier-button">
                     <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", true); ?>
