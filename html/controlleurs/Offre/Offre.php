@@ -64,13 +64,16 @@ STRING;
         }
         $image = "/ressources/img/offres/$this->idoffre/$this->imageO";
         $image = file_exists($_SERVER['DOCUMENT_ROOT'] . $image) ? $image : "https://placehold.co/512/png?text=image\\nmanquante";
+
+        $nom = strlen($this->nom) >= 32 ? substr($this->nom, 0, 29) . "..." : $this->nom;
+
         return <<<STRING
 <div class="offre">
     <img alt="" src="$image">
     <div>
         <div>
             $svgIcon
-            <p>$this->nom</p>
+            <p>$nom</p>
         </div>
         <div>
             <p>$this->note</p>
