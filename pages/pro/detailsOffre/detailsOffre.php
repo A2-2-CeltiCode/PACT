@@ -4,99 +4,80 @@ require_once("../../../composants/Button/Button.php");
 require_once("../../../composants/Input/Input.php");
 require_once("../../../composants/Header/Header.php");
 require_once("../../../composants/Footer/Footer.php");
-
 require_once("../../../bdd/connect_params.php");
 
-$idOffre = '3';
-$typeOffre = 'parc_attractions';
+$idOffre = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
 
 try {
-    // Établir la connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    switch ($typeOffre) {
-        case 'restaurant':
-            $typeOffre = 'restaurant';
-            break;
-        case 'spectacle':
-            $typeOffre = 'spectacle';
-            break;
-        case 'parc_attractions':
-            $typeOffre = 'parc_attractions';
-            break;
-        case 'activite':
-            $typeOffre = 'activite';
-            break;
-        case 'visite':
-            $typeOffre = 'visite';
-            break;
-        
-        default:
-            die('Aucune offre n\'a été trouvée');
-            break;
-    }
 
-    // Requête pour récupérer le temsp en mine de la séance de spectacle
-    $stmt = $dbh->query('SELECT prestation FROM pact.vue_activite WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+    $stmt = $dbh->prepare('SELECT nomcategorie FROM (SELECT nomcategorie FROM pact.vue_spectacle WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_restaurant WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_parc_attractions WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_activite WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_visite WHERE idoffre = :idOffre) AS categories');
+    $stmt->execute([':idOffre' => $idOffre]);
+    $typeOffre = $stmt->fetchColumn();
+    $typeOffre = str_replace(' ', '_', $typeOffre);
+    $typeOffre = str_replace("'", '', $typeOffre);
+    $typeOffre = strtolower($typeOffre);
+    if ($typeOffre === 'parc_dattractions') {
+        $typeOffre = 'parc_attractions';
+    }  
+    
+
+    // Requêtes pour obtenir les informations nécessaires
+    $stmt = $dbh->query('SELECT estguidee FROM pact.vue_visite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
+    $guidee = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT tempsenminutes FROM pact.vue_visite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
+    $minutesVisite = $stmt->fetch();
+
+    $stmt = $dbh->query('SELECT prestation FROM pact.vue_activite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
     $prestation = $stmt->fetch();
 
+    $stmt = $dbh->query('SELECT capacite FROM pact.vue_spectacle WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
+    $capacite = $stmt->fetch();
 
+    $stmt = $dbh->query('SELECT tempsenminutes FROM pact.vue_activite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
+    $minutesActivite = $stmt->fetch();
 
+    $stmt = $dbh->query('SELECT agemin FROM pact.vue_activite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
+    $ageMinimumActivite = $stmt->fetch();
 
-        // Requête pour récupérer le temsp en mine de la séance de spectacle
-        $stmt = $dbh->query('SELECT tempsenminutes FROM pact.vue_activite WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
-        $minutesActivite = $stmt->fetch();
+    $stmt = $dbh->query('SELECT agemin FROM pact.vue_parc_attractions WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
+    $ageMinimumParc = $stmt->fetch();
 
-            // Requête pour récupérer l'age minimum pour un parc d'attraction ageMinimum
-            $stmt = $dbh->query('SELECT agemin FROM pact.vue_activite WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
-            $ageMinimumActivite = $stmt->fetch();
-
-        // Requête pour récupérer l'age minimum pour un parc d'attraction ageMinimum
-        $stmt = $dbh->query('SELECT agemin FROM pact.vue_parc_attractions WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
-        $ageMinimumParc = $stmt->fetch();
-
-            // Requête pour récupérer le nombre d'attration dans un parc d'attraction
-    $stmt = $dbh->query('SELECT nbattractions FROM pact.vue_parc_attractions WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+    $stmt = $dbh->query('SELECT nbattractions FROM pact.vue_parc_attractions WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
     $nbAttraction = $stmt->fetch();
 
-    // Requête pour récupérer la gamme du restaurant
-    $stmt = $dbh->query('SELECT nomgamme FROM pact.vue_restaurant WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+    $stmt = $dbh->query('SELECT nomgamme FROM pact.vue_restaurant WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
     $gammeRestaurant = $stmt->fetch();
 
-    // Requête pour récupérer le temsp en mine de la séance de spectacle
-    $stmt = $dbh->query('SELECT tempsenminutes FROM pact.vue_spectacle WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+    $stmt = $dbh->query('SELECT tempsenminutes FROM pact.vue_spectacle WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
     $minutesSpectacle = $stmt->fetch();
-    
-    
-    // Requête pour récupérer les détails de l'offre
-    $stmt = $dbh->query('SELECT * FROM pact.vue_'. $typeOffre . ' WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
+
+    $stmt = $dbh->query('SELECT * FROM pact.vue_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
     $offre = $stmt->fetch();
-    
-    // Requête pour récupérer l'adresse de l'offre
-    $stmt = $dbh->query('SELECT codepostal, ville, nomrue, numrue FROM pact._offre NATURAL JOIN pact._adresse WHERE idoffre ='. $idOffre, PDO::FETCH_ASSOC);
+
+    $stmt = $dbh->query('SELECT codepostal, ville, nomrue, numrue FROM pact._offre NATURAL JOIN pact._adresse WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC);
     $adresse = $stmt->fetch();
 
-      // Requête pour récupérer les tags de l'offre
-      $stmt = $dbh->query('SELECT * FROM pact.vue_tags_' . $typeOffre . ' WHERE idoffre = '. $idOffre, PDO::FETCH_ASSOC);
-      $tags = $stmt->fetchAll();
+    $stmt = $dbh->query('SELECT * FROM pact.vue_tags_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
+    $tags = $stmt->fetchAll();
+
+    $stmt = $dbh->query('SELECT nomimage FROM pact._image WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC);
+    $images = $stmt->fetchAll();
 
 
-
-    $stmt = $dbh->query('SELECT nomimage FROM pact._image WHERE  idoffre ='. $idOffre, PDO::FETCH_ASSOC);
-    $images = $stmt->fetch();
-
-    // Vérification si les données sont bien récupérées
     if (!$offre) {
         throw new Exception("Aucune offre trouvée");
     }
-    
+
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();
 } finally {
     $dbh = null;
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -107,121 +88,118 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-
 <?php Header::render(HeaderType::Pro); ?>
+
 <body>
-    <?php Label::render("titre-offre", "", "", $offre['titre']); ?> 
+    <div class=titre>
+        <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
+    </div>
     <div class="container">
-        <!-- Carousel d'images -->
-        <div class="carousel">
-            <div class="carousel-images">
-                <?php
-                foreach ($images as $image) {
-                    echo '<img src="../../../ressources/'.$idOffre.'/images'.'/'.$image .'" class="carousel-image">';
-                }
-                ?>
+        <div>
+            <div class="carousel">
+                <div class="carousel-images">
+                    <?php 
+                        foreach ($images as $imageArray): ?>
+                            <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>"
+                                 class="carousel-image">
+                        <?php endforeach; ?>
+                </div>
+                <button class="carousel-button prev">❮</button>
+                <button class="carousel-button next">❯</button>
             </div>
-            <button class="carousel-button prev">❮</button>
-            <button class="carousel-button next">❯</button>
+            <?php if ($typeOffre !== 'restaurant'): ?>
+                <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
+            <?php endif; ?>
         </div>
 
-        <!-- Informations de l'offre -->
-        <div class="offre-info">
+        <div class="offre-infos">
             <?php
-            // Affichage du titre de l'offre
-            
-            
-            // Description courte et détaillée
-            Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/$typeOffre.svg");
+            Label::render("offre-description", "", "",$offre['description'], "../../../ressources/icone/$typeOffre.svg");
             Label::render("offre-detail", "", "", $offre['descriptiondetaillee']);
             ?>
-
-            <!-- Adresse complète -->
             <div class="address">
                 <?php
                 $adresseTotale = $adresse['codepostal'] . ' ' . $adresse['ville'] . ', ' . $adresse['numrue'] . ' ' . $adresse['nomrue'];
-                Label::render("offre-infos", "", "", $adresseTotale, "../../../ressources/icone/localisateur.svg");
+                Label::render("offre-adresse", "", "", $adresseTotale, "../../../ressources/icone/localisateur.svg");
                 ?>
             </div>
-            
-            <!-- Site Internet -->
             <?php
             Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
-            ?>
 
-<?php
-            Label::render("offre-option", "", "", "Option: " . $offre['nomoption'], "../../../ressources/icone/yeux.svg");
-            ?>
-
-            <?php 
-                // Tags
-            if ($tags!=[]) {
-                $tagsString = '';
-                foreach ($tags as $tag) {
-                    $tagsString .= $tag['nomtag'] . " ";
-                }
-                $tagsString = trim($tagsString);
-            Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
-
-            // Option et forfait
+            $tagsString = '';
+            foreach ($tags as $tag) {
+                $tagsString .= $tag['nomtag'] . ', ';
+            }
+            $tagsString = rtrim($tagsString, ', ');
+            if (!empty($tagsString)) {
+                ?><br><?php
+                Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
+                ?><br><?php
+            }
             Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
-                
+            ?>
+            <ul>
+                <?php
                 switch ($typeOffre) {
                     case 'restaurant':
-                        echo '<li>';
-                        Label::render("", "", "", "Gamme Restaurant: " . $gammeRestaurant, "../../../ressources/icone/gamme.svg");
-                        echo '</li>';
-                        // afficher le menu du restaurant en file que l'on peut télécharger en pdf
-                        
+                        ?>
+                        <li><?php
+                        Label::render("", "", "", "Gamme Restaurant: " . $gammeRestaurant['nomgamme'], "../../../ressources/icone/gamme.svg");
+                        ?></li><?php
                         break;
                     case 'spectacle':
-                        echo '<li>';
-                        Label::render("", "", "", "Durée(min): " . $minutesSpectacle['tempsenminutes'], "../../../ressources/icone/timer.svg");
-                        echo '</li>';
+                        ?>
+                        <li><?php
+                        Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Capacité: " . $capacite['capacite'], "../../../ressources/icone/timer.svg");
+                        ?></li><?php
                         break;
                     case 'parc_attractions':
-                        echo '<li>';
-                        print_r($prestation);
+                        ?>
+                        <li><?php
                         Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'], "../../../ressources/icone/timer.svg");
-                        Label::render("", "", "", "Nombre d'attraction: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg");
-                        echo '</li>';
+                        Label::render("", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg");
+                        ?></li><?php
                         break;
                     case 'activite':
-                        echo '<li>';
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'], "../../../ressources/icone/timer.svg");
-                        Label::render("", "", "", "Durée(min): " . $minutesActivite['tempsenminutes'], "../../../ressources/icone/timer.svg");
-                        Label::render("", "", "", "Prestation " . $prestation[''], "../../../ressources/icone/timer.svg");
-                        echo '</li>';
+                        ?>
+                        <li><?php
+                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'], "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg");
+                        ?></li><?php
                         break;
                     case 'visite':
-                        echo '<li>';
-                        echo '</li>';
+                        ?>
+                        <li><?php
+                        Label::render("", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg");
+                        ?></li><?php
                         break;
-                    
                     default:
                         die("Aucune offre n\'a été trouvée");
-                        break;
-                }        
-                echo "</ul>";
-            }
-            ?>
-
-            <!-- Prix de l'offre -->
-             
-            <?php
-            if (strcmp($typeOffre,'restaurant')!=0) {
-                Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€", "../../../ressources/icone/euro.svg");
-            }?>
+                }
+                ?>
+            </ul>
         </div>
-        <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg");?>
 
-        <!-- Bouton pour modifier l'offre -->
-        <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", "", "../StoryBook/StoryBook.php") ?>
+        <div class="offre-package-modification">
+            <div class="forfait-info">
+                <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg"); ?>
+            </div>
+            
+            <form action="../modifierOffre/modifierOffre.html" method="POST">
+                <input type="hidden" name="idOffre" value=<?php echo $idOffre;?>>
+                <div class="modifier-button">
+                    <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", true); ?>
+                </div>
+            </form>
+        </div>
+
     </div>
 
     <script src="detailsOffre.js"></script>
 </body>
-
 <?php Footer::render(FooterType::Pro); ?>
 
 </html>
