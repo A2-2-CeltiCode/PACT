@@ -139,7 +139,7 @@ main {
         display: none;
     }
 
-    body {
+    header {
         overflow-x: hidden;
     }
 }
