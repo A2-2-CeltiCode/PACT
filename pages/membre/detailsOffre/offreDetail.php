@@ -1,12 +1,13 @@
 <?php
 // Connexion à la base de données
-$server = 'localhost';
-$dbname = 'postgres';
-$user = 'postgres';
-$pass = '13phenix';
+$server = 'postgresdb,';
+$driver = 'pgsql';
+$dbname = 'sae';
+$user = 'sae';
+$pass = 'linc-keRRy-gor1lles';
 
 try {
-    $dbh = new PDO("pgsql:host=$server;port=5433;dbname=$dbname", $user, $pass);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     // Définit explicitement le schéma 'pact'
     $dbh->exec("SET search_path TO pact;");
 } catch (PDOException $e) {
