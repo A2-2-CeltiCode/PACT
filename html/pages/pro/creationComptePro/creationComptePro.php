@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    
+
     <?php
 
     use \composants\Input\Input;
@@ -21,7 +21,7 @@
     include $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
     include $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
     include $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
-    
+
     // Déclaration des variables
     $estPrive = true;
     $denomination = '';
@@ -124,9 +124,9 @@
                 $motDePasse = $_POST['motDePasse'];
                 $iban = $_POST['iban'];
                 
-                
+                include('./connect_params.php');
                 try {
-                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
                     $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$numero', '$telephone')");
                     $stmt->execute();

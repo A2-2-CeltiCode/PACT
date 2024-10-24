@@ -11,8 +11,8 @@ include $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
 try {
     // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+
     // Définit explicitement le schéma 'pact'
     $dbh->exec("SET search_path TO pact;");
 } catch (PDOException $e) {
@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
     $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
-    
+
     $requete_preparee = $dbh->prepare($requete_sql);
     $requete_preparee->bindParam(':identifiant', $identifiant_utilisateur);
     $requete_preparee->execute();
-    
+
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
         // Comparaison simple des mots de passe (sans hachage)
