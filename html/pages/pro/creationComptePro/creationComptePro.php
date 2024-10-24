@@ -66,7 +66,7 @@
                     <?php Input::render(class: "input-box", type: "text", name: "denomination", placeholder: "Dénomination*", value: $denomination, required: true); ?>
                     <?php Input::render(class: "input-box", type: "text", name: "raisonS", placeholder: "Raison Sociale*", value: $raisonS, required: true); ?>
                     <!-- Case à cocher "Entreprise privée" -->
-                    <p for="estPrive">
+                    <p class="small" for="estPrive">
                         <input type="checkbox" id="estPrive" name="estPrive" onclick="afficherChampSiren()"> Entreprise privée
                     </p>
                     <!-- Champ SIREN qui s'affiche uniquement si "Entreprise privée" est coché -->
