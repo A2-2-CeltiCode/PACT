@@ -1,0 +1,31 @@
+/* Style général pour le textarea */
+.textarea-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.textarea-wrapper textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    resize: vertical; /* Permet de redimensionner verticalement */
+    transition: border-color 0.3s;
+}
+
+.textarea-wrapper textarea:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 1px #007BFF;
+}
+
+/* Styles spécifiques pour le textarea */
+.textarea-wrapper textarea {
+    min-height: 100px; /* Hauteur minimale */
+    max-height: 300px; /* Hauteur maximale */
+    padding: 10px;
+}
