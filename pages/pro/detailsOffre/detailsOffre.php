@@ -78,7 +78,6 @@ try {
 </head>
 
 <?php Header::render(HeaderType::Pro); ?>
-<?php Header::render(HeaderType::Pro); ?>
 <body>
     <?php Label::render("titre-offre", "", "", $offre['titre']); ?> 
     <div class="container">
@@ -141,18 +140,14 @@ try {
             <!-- Prix de l'offre -->
             <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€", "../../../ressources/icone/price.svg"); ?>
         </div>
-        <?php Label::render("offre-prix", "", "", "" . $spectacle['valprix'] . "€", "../../../ressources/icone/price.svg"); ?>
 
         <!-- Bouton pour modifier l'offre -->
         <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", "", "../StoryBook/StoryBook.php") ?>
     </div>
-    
 
     <script src="detailsOffre.js"></script>
 </body>
 
 <?php Footer::render(FooterType::Pro); ?>
-<?php Footer::render(FooterType::Pro); ?>
 
 </html>
-            
