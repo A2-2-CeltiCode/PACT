@@ -500,3 +500,10 @@ footer .remonter-page {
 
 
 
+.section{
+    display: flex;
+    justify-content: center; 
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 20px;
+}
