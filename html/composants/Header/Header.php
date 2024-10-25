@@ -145,8 +145,8 @@ class Header
             Button::render($class = '', $id = 'member-button', $text = 'Mon Compte', $type = ButtonType::Member,
                 $onClick = "window.location.href='monCompte.php'");
         } elseif ($type == HeaderType::Pro) {
-            Button::render($class = '', $id = 'pro-button', $text = 'Mon Espace Pro', $type = ButtonType::Pro,
-                $onClick = "window.location.href='espacePro.php'");
+            Button::render($class = '', $id = 'pro-button', $text = 'Se deconnecter', $type = ButtonType::Pro,
+                $onClick = "window.location.href='../deconnexion.php'");
         }
         echo '</div>';
     }
