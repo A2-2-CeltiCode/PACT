@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION['idCompte'])) {
+    header("Location: /pages/visiteur/accueil/accueil.php");
+}
+?>
 <!doctype html>
 <html lang="fr-FR">
 <head>
