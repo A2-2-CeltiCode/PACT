@@ -1,10 +1,11 @@
 <?php
-// Connexion à la base de données
-$server = 'postgresdb,';
-$driver = 'pgsql';
-$dbname = 'sae';
-$user = 'sae';
-$pass = 'linc-keRRy-gor1lles';
+
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
+require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -88,13 +89,6 @@ if (!empty($sqlTags)) {
 
 <!DOCTYPE html>
 <html lang="fr">
-
-<?php require_once("../../../composants/Label/Label.php");
-      require_once("../../../composants/Button/Button.php");
-      require_once("../../../composants/Input/Input.php");
-      require_once("../../../composants/Header/Header.php");
-      require_once("../../../composants/Footer/Footer.php");
-?>
 
 <head>
     <meta charset="UTF-8">
