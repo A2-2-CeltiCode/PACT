@@ -104,7 +104,6 @@ main {
             padding-left: 9vw;
             white-space: nowrap;
             overflow-x: auto;
-            overflow-y: visible;
             /* cache la scrollbar */
             -ms-overflow-style: none; /* Internet Explorer 10+ */
             scrollbar-width: none; /* Firefox */
@@ -119,6 +118,7 @@ main {
 .carrousel {
     scroll-behavior: smooth;
     overflow-x: auto;
+    overflow-y: visible;
 
     + div {
         display: flex;
