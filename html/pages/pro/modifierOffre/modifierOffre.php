@@ -1,6 +1,6 @@
 <?php
 session_start();
-//error_reporting(E_ALL ^ E_WARNING);
+error_reporting(E_ALL ^ E_WARNING);
 
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
