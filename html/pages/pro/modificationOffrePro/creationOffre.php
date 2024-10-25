@@ -1,13 +1,14 @@
 <!DOCTYPE html>
     <html>
     <head>
-        <?php require "components/Input/Input.php";
-        require "components/Button/Button.php";
-        require "components/InsererImage/InsererImage.php";
-        require "components/Checkbox/Checkbox.php" ;
-        require "components/Textaera/Textarea.php";
-        require "components/Select/Select.php";
-        require "connect_params.php";
+        <?php 
+        require "../../../components/Input/Input.php";
+        require "../../../components/Button/Button.php";
+        require "../../../components/InsererImage/InsererImage.php";
+        require "../../../components/Checkbox/Checkbox.php" ;
+        require "../../../components/Textaera/Textarea.php";
+        require "../../../components/Select/Select.php";
+        require "../../../connect_params.php";
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
                 $user, $pass);
         ?>  
@@ -15,7 +16,7 @@
 
         <script src="creationOffre.js"></script>
 
-        <link rel="stylesheet" href="./creationOffre.css">
+        <link rel="stylesheet" href="creationOffre.css">
     </head>
 
     <body>
@@ -157,8 +158,8 @@
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownActivite')">Tag</button>
-                                <div class="dropdown-content" id="dropdownActivite">
+                            <?php Button::render(onClick: "toggleDropdown('dropdownActivite')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>
+                            <div class="dropdown-content" id="dropdownActivite">
                                     <?php foreach($tabTag as $index => $tag) { 
                                         Checkbox::render(
                                             class: "checkbox",
@@ -171,8 +172,9 @@
                                         );
                                     }?>
                                 </div>
-                                <br><br>
+                                
                             </div>
+                            <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix1", type: "number") ?>
                             <label>Âge minimum</label>
@@ -194,7 +196,8 @@
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownVisite')">Tag</button>
+                                
+                                <?php Button::render(onClick: "toggleDropdown('dropdownVisite')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownVisite">
                                     <?php foreach($tabTag as $index => $tag) { 
                                         Checkbox::render(
@@ -208,8 +211,9 @@
                                         );
                                     }?>
                                 </div>
-                                <br><br>
+                                
                             </div>
+                            <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix2", type: "number") ?>
                             <label>Durée de la visite</label>
@@ -251,7 +255,7 @@
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownSpectacle')">Tag</button>
+                            <?php Button::render(onClick: "toggleDropdown('dropdownSpectacle')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownSpectacle">
                                     <?php foreach($tabTag as $index => $tag) { 
                                         Checkbox::render(
@@ -265,8 +269,9 @@
                                         );
                                     }?>
                                 </div>
-                                <br><br>
+                                
                             </div>
+                            <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix3", type: "number") ?>
                             <label>Capacité d'accueil</label>
@@ -286,7 +291,8 @@
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownParc')">Tag</button>
+                            <?php Button::render(onClick: "toggleDropdown('dropdownParc')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
+
                                 <div class="dropdown-content" id="dropdownParc">
                                     <?php foreach($tabTag as $index => $tag) { 
                                         Checkbox::render(
@@ -302,6 +308,7 @@
                                 </div>
                             </div>
                             <br><br>
+                            
                             <label>Prix*</label>
                             <?php Input::render(name: "prix4", type: "number") ?>
                             <label>Nombre d'attractions</label>
@@ -325,7 +332,8 @@
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownRestaurant')">Tag</button>
+                            <?php Button::render(onClick: "toggleDropdown('dropdownRestaurant')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
+
                                 <div class="dropdown-content" id="dropdownRestaurant">
                                     <?php foreach($tabTag as $index => $tag) { 
                                         Checkbox::render(

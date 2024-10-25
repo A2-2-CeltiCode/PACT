@@ -25,13 +25,13 @@ class InsererImage
     {
         // Inclure le CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./components/InsererImage/InsererImage.css">';
+            echo '<link rel="stylesheet" href="/components/InsererImage/InsererImage.css">';
             self::$cssIncluded = true;
         }
     
         // Inclure le JavaScript une seule fois
         if (!self::$jsIncluded) {
-            echo '<script src="./components/InsererImage/InsererImage.js" defer></script>';
+            echo '<script src="/components/InsererImage/InsererImage.js" defer></script>';
             self::$jsIncluded = true;
         }
     

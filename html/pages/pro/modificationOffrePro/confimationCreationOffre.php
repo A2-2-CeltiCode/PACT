@@ -1,8 +1,8 @@
 <?php
-    require "connect_params.php";
+    require "../../../connect_params.php";
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
             $user, $pass);
-
+    
     function insererPrix($dbh, $prix) {
         $sql = "SELECT valprix FROM pact._prix WHERE valprix = :valprix";
         $stmt = $dbh->prepare($sql);  
@@ -13,7 +13,7 @@
     
         if (empty($prix2)) {
             $stmt = $dbh->prepare("INSERT INTO pact._prix(valprix) VALUES(:valprix)");
-            $stmt->bindValue(':valprix', $prix, PDO::PARAM_STR); // Correctly bind the value
+            $stmt->bindValue(':valprix', $prix, PDO::PARAM_STR); 
             $stmt->execute();
         }
     }
@@ -27,6 +27,7 @@
     
         // Si la durée n'existe pas, on l'insère
         if (empty($dureeExistante)) {
+            
             $stmt = $dbh->prepare(
                 "INSERT INTO pact._duree(tempsEnMinutes) 
                 VALUES(:tempsEnMinutes)"
