@@ -69,10 +69,10 @@ class Header
 
         echo '
         <header class="' . $type . '">
-            <div>
+            <a href="https://celticode.ventsdouest.dev">
                 <img src="/ressources/icone/logo.svg" alt="Logo PACT">
                 <span class="' . $spanClass . '">PACT</span>
-            </div>';
+            </a>';
         Input::render(class: "barre_recherche", placeholder: "Recherche activité, restaurant, lieu...",
             icon: "/ressources/icone/recherche.svg");
         echo '

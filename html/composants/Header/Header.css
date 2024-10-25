@@ -18,27 +18,30 @@ body > header {
         display: none;
     }
 
-    div {
-        &:first-of-type {
-            display: flex;
-            align-items: center;
+    > a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
 
-            img {
-                height: 56px;
-            }
-
-            span {
-                font-size: var(--h2-font-size);
-                font-weight: bold;
-                margin-left: 10px;
-            }
+        img {
+            height: 56px;
         }
 
-        &:nth-of-type(2) input {
+        span {
+            font-size: var(--h2-font-size);
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    }
+
+    div {
+
+
+        &:nth-of-type(1) input {
             width: 300px;
         }
 
-        &:nth-of-type(3) .input-wrapper {
+        &:nth-of-type(2) .input-wrapper {
             min-width: 500px;
         }
 
@@ -118,15 +121,15 @@ body > header {
 
             }
 
-            &:nth-of-type(2) input {
+            &:nth-of-type(1) input {
                 width: 50vw;
             }
 
-            &:nth-of-type(3) .input-wrapper {
+            &:nth-of-type(2) .input-wrapper {
                 display: none;
             }
 
-            &:nth-of-type(5) {
+            &:nth-of-type(4) {
                 display: none;
             }
         }
