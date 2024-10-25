@@ -51,7 +51,7 @@ if (!$offre) {
 // Chemin par défaut si aucune image n'est trouvée
 $imagePath = "../../../ressources/icone/default.jpg";
 if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
-    $imagePath = $_SERVER["DOCUMENT_ROOT"]."/ressources/". $_GET['id'] . "/" .$offre['nomimage'];
+    $imagePath = $_SERVER["DOCUMENT_ROOT"]."/ressources/". $_GET['id'] . "/" .$offre['nomimage'][1];
 }
 
 //Déterminer le type de l'offre
