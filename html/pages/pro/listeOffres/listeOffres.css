@@ -11,12 +11,13 @@ body {
 .carte-offre {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     display: flex;
-    width: 50em;
+    margin: 1em auto;
+    width: 45em;
     height: 12em;
     border-radius: 1em 1em 0 1em;
     border: 1px solid var(--gris1);
     transition: transform 0.2s ease;
-    margin-bottom: 3em;
+    margin-bottom: 4em;
 }
 
 .carte-offre:hover {
@@ -83,16 +84,15 @@ body {
     color: var(--gris2);
 }
 
+.svg-inline svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--primaire-pro);
+}
+
 .onglet.actif {
     text-decoration: underline;
     color: var(--primaire-pro);
-}
-
-.button-modif {
-    border-radius: 0 0 1em 1em !important;
-    position: relative;
-    top: 100%;
-    right: 0;
 }
 
 .titre-page {
@@ -100,13 +100,20 @@ body {
     align-items: center;
     justify-content: space-between;
 }
-
-.notation {
-    flex-direction: column;
-}
-
-
 footer{
     position: fixed;
     bottom: 0;
+}
+form {
+    display: flex;
+    justify-content: space-between; /* Espace entre les éléments */
+    align-items: center; /* Aligne verticalement */
+}
+
+.button-modif {
+    border-radius: 0 1em 0 1em !important;
+    position: relative;
+    bottom:14.5em;
+    border-top: 5px solid var(--primaire-pro);
+    margin-left: auto;
 }

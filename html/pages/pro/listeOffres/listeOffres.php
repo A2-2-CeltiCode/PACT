@@ -1,6 +1,5 @@
 <?php
 // Importation des composants
-session_start();
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use \composants\Label\Label;
@@ -16,13 +15,11 @@ try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $status = $_GET['status'] ?? 'enligne'; // Statut par défaut
-    
-    $idCompte = $_SESSION['idCompte'];
 
     // Requête selon le statut
     $query = $status === 'enligne' ?
-        'SELECT * FROM pact._offre WHERE estEnLigne = TRUE and idCompte = ' . $idCompte :
-        'SELECT * FROM pact._offre WHERE estEnLigne = FALSE and idCompte = ' . $idCompte;
+        'SELECT * FROM pact._offre WHERE estEnLigne = TRUE' :
+        'SELECT * FROM pact._offre WHERE estEnLigne = FALSE';
 
     $stmt = $dbh->query($query);
     $offres = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -93,7 +90,7 @@ try {
                     $images = $dbh->query('SELECT nomimage FROM pact._image WHERE idoffre = ' . $idoffre)->fetch();
                     ?>
                     <div class="carte-offre" onclick="document.getElementById('form-<?php echo $idoffre; ?>').submit();">
-                        <form id="form-<?php echo $idoffre; ?>" action="../detailsOffre/detailsOffre.php" method="POST" style="display:none;">
+                        <form id="form-<?php echo $idoffre; ?>" action="../detailsOffre/detailsOffre.php" method="POST">
                             <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
                         </form>
                         <div class="image-offre">
@@ -115,19 +112,11 @@ try {
                             }
                             ?>
                         </div>
-
                         <div class="details-offre">
                             <div class="donnees-offre">
                                 
                                 <div class="titre">
                                     <?php Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)), "../../../ressources/icone/$typeOffre.svg"); ?>
-                                    <div class="notation">
-                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
-                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
-                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
-                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
-                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
-                            </div>
                                 </div>
                                 <?php Label::render('details-offre .titre', '', '', htmlspecialchars($offre['titre'])); ?>
                                 <div class="infos-offre">
@@ -139,11 +128,11 @@ try {
                                 <?php Label::render('prix', '', '', htmlspecialchars($offre['nomforfait'])); ?>
                                 <?php Label::render('', '', '', htmlspecialchars($offre['nomoption'])); ?>
                             </div>
+                            <form action="../modifierOffre/modifierOffre.php" method="POST">
+                                <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
+                                <?php Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true); ?>
+                            </form>
                         </div>
-                        <form action="../modifierOffre/modifierOffre.php" method="POST">
-                            <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
-                            <?php Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true); ?>
-                        </form>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
