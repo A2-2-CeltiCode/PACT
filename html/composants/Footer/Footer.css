@@ -9,8 +9,6 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
-    bottom: 0;
 
     .liens-importants {
         padding: 0.5em;
@@ -107,4 +105,12 @@ footer {
     .scroll-up-pro {
         background-color: var(--primaire-pro);
     }
+}
+.footer-fixed {
+    position: fixed;
+    bottom: 0;
+}
+
+.footer-relative {
+    position: relative;
 }

@@ -39,25 +39,29 @@ class FooterType
  */
 class Footer
 {
-    /**
-     * Indique si le CSS a été inclus.
-     *
-     * @var bool
-     */
     private static bool $cssIncluded = false;
 
-    /**
-     * Rend le pied de page avec les éléments nécessaires (CSS, boutons, etc.) pour un utilisateur donné.
-     *
-     * @param string $type Le type d'utilisateur (Guest, Member, Pro). Par défaut, 'guest'.
-     */
     public static function render(string $type = FooterType::Guest): void {
         if (!self::$cssIncluded) {
             echo '<link rel="stylesheet" href="/composants/Footer/Footer.css">';
             self::$cssIncluded = true;
         }
 
-        echo '<footer class="' . $type . '">';
+        // Script pour gérer la position du footer
+        echo <<<EOF
+        <script>
+            window.onload = function() {
+                const footer = document.getElementById('footer');
+                if (document.body.scrollHeight > window.innerHeight) {
+                    footer.classList.add('footer-relative');
+                } else {
+                    footer.classList.add('footer-fixed');
+                }
+            };
+        </script>
+EOF;
+
+        echo '<footer id="footer" class="' . $type . '">';
 
         $buttonType = ButtonType::Guest;
         $buttonText = 'DEVENIR MEMBRE';
@@ -69,9 +73,10 @@ class Footer
             $buttonText = "ACCÉDER A L'ESPACE PROFESSIONNEL";
         }
 
-        Button::render($class = 'lien-bouton', $id = 'footer-button', $text = $buttonText, $type = $buttonType,
-            $onClick = "window.location.href='/pages/pro/creationComptePro/creationComptePro.php'");
+        Button::render('lien-bouton', 'footer-button', $buttonText, $buttonType,
+            "window.location.href='/pages/pro/creationComptePro/creationComptePro.php'");
 
+        // Liens importants
         echo <<<EOF
             <div class="liens-importants">
                 <a href="mentions.php">Mentions Légales</a>
@@ -80,17 +85,12 @@ class Footer
             </div>
 EOF;
 
+        // Icônes réseaux sociaux
         echo <<<EOF
             <div class="icones-reseaux-sociaux">
-                <a href="#">
-                    <img src="/ressources/icone/facebook.svg" alt="Icon facebook">
-                </a>
-                <a href="https://x.com/TripEnArvorPACT">
-                    <img src="/ressources/icone/twitter.svg" alt="Icon X">
-                </a>
-                <a href="https://www.instagram.com/pactlannion/">
-                    <img src="/ressources/icone/instagram.svg" alt="Icon instagram">
-                </a>
+                <a href="#"><img src="/ressources/icone/facebook.svg" alt="Icon facebook"></a>
+                <a href="https://x.com/TripEnArvorPACT"><img src="/ressources/icone/twitter.svg" alt="Icon X"></a>
+                <a href="https://www.instagram.com/pactlannion/"><img src="/ressources/icone/instagram.svg" alt="Icon instagram"></a>
             </div>
 EOF;
 
@@ -101,11 +101,6 @@ EOF;
         echo '</footer>';
     }
 
-    /**
-     * Rend l'icône de retour en haut de la page, personnalisée en fonction du type d'utilisateur.
-     *
-     * @param string $type Le type d'utilisateur (Guest, Member, Pro).
-     */
     private static function renderScrollUpIcon($type): void {
         $scrollUpClass = 'scroll-up-' . $type;
 
