@@ -86,8 +86,10 @@ try {
                 $typeOffre = $stmt->fetchColumn();
 
                 // Normalisation du type d'offre
-                $typeOffre = strtolower($typeOffre);
-                $svgOffre = str_replace([" ", "'"], '_', strtolower($typeOffre));
+                $typeOffre = str_replace([" ", "'"], '_', strtolower($typeOffre));
+//                if ($typeOffre === 'parc_dattractions') {
+//                    $typeOffre = 'parc_attractions';
+//                }
 
                 // Récupération des informations de l'offre
                 $raisonSociete = $dbh->query('SELECT cp.raisonsocialepro FROM pact._offre o JOIN pact._comptePro cp ON o.idCompte = cp.idCompte WHERE o.idoffre = ' . $idoffre)
@@ -123,10 +125,16 @@ try {
                     <div class="details-offre">
                         <div class="donnees-offre">
                             <div class="titre">
-                                <?php Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)),
-                                    "../../../ressources/icone/$svgOffre.svg"); ?>
+                                <?php if ($typeOffre === 'parc_attractions') {
+                                    Label::render('details-offre', '', '', 'Parc d\'attraction',
+                                        "../../../ressources/icone/parc_d_attraction.svg");
+                                } else {
+                                    Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)),
+                                        "../../../ressources/icone/$typeOffre.svg");
+                                }
+                                ?>
                             </div>
-                            <?php Label::render('details-offre titre2', '', '', htmlspecialchars($offre['titre'])); ?>
+                            <?php Label::render('details-offre .titre', '', '', htmlspecialchars($offre['titre'])); ?>
                             <div class="infos-offre">
                                 <?php Label::render('', '', '', $raisonSociete['raisonsocialepro']); ?>
                                 <?php Label::render('', '', '', $adresseTotale,

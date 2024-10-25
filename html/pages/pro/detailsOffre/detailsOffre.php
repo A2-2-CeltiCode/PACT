@@ -169,7 +169,9 @@ try {
             <div class="forfait-info">
                 <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg"); ?>
             </div>
+
             <?php
+            /*
             // Affichage des boutons pour télécharger des documents liés à l'offre
             switch ($typeOffre) {
                 case 'restaurant': ?>
@@ -189,7 +191,7 @@ try {
                 case 'default':
                     break;
             }
-            ?>
+            */?>
 
             <!-- Formulaire pour modifier l'offre -->
             <form action="../modifierOffre/modifierOffre.php" method="POST">

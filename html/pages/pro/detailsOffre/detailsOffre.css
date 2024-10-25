@@ -150,16 +150,24 @@ li {
     list-style: none;
 }
 
-.svg-inline svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--primaire-pro);
-}
-
 .offre-package-modification {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-end;
     padding: 1em;
+}
+
+.svg-inline svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primaire-pro);
+    fill: var(--primaire-pro);
+}
+
+.offre-description svg:first-of-type{
+    width: 20px;
+    height: 20px;
+    stroke: var(--primaire-pro);
+    fill: rgba(0, 0, 0, 0);
 }
