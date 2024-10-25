@@ -22,7 +22,7 @@ try {
 }
 
 // Récupérer l'ID de l'offre depuis l'URL ou autre paramètre
-$idOffre = isset($_GET['idOffre']) ? intval($_GET['idOffre']) : 1; // Par défaut, affiche l'offre avec idOffre 1
+$idOffre = isset($_GET['id']) ? intval($_GET['id']) : 1; // Par défaut, affiche l'offre avec idOffre 1
 
 // Requête pour récupérer les détails de l'offre
 $requete_sql = '
@@ -51,7 +51,7 @@ if (!$offre) {
 // Chemin par défaut si aucune image n'est trouvée
 $imagePath = "../../../ressources/icone/default.jpg";
 if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
-    $imagePath = "../../../ressources/images/" . $offre['nomimage'];
+    $imagePath = $_SERVER["DOCUMENT_ROOT"]."/ressources/". $_GET['id'] . "/" .$offre['nomimage'];
 }
 
 //Déterminer le type de l'offre
