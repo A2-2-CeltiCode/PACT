@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['idCompte'] = $compte['idcompte'];
             
             // Redirige vers le tableau de bord
-            header("Location: ../../visiteur/accueil/accueil.php");
+            header("Location: ../listeOffres/listeOffres.php");
             exit();
         } else {
             // Mot de passe incorrect

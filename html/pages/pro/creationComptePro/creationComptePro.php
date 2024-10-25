@@ -158,6 +158,6 @@
             
             }
         ?>
-        <script>window.location.href = '/pages/visiteur/accueil/accueil.php';</script>
+        <script>window.location.href = '../listeOffres/listeOffres.php';</script>
     </body>
 </html>

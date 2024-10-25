@@ -1,5 +1,6 @@
 <?php
 // Importation des composants
+session_start();
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use \composants\Label\Label;
@@ -15,11 +16,13 @@ try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $status = $_GET['status'] ?? 'enligne'; // Statut par défaut
+    
+    $idCompte = $_SESSION['idCompte'];
 
     // Requête selon le statut
     $query = $status === 'enligne' ?
-        'SELECT * FROM pact._offre WHERE estEnLigne = TRUE' :
-        'SELECT * FROM pact._offre WHERE estEnLigne = FALSE';
+        'SELECT * FROM pact._offre WHERE estEnLigne = TRUE and idCompte = ' . $idCompte :
+        'SELECT * FROM pact._offre WHERE estEnLigne = FALSE and idCompte = ' . $idCompte;
 
     $stmt = $dbh->query($query);
     $offres = $stmt->fetchAll(PDO::FETCH_ASSOC);
