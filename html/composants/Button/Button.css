@@ -1,0 +1,42 @@
+@import url("/ui.css");
+
+.button {
+    border-radius: 8px;
+    border: none;
+    padding: 15px;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+.bg-visiteur {
+    background-color: var(--primaire-visiteur);
+}
+
+.bg-membre {
+    background-color: var(--primaire-membre);
+}
+
+.bg-pro {
+    background-color: var(--primaire-pro);
+}
+
+
+button:active {
+    transform: scale(0.97);
+}
+
+.bg-visiteur:hover {
+    background-color: #156638;
+}
+
+.bg-membre:hover {
+    background-color: #075ea0;
+}
+
+.bg-pro:hover {
+    background-color: #5c0266;
+}
+
+button:hover {
+    cursor: pointer;
+}

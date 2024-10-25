@@ -91,7 +91,6 @@
 
 
 
-    include('connect_params.php');
     $dbh = new PDO("$driver:host=$server;dbname=$dbname",$user, $pass);
 
     //Insertion dans la BDD
