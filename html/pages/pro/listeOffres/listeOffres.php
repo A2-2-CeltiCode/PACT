@@ -1,13 +1,17 @@
 <?php
 // Importation des composants
-use composants\Input\Input;
-use composants\Button\Button;
-use composants\Label\Label;
-use composants\Header\Header;
-use composants\Footer\Footer;
+use \composants\Input\Input;
+use \composants\Button\Button;
+use \composants\Label\Label;
+use \composants\Header\Header;
+use \composants\Footer\Footer;
 
-
-require_once("../../../../bdd/connect_params.php");
+require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 try {
     // Connexion à la base de données
