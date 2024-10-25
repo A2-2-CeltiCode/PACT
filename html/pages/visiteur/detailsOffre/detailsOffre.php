@@ -152,7 +152,7 @@ if (!empty($sqlTags)) {
                     <img src="../../../ressources/icone/etoile_mid.svg" alt="Logo étoile pleine">
                     <img src="../../../ressources/icone/etoile_vide.svg" alt="Logo étoile pleine">
                 </div>
-                <?php Label::render("tranche_prix", "", "", "€€€"); ?>
+                <?php // Label::render("tranche_prix", "", "", "€€€"); ?>
 
                 <div class="contact">
                     <?php 
