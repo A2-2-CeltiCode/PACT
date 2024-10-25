@@ -69,7 +69,7 @@ STRING;
 
         return <<<STRING
 <div class="offre"><a href="/pages/visiteur/listeOffres/listeOffres.php?id=$this->idoffre">
-    <img alt="" src="$image">
+    <img alt="" height="300px" width="300px" src="$image">
     <div>
         <div>
             $svgIcon
