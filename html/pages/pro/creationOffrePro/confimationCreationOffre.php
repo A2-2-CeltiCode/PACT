@@ -132,20 +132,23 @@
     foreach ($_FILES['monDropZone']['name'] as $key => $val) {
         $nomImage = $_FILES['monDropZone']['name'][$key];
         $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
-        $location = '../../ressources/'.$idOffre .'/images'.'/';
-        
+        $location = '../../ressources/' . $idOffre . '/images' . '/';
+    
+        $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
+    
+        $nouveauNomImage = uniqid() . '.' . $extension;
+    
         if (!file_exists($location)) {
             mkdir($location, 0777, true);
         }
-        
-        move_uploaded_file($tmp_name, $location . $nomImage);
-        
+    
+        move_uploaded_file($tmp_name, $location . $nouveauNomImage);
         $stmt = $dbh->prepare(
             "INSERT INTO pact._image(idOffre, nomImage) 
             VALUES(:idOffre, :nomImage)"
         );
         $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-        $stmt->bindValue(':nomImage', $nomImage, PDO::PARAM_STR);
+        $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
         $stmt->execute();
     }
 
@@ -209,23 +212,28 @@
     if ($typeOffre === "ParcAttraction") {
         insererPrix($dbh, $prix3);
 
-        $nomImage = $_FILES['planParc']['name'][$key];
-        $tmp_name = $_FILES['planParc']['tmp_name'][$key];
-        $location = '../../ressources/'.$idOffre .'/carte'.'/';
+        foreach ($_FILES['monDropZone']['name'] as $key => $val) {
+            $nomImage = $_FILES['monDropZone']['name'][$key];
+            $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
+            $location = '../../ressources/' . $idOffre . '/images' . '/';
         
-        if (!file_exists($location)) {
-            mkdir($location, 0777, true);
+            $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
+        
+            $nouveauNomImage = uniqid() . '.' . $extension;
+        
+            if (!file_exists($location)) {
+                mkdir($location, 0777, true);
+            }
+        
+            move_uploaded_file($tmp_name, $location . $nouveauNomImage);
+            $stmt = $dbh->prepare(
+                "INSERT INTO pact._image(idOffre, nomImage) 
+                VALUES(:idOffre, :nomImage)"
+            );
+            $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+            $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
+            $stmt->execute();
         }
-        
-        move_uploaded_file($tmp_name, $location . $nomImage);
-        
-        $stmt = $dbh->prepare(
-            "INSERT INTO pact._image(idOffre, nomImage) 
-            VALUES(:idOffre, :nomImage)"
-        );
-        $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-        $stmt->bindValue(':nomImage', $nomImage, PDO::PARAM_STR);
-        $stmt->execute();
         $planParc = $dbh->lastInsertId();
 
         $stmt = $dbh->prepare(
@@ -281,23 +289,28 @@
     // Type d'offre : Restauration
     if ($typeOffre === "Restauration") {
 
-        $nomImage = $_FILES['carteRestaurant']['name'][$key];
-        $tmp_name = $_FILES['carteRestaurant']['tmp_name'][$key];
-        $location = '../../ressources/'.$idOffre .'/carte'.'/';
+        foreach ($_FILES['monDropZone']['name'] as $key => $val) {
+            $nomImage = $_FILES['monDropZone']['name'][$key];
+            $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
+            $location = '../../ressources/' . $idOffre . '/images' . '/';
         
-        if (!file_exists($location)) {
-            mkdir($location, 0777, true);
+            $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
+        
+            $nouveauNomImage = uniqid() . '.' . $extension;
+        
+            if (!file_exists($location)) {
+                mkdir($location, 0777, true);
+            }
+        
+            move_uploaded_file($tmp_name, $location . $nouveauNomImage);
+            $stmt = $dbh->prepare(
+                "INSERT INTO pact._image(idOffre, nomImage) 
+                VALUES(:idOffre, :nomImage)"
+            );
+            $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+            $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
+            $stmt->execute();
         }
-        
-        move_uploaded_file($tmp_name, $location . $nomImage);
-        
-        $stmt = $dbh->prepare(
-            "INSERT INTO pact._image(idOffre, nomImage) 
-            VALUES(:idOffre, :nomImage)"
-        );
-        $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-        $stmt->bindValue(':nomImage', $nomImage, PDO::PARAM_STR);
-        $stmt->execute();
         $carteRestaurant = $dbh->lastInsertId();
 
         $stmt = $dbh->prepare(
