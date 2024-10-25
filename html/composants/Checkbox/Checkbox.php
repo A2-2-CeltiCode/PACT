@@ -6,6 +6,7 @@
  * Cette classe fournit une méthode statique pour rendre des cases à cocher
  * HTML avec des options pour personnaliser les attributs et l'apparence.
  */
+namespace composants\Checkbox;
 class Checkbox
 {
     private static $cssIncluded = false; ///< Indicateur pour l'inclusion CSS.
