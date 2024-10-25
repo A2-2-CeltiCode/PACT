@@ -291,7 +291,7 @@ $typePromotion = $vueOffre["nomoption"];
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                            <?php Button::render(onClick: "toggleDropdown('dropdownVisite')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
+                            <?php Button::render(onClick: "toggleDropdown('dropdownVisite')", text: "Tag", type: "pro", submit: false, class: "tag"); ?>                               
                             <div class="dropdown-content" id="dropdownVisite">
                                     <?php foreach ($tabTag as $tag) {
                                         Checkbox::render(
@@ -384,7 +384,7 @@ $typePromotion = $vueOffre["nomoption"];
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                            <?php Button::render(onClick: "toggleDropdown('dropdownParc')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
+                            <?php Button::render(onClick: "toggleDropdown('dropdownParc')", text: "Tag",type: "pro", submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownParc">
                                     <?php foreach ($tabTag as $tag) {
                                         Checkbox::render(
@@ -422,7 +422,7 @@ $typePromotion = $vueOffre["nomoption"];
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                            <?php Button::render(onClick: "toggleDropdown('dropdownRestaurant')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
+                            <?php Button::render(onClick: "toggleDropdown('dropdownRestaurant')", text: "Tag", type: "pro", submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownRestaurant">
                                     <?php foreach ($tabTag as $tag) {
                                         Checkbox::render(

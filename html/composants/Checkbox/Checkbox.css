@@ -37,8 +37,8 @@
 
 /* État lorsque la case à cocher est cochée */
 .checkbox-wrapper input[type="checkbox"]:checked + label:before {
-    background-color: var(--primary-pro); /* Couleur de fond lorsque cochée */
-    border-color: var(--primary-pro); /* Couleur de bordure lorsque cochée */
+    background-color: var(--primaire-pro); /* Couleur de fond lorsque cochée */
+    border-color: var(--primaire-pro); /* Couleur de bordure lorsque cochée */
 }
 
 /* État lorsque la case à cocher est cochée (avec une coche) */
