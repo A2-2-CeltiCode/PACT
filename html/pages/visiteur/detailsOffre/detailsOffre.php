@@ -152,7 +152,7 @@ if (!empty($sqlTags)) {
                 </div>
                 <?php Label::render("tranche_prix", "", "", "€€€"); ?>
 
-                <div class="carte">
+                <div class="contact">
                     <?php 
                         if (isset($offre['denominationsociale'])) {
                             Label::render("", "", "", $offre['denominationsociale']);

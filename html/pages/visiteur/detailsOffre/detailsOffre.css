@@ -75,7 +75,7 @@ body {
     margin: 40px 15px 40px 40px;
 }
 
-.carte {
+.contact {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 5px;
@@ -88,22 +88,22 @@ body {
     align-items: center;
 }
 
-.carte div {
-    margin: 5px 0; /* Réduit la marge entre les éléments dans la carte */
+.contact div {
+    margin: 5px 0; /* Réduit la marge entre les éléments dans la contact */
 }
 
-.carte h2 {
+.contact h2 {
     font-size: 18px;
     margin: 10px 0 5px 0;
 }
 
-.carte p {
+.contact p {
     color: #777;
     font-size: 14px;
     margin: 5px 0;
 }
 
-.carte .email, .carte .telephone {
+.contact .email, .contact .telephone {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,17 +111,17 @@ body {
     font-size: 14px;
 }
 
-.carte .email img, .carte .telephone img {
+.contact .email img, .contact .telephone img {
     margin-right: 10px;
 }
 
-.carte .email a {
+.contact .email a {
     color: #000;
     text-decoration: none;
     border-bottom: 1px solid #000;
 }
 
-.carte .bouton {
+.contact .bouton {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -134,7 +134,7 @@ body {
     margin-top: 10px;
 }
 
-.carte .bouton img {
+.contact .bouton img {
     margin-right: 10px;
 }
 
