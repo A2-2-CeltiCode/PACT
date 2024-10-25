@@ -108,7 +108,7 @@ if (!empty($sqlTags)) {
 
  
 <body>
-    <?php Header::render(HeaderType::Member); ?>   
+    <?php Header::render(HeaderType::Guest); ?>   
     <main>
         <div class="offre">
             <img class="image-offre" alt="Image offre" src="<?php echo $imagePath; ?>" />
