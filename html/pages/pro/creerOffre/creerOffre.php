@@ -4,18 +4,24 @@
         <?php
         use composants\Input\Input;
         use composants\Button\Button;
-        require "../../../composants/Input/Input.php";
-        require "../../../composants/Button/Button.php";
-        require "../../../composants/InsererImage/InsererImage.php";
-        require "../../../composants/Checkbox/Checkbox.php";
-        require "../../../composants/Textaera/Textarea.php";
-        require "../../../composants/Select/Select.php";
-        require_once("../../../composants/Header/Header.php");
-        require_once("../../../composants/Footer/Footer.php");
-        require "../../../connect_params.php";
+        use \composants\InsererImage\InsererImage;
+        use \composants\Checkbox\Checkbox;
+        use \composants\Select\Select;
+        use \composants\Textaera\Textarea;
+
+    require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/InsererImage/InsererImage.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Checkbox/Checkbox.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Select/Select.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Header/Header.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Textaera/Textarea.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Footer/Footer.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+
+
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
-        
         ?> 
         <title>Création d'une offre</title>
 
