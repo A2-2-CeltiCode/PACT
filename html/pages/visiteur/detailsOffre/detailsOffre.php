@@ -102,7 +102,7 @@ if (!empty($sqlTags)) {
     <title>Détail de l'Offre</title>
 
     <!-- Liens vers les fichiers CSS pour le style général et spécifique -->
-    <link rel="stylesheet" href="offreDetail.css">
+    <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 
