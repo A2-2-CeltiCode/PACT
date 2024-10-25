@@ -34,9 +34,9 @@ $requete_sql = '
     JOIN pact._compte c ON cp.idcompte = c.idcompte
     JOIN pact._adresse a ON o.idadresse = a.idadresse
     LEFT JOIN (
-        SELECT idOffre, nomImage
-        FROM pact._image
-        WHERE idOffre = :idOffre
+        SELECT idoffre, nomimage
+        FROM pact._image 
+        WHERE idoffre = :idoffre
         LIMIT 1
     ) i ON o.idoffre = i.idoffre
     WHERE o.idoffre = :idOffre
