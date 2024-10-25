@@ -152,7 +152,7 @@ if ($adressePostale) {
 
 
 // Insertion dans la BDD
-print_r($idOffre);
+
 $sql = "SELECT idadresse FROM pact._offre WHERE idOffre = :idOffre";
 $stmt = $dbh->prepare($sql);
 $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
