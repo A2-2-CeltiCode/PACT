@@ -6,6 +6,7 @@
  * Cette classe fournit une méthode statique pour rendre des éléments label HTML,
  * avec des options pour personnaliser les attributs, l'apparence et inclure une icône.
  */
+namespace composants\Label;
 class Label
 {
     private static $cssIncluded = false; ///< Indicateur pour l'inclusion CSS.
