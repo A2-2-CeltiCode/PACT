@@ -42,7 +42,7 @@ class Checkbox
 
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./components/Checkbox/Checkbox.css">';
+            echo '<link rel="stylesheet" href="/composants/Checkbox/Checkbox.css">';
             self::$cssIncluded = true;
         }
 

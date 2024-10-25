@@ -3,10 +3,13 @@
 /**
  * Types de boutons.
  */
-class ButtonType {
-    const Guest = 'guest';  
-    const Member = 'member'; 
-    const Pro = 'pro';      
+
+namespace composants\Button;
+class ButtonType
+{
+    const Guest = 'guest';
+    const Member = 'member';
+    const Pro = 'pro';
 }
 
 /**
@@ -14,49 +17,54 @@ class ButtonType {
  */
 class Button
 {
-    private static $cssIncluded = false; 
+    private static bool $cssIncluded = false;
 
     /**
      * Affiche un bouton HTML.
      *
-     * @param string $class Classes CSS supplémentaires.
-     * @param string $id ID du bouton.
-     * @param string $text Texte du bouton.
-     * @param string $type Type de bouton (guest, member, pro).
+     * @param string $class   Classes CSS supplémentaires.
+     * @param string $id      ID du bouton.
+     * @param string $text    Texte du bouton.
+     * @param string $type    Type de bouton (guest, member, pro).
      * @param string $onClick Fonction JavaScript à appeler.
-     * @param bool $submit Bouton de soumission ?
+     * @param bool   $submit  Bouton de soumission ?
+     * @param string $path    Lien de redirection 
      */
-    public static function render(
-        $class = "",
-        $id = "",
-        $text = "",
-        $type = "",
-        $onClick = "",
-        $submit = false
-    ) {
+    public static function render(string $class = "",
+                                  string $id = "",
+                                  string $text = "",
+                                  string $type = "",
+                                  string $onClick = "",
+                                  bool   $submit = false,
+                                  string $path = ""): void {
         $isSubmit = $submit ? 'submit' : 'button';
-        
+
         // Définir la couleur de fond selon le type de bouton
         $backgroundColorClass = '';
         switch ($type) {
             case ButtonType::Guest:
-                $backgroundColorClass = 'bg-guest';
+                $backgroundColorClass = 'bg-visiteur';
                 break;
             case ButtonType::Member:
-                $backgroundColorClass = 'bg-member';
+                $backgroundColorClass = 'bg-membre';
                 break;
             case ButtonType::Pro:
                 $backgroundColorClass = 'bg-pro';
-                break;  
+                break;
         }
 
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="./components/Button/Button.css">';
+            echo '<link rel="stylesheet" href="/composants/Button/Button.css">';
             self::$cssIncluded = true;
         }
-
-        // Affiche le bouton
+        if (empty($path)) {
+            // Affiche le bouton
         echo "<button type=\"{$isSubmit}\" class=\"button {$class} {$backgroundColorClass}\" id=\"{$id}\" onclick=\"{$onClick}\";>{$text}</button>";
+        }else {
+            // Affiche le bouton avec le path
+            echo "<a href=\"$path\"><button type=\"{$isSubmit}\" class=\"button {$class} {$backgroundColorClass}\" id=\"{$id}\" onclick=\"{$onClick}\";>{$text}</button></a>";
+        }
+        
     }
 }

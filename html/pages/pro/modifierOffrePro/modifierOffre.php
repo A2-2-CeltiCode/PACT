@@ -1,9 +1,10 @@
 <?php
 require "../../../connect_params.php";
+error_reporting(E_ALL ^ E_WARNING);
 
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
-
+$idOffre=2;
 $sql = "SELECT nomcategorie FROM pact._spectacle WHERE idOffre = $idOffre";
 $stmt = $dbh->query($sql);
 $offre2 = $stmt->fetch();
@@ -115,28 +116,35 @@ $typePromotion = $vueOffre["nomoption"];
 <html>
 
 <head>
-    <?php require "../../../components/Input/Input.php";
-    require "../../../components/Button/Button.php";
-    require "../../../components/InsererImage/InsererImage.php";
-    require "../../../components/Checkbox/Checkbox.php";
-    require "../../../components/Textaera/Textarea.php";
-    require "../../../components/Select/Select.php";
-
+    <?php
+    use composants\Input\Input;
+    use composants\Button\Button;
+    require "../../../composants/Input/Input.php";
+    require "../../../composants/Button/Button.php";
+    require "../../../composants/InsererImage/InsererImage.php";
+    require "../../../composants/Checkbox/Checkbox.php";
+    require "../../../composants/Textaera/Textarea.php";
+    require "../../../composants/Select/Select.php";
+    require_once("../../../composants/Header/Header.php");
+    require_once("../../../composants/Footer/Footer.php");
+    
     ?>
-    <title>Création d'une offre</title>
+    <title>Modification d'une offre</title>
 
     <script src="modificationOffre.js"></script>
-
-    <link rel="stylesheet" href="./modificationOffre.css">
+    <link rel="stylesheet" href="../../../ui.css">
+    <link rel="stylesheet" href="modificationOffre.css">
 </head>
+<?php Header::render(HeaderType::Pro); ?>
 
 <body>
     <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data">
+        <input name="idOffre" type="hidden" value=<?php $idOffre ?>>
+        <input name="typeOffre" type="hidden" value=<?php $$typeOffre["nomcategorie"] ?>>
         <?php
-        Input::render(name: "idOffre", type: "hidden", value: $idOffre);
-        Input::render(name: "typeOffre", type: "hidden", value: $typeOffre);
+        
         ?>
-        <h1>Créez votre Offre</h1>
+        <h1>Modifier votre Offre</h1>
         <section>
 
             <article>
@@ -246,7 +254,7 @@ $typePromotion = $vueOffre["nomoption"];
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownActivite')">Tag</button>
+                            <?php Button::render(onClick: "toggleDropdown('dropdownActivite')", text: "Tag", type:"pro", submit: false, class: "tag"); ?>
                                 <div class="dropdown-content" id="dropdownActivite">
                                     <?php foreach ($tabTag as $tag) {
                                         Checkbox::render(
@@ -283,8 +291,8 @@ $typePromotion = $vueOffre["nomoption"];
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownVisite')">Tag</button>
-                                <div class="dropdown-content" id="dropdownVisite">
+                            <?php Button::render(onClick: "toggleDropdown('dropdownVisite')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
+                            <div class="dropdown-content" id="dropdownVisite">
                                     <?php foreach ($tabTag as $tag) {
                                         Checkbox::render(
                                             class: "checkbox",
@@ -297,8 +305,9 @@ $typePromotion = $vueOffre["nomoption"];
                                         );
                                     } ?>
                                 </div>
-                                <br><br>
+                                
                             </div>
+                            <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix4", type: "number", value: $prix4) ?>
                             <label>Durée de la visite</label>
@@ -340,7 +349,7 @@ $typePromotion = $vueOffre["nomoption"];
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownSpectacle')">Tag</button>
+                            <?php Button::render(onClick: "toggleDropdown('dropdownSpectacle')", text: "Tag", type:"pro", submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownSpectacle">
                                     <?php foreach ($tabTag as $tag) {
                                         Checkbox::render(
@@ -354,8 +363,9 @@ $typePromotion = $vueOffre["nomoption"];
                                         );
                                     } ?>
                                 </div>
-                                <br><br>
+                                
                             </div>
+                            <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix2", type: "number", value: $prix2) ?>
                             <label>Capacité d'accueil</label>
@@ -374,7 +384,7 @@ $typePromotion = $vueOffre["nomoption"];
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownParc')">Tag</button>
+                            <?php Button::render(onClick: "toggleDropdown('dropdownParc')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownParc">
                                     <?php foreach ($tabTag as $tag) {
                                         Checkbox::render(
@@ -412,7 +422,7 @@ $typePromotion = $vueOffre["nomoption"];
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <div class="dropdown">
-                                <button type="button" class="tag" onclick="toggleDropdown('dropdownRestaurant')">Tag</button>
+                            <?php Button::render(onClick: "toggleDropdown('dropdownRestaurant')", text: "Tag", type: ButtonType::Pro, submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownRestaurant">
                                     <?php foreach ($tabTag as $tag) {
                                         Checkbox::render(
@@ -476,14 +486,15 @@ $typePromotion = $vueOffre["nomoption"];
                 <?php } ?>
             </article>
         </section>
-        <div>
+        <div class="btns">
             <br>
-            <?php Button::render(onClick: "window.location.href = './accueil.php';", text: "Annuler", type: ButtonType::Pro, submit: false,); ?>
-            <?php Button::render(text: "Valider", type: ButtonType::Pro, submit: true); ?>
+            <?php Button::render(onClick: "window.location.href = './accueil.php';", text: "Annuler", type:"pro", submit: false,class:"valid"); ?>
+            <?php Button::render(text: "Valider", type:"pro", submit: true , class:"valid"); ?>
         </div>
 
     </form>
-    <script src="modificationOffre.js"></script>
+    
 </body>
-
+<?php Footer::render(FooterType::Pro); ?>
+<script src="modificationOffre.js"></script>
 </html>

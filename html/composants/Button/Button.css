@@ -1,4 +1,6 @@
-button {
+@import url("/ui.css");
+
+.button {
     border-radius: 8px;
     border: none;
     padding: 15px;
@@ -6,16 +8,16 @@ button {
     transition: background-color 0.2s ease;
 }
 
-.bg-guest {
-    background-color: var(--primary-guest);
+.bg-visiteur {
+    background-color: var(--primaire-visiteur);
 }
 
-.bg-member {
-    background-color: var(--primary-member);
+.bg-membre {
+    background-color: var(--primaire-membre);
 }
 
 .bg-pro {
-    background-color: var(--primary-pro);
+    background-color: var(--primaire-pro);
 }
 
 
@@ -23,11 +25,11 @@ button:active {
     transform: scale(0.97);
 }
 
-.bg-guest:hover {
+.bg-visiteur:hover {
     background-color: #156638;
 }
 
-.bg-member:hover {
+.bg-membre:hover {
     background-color: #075ea0;
 }
 

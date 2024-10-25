@@ -1,0 +1,116 @@
+@import url("/ui.css");
+
+footer {
+    background-color: var(--gris1);
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .liens-importants {
+        padding: 0.5em;
+        display: flex;
+        flex-direction: row;
+        gap: 3em;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--noir);
+        font-weight: var(--font-weight-semi-bold);
+    }
+
+    .lien-bouton {
+        color: var(--noir);
+        background-color: var(--gris1);
+        border: 1px solid var(--noir);
+        padding: 10px 20px;
+        font-weight: var(--font-weight-semi-bold);
+        cursor: pointer;
+        border-radius: 5px;
+        transition-duration: 350ms;
+
+        &:hover {
+            background-color: var(--noir);
+            color: var(--blanc);
+        }
+    }
+
+    .liens {
+        margin: 15px 0;
+        font-size: var(--p-small-font-size);
+
+        a {
+            margin: 0 15px;
+            color: var(--noir);
+            text-decoration: none;
+        }
+    }
+
+    .icones-reseaux {
+        margin: 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        div {
+            margin: 2em;
+        }
+    }
+
+    p {
+        margin: 10px 0 0;
+        font-size: var(--p-small-font-size);
+    }
+
+    .remonte-page {
+        background-color: var(--primaire-visiteur);
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        position: absolute;
+        top: 1.5em;
+        right: 1.5em;
+    }
+
+    .footer-content {
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .scroll-up-guest {
+        background-color: var(--primaire-visiteur);
+    }
+
+    .scroll-up-member {
+        background-color: var(--primaire-membre);
+    }
+
+    .scroll-up-pro {
+        background-color: var(--primaire-pro);
+    }
+}
+.footer-fixed {
+    position: fixed;
+    bottom: 0;
+}
+
+.footer-relative {
+    position: relative;
+}

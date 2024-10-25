@@ -1,5 +1,7 @@
 
 <?php
+error_reporting(E_ALL ^ E_WARNING);
+
 require "../../../connect_params.php";
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
