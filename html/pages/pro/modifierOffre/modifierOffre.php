@@ -146,7 +146,7 @@ $typePromotion = $vueOffre["nomoption"];
 
 <body>
     <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data">
-        <input type="hidden" name="idOffre" value="<?php echo htmlspecialchars($idoffre['idOffre']); ?>">
+        <input type="hidden" name="idOffre" value="<?php echo htmlspecialchars($idOffre['idOffre']); ?>">
         <input name="typeOffre" type="hidden" value=<?php $typeOffre["nomcategorie"] ?>>
         <?php
         
