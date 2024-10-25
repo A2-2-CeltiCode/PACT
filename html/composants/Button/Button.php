@@ -28,13 +28,15 @@ class Button
      * @param string $type    Type de bouton (guest, member, pro).
      * @param string $onClick Fonction JavaScript à appeler.
      * @param bool   $submit  Bouton de soumission ?
+     * @param string $path    Lien de redirection 
      */
     public static function render(string $class = "",
                                   string $id = "",
                                   string $text = "",
                                   string $type = "",
                                   string $onClick = "",
-                                  bool   $submit = false): void {
+                                  bool   $submit = false,
+                                  string $path = ""): void {
         $isSubmit = $submit ? 'submit' : 'button';
 
         // Définir la couleur de fond selon le type de bouton
@@ -56,8 +58,13 @@ class Button
             echo '<link rel="stylesheet" href="/composants/Button/Button.css">';
             self::$cssIncluded = true;
         }
-
-        // Affiche le bouton
+        if (empty($path)) {
+            // Affiche le bouton
         echo "<button type=\"{$isSubmit}\" class=\"button {$class} {$backgroundColorClass}\" id=\"{$id}\" onclick=\"{$onClick}\";>{$text}</button>";
+        }else {
+            // Affiche le bouton avec le path
+            echo "<a href=\"$path\"><button type=\"{$isSubmit}\" class=\"button {$class} {$backgroundColorClass}\" id=\"{$id}\" onclick=\"{$onClick}\";>{$text}</button></a>";
+        }
+        
     }
 }
