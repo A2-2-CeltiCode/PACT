@@ -46,8 +46,8 @@ body {
         text-decoration: none;
 
         > div {
-            /*border: 1px solid red;
-            background: aqua;*/
+            border: 1px solid red;
+            background: aqua;
             display: flex;
             justify-content: space-between;
             padding: 0 5px;
