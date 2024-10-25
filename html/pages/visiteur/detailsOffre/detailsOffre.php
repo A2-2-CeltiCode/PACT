@@ -53,7 +53,7 @@ if (!$offre) {
 // Chemin par défaut si aucune image n'est trouvée
 $imagePath = "../../../ressources/icone/default.jpg";
 if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
-    $imagePath = $_SERVER["DOCUMENT_ROOT"]."/ressources/". $_GET['id'] . "/images/" . $offre['nomimage'];
+    $imagePath = "/ressources/". $_GET['id'] . "/images/" . $offre['nomimage'];
 }
 
 //Déterminer le type de l'offre
@@ -112,7 +112,7 @@ if (!empty($sqlTags)) {
     <?php Header::render(HeaderType::Guest); ?>   
     <main>
         <div class="offre">
-            <img class="image-offre" alt="Image offre" src="<?php echo $imagePath; ?>" />
+            <img class="image-offre" alt="Image offre" src="<?php echo $_SERVER["DOCUMENT_ROOT"].$imagePath; ?>" />
             <div class="description">
                 <?php 
                     Label::render("nom-restau", "", "", $offre['titre']);
