@@ -6,6 +6,7 @@
  * Cette classe fournit une méthode statique pour rendre des zones de texte
  * HTML avec des options pour personnaliser les attributs et l'apparence.
  */
+namespace composants\Textarea;
 class Textarea
 {
     private static $cssIncluded = false; ///< Indicateur pour l'inclusion CSS.
