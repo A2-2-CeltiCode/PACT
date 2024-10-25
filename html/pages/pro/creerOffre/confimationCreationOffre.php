@@ -1,7 +1,7 @@
 <?php
     require "../../../connect_params.php";
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
-            $user, $pass);
+            $dbuser, $dbpass);
     
     function insererPrix($dbh, $prix) {
         $sql = "SELECT valprix FROM pact._prix WHERE valprix = :valprix";
