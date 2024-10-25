@@ -44,6 +44,8 @@ body {
 
     a {
         text-decoration: none;
+        border: 1px solid red;
+        background: aqua;
 
         > div {
             border: 1px solid red;
