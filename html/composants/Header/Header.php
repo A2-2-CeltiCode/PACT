@@ -109,8 +109,8 @@ class Header
             echo '<a href="offre.php">Offres</a>';
             echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
-            echo '<a href="dashboardPro.php">Mes Offres</a>';
-            echo '<a href="publierOffre.php">Créer une Offre</a>';
+            echo '<a href="/pages/pro/listeOffre/listeOffre.php">Mes Offres</a>';
+            echo '<a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>';
         }
         echo '</nav>';
     }
