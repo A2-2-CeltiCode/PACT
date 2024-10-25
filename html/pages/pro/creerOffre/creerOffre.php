@@ -7,7 +7,7 @@
         use \composants\InsererImage\InsererImage;
         use \composants\Checkbox\Checkbox;
         use \composants\Select\Select;
-        use \composants\Textaera\Textarea;
+        use \composants\Textaera\Textaera;
 
     require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
     require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
