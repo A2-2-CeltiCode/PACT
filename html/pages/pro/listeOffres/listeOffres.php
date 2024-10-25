@@ -1,11 +1,13 @@
 <?php
 // Importation des composants
-require_once("../../../composants/Label/Label.php");
-require_once("../../../composants/Button/Button.php");
-require_once("../../../composants/Input/Input.php");
-require_once("../../../composants/Header/Header.php");
-require_once("../../../composants/Footer/Footer.php");
-require_once("../../../bdd/connect_params.php");
+use composants\Input\Input;
+use composants\Button\Button;
+use composants\Label\Label;
+use composants\Header\Header;
+use composants\Footer\Footer;
+
+
+require_once("../../../../bdd/connect_params.php");
 
 try {
     // Connexion à la base de données
