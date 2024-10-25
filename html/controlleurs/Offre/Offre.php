@@ -62,7 +62,7 @@ class Offre
 STRING;
 
         }
-        $image = "/ressources/img/offres/$this->idoffre/$this->imageO";
+        $image = "/ressources/$this->idoffre/images/$this->imageO";
         $image = file_exists($_SERVER['DOCUMENT_ROOT'] . $image) ? $image : "https://placehold.co/512/png?text=image\\nmanquante";
 
         $nom = strlen($this->nom) >= 32 ? substr($this->nom, 0, 29) . "..." : $this->nom;
