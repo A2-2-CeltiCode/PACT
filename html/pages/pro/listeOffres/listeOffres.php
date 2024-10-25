@@ -125,7 +125,7 @@ try {
                     <div class="details-offre">
                         <div class="donnees-offre">
                             <div class="titre">
-                                <?php if ($typeOffre === 'parc_attractions') {
+                                <?php if ($typeOffre === 'parc_d_attractions') {
                                     Label::render('details-offre', '', '', 'Parc d\'attraction',
                                         "../../../ressources/icone/parc_d_attraction.svg");
                                 } else {
@@ -148,7 +148,7 @@ try {
                     </div>
                     <div class="button-container">
                         <form action="../modifierOffre/modifierOffre.php" method="POST">
-                            <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
+                            <input type="hidden" name="idOffre" value="<?php echo $idoffre["idOffre"]; ?>">
                             <?php Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true); ?>
                         </form>
                     </div>
