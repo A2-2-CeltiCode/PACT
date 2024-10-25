@@ -46,7 +46,7 @@ try {
     $offre = $dbh->query('SELECT * FROM pact.vue_parc_attractions' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $adresse = $dbh->query('SELECT codepostal, ville, nomrue, numrue FROM pact._offre NATURAL JOIN pact._adresse WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     
-    if($typeOffre == "Parc d'attractions"){
+    if(strcmp($typeOffre,"Parc d'attractions") != 0){
         $tags = $dbh->query('SELECT * FROM pact.vue_tags_parc_attractions WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
     }
     else{
