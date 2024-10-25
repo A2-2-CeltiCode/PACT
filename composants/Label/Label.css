@@ -9,7 +9,6 @@
 .svg-inline svg {
     width: 20px;
     height: 20px;
-    fill: var(--primary-guest); /* Applique la couleur à l'icône */
 }
 
 label {
