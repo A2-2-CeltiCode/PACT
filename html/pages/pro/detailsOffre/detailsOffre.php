@@ -168,6 +168,7 @@ try {
         <div class="offre-package-modification">
             <div class="forfait-info">
                 <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg"); ?>
+                <?php Label::render("offre-option", "", "", "Option: " . $offre['nomoption'], "../../../ressources/icone/oeil.svg"); ?>
             </div>
 
             <?php
