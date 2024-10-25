@@ -146,7 +146,7 @@ CREATE TABLE _categorie(
 CREATE TABLE _spectacle(
     idOffre         SERIAL,
     nomCategorie    VARCHAR(50) NOT NULL,
-    tempsEnMinutes  INTEGER UNIQUE,
+    tempsEnMinutes  INTEGER,
     valPrix         NUMERIC(5,2) NOT NULL,
     capacite        INTEGER NOT NULL,
     CONSTRAINT spectacle_pk PRIMARY KEY (idOffre),
@@ -163,7 +163,7 @@ CREATE TABLE _spectacle(
 CREATE TABLE _activite(
     idOffre         SERIAL,
     nomCategorie    VARCHAR(50) NOT NULL,
-    tempsEnMinutes  INTEGER UNIQUE,
+    tempsEnMinutes  INTEGER,
     valPrix         NUMERIC(5,2) NOT NULL,
     ageMin          INTEGER NOT NULL,
     prestation      VARCHAR(50) NOT NULL, -- prestation
@@ -200,7 +200,7 @@ CREATE TABLE _visite(
     idOffre         SERIAL,
     valPrix         NUMERIC(5,2) NOT NULL,
     estGuidee       BOOLEAN NOT NULL,
-    tempsEnMinutes  INTEGER UNIQUE,
+    tempsEnMinutes  INTEGER,
     nomCategorie    VARCHAR(50) NOT NULL,
     CONSTRAINT visite_pk PRIMARY KEY (idOffre),
     CONSTRAINT visite_fk_offre FOREIGN KEY (idOffre)
