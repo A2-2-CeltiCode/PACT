@@ -33,7 +33,12 @@ $requete_sql = '
     JOIN pact._comptepro cp ON o.idcompte = cp.idcompte
     JOIN pact._compte c ON cp.idcompte = c.idcompte
     JOIN pact._adresse a ON o.idadresse = a.idadresse
-    LEFT JOIN pact._image i ON o.idoffre = i.idoffre
+    LEFT JOIN (
+        SELECT idOffre, nomImage
+        FROM pact._image
+        WHERE idOffre = :idOffre
+        LIMIT 1
+    ) i ON o.idoffre = i.idoffre
     WHERE o.idoffre = :idOffre
 ';
 
@@ -51,7 +56,7 @@ if (!$offre) {
 // Chemin par défaut si aucune image n'est trouvée
 $imagePath = "../../../ressources/icone/default.jpg";
 if (isset($offre['nomimage']) && !empty($offre['nomimage'])) {
-    $imagePath = $_SERVER["DOCUMENT_ROOT"]."/ressources/". $_GET['id'] . "/images/" . $offre['nomimage'][0];
+    $imagePath = $_SERVER["DOCUMENT_ROOT"]."/ressources/". $_GET['id'] . "/images/" . $offre['nomimage'];
 }
 
 //Déterminer le type de l'offre
