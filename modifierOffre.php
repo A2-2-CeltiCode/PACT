@@ -3,7 +3,6 @@ require "connect_params.php";
 
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
-$idOffre = 3;
 
 $sql = "SELECT nomcategorie FROM pact._spectacle WHERE idOffre = $idOffre";
 $stmt = $dbh->query($sql);
