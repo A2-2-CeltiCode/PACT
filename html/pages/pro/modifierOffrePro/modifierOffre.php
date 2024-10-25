@@ -1,5 +1,5 @@
 <?php
-require "connect_params.php";
+require "../../../connect_params.php";
 
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
@@ -115,19 +115,19 @@ $typePromotion = $vueOffre["nomoption"];
 <html>
 
 <head>
-    <?php require "components/Input/Input.php";
-    require "components/Button/Button.php";
-    require "components/InsererImage/InsererImage.php";
-    require "components/Checkbox/Checkbox.php";
-    require "components/Textaera/Textarea.php";
-    require "components/Select/Select.php";
+    <?php require "../../../components/Input/Input.php";
+    require "../../../components/Button/Button.php";
+    require "../../../components/InsererImage/InsererImage.php";
+    require "../../../components/Checkbox/Checkbox.php";
+    require "../../../components/Textaera/Textarea.php";
+    require "../../../components/Select/Select.php";
 
     ?>
     <title>Création d'une offre</title>
 
-    <script src="creationOffre.js"></script>
+    <script src="modificationOffre.js"></script>
 
-    <link rel="stylesheet" href="./creationOffre.css">
+    <link rel="stylesheet" href="./modificationOffre.css">
 </head>
 
 <body>
@@ -483,7 +483,7 @@ $typePromotion = $vueOffre["nomoption"];
         </div>
 
     </form>
-    <script src="creationOffre.js"></script>
+    <script src="modificationOffre.js"></script>
 </body>
 
 </html>

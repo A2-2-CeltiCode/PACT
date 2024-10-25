@@ -1,6 +1,6 @@
 
 <?php
-require "connect_params.php";
+require "../../../connect_params.php";
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
 function insererPrix($dbh, $prix) {
