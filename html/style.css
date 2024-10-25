@@ -117,7 +117,7 @@ main {
 
 .carrousel {
     scroll-behavior: smooth;
-    overflow-y: visible;
+    overflow-x: auto;
 
     + div {
         display: flex;
