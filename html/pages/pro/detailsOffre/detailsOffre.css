@@ -132,13 +132,23 @@ p {
     align-self: flex-end;
 }
 
-a {
-    color: var(--primaire-member);
+body a {
+    color: var(--primaire-membre);
     text-decoration: none;
 }
 
-a:hover {
+body a:hover {
     text-decoration: underline;
+}
+
+
+header a {
+    color: initial;
+    text-decoration: none;
+}
+
+header a:hover {
+    text-decoration: none;
 }
 
 ul {
