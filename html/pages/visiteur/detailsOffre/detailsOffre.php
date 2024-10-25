@@ -1,8 +1,6 @@
 <?php
 
 use composants\Button\Button;
-use composants\Header\Header;
-use composants\Footer\Footer;
 use composants\Input\Input;
 use composants\Button\ButtonType;
 use composants\Label\Label;
