@@ -72,7 +72,7 @@ INSERT INTO _spectacle (idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite
 
 -- Peupler la table _parcAttractions
 INSERT INTO _parcAttractions (idOffre, nomCategorie, valPrix, idImage, nbAttractions, ageMin) VALUES
-(3, 'Parc d''attractions', 60, 4, 10, 6);
+(3, 'Parc d''attractions', 60, NULL , 10, 6);
 
 -- Peupler la table _visite
 INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee) VALUES

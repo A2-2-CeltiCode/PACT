@@ -182,7 +182,7 @@ CREATE TABLE _parcAttractions(
     idOffre         SERIAL,
     nomCategorie    VARCHAR(50) NOT NULL,
     valPrix         NUMERIC(5,2) NOT NULL,
-    idImage         SERIAL,
+    idImage         INTEGER,
     nbAttractions   INTEGER NOT NULL,
     ageMin          INTEGER NOT NULL,
     CONSTRAINT parcAttractions_pk PRIMARY KEY (idOffre),
