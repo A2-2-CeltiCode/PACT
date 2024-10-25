@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <title>Page de Connexion</title>
     <link rel="stylesheet" href="./connexionComptePro.css">
     <link rel="stylesheet" href="/ui.css">

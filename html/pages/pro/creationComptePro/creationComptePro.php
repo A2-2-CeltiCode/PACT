@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <title>Créez un Compte Professionel PACT</title>
     <link rel="stylesheet" href="./creationComptePro.css">
     <link rel="stylesheet" href="/ui.css">
