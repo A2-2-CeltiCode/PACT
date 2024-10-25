@@ -101,9 +101,8 @@ try {
                 ?>
                 <div class="carte-offre" onclick="document.getElementById('form-<?php echo $idoffre; ?>').submit();">
                     <form id="form-<?php echo $idoffre; ?>" action="../detailsOffre/detailsOffre.php" method="POST">
-                        <?php $_SESSION['idOffre'] =$idoffre;?>
-                        <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
                         
+                        <input type="hidden" name="idOffre" value=<?php $idOffre["idOffre"]; ?>>
                     </form>
                     <div class="image-offre">
                         <?php
