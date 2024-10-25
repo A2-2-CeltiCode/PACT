@@ -7,6 +7,7 @@
  * glisser-déposer des images, avec des options pour personnaliser l'apparence
  * et les comportements.
  */
+namespace composants\InsererImage;
 class InsererImage
 {
     private static $cssIncluded = false; ///< Indicateur pour l'inclusion CSS.
