@@ -126,7 +126,7 @@ try {
                                 <?php Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)),
                                     "../../../ressources/icone/$svgOffre.svg"); ?>
                             </div>
-                            <?php Label::render('details-offre .titre', '', '', htmlspecialchars($offre['titre'])); ?>
+                            <?php Label::render('details-offre titre2', '', '', htmlspecialchars($offre['titre'])); ?>
                             <div class="infos-offre">
                                 <?php Label::render('', '', '', $raisonSociete['raisonsocialepro']); ?>
                                 <?php Label::render('', '', '', $adresseTotale,

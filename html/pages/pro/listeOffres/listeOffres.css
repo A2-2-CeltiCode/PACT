@@ -35,7 +35,7 @@ body {
     background-color: var(--gris1);
 }
 
-.details-offre[class=".titre"] {
+.details-offre .titre2 {
     margin-left: 1.8em;
 }
 
