@@ -8,7 +8,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
 try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     // Définit explicitement le schéma 'pact'
     $dbh->exec("SET search_path TO pact;");
 } catch (PDOException $e) {
