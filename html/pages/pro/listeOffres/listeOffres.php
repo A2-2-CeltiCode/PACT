@@ -125,13 +125,15 @@ try {
                     <div class="details-offre">
                         <div class="donnees-offre">
                             <div class="titre">
-                                <?php if ($typeOffre === 'parc_attractions') {
+                                <?php /*if ($typeOffre === 'parc_attractions') {
                                     Label::render('details-offre', '', '', 'Parc d\'attraction',
                                         "../../../ressources/icone/parc_d_attraction.svg");
                                 } else {
                                     Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)),
                                         "../../../ressources/icone/$typeOffre.svg");
-                                }
+                                }*/
+                                Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)),
+                                    "../../../ressources/icone/$typeOffre.svg");
                                 ?>
                             </div>
                             <?php Label::render('details-offre .titre', '', '', htmlspecialchars($offre['titre'])); ?>
