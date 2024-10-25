@@ -1,9 +1,9 @@
 <?php
 session_start();
-/*
-if (!array_key_exists('idComtpe', $_SESSION) || is_null($_SESSION['idCompte'])) {
+
+if (!isset($_SESSION['idCompte'])) {
     header("Location: /pages/pro/connexionComptePro/connexionComptePro.php");
-}*/
+}
 
 // Importation des composants
 use composants\Button\Button;
