@@ -129,7 +129,7 @@
     foreach ($_FILES['monDropZone']['name'] as $key => $val) {
         $nomImage = $_FILES['monDropZone']['name'][$key];
         $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
-        $location = '../../ressources/' . $idOffre . '/images' . '/';
+        $location = $_SERVER["DOCUMENT_ROOT"] . "/composants/" . $idOffre . '/images' . '/';
     
         $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
     
