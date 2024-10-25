@@ -20,8 +20,9 @@ class InsererImage
      * @param int $maxFiles Nombre maximum de fichiers autorisés.
      * @param bool $multiple Permet de déposer plusieurs fichiers.
      * @param bool $required Spécifie si l'entrée est obligatoire ou non.
+     * @param array $acceptedExtensions Extensions d'image acceptées (ex: ['jpg', 'png']).
      */
-    public static function render($id = "drop-zone", $message = "Déposez une image ou cliquez ici", $maxFiles = 5, $multiple = true, $required = false)
+    public static function render($id = "drop-zone", $message = "Déposez une image ou cliquez ici", $maxFiles = 5, $multiple = true, $required = false, $acceptedExtensions = [])
     {
         // Inclure le CSS une seule fois
         if (!self::$cssIncluded) {
@@ -34,20 +35,23 @@ class InsererImage
             echo '<script src="/composants/InsererImage/InsererImage.js" defer></script>';
             self::$jsIncluded = true;
         }
-    
+
         // Définir l'attribut multiple si $multiple est vrai
         $multipleAttr = $multiple ? 'multiple' : '';
         
         // Définir l'attribut required si $required est vrai
         $requiredAttr = $required ? 'required' : '';
+
+        // Définir l'attribut accept en fonction des extensions fournies
+        $acceptStr = !empty($acceptedExtensions) ? 'accept="' . implode(',', array_map(function($ext) {
+            return '.' . $ext;
+        }, $acceptedExtensions)) . '"' : '';
     
         // Rendre la zone de dépôt d'image avec les paramètres dynamiques
         echo "
         <div class='drop-zone' id='{$id}' data-id='{$id}' data-max-files='{$maxFiles}'>{$message}</div>
-        <input type='file' id='fileInput-{$id}' name='{$id}' accept='image/*' {$multipleAttr} {$requiredAttr} style='display: none;'>
+        <input type='file' id='fileInput-{$id}' name='{$id}' {$acceptStr} {$multipleAttr} {$requiredAttr} style='display: none;'>
         <div id='successMessage-{$id}' style='display:none; color: green;'>Image ajoutée avec succès !</div><br>
         ";
     }
 }
-
-
