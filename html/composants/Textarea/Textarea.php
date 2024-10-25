@@ -46,7 +46,7 @@ class Textarea
 
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" href="/composants/Textaera/Textarea.css">';
+            echo '<link rel="stylesheet" href="/composants/Textarea/Textarea.css">';
             self::$cssIncluded = true;
         }
 
