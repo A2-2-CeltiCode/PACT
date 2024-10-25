@@ -50,7 +50,6 @@ try {
         throw new Exception("Aucune offre trouvée");
     }
 } catch (PDOException $e) {
-    // Gestion des erreurs de connexion à la base de données
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();
 } finally {
@@ -162,13 +161,12 @@ try {
                 ?>
             </ul>
         </div>
-
-
         <div class="offre-package-modification">
             <div class="forfait-info">
                 <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg"); ?>
             </div>
             <?php
+            // Affichage des boutons pour télécharger des documents liés à l'offre
             switch ($typeOffre) {
                 case 'restaurant': ?>
                     <div class="download-button">
@@ -196,11 +194,6 @@ try {
                     <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", true); ?>
                 </div>
             </form>
-
-            <!-- Lien pour télécharger l'image -->
-            <?php if (isset($carte['nomimage'])): ?>
-
-            <?php endif; ?>
         </div>
 
 
