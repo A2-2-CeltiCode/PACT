@@ -68,7 +68,7 @@ STRING;
         $nom = strlen($this->nom) >= 32 ? substr($this->nom, 0, 29) . "..." : $this->nom;
 
         return <<<STRING
-<div class="offre">
+<div class="offre"><a href="/pages/visiteur/listeOffres/listeOffres.php?id=$this->idoffre">
     <img alt="" src="$image">
     <div>
         <div>
@@ -90,7 +90,7 @@ STRING;
             <p>$this->nomProprietaire</p>
         </div>
         $d
-    </div>
+    </div></a>
 </div>
 STRING;
 

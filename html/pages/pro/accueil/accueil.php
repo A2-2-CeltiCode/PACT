@@ -8,7 +8,11 @@
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <style>
         svg {
-            stroke: var(--primaire-visiteur)
+            stroke: var(--primaire-pro)
+        }
+
+        header + div {
+            background-image: url("/ressources/img/font-barre-recherce-pro.png");
         }
     </style>
     <?php
@@ -73,7 +77,7 @@ foreach ($offresSql as $item) {
 ?>
 
 <body>
-<?php Header::render(); ?>
+<?php Header::render(HeaderType::Pro); ?>
 <div>
     <?php Input::render(class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
         icon: "/ressources/icone/recherche.svg") ?>
@@ -146,7 +150,7 @@ foreach ($offresSql as $item) {
         </div>
     </div>
 </main>
-<?php Footer::render(); ?>
+<?php Footer::render(FooterType::Pro); ?>
 </body>
 <script src="accueil.js"></script>
 </html>
