@@ -20,7 +20,6 @@
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Footer/Footer.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
-
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
         ?> 
