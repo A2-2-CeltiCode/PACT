@@ -73,7 +73,7 @@ if ($typeOffre == '_spectacle') {
 } elseif ($typeOffre == '_parcattractions') {
     $sqlTags = "SELECT nomtag FROM pact._possedeparcattractions WHERE idoffre = :idOffre";
 } elseif ($typeOffre == '_visite') {
-    $sqlTags = "SELECT nomtag FROM pact._possedepossedevisite WHERE idoffre = :idOffre";
+    $sqlTags = "SELECT nomtag FROM pact._possedevisite WHERE idoffre = :idOffre";
 } elseif ($typeOffre == '_restaurant') {
     $sqlTags = "SELECT nomtag FROM pact._possederestaurant WHERE idoffre = :idOffre";
 }
