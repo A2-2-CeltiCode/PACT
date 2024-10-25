@@ -6,6 +6,7 @@
  * Cette classe fournit une méthode statique pour rendre des menus déroulants
  * HTML avec des options pour personnaliser les attributs et l'apparence.
  */
+namespace composants\Select;
 class Select
 {
     private static $cssIncluded = false; ///< Indicateur pour l'inclusion CSS.
