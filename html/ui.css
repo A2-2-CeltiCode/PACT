@@ -40,7 +40,6 @@
 
 h1, h2, h3, h4, h5 {
     font-family: 'Encode Sans', sans-serif;
-    margin-bottom: 10px;
     font-weight: var(--font-weight-semi-bold);
 }
 
