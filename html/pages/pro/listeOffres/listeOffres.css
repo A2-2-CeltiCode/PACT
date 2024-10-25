@@ -11,23 +11,26 @@ body {
 .carte-offre {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     display: flex;
-    width: 100%;
+    width: 50em;
     height: 12em;
     border-radius: 1em 1em 0 1em;
-    border: 1px solid var(--grey1);
+    border: 1px solid var(--gris1);
     transition: transform 0.2s ease;
     margin-bottom: 3em;
 }
+
 .carte-offre:hover {
-    transform: scale(1.02); 
+    transform: scale(1.02);
 }
+
 .image-offre {
     flex: 1;
     border-radius: 1em 0 0 1em;
     place-items: center;
-    background-color: var(--grey1);
+    background-color: var(--gris1);
 }
-.image-carte{
+
+.image-carte {
     width: 100%;
     height: 100%;
     border-radius: 1em 0 0 1em;
@@ -42,7 +45,7 @@ body {
     padding: 1em;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid var(--grey1);
+    border-bottom: 1px solid var(--gris1);
 }
 
 .titre {
@@ -64,7 +67,7 @@ body {
 }
 
 .prix {
-    color: var(--secondary-pro);
+    color: var(--secondaire-pro);
 }
 
 .onglets {
@@ -77,22 +80,33 @@ body {
 
 .onglet {
     text-decoration: none;
-    color: var(--grey2);
+    color: var(--gris2);
 }
 
 .onglet.actif {
     text-decoration: underline;
-    color: var(--primary-pro);
+    color: var(--primaire-pro);
 }
 
-.btn{
-    border-radius: 0 0 1em 1em;
+.button-modif {
+    border-radius: 0 0 1em 1em !important;
     position: relative;
     top: 100%;
     right: 0;
 }
+
 .titre-page {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.notation {
+    flex-direction: column;
+}
+
+
+footer{
+    position: fixed;
+    bottom: 0;
 }

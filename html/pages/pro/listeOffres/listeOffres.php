@@ -115,8 +115,16 @@ try {
 
                         <div class="details-offre">
                             <div class="donnees-offre">
+                                
                                 <div class="titre">
                                     <?php Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)), "../../../ressources/icone/$typeOffre.svg"); ?>
+                                    <div class="notation">
+                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
+                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
+                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
+                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
+                                    <img src="../../../ressources/icone/etoile_pleine.svg" alt="etoile">
+                            </div>
                                 </div>
                                 <?php Label::render('details-offre .titre', '', '', htmlspecialchars($offre['titre'])); ?>
                                 <div class="infos-offre">
@@ -131,14 +139,14 @@ try {
                         </div>
                         <form action="../modifierOffre/modifierOffre.php" method="POST">
                             <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
-                            <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", true); ?>
+                            <?php Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true); ?>
                         </form>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
     </div>
+    <?php Footer::render(FooterType::Pro); ?>
 </body>
-<?php Footer::render(FooterType::Pro); ?>
 
 </html>
