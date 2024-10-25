@@ -103,7 +103,7 @@ function deleteOldImages($dbh, $idOffre, $typeOffre) {
 
 
 // Récupération des données du formulaire
-$idOffre=$_POST['idOffre'] ?? null;
+$idOffre=$_SESSION['idOffre']  ?? null;
 $nomOffre = $_POST['nomOffre'] ?? null;
 $ville = $_POST['ville'] ?? null;
 $codePostal = $_POST['codePostal'] ?? null;
