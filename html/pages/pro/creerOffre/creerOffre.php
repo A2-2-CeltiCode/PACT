@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
     <html>
     <head>
@@ -9,15 +10,15 @@
         use \composants\Select\Select;
         use \composants\Textarea\Textarea;
 
-    require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
-    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
-    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/InsererImage/InsererImage.php";
-    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Checkbox/Checkbox.php";
-    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Select/Select.php";
-    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Header/Header.php";
-    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Textarea/Textarea.php";
-    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Footer/Footer.php";
-    require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/InsererImage/InsererImage.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Checkbox/Checkbox.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Select/Select.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Header/Header.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Textarea/Textarea.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Footer/Footer.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
 
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
