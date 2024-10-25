@@ -13,11 +13,11 @@
     
         if (empty($prix2)) {
             $stmt = $dbh->prepare("INSERT INTO pact._prix(valprix) VALUES(:valprix)");
-            $stmt->bindValue(':valprix', $prix, PDO::PARAM_STR); 
+            $stmt->bindValue(':valprix', $prix, PDO::PARAM_STR);
             $stmt->execute();
         }
     }
-
+    
     function insererDuree($dbh, $tempsEnMinutes) {
         $sql = "SELECT tempsEnMinutes FROM pact._duree WHERE tempsEnMinutes = :tempsEnMinutes";
         $stmt = $dbh->prepare($sql);
@@ -25,9 +25,7 @@
         $stmt->execute();
         $dureeExistante = $stmt->fetchColumn();
     
-        // Si la durée n'existe pas, on l'insère
         if (empty($dureeExistante)) {
-            
             $stmt = $dbh->prepare(
                 "INSERT INTO pact._duree(tempsEnMinutes) 
                 VALUES(:tempsEnMinutes)"
@@ -36,7 +34,6 @@
             $stmt->execute();
         }
     }
-
 
     // Récupération des données du formulaire
     $nomOffre = $_POST['nomOffre'] ?? null;
@@ -50,6 +47,7 @@
     $typeForfait = $_POST['typeForfait'] ?? null;
     $typePromotion = $_POST['typePromotion'] ?? null;
     $typeOffre = $_POST['typeOffre'] ?? null;
+    
     //type Offfre variable
     $capacite = $_POST['capacite'] ?? null;
     $guidee = $_POST['guidee'] ?? null;
@@ -207,10 +205,10 @@
             $stmt->execute();
         }
     }
-
+    
     // Type d'offre : Parc d'Attraction
-    if ($typeOffre === "ParcAttraction") {
-        insererPrix($dbh, $prix3);
+    if ($typeOffre === "parc") {
+        insererPrix($dbh, $prix4);
 
         foreach ($_FILES['monDropZone']['name'] as $key => $val) {
             $nomImage = $_FILES['monDropZone']['name'][$key];
@@ -237,14 +235,14 @@
         $planParc = $dbh->lastInsertId();
 
         $stmt = $dbh->prepare(
-            "INSERT INTO pact._parcAttractions(idOffre, nomCategorie, tempsEnMinutes, valPrix, planParc, nbAttractions, ageMin)
-            VALUES(:idOffre, :nomCategorie, :tempsEnMinutes, :valPrix, :planParc, :nbAttractions, :ageMin)"
+            "INSERT INTO pact._parcAttractions(idOffre, nomCategorie, valPrix, idImage, nbAttractions, ageMin)
+            VALUES(:idOffre, :nomCategorie, :valPrix, :idImage, :nbAttractions, :ageMin)"
         );
         
         $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-        $stmt->bindValue(':nomCategorie', $typeOffre, PDO::PARAM_STR);
-        $stmt->bindValue(':valPrix', $prix3, PDO::PARAM_STR);
-        $stmt->bindValue(':planParc', $planParc, PDO::PARAM_STR);
+        $stmt->bindValue(':nomCategorie', "Parc d'attractions", PDO::PARAM_STR);
+        $stmt->bindValue(':valPrix', $prix4, PDO::PARAM_STR);
+        $stmt->bindValue(':idImage', $planParc, PDO::PARAM_INT);
         $stmt->bindValue(':nbAttractions', $nombreAttractions, PDO::PARAM_INT);
         $stmt->bindValue(':ageMin', $ageMinimum2, PDO::PARAM_INT);
         $stmt->execute();
@@ -258,6 +256,7 @@
             $stmt->bindValue(':nomTag', $val, PDO::PARAM_STR);
             $stmt->execute();
         }
+        
     }
 
     // Type d'offre : Visite
