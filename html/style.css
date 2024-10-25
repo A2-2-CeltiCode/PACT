@@ -99,12 +99,12 @@ main {
             margin-left: 7vw;
         }
 
-        overflow-y: visible;
 
         > div {
             padding-left: 9vw;
             white-space: nowrap;
             overflow-x: auto;
+            overflow-y: visible;
             /* cache la scrollbar */
             -ms-overflow-style: none; /* Internet Explorer 10+ */
             scrollbar-width: none; /* Firefox */
