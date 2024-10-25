@@ -1,11 +1,18 @@
 <?php
 
+use composants\Button\Button;
+use composants\Header\Header;
+use composants\Footer\Footer;
+use composants\Input\Input;
+use composants\Button\ButtonType;
+use composants\Label\Label;
+
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
-require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
-require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
