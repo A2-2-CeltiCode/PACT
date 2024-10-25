@@ -6,6 +6,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
 $idOffre=2;
+$idOffre=$_POST["idOffre"];
 $sql = "SELECT nomcategorie FROM pact._spectacle WHERE idOffre = $idOffre";
 $stmt = $dbh->query($sql);
 $offre2 = $stmt->fetch();
