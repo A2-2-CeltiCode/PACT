@@ -19,9 +19,9 @@
         ?> 
         <title>Création d'une offre</title>
 
-        <script src="creationOffre.js"></script>
+        <script src="creerOffre.js"></script>
 
-        <link rel="stylesheet" href="creationOffre.css">
+        <link rel="stylesheet" href="creerOffre.css">
         <link rel="stylesheet" href="../../../ui.css">
     </head>
 
@@ -404,5 +404,5 @@
         <?php Footer::render(FooterType::Pro); ?>
     </body>
     
-    <script src="creationOffre.js"></script>
+    <script src="creerOffre.js"></script>
     </html>
