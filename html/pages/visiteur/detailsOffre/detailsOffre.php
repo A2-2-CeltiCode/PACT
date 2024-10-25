@@ -28,18 +28,15 @@ $idOffre = isset($_GET['id']) ? intval($_GET['id']) : 1; // Par défaut, affiche
 $requete_sql = '
     SELECT o.titre, o.descriptiondetaillee, o.siteinternet, o.nomoption, o.nomforfait, a.codepostal, a.ville, 
            a.numtel, c.email, a.ville AS compteville, cp.idcompte, a.codepostal AS comptecodepostal,
-           cp.denominationsociale, i.nomimage
+           cp.denominationsociale, MIN(i.nomimage) AS nomimage -- Utilise MIN pour obtenir la première image
     FROM pact._offre o
     JOIN pact._comptepro cp ON o.idcompte = cp.idcompte
     JOIN pact._compte c ON cp.idcompte = c.idcompte
     JOIN pact._adresse a ON o.idadresse = a.idadresse
-    LEFT JOIN (
-        SELECT idoffre, nomimage
-        FROM pact._image 
-        WHERE idoffre = :idoffre
-        LIMIT 1
-    ) i ON o.idoffre = i.idoffre
+    LEFT JOIN pact._image i ON o.idoffre = i.idoffre
     WHERE o.idoffre = :idOffre
+    GROUP BY o.titre, o.descriptiondetaillee, o.siteinternet, o.nomoption, o.nomforfait, a.codepostal, a.ville, 
+             a.numtel, c.email, cp.idcompte, a.ville, a.codepostal, cp.denominationsociale
 ';
 
 $requete_preparee = $dbh->prepare($requete_sql);
