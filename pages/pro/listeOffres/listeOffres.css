@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+}
+
+.conteneur-offres {
+    width: 70%;
+    max-width: 50em;
+    margin: 1em auto;
+}
+
+.carte-offre {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    width: 100%;
+    height: 12em;
+    border-radius: 1em 1em 0 1em;
+    border: 1px solid var(--grey1);
+    transition: transform 0.2s ease;
+    margin-bottom: 3em;
+}
+.carte-offre:hover {
+    transform: scale(1.02); 
+}
+.image-offre {
+    flex: 1;
+    border-radius: 1em 0 0 1em;
+    place-items: center;
+    background-color: var(--grey1);
+}
+.image-carte{
+    width: 100%;
+    height: 100%;
+    border-radius: 1em 0 0 1em;
+
+}
+
+.details-offre {
+    flex: 2;
+}
+
+.donnees-offre {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--grey1);
+}
+
+.titre {
+    padding: 0em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.infos-offre {
+    padding: 0em 2em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.prix-offre {
+    padding: 0em 5em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.prix {
+    color: var(--secondary-pro);
+}
+
+.onglets {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5em 5em;
+    font-size: var(--h2-font-size);
+    font-family: 'Encode Sans';
+}
+
+.onglet {
+    text-decoration: none;
+    color: var(--grey2);
+}
+
+.onglet.actif {
+    text-decoration: underline;
+    color: var(--primary-pro);
+}
+
+.btn{
+    border-radius: 0 0 1em 1em;
+    position: relative;
+    top: 100%;
+    right: 0;
+}
+.titre-page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

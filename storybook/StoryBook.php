@@ -6,10 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StoryBook</title>
     <link rel="stylesheet" href="./StoryBook.css">
+    <link rel="stylesheet" href="../ui.css">
 </head>
 
 <body>
     <main>
+    <?php
+        foreach (glob("../composants/*/*.php") as $filename) {
+            include $filename;
+        }
+        //Header::render();
+        ?>
         <header>
             <h1>Sommaire</h1>
             <nav>
@@ -180,29 +187,27 @@
         <section id="composants">
             <h2>Composants</h2>
             <div>
-
-
                 <p>Label:</p>
-
-                
+                <?php Label::render("","", "", "Voici un Label pour Restaurant", "../ressources/icone/restaurant.svg");?>
                 <p>Input:</p>
-                <?php Input::render(type: "text", name: "username", required: true, icon: "./assets/icon/health.svg"); ?>
+                <?php Input::render(type: "text", name: "username", required: true, icon: "../ressources/icone/health.svg"); ?>
                 <p>Boutton:</p>
                 <div class="button-container">
-                    <?php Button::render(text: "Button", type: ButtonType::Member, submit: false); ?>
-                    <?php Button::render(text: "Button", type: ButtonType::Guest, submit: false); ?>
-                    <?php Button::render(text: "Button", type: ButtonType::Pro, submit: false); ?>
+                    <?php Button::render(text: "Membre", type: ButtonType::Member, submit: false); ?>
+                    <?php Button::render(text: "Visiteur", type: ButtonType::Guest, submit: false); ?>
+                    <?php Button::render(text: "Pro", type: ButtonType::Pro, submit: false); ?>
+                    <?php Button::render(text: "Valide", type: ButtonType::Valid, submit: false); ?>
+                    <?php Button::render(text: "Erreur", type: ButtonType::Error, submit: false); ?>
+                    <?php Button::render(text: "Attention", type: ButtonType::Warning, submit: false); ?>
                 </div>
 
                 <p>Boutton (Toast):</p>
-                <?php Button::render(text: "Clique Moi ;)", type: ButtonType::Member, onClick: "renderToast('Toast !', 'success')"); ?>
                 <?php Toast::render("Toast !", ToastType::SUCCESS); ?>
+                <?php Button::render(text: "Clique Moi ;)", type: ButtonType::Member, onClick: "renderToast()"); ?>
                 <p>Checkbox:</p>
-                <?php CheckBox::render(class: "my-checkbox", id: "subscribe", name: "subscribe", required: true, checked: false, text: "Subscribe to newsletter"); ?>
+                <?php CheckBox::render(class: "", id: "", name: "", required: true, checked: false, text: "Une checkBox"); ?>
                 <p>ImagePicker:</p>
-
                 <p>Range:</p>
-                
                 <p>barre de filtres:</p>
                 <p>SearchBar:</p>
                 <p>Card:</p>
@@ -220,9 +225,9 @@
                 <?php Input::render(type: "email", name: " gros caca"); ?>
 
             </div>
-            <hr>
         </section>
     </main>
 </body>
+<?php Footer::render(); ?>
 
 </html>
