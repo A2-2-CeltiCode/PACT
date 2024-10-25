@@ -148,7 +148,7 @@ try {
                     </div>
                     <div class="button-container">
                         <form action="../modifierOffre/modifierOffre.php" method="POST">
-                            <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
+                            <input type="hidden" name="idOffre" value="<?php echo $idoffre["idOffre"]; ?>">
                             <?php Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true); ?>
                         </form>
                     </div>
