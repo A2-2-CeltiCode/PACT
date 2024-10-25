@@ -1,9 +1,9 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['idCompte'])) {
+/*
+if (!array_key_exists('idComtpe', $_SESSION) || is_null($_SESSION['idCompte'])) {
     header("Location: /pages/pro/connexionComptePro/connexionComptePro.php");
-}
+}*/
 
 // Importation des composants
 use composants\Button\Button;
@@ -57,13 +57,11 @@ try {
 <div class="conteneur-offres">
     <div class="titre-page">
         <h1>Mes Offres</h1>
-        <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "", "Créer une Offre", ButtonType::Pro,
-                "", true); ?></a>
+        <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "", "Créer une Offre", ButtonType::Pro, "", true); ?></a>
     </div>
     <div class="onglets">
         <a href="?status=enligne" class="onglet <?php echo ($status === 'enligne') ? 'actif' : ''; ?>">En ligne</a>
-        <a href="?status=horsligne" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>">Hors
-            ligne</a>
+        <a href="?status=horsligne" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>">Hors ligne</a>
     </div>
 
     <div class="liste-offres">
@@ -92,10 +90,8 @@ try {
                 }
 
                 // Récupération des informations de l'offre
-                $raisonSociete = $dbh->query('SELECT cp.raisonsocialepro FROM pact._offre o JOIN pact._comptePro cp ON o.idCompte = cp.idCompte WHERE o.idoffre = ' . $idoffre)
-                    ->fetch();
-                $adresse = $dbh->query('SELECT ville, codepostal FROM pact._adresse WHERE idadresse = ' . $offre['idadresse'])
-                    ->fetch();
+                $raisonSociete = $dbh->query('SELECT cp.raisonsocialepro FROM pact._offre o JOIN pact._comptePro cp ON o.idCompte = cp.idCompte WHERE o.idoffre = ' . $idoffre)->fetch();
+                $adresse = $dbh->query('SELECT ville, codepostal FROM pact._adresse WHERE idadresse = ' . $offre['idadresse'])->fetch();
                 $adresseTotale = $adresse['ville'] . ', ' . $adresse['codepostal'];
                 $images = $dbh->query('SELECT nomimage FROM pact._image WHERE idoffre = ' . $idoffre)->fetch();
                 ?>
@@ -124,22 +120,26 @@ try {
                     </div>
                     <div class="details-offre">
                         <div class="donnees-offre">
-
                             <div class="titre">
-                                <?php Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)),
-                                    "../../../ressources/icone/$typeOffre.svg"); ?>
+                            <?php if($typeOffre === 'parc_attractions') {
+                                Label::render('details-offre', '', '', 'Parc d\'attraction', "../../../ressources/icone/parc_d_attraction.svg");
+                            }else{
+                                Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)), "../../../ressources/icone/$typeOffre.svg");
+                            }
+                            ?>
                             </div>
                             <?php Label::render('details-offre .titre', '', '', htmlspecialchars($offre['titre'])); ?>
                             <div class="infos-offre">
                                 <?php Label::render('', '', '', $raisonSociete['raisonsocialepro']); ?>
-                                <?php Label::render('', '', '', $adresseTotale,
-                                    "../../../ressources/icone/localisateur.svg"); ?>
+                                <?php Label::render('', '', '', $adresseTotale, "../../../ressources/icone/localisateur.svg"); ?>
                             </div>
                         </div>
                         <div class="prix-offre">
                             <?php Label::render('prix', '', '', htmlspecialchars($offre['nomforfait'])); ?>
-                            <?php Label::render('', '', '', htmlspecialchars($offre['nomoption'])); ?>
+                            <?php Label::render('', '', '', 'Option : '. htmlspecialchars($offre['nomoption'])); ?>
                         </div>
+                    </div>
+                    <div class="button-container">
                         <form action="../modifierOffre/modifierOffre.php" method="POST">
                             <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
                             <?php Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true); ?>

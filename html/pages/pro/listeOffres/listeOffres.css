@@ -14,10 +14,11 @@ body {
     margin: 1em auto;
     width: 45em;
     height: 12em;
-    border-radius: 1em 1em 0 1em;
+    border-radius: 1em;
     border: 1px solid var(--gris1);
     transition: transform 0.2s ease;
     margin-bottom: 4em;
+    position: relative;
 }
 
 .carte-offre:hover {
@@ -35,7 +36,6 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 1em 0 0 1em;
-
 }
 
 .details-offre {
@@ -84,12 +84,6 @@ body {
     color: var(--gris2);
 }
 
-.svg-inline svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--primaire-pro);
-}
-
 .onglet.actif {
     text-decoration: underline;
     color: var(--primaire-pro);
@@ -100,20 +94,18 @@ body {
     align-items: center;
     justify-content: space-between;
 }
-footer{
+
+.button-container {
+    position: absolute;
+    top: 0em;
+    right: 0em;
+}
+
+footer {
     position: fixed;
     bottom: 0;
 }
-form {
-    display: flex;
-    justify-content: space-between; /* Espace entre les éléments */
-    align-items: center; /* Aligne verticalement */
-}
 
-.button-modif {
-    border-radius: 0 1em 0 1em !important;
-    position: relative;
-    bottom:14.5em;
-    border-top: 5px solid var(--primaire-pro);
-    margin-left: auto;
+.button-modif{
+    border-radius: 0px 1em !important;
 }
