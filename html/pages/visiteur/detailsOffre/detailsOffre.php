@@ -118,7 +118,7 @@ if (!empty($sqlTags)) {
                     //Label::render("bas_desc", "", "", "11h-15h & 19h-23h", "../../../ressources/icone/horloge.svg"); 
                 ?>
                 <a href="<?php echo $offre['siteinternet']; ?>">
-                    <?php Label::render("bas_desc", "", "", "Site du restaurant", "../../../ressources/icone/naviguer.svg"); ?>
+                    <?php Label::render("bas_desc", "", "", "Site", "../../../ressources/icone/naviguer.svg"); ?>
                 </a>
                 <?php 
                     Label::render("bas_desc", "", "", $offre['ville'] . ' (' . $offre['codepostal'] . ')', "../../../ressources/icone/localisateur.svg"); 
