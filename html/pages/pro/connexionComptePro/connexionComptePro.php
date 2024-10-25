@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             </div>
             <div class="connecte">
-                <a class="lien-mdp-oublie" href="#">Mot de passe oublié ?</a>
+                <!--<a class="lien-mdp-oublie" href="#">Mot de passe oublié ?</a>-->
                 <?php Button::render(class: "bouton-connexion", submit: true, type: "pro", text: "Se connecter"); ?>
             </div>
         </form>
