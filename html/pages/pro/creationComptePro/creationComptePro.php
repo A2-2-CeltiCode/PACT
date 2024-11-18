@@ -32,7 +32,6 @@
     $telephone = '';
     $codePostal = '';
     $ville = '';
-    $numero = '';
     $rue = '';
     $motDePasse = '';
     $confirmMdp = '';
@@ -47,7 +46,6 @@
         $telephone = $_POST['telephone'];
         $codePostal = $_POST['codePostal'];
         $ville = $_POST['ville'];
-        $numero = $_POST['numero'];
         $rue = $_POST['rue'];
         $motDePasse = $_POST['motDePasse'];
         $confirmMdp = $_POST['confirmMdp'];
@@ -83,10 +81,9 @@
                 <br>
                 <div class="div-adresse">
                     <label for="informations">Votre Adresse Postale</label>
+                    <?php Input::render(class: "input-box", type: "text", name: "rue", placeholder: "Rue*", required: true); ?>
                     <?php Input::render(class: "input-box", type: "text", name: "codePostal", placeholder: "Code Postal*", required: true); ?>
                     <?php Input::render(class: "input-box", type: "text", name: "ville", placeholder: "Ville*", required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "rue", placeholder: "Rue*", required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "numero", placeholder: "Numéro", required: false); ?>
                 </div>
                 <br>
                 <div>
@@ -120,7 +117,6 @@
                 $codePostal = $_POST['codePostal']; 
                 $ville = $_POST['ville'];
                 $rue = $_POST['rue'];
-                $numero = $_POST['numero'];
                 $motDePasse = $_POST['motDePasse'];
                 $iban = $_POST['iban'];
                 
@@ -128,7 +124,7 @@
                 try {
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-                    $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$numero', '$telephone')");
+                    $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$telephone')");
                     $stmt->execute();
                     $idAdresse = $dbh->lastInsertId();
                     
