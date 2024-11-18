@@ -5,7 +5,7 @@ error_reporting(E_ALL ^ E_WARNING);
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-$idOffre =$_SESSION['idOffre'];
+$idOffre =$_SESSION['idOffre'] ;
 
 
 $sql = "SELECT nomcategorie FROM pact._spectacle WHERE idOffre = $idOffre";
@@ -148,7 +148,7 @@ $typePromotion = $vueOffre["nomoption"];
 
 <body>
     <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data">
-        <input type="hidden" name="idOffre" value=<?php $idOffre["idOffre"]; ?>>
+        <input type="hidden" name="idOffre" value="<?php echo $idOffre; ?>">
         <input name="typeOffre" type="hidden" value=<?php $typeOffre["nomcategorie"] ?>>
         <?php
         
