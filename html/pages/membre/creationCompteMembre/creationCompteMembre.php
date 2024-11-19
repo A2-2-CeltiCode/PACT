@@ -91,22 +91,21 @@
 
         <?php 
             } else {
-                $denomination = $_POST['denomination'];
-                $raisonS = $_POST['raisonS'];
-                $siren = $_POST['siren'];
-                $email = $_POST['email'];           
-                $telephone = $_POST['telephone'];      
-                $codePostal = $_POST['codePostal']; 
+                $nom = $_POST['nom'];
+                $prenom = $_POST['prenom'];
+                $pseudo = $_POST['pseudo'];
+                $email = $_POST['email'];
+                $telephone = $_POST['telephone'];
+                $codePostal = $_POST['codePostal'];
                 $ville = $_POST['ville'];
                 $rue = $_POST['rue'];
-                $motDePasse = $_POST['motDePasse'];
-                $iban = $_POST['iban'];
+                $motDePasse = hash("sha256", $_POST['motDePasse']);
                 
                 require_once($_SERVER["DOCUMENT_ROOT"] . '/connect_params.php');
                 try {
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-                    $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$telephone')");
+                    $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numTel) VALUES($codePostal, '$ville', '$rue', '$telephone')");
                     $stmt->execute();
                     $idAdresse = $dbh->lastInsertId();
                     
@@ -116,17 +115,9 @@
 
                     $_SESSION['idCompte'] = $idCompte;
 
-                    $stmt = $dbh->prepare("INSERT INTO pact._comptePro(idCompte,denominationSociale, raisonSocialePro,banqueRib) VALUES('$idCompte','$denomination','$raisonS','$iban')");
+                    $stmt = $dbh->prepare("INSERT INTO pact._compteMembre(idCompte, prenom, nom, pseudo) VALUES('$idCompte','$prenom','$nom','$pseudo')");
                     $stmt->execute();
 
-                    if(strlen($siren) > 0){
-                        $stmt = $dbh->prepare("INSERT INTO pact._compteProPrive(idCompte,numSiren) VALUES('$idCompte','$siren')");
-                        $stmt->execute();
-                    }
-                    else{
-                        $stmt = $dbh->prepare("INSERT INTO pact._compteProPublic(idCompte) VALUES('$idCompte')");
-                        $stmt->execute();
-                    }
 
                     $dbh = null;
                     
