@@ -24,7 +24,7 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupère les valeurs soumises dans le formulaire
     $identifiant_utilisateur = $_POST['username'];
-    $mot_de_passe_utilisateur = $_POST['password'];
+    $mot_de_passe_utilisateur = hash("SHA256",$_POST['password']);
 
     // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
     $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
-        // Comparaison simple des mots de passe (sans hachage)
+        // Comparaison simple des mots de passe (avec hachage!!)
         if ($mot_de_passe_utilisateur === $compte['mdp']) {
             // Si les informations sont correctes, démarrer la session
             $_SESSION['utilisateur_connecte'] = true;

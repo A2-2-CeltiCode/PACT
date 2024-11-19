@@ -117,7 +117,7 @@
                 $codePostal = $_POST['codePostal']; 
                 $ville = $_POST['ville'];
                 $rue = $_POST['rue'];
-                $motDePasse = $_POST['motDePasse'];
+                $motDePasse = hash("SHA256",$_POST['motDePasse']);
                 $iban = $_POST['iban'];
                 
                 require_once($_SERVER["DOCUMENT_ROOT"] . '/connect_params.php');
