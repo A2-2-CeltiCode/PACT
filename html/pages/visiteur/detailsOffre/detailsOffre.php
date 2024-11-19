@@ -73,7 +73,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php Header::render(HeaderType::Pro); ?>
+<?php Header::render(HeaderType::Guest); ?>
 
 <body>
     <div class=titre>
@@ -203,6 +203,6 @@ try {
 
     <script src="detailsOffre.js"></script>
 </body>
-<?php Footer::render(FooterType::Pro); ?>
+<?php Footer::render(FooterType::Guest); ?>
 
 </html>
