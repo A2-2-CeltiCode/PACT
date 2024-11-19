@@ -1,18 +1,22 @@
 <?php
 // Inclusion des fichiers nécessaires pour les composants de l'interface
-require_once("../../../composants/Label/Label.php");
-require_once("../../../composants/Button/Button.php");
-require_once("../../../composants/Input/Input.php");
-require_once("../../../composants/Header/Header.php");
-require_once("../../../composants/Footer/Footer.php");
-require_once("../../../bdd/connect_params.php");
+use \composants\Button\Button;
+use \composants\Button\ButtonType;
+use \composants\Label\Label;
+
+require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 // Récupération de l'identifiant de l'offre
 $idOffre = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
 
 try {
     // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
     // Requête pour obtenir le type d'offre
     $stmt = $dbh->prepare('SELECT nomcategorie FROM (SELECT nomcategorie FROM pact.vue_spectacle WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_restaurant WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_parc_attractions WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_activite WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_visite WHERE idoffre = :idOffre) AS categories');
@@ -45,6 +49,7 @@ try {
     $images = $dbh->query('SELECT _image.idImage, _image.nomImage FROM pact._image JOIN pact._offre ON _image.idOffre = _offre.idOffre WHERE _offre.idOffre = ' . $idOffre . ' AND _image.idImage NOT IN (SELECT _parcAttractions.idImage FROM pact._parcAttractions WHERE idOffre = _offre.idOffre) AND _image.idImage NOT IN (SELECT _restaurant.idImage FROM pact._restaurant WHERE idOffre = _offre.idOffre)', PDO::FETCH_ASSOC)->fetchAll();
     $carte = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._parcAttractions JOIN pact._image ON pact._parcAttractions.idImage = pact._image.idImage WHERE pact._parcAttractions.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $menu = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._restaurant JOIN pact._image ON pact._restaurant.idImage = pact._image.idImage WHERE pact._restaurant.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
+    $_SESSION['idOffre'] =$idoffre;
     // Vérification de l'existence de l'offre
     if (!$offre) {
         throw new Exception("Aucune offre trouvée");
@@ -164,8 +169,11 @@ try {
         <div class="offre-package-modification">
             <div class="forfait-info">
                 <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg"); ?>
+                <?php Label::render("offre-option", "", "", "Option: " . $offre['nomoption'], "../../../ressources/icone/oeil.svg"); ?>
             </div>
+
             <?php
+            /*
             // Affichage des boutons pour télécharger des documents liés à l'offre
             switch ($typeOffre) {
                 case 'restaurant': ?>
@@ -185,9 +193,15 @@ try {
                 case 'default':
                     break;
             }
-            ?>
+            */?>
 
-           
+            <!-- Formulaire pour modifier l'offre -->
+            <form action="../modifierOffre/modifierOffre.php" method="POST">
+                <input type="hidden" name="idOffre" value="<?php echo $idOffre; ?>">
+                <div class="modifier-button">
+                    <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", true); ?>
+                </div>
+            </form>
         </div>
 
 
