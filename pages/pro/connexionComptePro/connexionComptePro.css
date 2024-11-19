@@ -1,0 +1,156 @@
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/inter-v18-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: var(--font-weight-normal);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-600.woff2') format('woff2');
+}
+
+body {
+    font-family: 'Encode Sans', 'Inter';
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #c084b5;
+}
+
+.conteneur {
+    margin: 2% 0;
+    background-color: var(--blanc);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 70px 40px 70px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 25px var(--noir);
+}
+
+.conteneur img {
+    width: 160px;
+    height: 160px;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 20px 0;
+    color: #333;
+}
+hr {
+    display: block;
+    width: 80%;
+}
+
+.groupe-champ {
+    margin-bottom: 15px;
+    text-align: left;
+    position: relative;
+}
+
+.groupe-champ label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.lien-mdp-oublie {
+    display: block;
+    margin: 10px 0;
+    font-size: 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.bouton-connexion {
+    background-color: #6a1b9a;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.bouton-connexion:hover {
+    background-color: #4a1370;
+}
+
+.inscription {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #333;
+}
+
+.inscription a {
+    color: #6a1b9a;
+    text-decoration: none;
+}
+
+.inscription a:hover {
+    text-decoration: underline;
+}
+
+.conect {
+    width: 300px;
+}
+
+
+.conteneur {
+    text-align: center;
+}
+
+
+.connecte {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: 20px;
+}
+
+
+label {
+    margin-bottom: 50px;
+    font-size: var(--h5-font-size);
+    font-weight: var(--font-weight-semi-bold);
+
+}
+
+
+.connecte .lien-mdp-oublie {
+    display: block;
+    margin-bottom: 10px; 
+}

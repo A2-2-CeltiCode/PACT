@@ -1,0 +1,21 @@
+@import url('../../ui.css');
+
+.label-icon {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 5px;
+}
+
+.svg-inline svg {
+    width: 20px;
+    height: 20px;
+}
+
+label {
+    padding: 10px;
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+}
