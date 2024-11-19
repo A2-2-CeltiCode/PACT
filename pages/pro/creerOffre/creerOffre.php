@@ -21,7 +21,13 @@
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+        $idCompte = $_SESSION['idCompte'];
 
+        $sql = "SELECT numsiren FROM pact._CompteProPrive WHERE idCompte = :idCompte";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':idCompte', $idCompte, PDO::PARAM_INT);
+        $stmt->execute();
+        $numsiren = $stmt->fetchColumn();
         ?> 
         <title>Création d'une offre</title>
 
@@ -85,7 +91,14 @@
                     
                     <div>
                         <label>Type de forfait*</label>
+
+                        
+
                         <?php
+                            if($numsiren==true){
+                                
+                            }
+
                             $option=null;
                             $sql = "SELECT nomforfait FROM pact._forfait";
                             $stmt = $dbh->prepare($sql); 

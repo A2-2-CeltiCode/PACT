@@ -501,7 +501,7 @@ $estEnLigne = $vueOffre["estenligne"];
         </section>
         <div class="btns">
             <br>
-            <?php Button::render(onClick: "window.location.href = './accueil.php';", text: "Annuler", type:"pro", submit: false,class:"valid"); ?>
+            <?php Button::render(onClick: "window.location.href = ../listeOffres/listeOffres.php';", text: "Annuler", type:"pro", submit: false,class:"valid"); ?>
             <?php Button::render(text: "Valider", type:"pro", submit: true , class:"valid"); ?>
         </div>
         <input type="hidden" name="idOffre" value="<?php echo $crampte;?>">
