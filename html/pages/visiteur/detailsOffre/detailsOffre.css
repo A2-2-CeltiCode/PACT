@@ -1,162 +1,165 @@
-@font-face {
-    font-display: swap;
-    font-family: 'Encode Sans';
-    font-style: normal;
-    font-weight: var(--font-weight-normal);
-    src: url('./assets/fonts/encode-sans-v19-latin_latin-ext-regular.woff2') format('woff2');
-}
-
-@font-face {
-    font-display: swap;
-    font-family: 'Encode Sans';
-    font-style: normal;
-    font-weight: var(--font-weight-semi-bold);
-    src: url('./assets/fonts/encode-sans-v19-latin_latin-ext-600.woff2') format('woff2');
-}
-
-@font-face {
-    font-display: swap;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: var(--font-weight-normal);
-    src: url('./assets/fonts/inter-v18-latin_latin-ext-regular.woff2') format('woff2');
-}
-
-@font-face {
-    font-display: swap;
-    font-family: 'Inter';
-    font-style: italic;
-    font-weight: var(--font-weight-normal);
-    src: url('./assets/fonts/inter-v18-latin_latin-ext-italic.woff2') format('woff2');
-}
-
-@font-face {
-    font-display: swap;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: var(--font-weight-semi-bold);
-    src: url('./assets/fonts/inter-v18-latin_latin-ext-600.woff2') format('woff2');
-}
-
 body {
-    font-family: 'Encode Sans', 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: white;
+    background-color: #f5f5f5;
+    color: var(--black);
 }
-.offre {
+
+.container {
+    width: fit-content;
+    font-size: 14px;
+    padding: 20px;
+    max-width: 70em;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-between;
-}
-
-.description {
-    background-color: white;
-    font-size: small;
-    display: flex;
-    flex-direction: column;
-}
-
-.nom-restau {
-    margin: 25px 0px 0px 0px;
-    font-size: x-large;
-}
-.bas_desc{
-    font-size: large;
-}
-
-.image-offre, .description, .colonne-droite {
-    flex: 1; 
-    margin: 10px 10px; 
-}
-
-.image-offre {
-    width: 325px;
-    height: 325px;
-    margin: 40px 15px 40px 40px;
-}
-
-.contact {
-    background-color: #fff;
+    gap: 20px;
+    background: var(--white);
     border-radius: 10px;
-    box-shadow: 0 2px 5px;
-    padding: 10px;
-    width: 250px;
-    border: 1px solid #ccc;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.carousel {
+    background-color: var(--grey1);
+    width: 22em;
+    height: 22em;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.3s ease;
+    width: 22em;
+    height: 22em;
+}
+
+.carousel-image {
+    min-width: 22em;
+    min-height: 22em;
+    display: grid;
+    place-items:center;
+    width: 22em;
+    height: 22em;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.carousel-button.desactive{
+    display: none;
+}
+
+.carousel-button:has(~ .carousel-images > .pas-images){
+    display: none;
+}
+
+.carousel-button {
+    z-index: 2;
+    position:absolute;
+    top: 45%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.carousel-button.prev {
+    left: 15px;
+}
+
+.carousel-button.next {
+    right: 15px;
+}
+
+.carousel:hover .carousel-button {
+    opacity: 1;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.offre-infos {
+    width: 45%;
+}
+
+.offre-info > label {
+    width: fit-content;
+    max-width: 60%;
+}
+
+.offre-prix {
+    font-size: var(--p-large-font-size);
+}
+
+.offre-detail {
+    align-items: baseline;
+    height: fit-content;
+    color: var(--grey3);
+}
+
+.titre-offre {
+    font-size: var(--h1-font-size);
+    font-family: 'Encode Sans', sans-serif;
+    margin: 0.8em 0;
     text-align: center;
+}
+
+.titre {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 5px;
 }
 
-.contact div {
-    margin: 5px 0; /* Réduit la marge entre les éléments dans la contact */
-}
-
-.contact h2 {
-    font-size: 18px;
-    margin: 10px 0 5px 0;
-}
-
-.contact p {
-    color: #777;
-    font-size: 14px;
-    margin: 5px 0;
-}
-
-.contact .email, .contact .telephone {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 0; /* Réduit la marge entre les éléments */
-    font-size: 14px;
-}
-
-.contact .email img, .contact .telephone img {
-    margin-right: 10px;
-}
-
-.contact .email a {
-    color: #000;
-    text-decoration: none;
-    border-bottom: 1px solid #000;
-}
-
-.contact .bouton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #000;
-    border-radius: 5px;
+p {
+    font-size: var(--h1-font-size);
     padding: 10px;
+    color: var(--black);
+}
+
+.btn {
+    align-self: flex-end;
+}
+
+a {
+    color: var(--primary-member);
     text-decoration: none;
-    color: #000;
-    font-size: 14px;
-    margin-top: 10px;
 }
 
-.contact .bouton img {
-    margin-right: 10px;
+a:hover {
+    text-decoration: underline;
 }
 
-.note_etoiles{
-    height: 20px !important;
-    margin: 25px 0px 0px 0px;
+ul {
+    padding: 0;
+    margin: 0;
 }
 
-.description label, .description ul {
-    margin-bottom: 10px;
+li {
+    list-style: none;
 }
 
-.note_etoiles img {
-    margin-right: 5px;
+.svg-inline svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--primary-pro);
 }
 
-.telephone {
-    margin-top: 10px;
-}
-
-.bouton img {
-    margin-right: 5px;
-    vertical-align: middle;
+.offre-package-modification {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 1em;
 }
