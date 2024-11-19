@@ -16,14 +16,14 @@ INSERT INTO _duree (tempsEnMinutes) VALUES
 (120);
 
 -- Peupler la table _adresse
-INSERT INTO _adresse (codePostal, ville, nomRue, numRue, numTel) VALUES
-(22000, 'Saint-Brieuc', 'Rue nominoë', '1', '+33 1 23 45 67 89'),
-(29600, 'Morlaix', 'Rue Nos', '9', '+33 4 12 34 56 78'),
-(29200, 'Brest', 'Rue Jean Jaures', '3', '+33 4 12 34 56 78'),
-(35400, 'Saint-Malo', 'Rue de la République', '54', '+33 4 12 34 56 78'),
-(56100, 'Lorient', 'Rue Baignus', '98', '+33 4 12 34 56 78'),
-(29000, 'Quimper', 'Rue Contours', '45', '+33 4 12 34 56 78'),
-(35000, 'Rennes', 'Rue les Maux', '7', '+33 4 91 23 45 67');
+INSERT INTO _adresse (codePostal, ville, rue, numTel) VALUES
+(22000, 'Saint-Brieuc', '2 Rue nominoë','+33 1 23 45 67 89'),
+(29600, 'Morlaix', '4 Rue Nos','+33 4 12 34 56 78'),
+(29200, 'Brest', '9 Rue Jean Jaures', '+33 4 12 34 56 78'),
+(35400, 'Saint-Malo', '7 Rue de la République', '+33 4 12 34 56 78'),
+(56100, 'Lorient', '3 Rue Baignus', '+33 4 12 34 56 78'),
+(29000, 'Quimper', '1 Rue Contours', '+33 4 12 34 56 78'),
+(35000, 'Rennes', '45 Rue les Maux', '+33 4 91 23 45 67');
 
 -- Peupler la table _compte
 INSERT INTO _compte (mdp, email, idAdresse) VALUES
@@ -32,7 +32,7 @@ INSERT INTO _compte (mdp, email, idAdresse) VALUES
 ('Passw0rd$', 'test3@gmail.com', 3);
 
 -- Peupler la table _compteMembre
-INSERT INTO _compteMembre (idCompte,login, prenom, nom) VALUES
+INSERT INTO _compteMembre (idCompte,pseudo, prenom, nom) VALUES
 (1, 'user1',  'Jean','Dupont');
 
 -- Peupler la table _comptePro

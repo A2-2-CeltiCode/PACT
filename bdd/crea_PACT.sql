@@ -14,8 +14,7 @@ CREATE TABLE _adresse(
     idAdresse     SERIAL,
     codePostal    INTEGER NOT NULL,
     ville         VARCHAR(50) NOT NULL,
-    nomRue        VARCHAR(50) NOT NULL,
-    numRue        VARCHAR(5),
+    rue        VARCHAR(50) NOT NULL,
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
     CONSTRAINT adresse_pk PRIMARY KEY(idAdresse)
 );
@@ -33,6 +32,20 @@ CREATE TABLE _option(
 CREATE TABLE _forfait( -- a modif peut être
     nomForfait  VARCHAR(50),
     CONSTRAINT forfait_pk PRIMARY KEY(nomForfait)
+);
+
+CREATE TABLE _forfaitPublic( -- a modif peut être
+    nomForfait  VARCHAR(50),
+    CONSTRAINT forfaitPublic_fk_forfait FOREIGN KEY (nomForfait) 
+        REFERENCES _forfait(nomForfait),
+    CONSTRAINT forfaitPublic_pk PRIMARY KEY(nomForfait)
+);
+
+CREATE TABLE _forfaitPro( -- a modif peut être
+    nomForfait  VARCHAR(50),
+    CONSTRAINT forfaitPro_fk_forfait FOREIGN KEY (nomForfait) 
+        REFERENCES _forfait(nomForfait),
+    CONSTRAINT forfaitPro_pk PRIMARY KEY(nomForfait)
 );
 
 --
@@ -69,9 +82,9 @@ CREATE TABLE _compte (
 
 CREATE TABLE _compteMembre(
     idCompte  SERIAL,
-    login     VARCHAR(255) NOT NULL UNIQUE,
     prenom    VARCHAR(50) NOT NULL,
     nom       VARCHAR(50) NOT NULL,
+    pseudo     VARCHAR(255) NOT NULL UNIQUE,
     CONSTRAINT compteMembre_fk_compte FOREIGN KEY (idCompte) 
         REFERENCES _compte(idCompte)
 );
@@ -264,6 +277,40 @@ CREATE TABLE _tagRestaurant(
     CONSTRAINT tagRestaurant_pk PRIMARY KEY(nomTag),
     CONSTRAINT tagRestaurant_fk_tag FOREIGN KEY (nomTag)
         REFERENCES _tag(nomTag)
+);
+
+--
+-- TABLE AVIS
+--
+
+CREATE TABLE _avis(
+    idAvis    SERIAL,
+    commentaire VARCHAR(50),
+    CONSTRAINT avis_pk PRIMARY KEY(idAvis)
+);
+
+CREATE TABLE _avisMembre(
+    idAvis    SERIAL,
+    idCompte  SERIAL,
+    idOffre   SERIAL,
+    CONSTRAINT avisMembre_fk_avis FOREIGN KEY (idAvis)
+        REFERENCES _avis(idAvis),
+    CONSTRAINT avisMembre_fk_compte FOREIGN KEY (idCompte)
+        REFERENCES _compte(idCompte),
+    CONSTRAINT avisMembre_fk_offre FOREIGN KEY (idOffre)
+        REFERENCES _offre(idOffre)
+);
+
+CREATE TABLE _reponsePro(
+    idAvis    SERIAL,
+    idCompte  SERIAL,
+    idOffre   SERIAL,
+    CONSTRAINT reponsePro_fk_avis FOREIGN KEY (idAvis)
+        REFERENCES _avis(idAvis),
+    CONSTRAINT reponsePro_fk_compte FOREIGN KEY (idCompte)
+        REFERENCES _compte(idCompte),
+    CONSTRAINT reponsePro_fk_offre FOREIGN KEY (idOffre)
+        REFERENCES _offre(idOffre)
 );
 
 --
