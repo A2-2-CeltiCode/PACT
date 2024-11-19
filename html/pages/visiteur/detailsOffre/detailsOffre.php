@@ -4,7 +4,7 @@ use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use \composants\Label\Label;
 
-//require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
@@ -16,7 +16,8 @@ $idOffre = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
 
 
 try {
-    $dbh = new PDO("pgsql:host=$server;dbname=$dbname", $user, $pass);
+    // Connexion à la base de données
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
     // Requête pour obtenir le type d'offre
     $stmt = $dbh->prepare('SELECT nomcategorie FROM (SELECT nomcategorie FROM pact.vue_spectacle WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_restaurant WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_parc_attractions WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_activite WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_visite WHERE idoffre = :idOffre) AS categories');
