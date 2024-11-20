@@ -11,7 +11,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
 try {
     // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;port=5433;dbname=$dbname", $dbuser, '13phenix');
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
     // Définit explicitement le schéma 'pact'
     $dbh->exec("SET search_path TO pact;");
