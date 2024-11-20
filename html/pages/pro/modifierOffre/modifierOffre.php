@@ -211,60 +211,8 @@ $estEnLigne = $vueOffre["estenligne"];
                     <label for="non">Non</label>
                 </div>
 
-                <div>
-                <?php
-                    
-                            
-                    if($numsiren!=null){
-                        ?>
-                        <label>Type de forfait*</label>
-                        <?php
-                        $option=null;
-                        $sql = "SELECT nomforfait FROM pact._forfaitPro";
-                        $stmt = $dbh->prepare($sql); 
-                        $stmt->execute();
-
-                        $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-
-                        foreach ($tabForfait as $forfait) {
-                            $option[$forfait['nomforfait']] = $forfait['nomforfait'];
-                        }
-
-                        Select::render(
-                            name: "typeForfait", 
-                            required: true, 
-                            options: $option,
-                            
-                        );
-                        
-                        
-                    }else{
-                        ?><input type="hidden" name="typeForfait" value="Gratuit"><?php
-                    }
-                    ?>
-                </div>
-
-                <div>
-                    <label>Type de promotion de l'offre*</label>
-                    <?php
-                    $option = null;
-                    $sql = "SELECT nomoption FROM pact._option";
-                    $stmt = $dbh->prepare($sql);
-                    $stmt->execute();
-
-                    $tabOption = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                    foreach ($tabOption as $type) {
-                        $option[$type['nomoption']] = $type['nomoption'];
-                    }
-
-                    Select::render(
-                        name: "typePromotion",
-                        required: true,
-                        options: $option
-                    );
-                    ?>
-                </div>
+                
+                
 
                 
 

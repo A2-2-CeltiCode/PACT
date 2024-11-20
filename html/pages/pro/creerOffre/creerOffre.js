@@ -116,3 +116,32 @@ function toggleDropdown(dropdownId) {
     var dropdown = document.getElementById(dropdownId);
     dropdown.classList.toggle("show");
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selectForfait = document.getElementById("selectForfait");
+    const prixStandardContainer = document.getElementById("prixStandardContainer");
+    const prixPremiumContainer = document.getElementById("prixPremiumContainer");
+
+    function updatePrixDisplay() {
+        const selectedValue = selectForfait.value;
+
+        // Affiche/mask les sections de prix en fonction de la sélection
+        if (selectedValue === "Standard") {
+            prixStandardContainer.style.display = "block";
+            prixPremiumContainer.style.display = "none";
+        } else if (selectedValue === "Premium") {
+            prixStandardContainer.style.display = "none";
+            prixPremiumContainer.style.display = "block";
+        } else {
+            prixStandardContainer.style.display = "none";
+            prixPremiumContainer.style.display = "none";
+        }
+    }
+
+    // Ajout de l'écouteur d'événements
+    selectForfait.addEventListener("change", updatePrixDisplay);
+
+    // Appel initial pour ajuster en fonction de la valeur par défaut
+    updatePrixDisplay();
+});

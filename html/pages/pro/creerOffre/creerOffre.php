@@ -26,6 +26,10 @@
         $stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
         $stmt->execute();
         $numsiren = $stmt->fetchColumn();
+
+
+        $prixPremium=20;
+        $prixStandard=10;
         ?> 
         <title>Création d'une offre</title>
 
@@ -112,7 +116,8 @@
                                 Select::render(
                                     name: "typeForfait", 
                                     required: true, 
-                                    options: $option
+                                    options: $option,
+                                    id: "selectForfait"
                                 );
                                 
                                 
@@ -416,6 +421,17 @@
 
                 </article>
             </section> 
+            
+                Prix mensuel de l'offre
+                <div id="prixStandardContainer" style="display: none;">
+                    <label>Prix Standard</label>
+                    <span id="prixStandard"><?php echo($prixStandard); ?> €</span>
+                </div>
+                <div id="prixPremiumContainer" style="display: none;">
+                    <label>Prix Premium</label>
+                    <span id="prixPremium"><?php echo($prixPremium); ?> €</span>
+                </div>
+            
             <div>
                 <br>
                 <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
