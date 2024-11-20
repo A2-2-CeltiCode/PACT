@@ -239,7 +239,7 @@ $estEnLigne = $vueOffre["estenligne"];
                         
                         
                     }else{
-                        ?><input type="hidden" name="typeForfait" value="Gratuit">gratuit<?php
+                        ?><input type="hidden" name="typeForfait" value="Gratuit"><?php
                     }
                     ?>
                 </div>
