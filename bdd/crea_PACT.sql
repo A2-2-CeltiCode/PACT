@@ -47,7 +47,13 @@ CREATE TABLE _forfaitPro( -- a modif peut être
         REFERENCES _forfait(nomForfait),
     CONSTRAINT forfaitPro_pk PRIMARY KEY(nomForfait)
 );
-
+/*
+CREATE TABLE _horaire(
+    heureOuverture VARCHAR(10),
+    heureFermeture VARCHAR(10),
+    CONSTRAINT horaire_pk PRIMARY KEY(heureOuverture,heureFermeture)
+);
+*/
 --
 -- TABLE PRIX
 --
@@ -127,6 +133,7 @@ CREATE TABLE _offre(
     nomForfait              VARCHAR(50) NOT NULL,
     estEnLigne              BOOLEAN NOT NULL,
     idAdresse               SERIAL NOT NULL,
+--    creaDate                DATE NOT NULL,
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
@@ -231,6 +238,8 @@ CREATE TABLE _restaurant(
     nomCategorie      VARCHAR(50) NOT NULL,
     nomGamme          VARCHAR(20) NOT NULL,
     idImage           SERIAL NOT NULL,
+/*    horaireOuverture  VARCHAR(10) NOT NULL,
+    horaireFermeture  VARCHAR(10) NOT NULL,*/
     CONSTRAINT restaurant_pk PRIMARY KEY (idOffre),
     CONSTRAINT restaurant_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
