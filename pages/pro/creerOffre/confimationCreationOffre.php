@@ -78,12 +78,7 @@
     $langue = $_POST['langue'] ?? null;
     
 
-    if ($adressePostale) {
-        // Expression régulière pour capturer les chiffres au début
-        preg_match('/^(\d+)\s*(.*)$/', $adressePostale, $matches);
-        $numRue = $matches[1]; // La partie des chiffres
-        $nomRue  = $matches[2];    // Le reste de l'adresse
-    }
+    
     
 
 
@@ -93,17 +88,16 @@
     //Insertion dans la BDD
 
 
-
+    print_r($adressePostale);
     //creation adresse
     $stmt = $dbh->prepare(
-        "INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel)
-        VALUES(:codePostal, :ville, :nomRue, :numRue, :numTel)"
+        "INSERT INTO pact._adresse(codePostal, ville, rue, numTel)
+        VALUES(:codePostal, :ville, :rue, :numTel)"
     );
 
     $stmt->bindValue(':codePostal', $codePostal, $codePostal !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
     $stmt->bindValue(':ville', $ville, $ville !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
-    $stmt->bindValue(':nomRue', $nomRue, $nomRue !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
-    $stmt->bindValue(':numRue', $numRue, $numRue !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stmt->bindValue(':rue', $adressePostale, PDO::PARAM_STR);
     $stmt->bindValue(':numTel', $numeroTelephone, $numeroTelephone !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
     $stmt->execute();
     $idAdresse=$dbh->lastInsertId();

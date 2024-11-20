@@ -48,6 +48,11 @@ $gammeRestaurant = null;
 $typeOffre = null;
 $estEnLigne=null;
 
+$sql = "SELECT numsiren FROM pact._CompteProPrive WHERE idCompte = :idCompte";
+$stmt = $dbh->prepare($sql);
+$stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
+$stmt->execute();
+$numsiren = $stmt->fetchColumn();
 
 if ($offre1 != null) {
     $sql = "SELECT * FROM pact.vue_activite WHERE idOffre = $idOffre";
@@ -107,8 +112,7 @@ if ($offre5 != null) {
 $nomOffre = $vueOffre["titre"];
 $ville = $vueOffre["ville"];
 $codePostal = $vueOffre["codepostal"];
-$nomRue = $vueOffre["nomrue"];
-$numRue = $vueOffre["numrue"];
+$rue = $vueOffre["rue"];
 $numeroTelephone = $vueOffre["numtel"];
 $siteWeb = $vueOffre["siteinternet"];
 $descriptionOffre = $vueOffre["description"];
@@ -167,7 +171,7 @@ $estEnLigne = $vueOffre["estenligne"];
                     <label>Information de l'offre</label>
                     <?php Input::render(name: "ville", type: "text", required: "true", placeholder: 'Ville*', value: $ville) ?>
                     <?php Input::render(name: "codePostal", type: "number", required: 'true', placeholder: "Code Postal*", value: $codePostal) ?>
-                    <?php Input::render(name: "adressePostale", id: "adressePostale", type: "text", placeholder: 'Adresse Postale', value: $numRue . " " . $nomRue) ?>
+                    <?php Input::render(name: "adressePostale", id: "adressePostale", type: "text", placeholder: 'Adresse Postale', value: $rue) ?>
 
 
                 </div>
@@ -208,26 +212,35 @@ $estEnLigne = $vueOffre["estenligne"];
                 </div>
 
                 <div>
-                    <label>Type de forfait*</label>
-                    <?php
-                    $option = null;
-                    $sql = "SELECT nomforfait FROM pact._forfait";
-                    $stmt = $dbh->prepare($sql);
-                    $stmt->execute();
+                <?php
+                    
+                            
+                    if($numsiren!=null){
+                        ?>
+                        <label>Type de forfait*</label>
+                        <?php
+                        $option=null;
+                        $sql = "SELECT nomforfait FROM pact._forfaitPro";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
 
-                    $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
-                    foreach ($tabForfait as $forfait) {
-                        $option[$forfait['nomforfait']] = $forfait['nomforfait'];
+                        foreach ($tabForfait as $forfait) {
+                            $option[$forfait['nomforfait']] = $forfait['nomforfait'];
+                        }
+
+                        Select::render(
+                            name: "typeForfait", 
+                            required: true, 
+                            options: $option,
+                            
+                        );
+                        
+                        
+                    }else{
+                        ?><input type="hidden" name="typeForfait" value="Gratuit">gratuit<?php
                     }
-                    ?>
-                    <?php
-                    Select::render(
-                        name: "typeForfait",
-                        required: true,
-                        options: $option
-                    );
-
                     ?>
                 </div>
 
@@ -501,7 +514,7 @@ $estEnLigne = $vueOffre["estenligne"];
         </section>
         <div class="btns">
             <br>
-            <?php Button::render(onClick: "window.location.href = ../listeOffres/listeOffres.php';", text: "Annuler", type:"pro", submit: false,class:"valid"); ?>
+            <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
             <?php Button::render(text: "Valider", type:"pro", submit: true , class:"valid"); ?>
         </div>
         <input type="hidden" name="idOffre" value="<?php echo $crampte;?>">

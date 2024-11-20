@@ -142,11 +142,7 @@ $enLigne = $_POST['estEnLigne'] ?? null;
 
 
 
-if ($adressePostale) {
-    preg_match('/^(\d+)\s*(.*)$/', $adressePostale, $matches);
-    $numRue = $matches[1]; 
-    $nomRue  = $matches[2];  
-}
+
 
 
 $idOffre = $_POST['idOffre'];
@@ -161,13 +157,12 @@ $idAdresse = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Creation adresse
 $stmt = $dbh->prepare(
-    "UPDATE pact._adresse SET codePostal = :codePostal, ville = :ville, nomRue = :nomRue, numRue = :numRue, numTel = :numTel 
+    "UPDATE pact._adresse SET codePostal = :codePostal, ville = :ville, rue = :rue, numTel = :numTel 
     WHERE idAdresse = :idAdresse"
 );
 $stmt->bindValue(':codePostal', $codePostal, $codePostal !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':ville', $ville, $ville !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
-$stmt->bindValue(':nomRue', $nomRue, $nomRue !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
-$stmt->bindValue(':numRue', $numRue, $numRue !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
+$stmt->bindValue(':rue', $adressePostale, $adressePostale !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':numTel', $numeroTelephone, $numeroTelephone !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':idAdresse', $idAdresse["idadresse"], PDO::PARAM_INT);
 $stmt->execute();

@@ -21,11 +21,9 @@
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-        $idCompte = $_SESSION['idCompte'];
-
         $sql = "SELECT numsiren FROM pact._CompteProPrive WHERE idCompte = :idCompte";
         $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(':idCompte', $idCompte, PDO::PARAM_INT);
+        $stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
         $stmt->execute();
         $numsiren = $stmt->fetchColumn();
         ?> 
@@ -44,7 +42,7 @@
         <form class="info-display" id="myForm" method="post" action="confimationCreationOffre.php" enctype="multipart/form-data">
             <h1>Créez votre Offre</h1>
             <section>
-                
+            
                 <article>
                     <div>
                         <label>Nom de l'offre*</label>
@@ -90,34 +88,39 @@
 
                     
                     <div>
-                        <label>Type de forfait*</label>
+                        
 
                         
 
                         <?php
-                            if($numsiren==true){
-                                
-                            }
-
-                            $option=null;
-                            $sql = "SELECT nomforfait FROM pact._forfait";
-                            $stmt = $dbh->prepare($sql); 
-                            $stmt->execute();
-
-                            $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-
-                            foreach ($tabForfait as $forfait) {
-                                $option[$forfait['nomforfait']] = $forfait['nomforfait'];
-                            }
-                        ?>
-                        <?php 
-                            Select::render(
-                                name: "typeForfait", 
-                                required: true, 
-                                options: $option
-                            );
                             
+                            if($numsiren!=null){
+                                ?>
+                                <label>Type de forfait*</label>
+                                <?php
+                                $option=null;
+                                $sql = "SELECT nomforfait FROM pact._forfaitPro";
+                                $stmt = $dbh->prepare($sql); 
+                                $stmt->execute();
+    
+                                $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    
+                                foreach ($tabForfait as $forfait) {
+                                    $option[$forfait['nomforfait']] = $forfait['nomforfait'];
+                                }
+    
+                                Select::render(
+                                    name: "typeForfait", 
+                                    required: true, 
+                                    options: $option
+                                );
+                                
+                                
+                            }else{
+                                ?><input type="hidden" name="typeForfait" value="Gratuit">gratuit<?php
+                            }
                             ?>
+                            
                     </div>
                     
                     <div>
