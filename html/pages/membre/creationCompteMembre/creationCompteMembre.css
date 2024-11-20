@@ -45,7 +45,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #c084b5;
+    background-color: var(--primaire-membre);
 }
 
 img {

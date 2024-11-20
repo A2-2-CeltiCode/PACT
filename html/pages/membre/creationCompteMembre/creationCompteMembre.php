@@ -105,7 +105,7 @@
                 try {
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-                    $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numTel) VALUES($codePostal, '$ville', '$rue', '$telephone')");
+                    $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, rue, numTel) VALUES($codePostal, '$ville', '$rue', '$telephone')");
                     $stmt->execute();
                     $idAdresse = $dbh->lastInsertId();
                     
