@@ -6,12 +6,12 @@ use \composants\Input\Input;
 use \composants\Button\Button;
 
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
-require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
-require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
 try {
     // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $dbh = new PDO("$driver:host=$server;port=5433;dbname=$dbname", $dbuser, '13phenix');
 
     // Définit explicitement le schéma 'pact'
     $dbh->exec("SET search_path TO pact;");
@@ -24,9 +24,9 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupère les valeurs soumises dans le formulaire
     $identifiant_utilisateur = $_POST['username'];
-    $mot_de_passe_utilisateur = hash("SHA256",$_POST['password']);
+    $mot_de_passe_utilisateur = hash("sha256", $_POST['password']); // Hachage du mot de passe en clair
 
-    // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
+    // Requête pour vérifier l'email et récupérer le mot de passe haché depuis la table _compte
     $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
 
     $requete_preparee = $dbh->prepare($requete_sql);
@@ -35,14 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
-        // Comparaison simple des mots de passe (avec hachage!!)
+        // Comparaison directe des mots de passe hachés
         if ($mot_de_passe_utilisateur === $compte['mdp']) {
             // Si les informations sont correctes, démarrer la session
             $_SESSION['utilisateur_connecte'] = true;
             $_SESSION['identifiant_utilisateur'] = $compte['email'];
             // Sauvegarder l'ID du compte dans la session
             $_SESSION['idCompte'] = $compte['idcompte'];
-            
+
             // Redirige vers le tableau de bord
             header("Location: ../listeOffres/listeOffres.php");
             exit();
@@ -55,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -85,16 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="post" action="">
             <div class="groupe-champ">
                 <label for="username">Votre identifiant</label>
-                <?php Input::render(class : "conect" , type : "text", name:"username", placeholder:"Adresse e-mail", required : true)  ?>
-
+                <?php Input::render(class : "conect", type : "text", name:"username", placeholder:"Adresse e-mail", required : true) ?>
             </div>
             <div class="groupe-champ toggle-mot-de-passe">
                 <label for="password">Votre mot de passe</label>
-                <?php Input::render(class : "conect" , type : "password", name:"password", placeholder:"Mot de passe", required : true)  ?>
-        
+                <?php Input::render(class : "conect", type : "password", name:"password", placeholder:"Mot de passe", required : true) ?>
             </div>
             <div class="connecte">
-                <!--<a class="lien-mdp-oublie" href="#">Mot de passe oublié ?</a>-->
                 <?php Button::render(class: "bouton-connexion", submit: true, type: "pro", text: "Se connecter"); ?>
             </div>
         </form>

@@ -18,13 +18,11 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-    $status = $_GET['status'] ?? 'enligne'; // Statut par défaut
 
-    $idCompte = $_SESSION['idCompte'];
-
+    // Définit explicitement le schéma 'pact'
+    $dbh->exec("SET search_path TO pact;");
 } catch (PDOException $e) {
-    // Gestion des erreurs
-    print "Erreur !: " . htmlspecialchars($e->getMessage()) . "<br>";
+    print "Erreur !: " . $e->getMessage() . "<br>";
     die();
 }
  ?>
@@ -40,8 +38,9 @@ try {
 <body>
 
     <?php Header::render(HeaderType::Pro); ?>
-    
+
     <main>
+        
 
     </main>
 
