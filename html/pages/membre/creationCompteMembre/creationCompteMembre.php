@@ -128,6 +128,6 @@
             
             }
         ?>
-        <script>window.location.href = '../listeOffres/listeOffres.php';</script>
+        <script>window.location.href = '../accueil/accueil.php';</script>
     </body>
 </html>
