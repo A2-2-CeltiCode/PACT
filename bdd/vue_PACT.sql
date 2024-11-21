@@ -29,6 +29,14 @@ FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN 
 -- VUES OFFRES
 --
 
+/*CREATE OR REPLACE VIEW vue_offre AS
+SELECT idOffre, idCompte, titre, description, descriptionDetaillee, siteInternet, nomOption, nomForfait, estEnLigne, idAdresse, creaDate,
+       heureOuverture, heureFermeture, nomCategorie, tempsEnMinutes, valPrix, capacite, ageMin, prestation, carteParc, nbAttractions,
+       estGuidee, nomGamme, menuRestaurant
+FROM _offre NATURAL JOIN _categorie NATURAL JOIN _visite NATURAL JOIN _spectacle NATURAL JOIN _activite
+            NATURAL JOIN _parcAttractions NATURAL JOIN _restaurant NATURAL JOIN _adresse NATURAL JOIN _option
+            NATURAL JOIN _forfait NATURAL JOIN _prix NATURAL JOIN _duree NATURAL JOIN _image;
+*/
 -- VISITE
 
 CREATE OR REPLACE VIEW vue_visite AS
@@ -100,4 +108,13 @@ FROM _possedeRestaurant;
 CREATE OR REPLACE VIEW vue_image_offre (idOffre, idImage) AS
 SELECT idOffre, idImage
 FROM _image;
+
+--
+-- VUE AVIS
+--
+
+
+CREATE OR REPLACE VIEW vue_avis AS
+SELECT idAvis, idOffre, commentaire, note, titre, contexteVisite, dateVisite, dateAvis
+FROM _avis;
 
