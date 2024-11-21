@@ -118,6 +118,7 @@ p {
 
 .form-texte {
     text-align: center;
+    color: var(--erreur);
 }
 
 #passwordMismatch {
