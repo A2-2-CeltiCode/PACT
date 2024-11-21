@@ -12,7 +12,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 // Récupération de l'identifiant de l'offre
-$idOffre = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
+$idOffre = $_POST['idOffre'] ?? '1';
 
 try {
     // Connexion à la base de données
