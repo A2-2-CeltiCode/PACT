@@ -2,11 +2,14 @@
 use \composants\Select\Select;
 use \composants\CheckboxSelect\CheckboxSelect;
 use controlleurs\Offre\Offre;
+use composants\Input\Input;
+use composants\Button\Button;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controlleurs/Offre/Offre.php';
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Select/Select.php";
 require_once  $_SERVER["DOCUMENT_ROOT"] . '/composants/CheckboxSelect/CheckboxSelect.php';
 require_once 'fonctionTrie.php';
-
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 
 // Connexion à la base de données
 include 'connect_params.php';
@@ -30,7 +33,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         $offre = new Offre($item['titre'], $item['nomcategorie'], "o", $item['nomimage'], "o", $item['idoffre'], $item['tempsenminutes']);
         $offres[] = (string)$offre;
     }
-    echo json_encode($offres);
+    $nombreOffres = count($offres);
+    echo json_encode(['offres' => $offres, 'nombreOffres' => $nombreOffres]);
     exit; // Stoppe l'exécution pour AJAX
 }
 
@@ -48,6 +52,23 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         flex-wrap: wrap;
         gap: 10px; /* Espace entre les offres */
     }
+    .offre {
+        margin: 10px auto;
+    }
+    .button-container {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Espace entre les boutons */
+    }
+    .button-container button {
+        height: 40px; /* Ajustez la hauteur selon vos besoins */
+        display: flex;
+        align-items: center;
+    }
+    .input {
+        display: flex;
+        gap: 10px;
+    }
     </style>
     <script src="trieGeneral.js"></script>
 </head>
@@ -55,9 +76,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <form id="searchForm" method="GET" action="">
         <!-- Formulaire de tri -->
         <input type="hidden" id="sortInput" name="sort" value="<?php echo htmlspecialchars($sort); ?>">
-        <input type="text" name="titre" placeholder="Titre" value="<?php echo htmlspecialchars($titre); ?>">
-        <input type="number" name="minPrix" placeholder="Prix Min" value="">
-        <input type="number" name="maxPrix" placeholder="Prix Max" value="">
+        <div class="input">
+        <?php Input::render(name:"titre", type:"text", placeholder:'Titre*', value: htmlspecialchars($titre)); ?>
+        <?php Input::render(name:"minPrix", type:"number", placeholder:'Prix Min', value: htmlspecialchars($minPrix)); ?>
+        <?php Input::render(name:"maxPrix", type:"number", placeholder:'Prix Max', value: htmlspecialchars($maxPrix)); ?>
+        
         <?php
         $options = [
             'Spectacle' => 'Spectacle',
@@ -75,18 +98,23 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             $nomcategories
         );
         ?>
-        <button type="submit">Rechercher</button>
+        <?php Button::render(text: "Rechercher", submit: true); ?>
+        </div>
     </form>
+    <br>
 
     <div>
         <!-- Boutons de tri -->
-        <button type="button" onclick="document.getElementById('sortInput').value='valprix ASC'; trier('valprix ASC')">Trier par prix croissant</button>
-        <button type="button" onclick="document.getElementById('sortInput').value='valprix DESC'; trier('valprix DESC')">Trier par prix décroissant</button>
-        <button type="button" onclick="document.getElementById('sortInput').value='idoffre ASC'; trier('idoffre ASC')">Trier par date croissante</button>
-        <button type="button" onclick="document.getElementById('sortInput').value='idoffre DESC'; trier('idoffre DESC')">Trier par date décroissante</button>
-        <button type="button" onclick="window.location.href='/bordel/trieGeneral.php'">Réinitialiser</button>
+        <?php Button::render(text: "Trier par prix croissant", type: "member", onClick: "document.getElementById('sortInput').value='valprix ASC'; trier('valprix ASC')"); ?>
+        <?php Button::render(text: "Trier par prix décroissant", type: "member", onClick: "document.getElementById('sortInput').value='valprix DESC'; trier('valprix DESC')"); ?>
+        <?php Button::render(text: "Trier par date croissante", type: "member", onClick: "document.getElementById('sortInput').value='idoffre ASC'; trier('idoffre ASC')"); ?>
+        <?php Button::render(text: "Trier par date décroissante", type: "member", onClick: "document.getElementById('sortInput').value='idoffre DESC'; trier('idoffre DESC')"); ?>
+        <?php Button::render(text: "Réinitialiser", type: "member", onClick: "window.location.href='/bordel/trieGeneral.php'"); ?>
     </div>
 
+    <div id="nombreOffres">
+        <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
+    </div>
     <div id="resultats" class="offres-container">
         <!-- Affichage des résultats -->
         <?php

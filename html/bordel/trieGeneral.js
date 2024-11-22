@@ -1,51 +1,63 @@
 function trier(sort) {
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('sort', sort);
-
-    fetch('/bordel/trieGeneral.php?' + urlParams.toString(), {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `trieGeneral.php?sort=${sort}`, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            const resultatsContainer = document.getElementById('resultats');
+            resultatsContainer.innerHTML = response.offres.join('');
+            document.getElementById('nombreOffres').innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
+            // Réappliquer les styles CSS si nécessaire
+            applyStyles();
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const resultatsDiv = document.getElementById('resultats');
-        resultatsDiv.innerHTML = '';
-        data.forEach(item => {
-            const offreDiv = document.createElement('div');
-            offreDiv.innerHTML = item;
-            resultatsDiv.appendChild(offreDiv);
-        });
-    })
-    .catch(error => console.error('Error:', error));
+    };
+    xhr.send();
 }
 
 function rechercher() {
-    const form = document.getElementById('searchForm');
-    const formData = new FormData(form);
-    const urlParams = new URLSearchParams(formData);
+    const searchInput = document.querySelector('input[name="titre"]').value;
+    const minPrixInput = document.querySelector('input[name="minPrix"]').value;
+    const maxPrixInput = document.querySelector('input[name="maxPrix"]').value;
+    const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
 
-    fetch('/bordel/trieGeneral.php?' + urlParams.toString(), {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
+    const params = new URLSearchParams();
+    if (searchInput) params.append('titre', searchInput);
+    if (minPrixInput) params.append('minPrix', minPrixInput);
+    if (maxPrixInput) params.append('maxPrix', maxPrixInput);
+    if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `trieGeneral.php?${params.toString()}`, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            try {
+                const response = JSON.parse(xhr.responseText);
+                const resultatsContainer = document.getElementById('resultats');
+                resultatsContainer.innerHTML = response.offres.join('');
+                document.getElementById('nombreOffres').innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
+                // Réappliquer les styles CSS si nécessaire
+                applyStyles();
+            } catch (e) {
+                console.error('Erreur lors du traitement de la réponse JSON:', e);
+            }
+        } else {
+            console.error('Erreur lors de la requête AJAX:', xhr.status, xhr.statusText);
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const resultatsDiv = document.getElementById('resultats');
-        resultatsDiv.innerHTML = '';
-        data.forEach(item => {
-            const offreDiv = document.createElement('div');
-            offreDiv.innerHTML = item;
-            resultatsDiv.appendChild(offreDiv);
-        });
-    })
-    .catch(error => console.error('Error:', error));
+    };
+    xhr.send();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function applyStyles() {
+    const offres = document.querySelectorAll('.offre');
+    offres.forEach(offre => {
+        offre.style.margin = '10px auto';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('searchForm');
-    const sortInput = document.getElementById('sortInput');
     const searchInput = document.querySelector('input[name="titre"]');
     const minPrixInput = document.querySelector('input[name="minPrix"]');
     const maxPrixInput = document.querySelector('input[name="maxPrix"]');
