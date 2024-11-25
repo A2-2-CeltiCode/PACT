@@ -82,7 +82,7 @@ class Header
             </div>';*/
             
         self::renderNav($type);
-        self::renderLanguageSelector();
+        //self::renderLanguageSelector();
         self::renderAccountSection($type);
         self::renderBurger($type);
 
@@ -118,7 +118,7 @@ class Header
     /**
      * Rend le sélecteur de langue pour l'en-tête.
      */
-    private static function renderLanguageSelector(): void {
+    /*private static function renderLanguageSelector(): void {
         echo '
         <div class="entete-langue">
             <img class="logo-langue" src="/ressources/icone/logofr.svg" alt="Français">
@@ -128,7 +128,7 @@ class Header
                 <option value="en">English</option>
             </select>
         </div>';
-    }
+    }*/
 
     /**
      * Rend la section du compte en fonction du type d'utilisateur.
@@ -172,7 +172,7 @@ class Header
             echo '<a href="dashboardPro.php">Mes Offres</a>';
             echo '<a href="publierOffre.php">Créer une Offre</a>';
         }
-        self::renderLanguageSelector();
+        //self::renderLanguageSelector();
         self::renderAccountSection($type);
         echo <<<EOF
  </div>

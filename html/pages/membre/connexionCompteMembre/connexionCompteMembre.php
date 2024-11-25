@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['typeUtilisateur'] = "membre";
             
             // Redirige vers le tableau de bord
-            header("Location: ../listeOffres/listeOffres.php");
+            header("Location: ../../visiteur/accueil/accueil.php");
             exit();
         } else {
             // Mot de passe incorrect
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         <!-- Lien pour créer un compte -->
         <div class="inscription">
-            Vous n'avez pas de compte ? <a href="../creationComptePro/creationComptePro.php">Créez un compte dès maintenant</a>
+            Vous n'avez pas de compte ? <a href="../creationCompteMembre/creationCompteMembre.php">Créez un compte dès maintenant</a>
         </div>
     </div>
 </body>

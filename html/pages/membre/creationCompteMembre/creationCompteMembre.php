@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
 
             // Redirection après succès
-            header("Location: ../accueil/accueil.php");
+            header("Location: ../../visiteur/accueil/accueil.php");
             exit();
         } catch (PDOException $e) {
             die("Erreur lors de l'insertion : " . $e->getMessage());

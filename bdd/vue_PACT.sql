@@ -42,7 +42,7 @@ SELECT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _off
             WHEN _spectacle.idoffre IS NOT NULL THEN 'Spectacle'::text
             WHEN _restaurant.idoffre IS NOT NULL THEN 'Restaurant'::text
             WHEN _parcattractions.idoffre IS NOT NULL THEN 'Parc d''attractions'::text
-            WHEN _activite.idoffre IS NOT NULL THEN 'ActivitÃ©'::text
+            WHEN _activite.idoffre IS NOT NULL THEN 'Activite'::text
             WHEN _visite.idoffre IS NOT NULL THEN 'Visite'::text
             ELSE 'Inconnu'::text
         END AS type_offre,
