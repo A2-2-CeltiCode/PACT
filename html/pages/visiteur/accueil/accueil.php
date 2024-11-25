@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!doctype html>
 <html lang="fr-FR">
 <head>
@@ -8,7 +9,7 @@
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <style>
         svg {
-            stroke: var(--primaire-visiteur)
+            <?=isset($_SESSION["typeUtilisateur"]) && $_SESSION["typeUtilisateur"] == "membre" ? "stroke: var(--primaire-membre)":"stroke: var(--primaire-visiteur)"?>
         }
     </style>
     <?php
@@ -73,7 +74,7 @@ foreach ($offresSql as $item) {
 ?>
 
 <body>
-<?php Header::render(); ?>
+<?php isset($_SESSION["idCompte"])?Header::render(type: HeaderType::Member):Header::render(); ?>
 <div>
     <?php Input::render(class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
         icon: "/ressources/icone/recherche.svg") ?>
@@ -146,7 +147,7 @@ foreach ($offresSql as $item) {
         </div>
     </div>
 </main>
-<?php Footer::render(); ?>
+<?php isset($_SESSION["idCompte"])?Footer::render(type: FooterType::Member):Footer::render(); ?>
 </body>
 <script src="accueil.js"></script>
 </html>
