@@ -1,25 +1,31 @@
 <?php
 use \composants\Select\Select;
 use \composants\CheckboxSelect\CheckboxSelect;
+use \composants\Checkbox\Checkbox;
 use controlleurs\Offre\Offre;
 use composants\Input\Input;
 use composants\Button\Button;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controlleurs/Offre/Offre.php';
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Select/Select.php";
 require_once  $_SERVER["DOCUMENT_ROOT"] . '/composants/CheckboxSelect/CheckboxSelect.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/composants/Checkbox/Checkbox.php';
 require_once 'fonctionTrie.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 
 // Connexion à la base de données
-include 'connect_params.php';
+include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
 $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
 // Récupération des paramètres de la requête
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'idoffre DESC';
 $titre = isset($_GET['titre']) ? $_GET['titre'] : '';
+$localisation = isset($_GET['localisation']) ? $_GET['localisation'] : '';
 $minPrix = isset($_GET['minPrix']) ? $_GET['minPrix'] : null;
 $maxPrix = isset($_GET['maxPrix']) ? $_GET['maxPrix'] : null;
+$etat= isset($_GET['etat']) ? $_GET['etat'] : 'ouvertetferme';
+$ouverture = isset($_GET['ouverture']) ? $_GET['ouverture'] : "00:00";
+$fermeture = isset($_GET['fermeture']) ? $_GET['fermeture'] : "23:59";
 $query = "SELECT * FROM offres WHERE 1=1";
 $params = [];
 
@@ -31,7 +37,7 @@ if (!empty($_GET['nomcategorie'])) {
     $params = array_merge($params, $nomcategories);
 }
 // Récupération des résultats
-$resultats = getOffres($pdo, $sort, $minPrix, $maxPrix, $titre, $nomcategories);
+$resultats = getOffres($pdo, $sort, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat);
 
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
@@ -86,9 +92,17 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <input type="hidden" id="sortInput" name="sort" value="<?php echo htmlspecialchars($sort); ?>">
         <div class="input">
         <?php Input::render(name:"titre", type:"text", placeholder:'Titre*', value: htmlspecialchars($titre)); ?>
+        <?php Input::render(name:"localisation", type:"text", placeholder:'localisation', value: htmlspecialchars($localisation)); ?>
         <?php Input::render(name:"minPrix", type:"number", placeholder:'Prix Min', value: htmlspecialchars($minPrix)); ?>
         <?php Input::render(name:"maxPrix", type:"number", placeholder:'Prix Max', value: htmlspecialchars($maxPrix)); ?>
-        
+        <div>
+        <label for="ouverture">Heure d'ouverture</label>
+        <?php Input::render(name:"ouverture", type:"time", value: htmlspecialchars($ouverture)); ?>
+        </div>
+        <div>
+        <label for="fermeture">Heure de fermeture</label>
+        <?php Input::render(name:"fermeture", type:"time", placeholder:'Heure de fermeture', value: htmlspecialchars($fermeture)); ?>
+        </div>
         <?php
         $options = [
             'Spectacle' => 'Spectacle',
@@ -105,6 +119,20 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             $options,
             $nomcategories
         );
+        $options = [
+            'ouvertetferme'=> 'Ouvert et fermé',
+            'ouvert'=> 'Ouvert',
+            'ferme'=> 'Fermé'
+        ];
+        Select::render(
+            'custom-class',
+            'select-id',
+            'etat',
+            false,
+            $options,
+            isset($_GET['etat']) ? $_GET['etat'] : 'tout'
+        );
+        
         ?>
         <?php Button::render(text: "Rechercher", submit: true); ?>
         </div>
@@ -117,7 +145,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <?php Button::render(text: "Trier par prix décroissant", type: "member", onClick: "document.getElementById('sortInput').value='valprix DESC'; trier('valprix DESC')"); ?>
         <?php Button::render(text: "Trier par date croissante", type: "member", onClick: "document.getElementById('sortInput').value='idoffre ASC'; trier('idoffre ASC')"); ?>
         <?php Button::render(text: "Trier par date décroissante", type: "member", onClick: "document.getElementById('sortInput').value='idoffre DESC'; trier('idoffre DESC')"); ?>
-        <?php Button::render(text: "Réinitialiser", type: "member", onClick: "window.location.href='/bordel/trieGeneral.php'"); ?>
+        <?php Button::render(text: "Réinitialiser", type: "member", onClick: "window.location.href='/pages/visiteur/listeOffre/listeOffre.php'"); ?>
     </div>
 
     <div id="nombreOffres">
