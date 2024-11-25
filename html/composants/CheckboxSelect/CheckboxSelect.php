@@ -95,6 +95,16 @@ class CheckboxSelect
                     element.classList.add("show");
                 }
             }
+
+            document.addEventListener("click", function(event) {
+                var dropdowns = document.getElementsByClassName("checkbox-select");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (!openDropdown.contains(event.target) && !event.target.matches("button")) {
+                        openDropdown.classList.remove("show");
+                    }
+                }
+            });
         </script>';
     }
 }

@@ -14,8 +14,13 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
         $sql .= " AND LOWER(titre) LIKE LOWER(:titre)";
     }
     if (!empty($nomcategories) && !in_array('Tout', $nomcategories)) {
-        $placeholders = implode(',', array_map(function($key) { return ":category_$key"; }, array_keys($nomcategories)));
-        $sql .= " AND nomcategorie IN ($placeholders)";
+        $sql .= " AND (";
+        $conditions = [];
+        foreach ($nomcategories as $index => $category) {
+            $conditions[] = "nomcategorie = :category_$index";
+        }
+        $sql .= implode(' OR ', $conditions);
+        $sql .= ")";
     }
 
     // Ajout du tri
@@ -25,20 +30,19 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
 
     // Liaison des paramètres
     if ($minPrix !== null && $minPrix !== '') {
-        $stmt->bindParam(':minPrix', $minPrix, PDO::PARAM_INT);
+        $stmt->bindValue(':minPrix', $minPrix, PDO::PARAM_INT);
     }
     if ($maxPrix !== null && $maxPrix !== '') {
-        $stmt->bindParam(':maxPrix', $maxPrix, PDO::PARAM_INT);
+        $stmt->bindValue(':maxPrix', $maxPrix, PDO::PARAM_INT);
     }
     if ($titre !== null) {
-        $titre = '%' . $titre . '%';
-        $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
+        $stmt->bindValue(':titre', '%' . $titre . '%', PDO::PARAM_STR);
     }
 
     // Liaison des catégories
     if (!empty($nomcategories) && !in_array('Tout', $nomcategories)) {
-        foreach ($nomcategories as $key => $category) {
-            $stmt->bindValue(":category_$key", $category, PDO::PARAM_STR);
+        foreach ($nomcategories as $index => $category) {
+            $stmt->bindValue(":category_$index", $category, PDO::PARAM_STR);
         }
     }
 

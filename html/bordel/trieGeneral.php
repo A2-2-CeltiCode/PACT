@@ -20,8 +20,16 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'idoffre DESC';
 $titre = isset($_GET['titre']) ? $_GET['titre'] : '';
 $minPrix = isset($_GET['minPrix']) ? $_GET['minPrix'] : null;
 $maxPrix = isset($_GET['maxPrix']) ? $_GET['maxPrix'] : null;
-$nomcategories = isset($_GET['nomcategorie']) ? (array)$_GET['nomcategorie'] : ['Tout'];
+$query = "SELECT * FROM offres WHERE 1=1";
+$params = [];
 
+$nomcategories = isset($_GET['nomcategorie']) ? explode(',', $_GET['nomcategorie']) : ['Tout'];
+
+if (!empty($_GET['nomcategorie'])) {
+    $categoriesPlaceholders = implode(',', array_fill(0, count($nomcategories), '?'));
+    $query .= " AND nomcategorie IN ($categoriesPlaceholders)";
+    $params = array_merge($params, $nomcategories);
+}
 // Récupération des résultats
 $resultats = getOffres($pdo, $sort, $minPrix, $maxPrix, $titre, $nomcategories);
 
@@ -50,7 +58,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     .offres-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px; /* Espace entre les offres */
+        gap: 10px; 
     }
     .offre {
         margin: 10px auto;
@@ -58,10 +66,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     .button-container {
         display: flex;
         align-items: center;
-        gap: 10px; /* Espace entre les boutons */
+        gap: 10px;
     }
     .button-container button {
-        height: 40px; /* Ajustez la hauteur selon vos besoins */
+        height: 40px;
         display: flex;
         align-items: center;
     }
