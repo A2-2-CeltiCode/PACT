@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h1>Créez votre compte Membre</h1>
             <hr>
             <p id="necessary-fields-label">(*) - Champs Obligatoires</p>
-            <form name="creerCompteMembre" action="test.php" method="POST" onsubmit="return formValide()">
+            <form name="creerCompteMembre" action="creationCompteMembre.php" method="POST" onsubmit="return formValide()">
                 <div>
                     <label for="informations">Vos Informations</label>
                     <?php Input::render(class: "input-box", type: "text", name: "nom", placeholder: "Nom*", value: $nom, required: true); ?>
