@@ -133,6 +133,7 @@
                     $idCompte = $dbh->lastInsertId();
 
                     $_SESSION['idCompte'] = $idCompte;
+                    $_SESSION['typeUtilisateur'] = "pro";
 
                     $stmt = $dbh->prepare("INSERT INTO pact._comptePro(idCompte,denominationSociale, raisonSocialePro,banqueRib) VALUES('$idCompte','$denomination','$raisonS','$iban')");
                     $stmt->execute();

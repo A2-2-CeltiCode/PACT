@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['identifiant_utilisateur'] = $compte['email'];
             // Sauvegarder l'ID du compte dans la session
             $_SESSION['idCompte'] = $compte['idcompte'];
+            $_SESSION['typeUtilisateur'] = "pro";
             
             // Redirige vers le tableau de bord
             header("Location: ../listeOffres/listeOffres.php");
