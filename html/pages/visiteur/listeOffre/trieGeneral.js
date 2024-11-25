@@ -5,6 +5,7 @@ function trier(sort) {
     const maxPrixInput = document.querySelector('input[name="maxPrix"]').value;
     const ouvertureInput = document.querySelector('input[name="ouverture"]').value;
     const fermetureInput = document.querySelector('input[name="fermeture"]').value;
+    const etatInput = document.querySelector('select[name="etat"]').value;
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
 
     const params = new URLSearchParams();
@@ -15,6 +16,7 @@ function trier(sort) {
     if (maxPrixInput) params.append('maxPrix', maxPrixInput);
     if (ouvertureInput) params.append('ouverture', ouvertureInput);
     if (fermetureInput) params.append('fermeture', fermetureInput);
+    if (etatInput) params.append('etat', etatInput);
     if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
@@ -40,6 +42,7 @@ function rechercher() {
     const maxPrixInput = document.querySelector('input[name="maxPrix"]').value;
     const ouvertureInput = document.querySelector('input[name="ouverture"]').value;
     const fermetureInput = document.querySelector('input[name="fermeture"]').value;
+    const etatInput = document.querySelector('select[name="etat"]').value;
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
 
     const params = new URLSearchParams();
@@ -49,6 +52,7 @@ function rechercher() {
     if (maxPrixInput) params.append('maxPrix', maxPrixInput);
     if (ouvertureInput) params.append('ouverture', ouvertureInput);
     if (fermetureInput) params.append('fermeture', fermetureInput);
+    if (etatInput) params.append('etat', etatInput);
     if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
@@ -88,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const maxPrixInput = document.querySelector('input[name="maxPrix"]');
     const ouvertureInput = document.querySelector('input[name="ouverture"]');
     const fermetureInput = document.querySelector('input[name="fermeture"]');
+    const etatInput = document.querySelector('select[name="etat"]');
     const categoryInputs = document.querySelectorAll('input[name="nomcategorie[]"]');
 
     searchInput.addEventListener('input', function() {
@@ -111,6 +116,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     fermetureInput.addEventListener('input', function() {
+        rechercher();
+    });
+
+    etatInput.addEventListener('change', function() {
         rechercher();
     });
 

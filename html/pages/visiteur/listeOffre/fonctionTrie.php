@@ -20,22 +20,33 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
         $sql .= " AND nomcategorie IN ($categoriesPlaceholders)";
     }
     if ($ouverture !== null && $ouverture !== '') {
-        $sql .= " AND to_char(heureouverture, 'HH24:MI') >= :ouverture";
+        $sql .= " AND (
+            (heureouverture < heurefermeture AND :ouverture BETWEEN heureouverture AND heurefermeture) OR
+            (heureouverture > heurefermeture AND (:ouverture >= heureouverture OR :ouverture <= heurefermeture))
+        )";
     }
     if ($fermeture !== null && $fermeture !== '') {
-        $sql .= " AND to_char(heurefermeture, 'HH24:MI') <= :fermeture";
+        $sql .= " AND (
+            (heureouverture < heurefermeture AND :fermeture BETWEEN heureouverture AND heurefermeture) OR
+            (heureouverture > heurefermeture AND (:fermeture >= heureouverture OR :fermeture <= heurefermeture))
+        )";
     }
     if ($localisation !== null && $localisation !== '') {
         $sql .= " AND (LOWER(rue) LIKE LOWER(:localisation) OR LOWER(ville) LIKE LOWER(:localisation) OR LOWER(CAST(codepostal AS TEXT)) LIKE LOWER(:localisation))";
     }
     if ($etat !== null && $etat !== '') {
         if ($etat === 'ouvert') {
-            $sql .= " AND CURRENT_TIME < heureouverture";
+            $sql .= " AND (
+                (heureouverture < heurefermeture AND CURRENT_TIME BETWEEN heureouverture AND heurefermeture) OR
+                (heureouverture > heurefermeture AND (CURRENT_TIME >= heureouverture OR CURRENT_TIME <= heurefermeture))
+            )";
         } elseif ($etat === 'ferme') {
-            $sql .= " AND CURRENT_TIME > heurefermeture";
+            $sql .= " AND (
+                (heureouverture < heurefermeture AND (CURRENT_TIME < heureouverture OR CURRENT_TIME > heurefermeture)) OR
+                (heureouverture > heurefermeture AND (CURRENT_TIME < heureouverture AND CURRENT_TIME > heurefermeture))
+            )";
         }
     }
-    
 
     // Ajout du tri
     $sql .= " ORDER BY " . $sort;
@@ -61,7 +72,6 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     if ($localisation !== null && $localisation !== '') {
         $stmt->bindValue(':localisation', '%' . $localisation . '%', PDO::PARAM_STR);
     }
-    
 
     // Liaison des catégories
     if (!empty($nomcategories) && !in_array('Tout', $nomcategories)) {

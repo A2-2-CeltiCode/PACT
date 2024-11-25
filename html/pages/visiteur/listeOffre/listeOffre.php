@@ -24,8 +24,8 @@ $localisation = isset($_GET['localisation']) ? $_GET['localisation'] : '';
 $minPrix = isset($_GET['minPrix']) ? $_GET['minPrix'] : null;
 $maxPrix = isset($_GET['maxPrix']) ? $_GET['maxPrix'] : null;
 $etat= isset($_GET['etat']) ? $_GET['etat'] : 'ouvertetferme';
-$ouverture = isset($_GET['ouverture']) ? $_GET['ouverture'] : "00:00";
-$fermeture = isset($_GET['fermeture']) ? $_GET['fermeture'] : "23:59";
+$ouverture = isset($_GET['ouverture']) ? $_GET['ouverture'] : null;
+$fermeture = isset($_GET['fermeture']) ? $_GET['fermeture'] : null;
 $query = "SELECT * FROM offres WHERE 1=1";
 $params = [];
 
@@ -126,7 +126,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         ];
         Select::render(
             'custom-class',
-            'select-id',
+            'select-etat', 
             'etat',
             false,
             $options,
