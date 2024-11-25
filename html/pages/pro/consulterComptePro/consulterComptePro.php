@@ -62,7 +62,7 @@ try {
 
 <!DOCTYPE html>
 <html lang="fr">
-    
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,13 +85,9 @@ try {
         <!-- Affichage des informations si disponibles -->
         <?php if (!empty($userInfo)): ?>
             <table border="1">
+                <!-- Catégorie Identité -->
                 <tr>
-                    <th>Email</th>
-                    <td><?= isset($userInfo['email']) ? htmlspecialchars($userInfo['email']) : "Non disponible" ?></td>
-                </tr>
-                <tr>
-                    <th>Numéro de téléphone</th>
-                    <td><?= isset($userInfo['numtel']) ? htmlspecialchars($userInfo['numtel']) : "Non disponible" ?></td>
+                    <th colspan="2" style="background-color: #6b3d84; color: white; text-align: center;">Identité</th>
                 </tr>
                 <tr>
                     <th>Dénomination Sociale</th>
@@ -102,12 +98,30 @@ try {
                     <td><?= isset($userInfo['raisonsocialepro']) ? htmlspecialchars($userInfo['raisonsocialepro']) : "Non disponible" ?></td>
                 </tr>
                 <tr>
-                    <th>Banque (RIB)</th>
-                    <td><?= isset($userInfo['banquerib']) ? htmlspecialchars($userInfo['banquerib']) : "Non disponible" ?></td>
-                </tr>
-                <tr>
                     <th>Numéro Siren</th>
                     <td><?= isset($userInfo['numsiren']) ? htmlspecialchars($userInfo['numsiren']) : "Non disponible" ?></td>
+                </tr>
+
+                <!-- Catégorie Coordonnées -->
+                <tr>
+                    <th colspan="2" style="background-color: #6b3d84; color: white; text-align: center;">Coordonnées</th>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><?= isset($userInfo['email']) ? htmlspecialchars($userInfo['email']) : "Non disponible" ?></td>
+                </tr>
+                <tr>
+                    <th>Numéro de Téléphone</th>
+                    <td><?= isset($userInfo['numtel']) ? htmlspecialchars($userInfo['numtel']) : "Non disponible" ?></td>
+                </tr>
+
+                <!-- Catégorie Adresse -->
+                <tr>
+                    <th colspan="2" style="background-color: #6b3d84; color: white; text-align: center;">Adresse</th>
+                </tr>
+                <tr>
+                    <th>Rue</th>
+                    <td><?= isset($userInfo['rue']) ? htmlspecialchars($userInfo['rue']) : "Non disponible" ?></td>
                 </tr>
                 <tr>
                     <th>Code Postal</th>
@@ -117,9 +131,14 @@ try {
                     <th>Ville</th>
                     <td><?= isset($userInfo['ville']) ? htmlspecialchars($userInfo['ville']) : "Non disponible" ?></td>
                 </tr>
+
+                <!-- Catégorie Informations bancaires -->
                 <tr>
-                    <th>Rue</th>
-                    <td><?= isset($userInfo['rue']) ? htmlspecialchars($userInfo['rue']) : "Non disponible" ?></td>
+                    <th colspan="2" style="background-color: #6b3d84; color: white; text-align: center;">Informations Bancaires</th>
+                </tr>
+                <tr>
+                    <th>RIB</th>
+                    <td><?= isset($userInfo['banquerib']) ? htmlspecialchars($userInfo['banquerib']) : "Non disponible" ?></td>
                 </tr>
             </table>
         <?php endif; ?>
