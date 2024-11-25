@@ -73,16 +73,6 @@ CREATE TABLE _forfaitPro( -- a modif peut être
 );
 
 --
--- TABLE HORAIRE
---
-
-CREATE TABLE _horaire(
-    heureOuverture VARCHAR(10) NOT NULL,
-    heureFermeture VARCHAR(10) NOT NULL,
-    CONSTRAINT horaire_pk PRIMARY KEY(heureOuverture,heureFermeture)
-);
-
---
 -- TABLE DUREE
 --
 
@@ -153,17 +143,15 @@ CREATE TABLE _offre(
     estEnLigne              BOOLEAN NOT NULL,
     idAdresse               SERIAL NOT NULL,
     creaDate                DATE DEFAULT CURRENT_TIMESTAMP,
-    heureOuverture          VARCHAR(10) NOT NULL,
-    heureFermeture          VARCHAR(10) NOT NULL,
+    heureOuverture          TIME NOT NULL,
+    heureFermeture          TIME NOT NULL,
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
     CONSTRAINT offre_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption),
     CONSTRAINT offre_fk_forfait FOREIGN KEY (nomForfait)
-        REFERENCES _forfait(nomForfait),
-    CONSTRAINT offre_fk_horaire FOREIGN KEY (heureOuverture,heureFermeture)
-        REFERENCES _horaire(heureOuverture,heureFermeture)
+        REFERENCES _forfait(nomForfait)
 );
 
 CREATE TABLE _image(
@@ -190,6 +178,7 @@ CREATE TABLE _spectacle(
     tempsEnMinutes  INTEGER,
     valPrix         NUMERIC(5,2) NOT NULL,
     capacite        INTEGER NOT NULL,
+    dateEvenement   DATE NOT NULL,
     CONSTRAINT spectacle_pk PRIMARY KEY (idOffre),
     CONSTRAINT spectacle_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
@@ -243,6 +232,7 @@ CREATE TABLE _visite(
     estGuidee       BOOLEAN NOT NULL,
     tempsEnMinutes  INTEGER,
     nomCategorie    VARCHAR(50) NOT NULL,
+    dateEvenement   DATE NOT NULL,
     CONSTRAINT visite_pk PRIMARY KEY (idOffre),
     CONSTRAINT visite_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),

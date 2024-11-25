@@ -15,15 +15,6 @@ INSERT INTO _duree (tempsEnMinutes) VALUES
 (90),
 (120);
 
-INSERT INTO _horaire (heureOuverture, heureFermeture) VALUES
-('6h','17h'),
-('7h','16h'),
-('8h','15h'),
-('17h','1h'),
-('2h','14h'),
-('0h','10h');
-
-
 -- Peupler la table _adresse
 INSERT INTO _adresse (codePostal, ville, rue, numTel) VALUES
 (22000, 'Saint-Brieuc', '2 Rue nominoë','+33 1 23 45 67 89'),
@@ -57,12 +48,12 @@ INSERT INTO _compteProPublic (idCompte) VALUES
 
 -- Peupler la table _offre
 INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne,idAdresse, heureOuverture, heureFermeture) VALUES
-(2,'Aucune', 'Gratuit', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 1,'6h','17h'),
-(2,'En relief', 'Standard', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 2,'7h','16h'),
-(2,'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 3,'8h','15h'),
-(2,'Aucune', 'Gratuit', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 4,'17h','1h'),
-(3,'A la une', 'Standard', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 5,'2h','14h'),
-(3,'En relief', 'Premium', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 6,'0h','10h');
+(2,'Aucune', 'Gratuit', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 1,'06:00','17:00'),
+(2,'En relief', 'Standard', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 2,'07:00','16:00'),
+(2,'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 3,'08:00','15:00'),
+(2,'Aucune', 'Gratuit', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 4,'17:00','01:00'),
+(3,'A la une', 'Standard', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 5,'02:00','14:00'),
+(3,'En relief', 'Premium', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 6,'00:00','10:00');
 
 -- Peupler la table _image
 INSERT INTO _image (idOffre, nomImage) VALUES
@@ -76,17 +67,17 @@ INSERT INTO _image (idOffre, nomImage) VALUES
 (6, 'quimper.jpg');
 
 -- Peupler la table _spectacle
-INSERT INTO _spectacle (idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite) VALUES
-(2, 'Spectacle', 120, 40, 20);
+INSERT INTO _spectacle (idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite, dateEvenement) VALUES
+(2, 'Spectacle', 120, 40, 20, now());
 
 -- Peupler la table _parcAttractions
 INSERT INTO _parcAttractions (idOffre, nomCategorie, valPrix, carteParc, nbAttractions, ageMin) VALUES
 (3, 'Parc d''attractions', 60, NULL , 10, 6);
 
 -- Peupler la table _visite
-INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee) VALUES
-(1, 20, 60, 'Visite', TRUE),
-(6, 80, 90, 'Visite', FALSE);
+INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee,dateEvenement) VALUES
+(1, 20, 60, 'Visite', TRUE, now()),
+(6, 80, 90, 'Visite', FALSE, now());
 
 -- Peupler la table _activite
 INSERT INTO _activite (idOffre, nomCategorie, tempsEnMinutes, valPrix, ageMin, prestation) VALUES
