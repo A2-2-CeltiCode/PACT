@@ -117,7 +117,7 @@
                 $codePostal = $_POST['codePostal']; 
                 $ville = $_POST['ville'];
                 $rue = $_POST['rue'];
-                $motDePasse = $_POST['motDePasse'];
+                $motDePasse = hash("SHA256",$_POST['motDePasse']);
                 $iban = $_POST['iban'];
                 
                 require_once($_SERVER["DOCUMENT_ROOT"] . '/connect_params.php');
@@ -133,6 +133,7 @@
                     $idCompte = $dbh->lastInsertId();
 
                     $_SESSION['idCompte'] = $idCompte;
+                    $_SESSION['typeUtilisateur'] = "pro";
 
                     $stmt = $dbh->prepare("INSERT INTO pact._comptePro(idCompte,denominationSociale, raisonSocialePro,banqueRib) VALUES('$idCompte','$denomination','$raisonS','$iban')");
                     $stmt->execute();

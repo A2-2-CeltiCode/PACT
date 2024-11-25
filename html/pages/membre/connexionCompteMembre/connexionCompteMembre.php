@@ -24,7 +24,7 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupère les valeurs soumises dans le formulaire
     $identifiant_utilisateur = $_POST['username'];
-    $mot_de_passe_utilisateur = hash("SHA256",$_POST['password']);
+    $mot_de_passe_utilisateur = hash("sha256",$_POST['password']);
 
     // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
     $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
@@ -35,14 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
-        // Comparaison simple des mots de passe (avec hachage!!)
+        // Comparaison simple des mots de passe (sans hachage)
         if ($mot_de_passe_utilisateur === $compte['mdp']) {
             // Si les informations sont correctes, démarrer la session
             $_SESSION['utilisateur_connecte'] = true;
             $_SESSION['identifiant_utilisateur'] = $compte['email'];
             // Sauvegarder l'ID du compte dans la session
             $_SESSION['idCompte'] = $compte['idcompte'];
-            $_SESSION['typeUtilisateur'] = "pro";
+            $_SESSION['typeUtilisateur'] = "membre";
             
             // Redirige vers le tableau de bord
             header("Location: ../listeOffres/listeOffres.php");
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <title>Page de Connexion</title>
-    <link rel="stylesheet" href="./connexionComptePro.css">
+    <link rel="stylesheet" href="./connexionCompteMembre.css">
     <link rel="stylesheet" href="/ui.css">
 </head>
 <body>
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="connecte">
                 <!--<a class="lien-mdp-oublie" href="#">Mot de passe oublié ?</a>-->
-                <?php Button::render(class: "bouton-connexion", submit: true, type: "pro", text: "Se connecter"); ?>
+                <?php Button::render(class: "bouton-connexion", submit: true, type: "membre", text: "Se connecter"); ?>
             </div>
         </form>
         <!-- Lien pour créer un compte -->
