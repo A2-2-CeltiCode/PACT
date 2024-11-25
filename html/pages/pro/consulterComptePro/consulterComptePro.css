@@ -79,7 +79,7 @@ main table th, main table td {
 }
 
 main table th {
-    background-color: var(--primaire-pro);
+    background-color:#a93b95;
     color: white;
     font-weight: bold;
 }
