@@ -87,6 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Redirection après succès
             $_SESSION['idCompte'] = $idCompte;
+            $_SESSION['typeUtilisateur'] = "pro";
             header("Location: ../listeOffres/listeOffres.php");
             exit();
         }

@@ -73,14 +73,14 @@ class Header
                 <img src="/ressources/icone/logo.svg" alt="Logo PACT">
                 <span class="' . $spanClass . '">PACT</span>
             </a>';
-        Input::render(class: "barre_recherche", placeholder: "Recherche activité, restaurant, lieu...",
+        /*Input::render(class: "barre_recherche", placeholder: "Recherche activité, restaurant, lieu...",
             icon: "/ressources/icone/recherche.svg");
         echo '
             <div>';
         Input::render(placeholder: 'Entrez une localisation...', icon: "/ressources/icone/test.svg");
         echo '
-            </div>';
-
+            </div>';*/
+            
         self::renderNav($type);
         self::renderLanguageSelector();
         self::renderAccountSection($type);
@@ -103,11 +103,11 @@ class Header
         echo '<nav>';
         if ($type == HeaderType::Guest) {
             echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            echo '<a href="offre.php">Offres</a>';
+            //echo '<a href="offre.php">Offres</a>';
         } elseif ($type == HeaderType::Member) {
             echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            echo '<a href="offre.php">Offres</a>';
-            echo '<a href="offre.php">Favoris</a>';
+            //echo '<a href="offre.php">Offres</a>';
+            //echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
             echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
             echo '<a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>';
@@ -142,11 +142,11 @@ class Header
                 $type = ButtonType::Guest,
                 $onClick = "window.location.href='/pages/membre/connexionCompteMembre/connexionCompteMembre.php'");
         } elseif ($type == HeaderType::Member) {
-            Button::render($class = '', $id = 'member-button', $text = 'Mon Compte', $type = ButtonType::Member,
-                $onClick = "window.location.href='monCompte.php'");
+            Button::render($class = '', $id = 'member-button', $text = 'Se deconnecter', $type = ButtonType::Member,
+                $onClick = "window.location.href='../../../deconnexion.php'");
         } elseif ($type == HeaderType::Pro) {
             Button::render($class = '', $id = 'pro-button', $text = 'Se deconnecter', $type = ButtonType::Pro,
-                $onClick = "window.location.href='../deconnexion.php'");
+                $onClick = "window.location.href='../../../deconnexion.php'");
         }
         echo '</div>';
     }

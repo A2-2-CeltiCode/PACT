@@ -70,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
             $idCompte = $dbh->lastInsertId();
             $_SESSION['idCompte'] = $idCompte;
+            $_SESSION['typeUtilisateur'] = "membre";
 
             $stmt = $dbh->prepare("INSERT INTO pact._compteMembre(idCompte, prenom, nom, pseudo) VALUES(:idCompte, :prenom, :nom, :pseudo)");
             $stmt->bindParam(':idCompte', $idCompte);
