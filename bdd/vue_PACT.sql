@@ -16,13 +16,13 @@ FROM _compte NATURAL JOIN _compteMembre NATURAL JOIN _adresse;
 -- COMPTE PRO PRIVE
 
 CREATE OR REPLACE VIEW vue_compte_pro_prive AS
-SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren
+SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, idAdresse, codePostal, ville, rue
 FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPrive NATURAL JOIN _adresse;
 
 -- COMPTE PRO PUBLIC
 
 CREATE OR REPLACE VIEW vue_compte_pro_public AS
-SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib
+SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, idAdresse, codePostal, ville, rue
 FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN _adresse;
 
 --
