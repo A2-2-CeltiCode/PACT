@@ -48,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } else {
             // Mot de passe incorrect
-            $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
+            $message_erreur_connexion = 'Adresse Mail ou mot de passe incorrect';
         }
     } else {
         // Aucun compte trouvé avec cet email
-        $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
+        $message_erreur_connexion = 'Adresse Mail ou mot de passe incorrect';
     }
 }
 ?>
