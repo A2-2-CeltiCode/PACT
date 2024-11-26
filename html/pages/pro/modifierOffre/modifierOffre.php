@@ -132,7 +132,7 @@ $estEnLigne = $vueOffre["estenligne"];
     use \composants\Checkbox\Checkbox;
     use \composants\Select\Select;
     use \composants\Textarea\Textarea;
-    
+    use \composants\CheckboxSelect\CheckboxSelect;
     require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
     require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
     require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/InsererImage/InsererImage.php";
@@ -142,6 +142,7 @@ $estEnLigne = $vueOffre["estenligne"];
     require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Textarea/Textarea.php";
     require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Footer/Footer.php";
     require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/CheckboxSelect/CheckboxSelect.php";
     
     ?>
     <title>Modification d'une offre</title>
@@ -212,36 +213,7 @@ $estEnLigne = $vueOffre["estenligne"];
                 </div>
 
                 <div>
-                <?php
-                    
-                            
-                    if($numsiren!=null){
-                        ?>
-                        <label>Type de forfait*</label>
-                        <?php
-                        $option=null;
-                        $sql = "SELECT nomforfait FROM pact._forfaitPro";
-                        $stmt = $dbh->prepare($sql); 
-                        $stmt->execute();
-
-                        $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-
-                        foreach ($tabForfait as $forfait) {
-                            $option[$forfait['nomforfait']] = $forfait['nomforfait'];
-                        }
-
-                        Select::render(
-                            name: "typeForfait", 
-                            required: true, 
-                            options: $option,
-                            
-                        );
-                        
-                        
-                    }else{
-                        ?><input type="hidden" name="typeForfait" value="Gratuit"><?php
-                    }
-                    ?>
+                
                 </div>
 
                 <div>
@@ -279,34 +251,24 @@ $estEnLigne = $vueOffre["estenligne"];
                             $stmt->execute();
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
-                            <div class="dropdown">
-                            <?php Button::render(onClick: "toggleDropdown('dropdownActivite')", text: "Tag", type:"pro", submit: false, class: "tag"); ?>
-                                <div class="dropdown-content" id="dropdownActivite">
-                                    <?php foreach ($tabTag as $tag) {
-                                        Checkbox::render(
-                                            class: "checkbox",
-                                            id: "activite_tag_" . $tag['nomtag'],
-                                            name: "tag[]",
-                                            value: $tag['nomtag'],
-                                            text: $tag['nomtag'],
-                                            required: false,
-                                            checked: false
-                                        );
-                                    } ?>
-                                </div>
-                                <br><br>
-                            </div>
+                                <?php
+                                    CheckboxSelect::render(
+                                        class: "checkbox",
+                                        id: "activite_tag_" . $tag['nomtag'],
+                                        name: "tag[]",
+                                        options: $tabTag,
+                                        required: false,
+                                        
+                                    );
+                                ?>
+                            <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix1", type: "number", value: $prix1) ?>
                             <label>Âge minimum</label>
-                            <?php Input::render(name: "ageMinimum1", type: "number", value: $ageMinimum1) ?>
-                            <label>Prestation</label>
-                            <?php Input::render(name: "prestation", type: "text", value: $prestation) ?>
-                            <label>Durée de l'activité</label>
-                            <?php Input::render(name: "duree1", type: "number", value: $duree1) ?>
                         </div>
-                    </div> 
-                <?php } else if ($offre4 != null) { ?>
+                    </div>
+                <?php } ?>
+                <?php if ($offre4 != null) { ?>
                     
                     <div id="Visite" class="section">
                         <div>
@@ -320,7 +282,7 @@ $estEnLigne = $vueOffre["estenligne"];
                             <?php Button::render(onClick: "toggleDropdown('dropdownVisite')", text: "Tag", type: "pro", submit: false, class: "tag"); ?>                               
                             <div class="dropdown-content" id="dropdownVisite">
                                     <?php foreach ($tabTag as $tag) {
-                                        Checkbox::render(
+                                        CheckboxSelect::render(
                                             class: "checkbox",
                                             id: "visite_tag_" . $tag['nomtag'], 
                                             name: "tag[]",
@@ -350,7 +312,7 @@ $estEnLigne = $vueOffre["estenligne"];
                                 $stmt->execute();
                                 $tabLangue = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($tabLangue as $langue) {
-                                    CheckBox::render(
+                                    CheckboxSelect::render(
                                         class: "checkbox",
                                         id: "langue_" . $langue['nomlangage'], 
                                         name: "langue[]",
@@ -378,7 +340,7 @@ $estEnLigne = $vueOffre["estenligne"];
                             <?php Button::render(onClick: "toggleDropdown('dropdownSpectacle')", text: "Tag", type:"pro", submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownSpectacle">
                                     <?php foreach ($tabTag as $tag) {
-                                        Checkbox::render(
+                                        CheckboxSelect::render(
                                             class: "checkbox",
                                             id: "spectacle_tag_" . $tag['nomtag'], 
                                             name: "tag[]",
@@ -413,7 +375,7 @@ $estEnLigne = $vueOffre["estenligne"];
                             <?php Button::render(onClick: "toggleDropdown('dropdownParc')", text: "Tag",type: "pro", submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownParc">
                                     <?php foreach ($tabTag as $tag) {
-                                        Checkbox::render(
+                                        CheckboxSelect::render(
                                             class: "checkbox",
                                             id: "parc_tag_" . $tag['nomtag'],
                                             name: "tag[]",
@@ -451,7 +413,7 @@ $estEnLigne = $vueOffre["estenligne"];
                             <?php Button::render(onClick: "toggleDropdown('dropdownRestaurant')", text: "Tag", type: "pro", submit: false, class: "tag"); ?>                               
                                 <div class="dropdown-content" id="dropdownRestaurant">
                                     <?php foreach ($tabTag as $tag) {
-                                        Checkbox::render(
+                                        CheckboxSelect::render(
                                             class: "checkbox",
                                             id: "restaurant_tag_" . $tag['nomtag'], 
                                             name: "tag[]",
@@ -495,7 +457,7 @@ $estEnLigne = $vueOffre["estenligne"];
                                 $stmt->execute();
                                 $tabnomrepas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($tabnomrepas as $nomrepas) {
-                                    Checkbox::render(
+                                    CheckboxSelect::render(
                                         class: "checkbox",
                                         id: "repas_" . $nomrepas['nomrepas'],
                                         name: "repas[]",

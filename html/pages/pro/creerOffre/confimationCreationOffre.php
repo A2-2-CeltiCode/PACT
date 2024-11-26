@@ -76,9 +76,9 @@
     $carteRestaurant = $_POST['carteRestaurant'] ?? null;
     $planParc = $_POST['planParc'] ?? null;
     $langue = $_POST['langue'] ?? null;
-    
-
-    
+    $iban = $_POST['iban'] ?? null;
+    $ouverture = $_POST['ouverture'] ?? null;
+    $fermeture = $_POST['fermeture'] ?? null;
     
 
 
@@ -87,8 +87,16 @@
 
     //Insertion dans la BDD
 
+    if($iban !== null){
+        $stmt = $dbh->prepare(
+            "UPDATE pact._comptepro set banquerib= :iban WHERE idCompte = :idCompte"   
+        );
+        $stmt->bindValue(':idCompte', $idCompte, PDO::PARAM_INT);
+        $stmt->bindValue(':iban', $iban, PDO::PARAM_STR);
+        $stmt->execute();
+    }
 
-    print_r($adressePostale);
+
     //creation adresse
     $stmt = $dbh->prepare(
         "INSERT INTO pact._adresse(codePostal, ville, rue, numTel)
@@ -104,8 +112,8 @@
 
     //creation offre
     $stmt = $dbh->prepare(
-        "INSERT INTO pact._offre(idCompte, titre, description, descriptionDetaillee,siteInternet,nomOption,nomForfait,estEnLigne,idAdresse) 
-        VALUES(:idCompte, :titre, :description, :descriptionDetaillee, :siteInternet, :nomOption, :nomForfait, :estEnLigne, :idAdresse)"        
+        "INSERT INTO pact._offre(idCompte, titre, description, descriptionDetaillee,siteInternet,nomOption,nomForfait,estEnLigne,idAdresse,heureouverture,heurefermeture) 
+        VALUES(:idCompte, :titre, :description, :descriptionDetaillee, :siteInternet, :nomOption, :nomForfait, :estEnLigne, :idAdresse, :heureouverture, :heurefermeture)"        
         );
     $stmt->bindValue(':idCompte', $idCompte, $idCompte !== null ? PDO::PARAM_INT : PDO::PARAM_NULL);
     $stmt->bindValue(':titre', $nomOffre, $nomOffre !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
@@ -116,6 +124,8 @@
     $stmt->bindValue(':nomForfait', $typeForfait, $typeForfait !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
     $stmt->bindValue(':estEnLigne', $enLigne, $enLigne !== null ? PDO::PARAM_BOOL : PDO::PARAM_NULL);
     $stmt->bindValue(':idAdresse', $idAdresse, $idAdresse !== null ? PDO::PARAM_INT : PDO::PARAM_NULL);
+    $stmt->bindValue(':heureouverture', $ouverture, $ouverture !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stmt->bindValue(':heurefermeture', $fermeture, $fermeture !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
     $stmt->execute();
     $idOffre=$dbh->lastInsertId();
 

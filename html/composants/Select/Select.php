@@ -20,6 +20,7 @@ class Select
      * @param bool $required Indique si le champ est requis.
      * @param array $options Tableau associatif des options (clé => valeur).
      * @param string $selected Valeur sélectionnée par défaut.
+     * @param string $style Style CSS pour le select.
      */
     public static function render(
         $class = "",
@@ -27,14 +28,16 @@ class Select
         $name = "",
         $required = false,
         $options = [],
-        $selected = ""
+        $selected = "",
+        $style = ""
     ) {
         // Préparer les attributs du select
         $attrs = [
             'class' => $class,
             'id' => $id,
             'name' => $name,
-            'required' => $required ? 'required' : ''
+            'required' => $required ? 'required' : '',
+            
         ];
 
         // Inclure CSS une seule fois

@@ -26,6 +26,13 @@
         $stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
         $stmt->execute();
         $numsiren = $stmt->fetchColumn();
+
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+        $sql = "SELECT banquerib FROM pact._ComptePro WHERE idCompte = :idCompte";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
+        $stmt->execute();
+        $rib = $stmt->fetchColumn();
         ?> 
         <title>Création d'une offre</title>
 
@@ -39,7 +46,7 @@
         <?php Header::render(HeaderType::Pro); ?>
         
         
-        <form class="info-display" id="myForm" method="post" action="confimationCreationOffre.php" enctype="multipart/form-data">
+        <form class="info-display" id="myForm" method="post" action="confimationCreationOffre.php" onsubmit="return validateForm()" enctype="multipart/form-data">
             <h1>Créez votre Offre</h1>
             <section>
             
@@ -74,6 +81,18 @@
                         <label>Description de l'offre*</label>
                         <?php Textarea::render(name:"descriptionOffre", required:"true", rows:2) ?>
                     </div>
+
+                    <div>
+                        <label>Heure d'ouverture</label>
+                        <?php Input::render(name:"ouverture", type:"time", placeholder:'',required:"true") ?>
+                        
+                    </div>
+
+                    <div>
+                        <label>Heure de fermeture</label>
+                        <?php Input::render(name:"fermeture", type:"time", placeholder:'',required:"true") ?>
+                        
+                    </div>
                 </article>
                 <article>
                     <div>
@@ -82,19 +101,20 @@
                     </div>
 
                     
+                    
                         
                     </div>
 
 
                     
                     <div>
-                        
-
-                        
-
                         <?php
                             
                             if($numsiren!=null){
+                                if($rib==null){
+                                    ?><label>IBAN*</label><?php
+                                    Input::render(name: "iban", type: "text", required: true);
+                                }
                                 ?>
                                 <label>Type de forfait*</label>
                                 <?php
@@ -112,7 +132,8 @@
                                 Select::render(
                                     name: "typeForfait", 
                                     required: true, 
-                                    options: $option
+                                    options: $option,
+                                    style: "width: 300%;"
                                 );
                                 
                                 
@@ -130,19 +151,25 @@
                             $sql = "SELECT nomoption FROM pact._option";
                             $stmt = $dbh->prepare($sql); 
                             $stmt->execute();
-        
+                    
                             $tabOption = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-
+                    
                             foreach ($tabOption as $type) {
                                 $option[$type['nomoption']] = $type['nomoption'];
                             }
-
+                    
                             Select::render(
                                 name: "typePromotion", 
                                 required: true, 
                                 options: $option
                             );
                         ?>
+                    </div>
+                    <div id="datePromotionContainer" style="display:none;">
+                        <label>Date de début de la promotion*</label>
+                        <?php Input::render(name:"datePromotion", type:"week", required:"true") ?>
+                        <label>Nombre de semaine (max 4 semaine)</label>
+                        <?php Input::render(name:"durepromotion",id:"durepromotion", type:"number", required:"true",min:1,max:4) ?>
                     </div>
                     
                     <div>

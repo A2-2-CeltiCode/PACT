@@ -117,3 +117,7 @@ article{
 
 
 .btns{padding: 1em;}    
+
+.input-wrapper {
+    width: 90% !important;
+}

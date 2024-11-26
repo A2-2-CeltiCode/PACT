@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectElement = document.querySelector('select[name="typeOffre"]');
     const sections = document.querySelectorAll('.section');
+    const promotionSelectElement = document.querySelector('select[name="typePromotion"]');
+    const datePromotionContainer = document.getElementById('datePromotionContainer');
 
     // Fonction pour masquer toutes les sections
     function hideAllSections() {
@@ -26,16 +28,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // On cache toutes les sections au début
     hideAllSections();
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('myForm').addEventListener('submit', function(event) {
-        const input = document.getElementById('adressePostale').value;
-        const regex = /^[0-9]+/; // Regex pour une adresse postale simple
-
-        if (!regex.test(input)) {
-            event.preventDefault(); // Empêche l'envoi du formulaire
-                alert("Veuillez entrer une adresse postale valide."); // Affiche un message d'erreur
+    // Événement déclenché lorsque le type de promotion est modifié
+    promotionSelectElement.addEventListener('change', function () {
+        const selectedValue = this.value;
+        if (selectedValue === 'Aucune') {
+            datePromotionContainer.style.display = 'none';
+        } else {
+            datePromotionContainer.style.display = 'block';
         }
     });
 });
@@ -115,4 +115,13 @@ function toggleLangue(show) {
 function toggleDropdown(dropdownId) {
     var dropdown = document.getElementById(dropdownId);
     dropdown.classList.toggle("show");
+}
+
+function validateForm() {
+    const durepromotion = document.getElementById("durepromotion").value;
+    if (durepromotion > 4) {
+        alert("La durée de la promotion ne doit pas dépasser 4.");
+        return false;
+    }
+    return true;
 }
