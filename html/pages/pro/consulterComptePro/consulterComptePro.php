@@ -46,7 +46,7 @@ try {
     $sql = "SELECT idcompte, mdp, email, numtel, denominationsociale, 
                    raisonsocialepro, banquerib, numsiren,
                    codepostal, ville, rue
-            FROM vue_compte_pro_prive
+            FROM vue_compte_pro
             WHERE idCompte = :idCompte";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
