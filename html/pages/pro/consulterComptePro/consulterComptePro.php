@@ -17,26 +17,20 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 
 // Vérifier si l'utilisateur est connecté
-//if (!isset($_SESSION['idCompte'])) {
-//    header("Location: login.php"); // Redirige vers une page de connexion si l'utilisateur n'est pas connecté
-//    exit;
-//}
+if (!isset($_SESSION['idCompte'])) {
+    header("Location: login.php"); 
+    exit;
+}
 
-
-// Configuration de la base de données
-$host = 'localhost';       // Remplacez par votre hôte
-$dbname = 'postgres'; // Remplacez par le nom de votre base de données
-$user = 'postgres'; // Remplacez par votre utilisateur
-$password = '13phenix';    // Remplacez par votre mot de passe
 
 // Initialisation des variables
 $message = "";
 $userInfo = [];
-$idCompte = 2; //$_SESSION['idCompte']; // Récupération de l'ID depuis la session
+$idCompte = $_SESSION['idCompte']; 
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $user, $password);
+    $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Définir le schéma "pact" pour la session

@@ -1,6 +1,7 @@
 <?php
 // Démarrer la session
 session_start();
+require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['idCompte'])) {
@@ -8,12 +9,7 @@ if (!isset($_SESSION['idCompte'])) {
     exit;
 }
 
-// Configuration de la base de données
-$host = 'localhost';        // Remplacez par votre hôte
-$dbname = 'postgres';       // Remplacez par le nom de votre base de données
-$user = 'postgres';         // Remplacez par votre utilisateur
-$password = '13phenix';     // Remplacez par votre mot de passe
-$idCompte = 2;//$_SESSION['idCompte']; // ID de l'utilisateur connecté
+$idCompte = $_SESSION['idCompte'];
 
 try {
     // Connexion à la base de données
@@ -33,10 +29,31 @@ try {
         $ville = htmlspecialchars($_POST['ville'], ENT_QUOTES, 'UTF-8');
         $banquerib = htmlspecialchars($_POST['banquerib'], ENT_QUOTES, 'UTF-8');
 
+          // Vérification du format du numéro de téléphone
+          if (!preg_match('/^(\d{2} ){4}\d{2}$/', $numtel)) {
+            throw new Exception("Le numéro de téléphone doit être au format : 01 02 03 04 05.");
+        }
+
+        // Vérification du format de l'email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception("L'email n'est pas valide.");
+        }
+
+        // Vérification du format du code postal (5 chiffres)
+        if (!preg_match('/^\d{5}$/', $codepostal)) {
+            throw new Exception("Le code postal doit contenir exactement 5 chiffres.");
+        }
+
+        // Vérification du format du RIB (34 caractères max)
+        if (!preg_match('/^[a-zA-Z0-9]{1,34}$/', $banquerib)) {
+            throw new Exception("Le RIB doit contenir jusqu'à 34 caractères alphanumériques.");
+        }
+
         // Vérification des données obligatoires
         if (!$email || !$numtel || !$rue || !$codepostal || !$ville || !$banquerib) {
             throw new Exception("Toutes les informations doivent être correctement renseignées.");
         }
+
 
 
         // Préparer et exécuter la mise à jour de _compte
