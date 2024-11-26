@@ -10,6 +10,7 @@ if (!isset($_SESSION['idCompte'])) {
     exit;
 }
 
+$idCompte = $_SESSION['idCompte']; //$_SESSION['idCompte']; // Récupération de l'ID depuis la session
 
 try {
     // Connexion à la base de données
@@ -21,15 +22,17 @@ try {
     // Vérifier que les données ont été envoyées
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Récupérer et valider les données du formulaire
+        $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, 'UTF-8');
+        $prenom = htmlspecialchars($_POST['prenom'], ENT_QUOTES, 'UTF-8');
+        $pseudo = htmlspecialchars($_POST['pseudo'], ENT_QUOTES, 'UTF-8');
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $numtel = htmlspecialchars($_POST['numtel'], ENT_QUOTES, 'UTF-8');
         $rue = htmlspecialchars($_POST['rue'], ENT_QUOTES, 'UTF-8');
         $codepostal = filter_var($_POST['codepostal'], FILTER_VALIDATE_INT);
         $ville = htmlspecialchars($_POST['ville'], ENT_QUOTES, 'UTF-8');
-        $banquerib = htmlspecialchars($_POST['banquerib'], ENT_QUOTES, 'UTF-8');
 
         // Vérification des données obligatoires
-        if (!$email || !$numtel || !$rue || !$codepostal || !$ville || !$banquerib) {
+        if (!$nom || !$prenom || !$pseudo || !$email || !$rue || !$codepostal || !$ville) {
             throw new Exception("Toutes les informations doivent être correctement renseignées.");
         }
 
@@ -38,7 +41,7 @@ try {
         $sqlCompte = "UPDATE _compte
                     SET email = :email
                     WHERE idCompte = :idCompte";
-        $stmtCompte = $pdo->prepare($sqlCompte);
+        $stmtCompte = $dbh->prepare($sqlCompte);
         $stmtCompte->bindParam(':email', $email, PDO::PARAM_STR);
         $stmtCompte->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
         $stmtCompte->execute();
@@ -49,7 +52,7 @@ try {
                     WHERE idAdresse = (
                         SELECT idAdresse FROM _compte WHERE idCompte = :idCompte
                     )";
-        $stmtAdresse = $pdo->prepare($sqlAdresse);
+        $stmtAdresse = $dbh->prepare($sqlAdresse);
         $stmtAdresse->bindParam(':rue', $rue, PDO::PARAM_STR);
         $stmtAdresse->bindParam(':codepostal', $codepostal, PDO::PARAM_INT);
         $stmtAdresse->bindParam(':ville', $ville, PDO::PARAM_STR);
@@ -57,14 +60,16 @@ try {
         $stmtAdresse->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
         $stmtAdresse->execute();
 
-        // Préparer et exécuter la mise à jour de _comptePro
-        $sqlComptePro = "UPDATE _comptePro
-                        SET banqueRib = :banquerib
+        // Préparer et exécuter la mise à jour de _comptemembre
+        $sqlCompteMembre = "UPDATE _comptemembre
+                        SET nom = :nom, prenom = :prenom, pseudo = :pseudo
                         WHERE idCompte = :idCompte";
-        $stmtComptePro = $pdo->prepare($sqlComptePro);
-        $stmtComptePro->bindParam(':banquerib', $banquerib, PDO::PARAM_STR);
-        $stmtComptePro->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
-        $stmtComptePro->execute();
+        $stmtCompteMembre = $dbh->prepare($sqlCompteMembre);
+        $stmtCompteMembre->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $stmtCompteMembre->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+        $stmtCompteMembre->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+        $stmtCompteMembre->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
+        $stmtCompteMembre->execute();
 
 
 
@@ -77,5 +82,5 @@ try {
 }
 
 // Recharger la page précédente
-header("Location: consulterComptePro.php");
+header("Location: consulterCompteMembre.php");
 exit;
