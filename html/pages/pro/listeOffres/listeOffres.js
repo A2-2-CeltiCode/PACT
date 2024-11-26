@@ -46,6 +46,7 @@ function rechercher() {
     const fermetureInput = document.querySelector('input[name="fermeture"]').value;
     const etatInput = document.querySelector('select[name="etat"]').value;
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
+    const filtre = document.querySelector('select[name="filtre"]').value;
 
     const params = new URLSearchParams();
     if (searchInput) params.append('titre', searchInput);
@@ -56,6 +57,7 @@ function rechercher() {
     if (fermetureInput) params.append('fermeture', fermetureInput);
     if (etatInput) params.append('etat', etatInput);
     if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
+    if (filtre) params.append('filtre', filtre);
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `listeOffre.php?${params.toString()}`, true);
@@ -90,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fermetureInput = document.querySelector('input[name="fermeture"]');
     const etatInput = document.querySelector('select[name="etat"]');
     const categoryInputs = document.querySelectorAll('input[name="nomcategorie[]"]');
+    const filtre = document.querySelector('select[name="filtre"]');
 
     searchInput.addEventListener('input', function() {
         rechercher();
@@ -123,6 +126,10 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('change', function() {
             rechercher();
         });
+    });
+
+    filtre.addEventListener('change', function() {
+        rechercher();
     });
 
     form.addEventListener('submit', function(event) {
