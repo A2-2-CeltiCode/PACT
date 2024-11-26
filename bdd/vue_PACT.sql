@@ -1,26 +1,23 @@
 --
 -- SCHEMA
 --
-SET SCHEMA 'pact';
+set schema 'pact'
+;
 
 --
 -- VUES COMPTES
 --
-
 -- COMPTE MEMBRE
-
 CREATE OR REPLACE VIEW vue_compte_membre AS
 SELECT idCompte, pseudo, mdp, email, numTel, nom, prenom
 FROM _compte NATURAL JOIN _compteMembre NATURAL JOIN _adresse;
 
 -- COMPTE PRO PRIVE
-
 CREATE OR REPLACE VIEW vue_compte_pro_prive AS
 SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, idAdresse, codePostal, ville, rue
 FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPrive NATURAL JOIN _adresse;
 
 -- COMPTE PRO PUBLIC
-
 CREATE OR REPLACE VIEW vue_compte_pro_public AS
 SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, idAdresse, codePostal, ville, rue
 FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN _adresse;
@@ -28,9 +25,12 @@ FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN 
 --
 -- VUES OFFRES
 --
-
 CREATE OR REPLACE VIEW pact.vue_offres AS
-SELECT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _offre.nomforfait,
+SELECT _offre.idcompte,
+            _offre.idoffre,
+            _offre.idadresse,
+            _offre.nomoption,
+            _offre.nomforfait,
        _offre.titre, _offre.description, _offre.descriptiondetaillee, _offre.siteinternet, _offre.heureOuverture, _offre.heureFermeture,_adresse.codepostal, _adresse.ville,
        COALESCE(_spectacle.nomcategorie, _activite.nomcategorie, _visite.nomcategorie, _parcattractions.nomcategorie, _restaurant.nomcategorie) AS nomcategorie,
        _adresse.rue, _adresse.numtel,
@@ -46,8 +46,9 @@ SELECT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _off
             WHEN _visite.idoffre IS NOT NULL THEN 'Visite'::text
             ELSE 'Inconnu'::text
         END AS type_offre,
-    _image.idimage,
-    _image.nomimage
+    (SELECT nomimage as idimage
+        FROM pact._image
+        WHERE pact._image.idoffre = _offre.idoffre FETCH FIRST 1 ROW ONLY) as nomimage
 FROM pact._offre LEFT JOIN pact._spectacle ON _offre.idoffre = _spectacle.idoffre
                  LEFT JOIN pact._activite ON _offre.idoffre = _activite.idoffre
                  LEFT JOIN pact._parcattractions ON _offre.idoffre = _parcattractions.idoffre
@@ -61,7 +62,6 @@ FROM pact._offre LEFT JOIN pact._spectacle ON _offre.idoffre = _spectacle.idoffr
                  LEFT JOIN pact._image ON _offre.idoffre = _image.idoffre;
 
 -- VISITE
-
 CREATE OR REPLACE VIEW vue_visite AS
 SELECT idCompte, idOffre, idAdresse, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
        nomCategorie, codePostal, ville, rue, numTel, valPrix, tempsEnMinutes, estGuidee, estEnLigne, dateEvenement
@@ -77,7 +77,6 @@ SELECT idOffre, nomTag
 FROM _possedeVisite;
 
 -- SPECTACLE
-
 CREATE OR REPLACE VIEW vue_spectacle AS
 SELECT idCompte, idOffre, idAdresse, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
        nomCategorie, codePostal, ville, rue, numTel, valPrix, tempsEnMinutes, capacite, estEnLigne, dateEvenement
@@ -89,7 +88,6 @@ SELECT idOffre, nomTag
 FROM _possedeSpectacle;
 
 -- ACTIVITE
-
 CREATE OR REPLACE VIEW vue_activite AS
 SELECT idCompte, idOffre, idAdresse, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
        nomCategorie, codePostal, ville, rue, numTel, valPrix, tempsEnMinutes, ageMin, prestation, estEnLigne
@@ -101,7 +99,6 @@ SELECT idOffre, nomTag
 FROM _possedeActivite;
 
 -- PARC D'ATTRACTIONS
-
 CREATE OR REPLACE VIEW vue_parc_attractions AS
 SELECT idCompte, idOffre, idAdresse, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
        nomCategorie, codePostal, ville, rue, numTel, valPrix, ageMin, nbAttractions, idImage, nomImage, estEnLigne
@@ -113,7 +110,6 @@ SELECT idOffre, nomTag
 FROM _possedeParcAttractions;
 
 -- RESTAURANT
-
 CREATE OR REPLACE VIEW vue_restaurant AS
 SELECT idCompte, idOffre, idAdresse, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
        nomCategorie, codePostal, ville, rue, numTel, nomGamme, estEnLigne, idImage,nomImage
@@ -135,8 +131,6 @@ FROM _image;
 --
 -- VUE AVIS
 --
-
-
 CREATE OR REPLACE VIEW vue_avis AS
 SELECT idAvis, idOffre, commentaire, note, titre, contexteVisite, dateVisite, dateAvis
 FROM _avis;
