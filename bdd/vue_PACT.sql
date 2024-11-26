@@ -1,8 +1,7 @@
 --
 -- SCHEMA
 --
-set schema 'pact'
-;
+set schema 'pact';
 
 --
 -- VUES COMPTES
