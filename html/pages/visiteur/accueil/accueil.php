@@ -8,6 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <style>
+        header + div {
+            <?php
+            if (isset($_SESSION["typeUtilisateur"]) && $_SESSION["typeUtilisateur"] == "membre") {
+                echo 'background-image: url("/ressources/img/font-barre-recherce-membre.png");';
+            } else {
+                echo 'background-image: url("/ressources/img/font-barre-recherce.png");';
+            }
+            ?>
+        }
         svg {
             <?=isset($_SESSION["typeUtilisateur"]) && $_SESSION["typeUtilisateur"] == "membre" ? "stroke: var(--primaire-membre)":"stroke: var(--primaire-visiteur)"?>
         }
@@ -33,31 +42,16 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
     $offresSql = $dbh->query(<<<STRING
-SELECT titre                                                                       AS nom,
+select distinct titre                                                                       AS nom,
        nomcategorie                                                                AS type,
-       ville,
-       (SELECT nomimage as idimage
-        FROM pact._image
-        WHERE pact._image.idoffre = offre.idoffre FETCH FIRST 1 ROW ONLY) as idimage,
+       vue_offres.ville,
+       nomimage as idimage,
        idoffre,
        COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
        tempsenminutes                                                              AS duree
-FROM (SELECT titre, nomcategorie, ville, tempsenminutes, idoffre, idcompte
-      FROM pact.vue_spectacle
-      UNION
-      SELECT titre, nomcategorie, ville, tempsenminutes, idoffre, idcompte
-      FROM pact.vue_activite
-      UNION
-      SELECT titre, nomcategorie, ville, NULL AS tempsenminutes, idoffre, idcompte
-      FROM pact.vue_parc_attractions
-      UNION
-      SELECT titre, nomcategorie, ville, tempsenminutes, idoffre, idcompte
-      FROM pact.vue_visite
-      UNION
-      SELECT titre, nomcategorie, ville, NULL AS tempsenminutes, idoffre, idcompte
-      FROM pact.vue_restaurant) as offre
-         LEFT JOIN pact.vue_compte_pro_prive ppv ON offre.idcompte = ppv.idcompte
-         LEFT JOIN pact.vue_compte_pro_public ppu ON offre.idcompte = ppu.idcompte
+from pact.vue_offres
+LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
+         LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
 STRING
     );
 

@@ -70,7 +70,6 @@ body {
 }
 
 header + div {
-    background-image: url("/ressources/img/font-barre-recherce.png");
     display: flex;
     justify-content: center;
     align-items: center;
