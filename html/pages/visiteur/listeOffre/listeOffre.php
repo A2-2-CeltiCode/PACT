@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
 use \composants\Select\Select;
 use \composants\CheckboxSelect\CheckboxSelect;
 use \composants\Checkbox\Checkbox;
@@ -129,7 +130,12 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             'select-etat', 
             'etat',
             false,
-            $options,
+            [
+                "prixCroissant" => "Tri par prix croissant",
+                "prixDecroissant" => "Tri par prix décroissant",
+                "dateCroissante" => "Tri par date croissante",
+                "dateDecroissante" => "Tri par date décroissante",
+            ],
             isset($_GET['etat']) ? $_GET['etat'] : 'tout'
         );
         
