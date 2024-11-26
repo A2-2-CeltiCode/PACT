@@ -8,11 +8,11 @@ body {
 .container {
     width: fit-content;
     font-size: 14px;
-    padding: 20px;
+    padding: 20px 20px 5px 20px;
     max-width: 70em;
     margin: 0 auto;
     display: flex;
-    gap: 20px;
+    gap: 10px;
     background: var(--white);
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -89,12 +89,10 @@ body {
 .carousel-button:hover {
     background-color: rgba(0, 0, 0, 0.7);
 }
+.offre-infos{display: flex;
+flex-direction: column;}
 
-.offre-infos {
-    width: 45%;
-}
-
-.offre-info > label {
+.offre-infos > label {
     width: fit-content;
     max-width: 60%;
 }
@@ -152,8 +150,10 @@ header a:hover {
 }
 
 ul {
-    padding: 0;
+    padding: 0 0 0 3px;
     margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 li {
@@ -186,3 +186,17 @@ li {
 main{
     margin-bottom: 20px;
 }
+
+
+.container-gauche{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.test{
+background-color: red;
+position: absolute;
+top: 40%;
+right: 0px;}
