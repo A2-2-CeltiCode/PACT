@@ -23,11 +23,11 @@ FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN 
 
 -- COMPTE PRO
 CREATE OR REPLACE VIEW vue_compte_pro AS
-SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, idAdresse, codePostal, ville, rue
-FROM _compte LEFT JOIN _comptePro
-             LEFT JOIN _compteProPrive
-             LEFT JOIN _compteProPublic
-             LEFT JOIN _adresse;
+SELECT _compte.idCompte, _compte.mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, _adresse.idAdresse, codePostal, ville, rue
+FROM _compte LEFT JOIN _comptePro ON _compte.idCompte = _comptePro.idCompte
+             LEFT JOIN _compteProPrive ON _compte.idCompte = _compteProPrive.idCompte
+             LEFT JOIN _compteProPublic ON _compte.idCompte = _compteProPublic.idCompte
+             LEFT JOIN _adresse ON _compte.idAdresse = _adresse.idAdresse;
 
 --
 -- VUES OFFRES
