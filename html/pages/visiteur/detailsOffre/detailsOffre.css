@@ -8,11 +8,11 @@ body {
 .container {
     width: fit-content;
     font-size: 14px;
-    padding: 20px;
+    padding: 20px 20px 5px 20px;
     max-width: 70em;
     margin: 0 auto;
     display: flex;
-    gap: 20px;
+    gap: 10px;
     background: var(--white);
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -41,23 +41,24 @@ body {
     min-width: 22em;
     min-height: 22em;
     display: grid;
-    place-items:center;
+    place-items: center;
     width: 22em;
     height: 22em;
     object-fit: cover;
     border-radius: 10px;
 }
-.carousel-button.desactive{
+
+.carousel-button.desactive {
     display: none;
 }
 
-.carousel-button:has(~ .carousel-images > .pas-images){
+.carousel-button:has(~ .carousel-images > .pas-images) {
     display: none;
 }
 
 .carousel-button {
     z-index: 2;
-    position:absolute;
+    position: absolute;
     top: 45%;
     background-color: rgba(0, 0, 0, 0.5);
     border: none;
@@ -91,10 +92,11 @@ body {
 }
 
 .offre-infos {
-    width: 45%;
+    display: flex;
+    flex-direction: column;
 }
 
-.offre-info > label {
+.offre-info>label {
     width: fit-content;
     max-width: 60%;
 }
@@ -103,7 +105,14 @@ body {
     font-size: var(--p-large-font-size);
 }
 
+.container-gauche {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .offre-detail {
+    padding: 0 0 0 10px;
     align-items: baseline;
     height: fit-content;
     color: var(--gris3);
@@ -152,7 +161,7 @@ header a:hover {
 }
 
 ul {
-    padding: 0;
+    padding: 0 0 0 4px;
     margin: 0;
 }
 
@@ -175,7 +184,7 @@ li {
     fill: var(--primaire-visiteur);
 }
 
-.offre-description svg:first-of-type{
+.offre-description svg:first-of-type {
     width: 20px;
     height: 20px;
     stroke: var(--primaire-visiteur);
@@ -183,6 +192,36 @@ li {
 }
 
 
-main{
+main {
     margin-bottom: 20px;
 }
+
+
+
+.contact {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 25px;
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 15vw;
+    height: fit-content;
+    position: absolute;
+    right: 10%;
+    top: 30%;
+    align-items: center;
+}
+
+
+.denomination{
+    font-size: var(--p-large-font-size);
+}
+
+
+.tel{
+    text-decoration: underline;
+}
+
+.btn-mail{align-items: center;}
