@@ -108,3 +108,11 @@ INSERT INTO _tagRestaurant (nomTag) VALUES
 ('Gastronomique'),
 ('Restauration rapide'),
 ('Crêperie');
+
+-- Peupler la table _contexte
+INSERT INTO _contexte (nomContexte) VALUES
+('Affaires'),
+('Couple'),
+('Famille'),
+('Amis'),
+('Solo');

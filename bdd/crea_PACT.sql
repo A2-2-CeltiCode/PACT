@@ -82,6 +82,15 @@ CREATE TABLE _duree(
 );
 
 --
+-- TABLE CONTEXTE
+--
+
+CREATE TABLE _contexte(
+    nomContexte   VARCHAR(10),
+    CONSTRAINT contexte_pk PRIMARY KEY(nomContexte)
+);
+
+--
 -- TABLES COMPTES
 --
 
@@ -304,15 +313,17 @@ CREATE TABLE _tagRestaurant(
 CREATE TABLE _avis(
     idAvis          SERIAL,
     idOffre         INTEGER,
-    commentaire     VARCHAR(50),
+    commentaire     VARCHAR(255),
     note            NUMERIC(2,1),
     titre           VARCHAR(50),
-    contexteVisite  VARCHAR(50),
+    contexteVisite  VARCHAR(10),
     dateVisite      DATE,
     dateAvis        DATE DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT avis_pk PRIMARY KEY(idAvis),
     CONSTRAINT avis_fk_offre FOREIGN KEY (idOffre)
-        REFERENCES _offre(idOffre)
+        REFERENCES _offre(idOffre),
+    CONSTRAINT avis_fk_contexte FOREIGN KEY(contexteVisite)
+        REFERENCES _contexte(nomContexte)
 );
 
 CREATE TABLE _reponse(
