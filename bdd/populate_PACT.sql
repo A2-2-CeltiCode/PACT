@@ -130,4 +130,14 @@ INSERT INTO _avis (idOffre, commentaire, note, titre, contexteVisite, dateVisite
 (1, 'Superbe expérience. Les paysages étaient époustouflants et l''accueil très chaleureux. On reviendra!', 5.0, 'Une expérience mémorable', 'Couple', '2024-11-13'),
 (1, 'Belle découverte de la ville, mais un peu trop de monde ce jour-là. Le groupe était un peu trop grand.', 4.0, 'Bien mais trop fréquenté', 'Amis', '2024-11-14'),
 (1, 'Une excellente activité pour toute la famille. Le guide a su adapter la visite aux enfants. Moment très agréable!', 5.0, 'Adapté aux enfants', 'Famille', '2024-11-16'),
-(1, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 3.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17');
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 0.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 0.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 1.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 1.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 2.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 2.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 3.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 3.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 4.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 4.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 5.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17');

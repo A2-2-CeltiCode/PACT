@@ -21,10 +21,18 @@ CREATE OR REPLACE VIEW vue_compte_pro_public AS
 SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, idAdresse, codePostal, ville, rue
 FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN _adresse;
 
+-- COMPTE PRO
+CREATE OR REPLACE VIEW vue_compte_pro AS
+SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, idAdresse, codePostal, ville, rue
+FROM _compte LEFT JOIN _comptePro
+             LEFT JOIN _compteProPrive
+             LEFT JOIN _compteProPublic
+             LEFT JOIN _adresse;
+
 --
 -- VUES OFFRES
 --
-CREATE OR REPLACE VIEW pact.vue_offres AS
+CREATE OR REPLACE VIEW vue_offres AS
 SELECT _offre.idcompte,
             _offre.idoffre,
             _offre.idadresse,
@@ -46,19 +54,19 @@ SELECT _offre.idcompte,
             ELSE 'Inconnu'::text
         END AS type_offre,
     (SELECT nomimage as idimage
-        FROM pact._image
-        WHERE pact._image.idoffre = _offre.idoffre FETCH FIRST 1 ROW ONLY) as nomimage
-FROM pact._offre LEFT JOIN pact._spectacle ON _offre.idoffre = _spectacle.idoffre
-                 LEFT JOIN pact._activite ON _offre.idoffre = _activite.idoffre
-                 LEFT JOIN pact._parcattractions ON _offre.idoffre = _parcattractions.idoffre
-                 LEFT JOIN pact._restaurant ON _offre.idoffre = _restaurant.idoffre
-                 LEFT JOIN pact._visite ON _offre.idoffre = _visite.idoffre
-                 LEFT JOIN pact._adresse ON _offre.idadresse = _adresse.idadresse
-                 LEFT JOIN pact._option ON _offre.nomoption::text = _option.nomoption::text
-                 LEFT JOIN pact._forfait ON _offre.nomforfait::text = _forfait.nomforfait::text
-                 LEFT JOIN pact._prix ON COALESCE(_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix) = _prix.valprix
-                 LEFT JOIN pact._duree ON COALESCE(_spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes) = _duree.tempsenminutes
-                 LEFT JOIN pact._image ON _offre.idoffre = _image.idoffre;
+        FROM _image
+        WHERE _image.idoffre = _offre.idoffre FETCH FIRST 1 ROW ONLY) as nomimage
+FROM _offre LEFT JOIN _spectacle ON _offre.idoffre = _spectacle.idoffre
+                 LEFT JOIN _activite ON _offre.idoffre = _activite.idoffre
+                 LEFT JOIN _parcattractions ON _offre.idoffre = _parcattractions.idoffre
+                 LEFT JOIN _restaurant ON _offre.idoffre = _restaurant.idoffre
+                 LEFT JOIN _visite ON _offre.idoffre = _visite.idoffre
+                 LEFT JOIN _adresse ON _offre.idadresse = _adresse.idadresse
+                 LEFT JOIN _option ON _offre.nomoption::text = _option.nomoption::text
+                 LEFT JOIN _forfait ON _offre.nomforfait::text = _forfait.nomforfait::text
+                 LEFT JOIN _prix ON COALESCE(_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix) = _prix.valprix
+                 LEFT JOIN _duree ON COALESCE(_spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes) = _duree.tempsenminutes
+                 LEFT JOIN _image ON _offre.idoffre = _image.idoffre;
 
 -- VISITE
 CREATE OR REPLACE VIEW vue_visite AS

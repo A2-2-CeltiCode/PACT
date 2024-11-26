@@ -173,6 +173,27 @@ CREATE TABLE _image(
 );
 
 --
+-- TABLE FACTURE
+--
+
+/*CREATE TABLE _facture(
+    idFacture             SERIAL,
+    idOffre               INTEGER,
+    titreOffre            VARCHAR(50) NOT NULL,
+    idAdressePro          INTEGER NOT NULL,
+    idAdressePACT         INTEGER NOT NULL DEFAULT 1,
+    datePrestaServices    DATE NOT NULL,
+    dateEcheance          DATE NOT NULL,
+    CONSTRAINT offre_pk PRIMARY KEY(idOffre),
+    CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
+        REFERENCES _comptePro(idCompte),
+    CONSTRAINT offre_fk_option FOREIGN KEY (nomOption)
+        REFERENCES _option(nomOption),
+    CONSTRAINT offre_fk_forfait FOREIGN KEY (nomForfait)
+        REFERENCES _forfait(nomForfait)
+);*/
+
+--
 -- TABLE CATEGORY
 --
 
