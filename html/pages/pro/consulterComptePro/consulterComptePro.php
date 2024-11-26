@@ -2,6 +2,7 @@
 // Démarrer la session
 session_start();
 
+
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use \composants\Label\Label;
@@ -13,11 +14,14 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
+
+
 // Vérifier si l'utilisateur est connecté
 //if (!isset($_SESSION['idCompte'])) {
 //    header("Location: login.php"); // Redirige vers une page de connexion si l'utilisateur n'est pas connecté
 //    exit;
 //}
+
 
 // Configuration de la base de données
 $host = 'localhost';       // Remplacez par votre hôte
@@ -71,11 +75,14 @@ try {
     <script>
         // Fonction pour activer la modification des champs
         function activerModification() {
+            // Rendre tous les champs modifiables
             document.querySelectorAll('.editable').forEach(function (element) {
-                element.removeAttribute('readonly'); // Rendre le champ éditable
-                element.style.backgroundColor = '#f0f0f0'; // Ajouter un effet visuel
+                element.removeAttribute('readonly');
+                element.style.backgroundColor = '#f0f0f0'; // Indiquer visuellement que le champ est éditable
             });
-            document.getElementById('btnEnregistrer').style.display = 'block'; // Afficher le bouton "Enregistrer"
+
+            // Afficher le bouton "Enregistrer"
+            document.getElementById('btnEnregistrer').style.display = 'block';
         }
     </script>
 </head>
@@ -86,8 +93,20 @@ try {
     <main>
         <h1>Vos informations professionnelles</h1>
 
+        <!-- Bouton "Modifier mes informations" -->
         <div class="modifier">
             <button onclick="activerModification()">Modifier mes informations</button>
+
+            <!-- Affichage des messages -->
+            <?php if (isset($_SESSION['message'])): ?>
+                <p style="color: green; margin-top: 10px;"><?= htmlspecialchars($_SESSION['message']) ?></p>
+                <?php unset($_SESSION['message']); ?>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['error'])): ?>
+                <p style="color: red; margin-top: 10px;"><?= htmlspecialchars($_SESSION['error']) ?></p>
+                <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
         </div>
 
         <!-- Formulaire pour afficher et modifier les informations -->
@@ -150,7 +169,8 @@ try {
                 </tr>
             </table>
 
-            <button type="submit" id="btnEnregistrer">Enregistrer</button>
+            <!-- Bouton "Enregistrer" -->
+            <button type="submit" id="btnEnregistrer" style="display: none; float: right; margin-top: 20px;">Enregistrer</button>
         </form>
     </main>
 

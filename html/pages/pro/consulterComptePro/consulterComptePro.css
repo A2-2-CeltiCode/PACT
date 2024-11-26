@@ -167,11 +167,43 @@ main button:hover {
     background-color: #4b2b63;
 }
 
-/* Section des boutons */
+/* Conteneur du bouton et des messages */
 .modifier {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
+}
+
+/* Bouton "Modifier mes informations" */
+.modifier button {
+    background-color: #6b3d84;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.modifier button:hover {
+    background-color: #4b2b63;
+}
+
+/* Messages (succès et erreur) */
+.modifier p {
+    margin-top: 10px; 
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.modifier p.success {
+    color: green;
+}
+
+.modifier p.error {
+    color: red;
 }
 
 /* Bouton "Enregistrer" */
