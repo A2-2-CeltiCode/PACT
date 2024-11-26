@@ -105,3 +105,9 @@ main button:hover {
     background-color: #4b2b63;
 }
 
+.modifier{
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
