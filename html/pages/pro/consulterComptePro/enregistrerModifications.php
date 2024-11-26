@@ -13,7 +13,7 @@ $host = 'localhost';        // Remplacez par votre hôte
 $dbname = 'postgres';       // Remplacez par le nom de votre base de données
 $user = 'postgres';         // Remplacez par votre utilisateur
 $password = '13phenix';     // Remplacez par votre mot de passe
-$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
+$idCompte = 2;//$_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 try {
     // Connexion à la base de données
