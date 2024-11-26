@@ -44,7 +44,8 @@ SELECT _offre.idcompte,
        COALESCE(_spectacle.dateEvenement,_visite.dateEvenement) AS dateEvenement,
        COALESCE(_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix, NULL::numeric) AS valprix,
        COALESCE(_spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes, NULL::integer) AS tempsenminutes,
-       _spectacle.capacite, _activite.agemin, _activite.prestation, _visite.estguidee, _restaurant.nomgamme, _parcattractions.nbattractions,_offre.estenligne,
+       _spectacle.capacite, COALESCE(_activite.agemin,_parcattractions.agemin) AS ageMin, _activite.prestation,
+       _visite.estguidee, _restaurant.nomgamme, _parcattractions.nbattractions,_offre.estenligne,
         CASE
             WHEN _spectacle.idoffre IS NOT NULL THEN 'Spectacle'::text
             WHEN _restaurant.idoffre IS NOT NULL THEN 'Restaurant'::text
@@ -139,6 +140,6 @@ FROM _image;
 -- VUE AVIS
 --
 CREATE OR REPLACE VIEW vue_avis AS
-SELECT idAvis, idOffre, commentaire, note, titre, contexteVisite, dateVisite, dateAvis
+SELECT idAvis, idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis
 FROM _avis;
 
