@@ -176,22 +176,35 @@ CREATE TABLE _image(
 -- TABLE FACTURE
 --
 
-/*CREATE TABLE _facture(
+CREATE TABLE _facture(
     idFacture             SERIAL,
     idOffre               INTEGER,
-    titreOffre            VARCHAR(50) NOT NULL,
     idAdressePro          INTEGER NOT NULL,
     idAdressePACT         INTEGER NOT NULL DEFAULT 1,
     datePrestaServices    DATE NOT NULL,
     dateEcheance          DATE NOT NULL,
-    CONSTRAINT offre_pk PRIMARY KEY(idOffre),
-    CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
-        REFERENCES _comptePro(idCompte),
-    CONSTRAINT offre_fk_option FOREIGN KEY (nomOption)
+    CONSTRAINT facture_pk PRIMARY KEY(idFacture),
+    CONSTRAINT facture_fk_offre FOREIGN KEY (idOffre) 
+        REFERENCES _offre(idOffre),
+    CONSTRAINT facture_fk_adresse FOREIGN KEY (idAdressePro) 
+        REFERENCES _adresse(idAdresse)
+);
+
+CREATE TABLE _historique(
+    idFacture             SERIAL,
+    idOffre               INTEGER,
+    nomOption             VARCHAR(50) NOT NULL,
+    nbSemaines            INTEGER NOT NULL,
+    jourDebut             DATE,
+    jourFin               DATE,
+    CONSTRAINT historique_pk PRIMARY KEY(idFacture,idOffre),
+    CONSTRAINT historique_fk_offre FOREIGN KEY (idOffre) 
+        REFERENCES _offre(idOffre),
+    CONSTRAINT historique_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption),
-    CONSTRAINT offre_fk_forfait FOREIGN KEY (nomForfait)
-        REFERENCES _forfait(nomForfait)
-);*/
+    CONSTRAINT historique_fk_facture FOREIGN KEY (idFacture)
+        REFERENCES _facture(idFacture)
+);
 
 --
 -- TABLE CATEGORY
@@ -334,6 +347,7 @@ CREATE TABLE _tagRestaurant(
 CREATE TABLE _avis(
     idAvis          SERIAL,
     idOffre         INTEGER,
+    idCompte        INTEGER,
     commentaire     VARCHAR(255),
     note            NUMERIC(2,1),
     titre           VARCHAR(50),
@@ -344,16 +358,18 @@ CREATE TABLE _avis(
     CONSTRAINT avis_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
     CONSTRAINT avis_fk_contexte FOREIGN KEY(contexteVisite)
-        REFERENCES _contexte(nomContexte)
+        REFERENCES _contexte(nomContexte),
+    CONSTRAINT avis_fk_compte FOREIGN KEY(idCompte)
+        REFERENCES _compte(idCompte)
 );
 
-CREATE TABLE _reponse(
+/*CREATE TABLE _reponse(
     idAvis      INTEGER,
     commentaire VARCHAR(50),
     dateRep     DATE DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT reponse_fk_avis FOREIGN KEY (idAvis)
         REFERENCES _avis(idAvis)
-);
+);*/
 
 --
 -- TABLE ASSOCIATION GUIDEE
