@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mot_de_passe_utilisateur = hash("sha256",$_POST['password']);
 
     // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
-    $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
+    $requete_sql = 'SELECT * FROM pact.vue_compte_membre WHERE email = :identifiant';
 
     $requete_preparee = $dbh->prepare($requete_sql);
     $requete_preparee->bindParam(':identifiant', $identifiant_utilisateur);
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
-        // Comparaison simple des mots de passe (sans hachage)
+        // Comparaison simple des mots de passe (avec hachage)
         if ($mot_de_passe_utilisateur === $compte['mdp']) {
             // Si les informations sont correctes, démarrer la session
             $_SESSION['utilisateur_connecte'] = true;
