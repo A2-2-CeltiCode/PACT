@@ -1,0 +1,107 @@
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/inter-v18-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: var(--font-weight-normal);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-600.woff2') format('woff2');
+}
+
+body {
+    font-family: 'Encode Sans', 'Inter';
+    background-color: var(--primaire-membre);
+    margin:auto;
+    padding:auto;
+}
+
+
+main {
+    width: 90%;
+    max-width: 800px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    margin: 20px auto;
+    text-align: left;
+    align-items: center;
+}
+
+/* Titres principaux dans <main> */
+main h1 {
+    text-align: center;
+    color: var(--primaire-pro);
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* Tableau des informations dans <main> */
+main table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+main table th, main table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+main table th {
+    background-color:#a93b95;
+    color: white;
+    font-weight: bold;
+}
+
+main table td {
+    background-color: #f9f9f9;
+}
+
+/* Boutons dans <main> */
+main button {
+    background-color: #6b3d84;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+}
+
+main button:hover {
+    background-color: #4b2b63;
+}
+
