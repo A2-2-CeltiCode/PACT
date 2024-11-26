@@ -76,6 +76,7 @@ try {
 
     <main>
         <h1>Vos informations professionnelles</h1>
+        <?php Button::render("btn", "", "Modifier mes informations", ButtonType::Pro, "", true); ?>
 
         <!-- Message d'erreur ou confirmation -->
         <?php if ($message): ?>
