@@ -2,6 +2,7 @@
 // Démarrer la session
 session_start();
 
+
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use \composants\Label\Label;
@@ -12,12 +13,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
-
-// Vérifier si l'utilisateur est connecté
-//if (!isset($_SESSION['idCompte'])) {
-//    header("Location: login.php"); // Redirige vers une page de connexion si l'utilisateur n'est pas connecté
-//    exit;
-//}
 
 
 // Initialisation des variables
@@ -62,6 +57,7 @@ try {
     <title>Mon Compte</title>
     <link rel="stylesheet" href="consulterCompteMembre.css">
     <link rel="stylesheet" href="../../../ui.css">
+    <script src="consulterCompteMembre.js"></script>
 </head>
 
 <body>
@@ -69,15 +65,25 @@ try {
 
     <main>
         <h1>Vos informations personnelles</h1>
-        <?php Button::render("btn", "", "Modifier mes informations", ButtonType::Member, "", true); ?>
 
-        <!-- Message d'erreur ou confirmation -->
-        <?php if ($message): ?>
-            <p style="color: red;"><?= htmlspecialchars($message) ?></p>
-        <?php endif; ?>
+        <!-- Bouton "Modifier mes informations" -->
+        <div class="modifier">
+            <button onclick="activerModification()">Modifier mes informations</button>
+
+            <!-- Affichage des messages -->
+            <?php if (isset($_SESSION['message'])): ?>
+                <p style="color: green; margin-top: 10px;"><?= htmlspecialchars($_SESSION['message']) ?></p>
+                <?php unset($_SESSION['message']); ?>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['error'])): ?>
+                <p style="color: red; margin-top: 10px;"><?= htmlspecialchars($_SESSION['error']) ?></p>
+                <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
+        </div>
 
         <!-- Affichage des informations si disponibles -->
-        <?php if (!empty($userInfo)): ?>
+        <form method="post" action="enregistrerModifications.php">
             <table border="1">
                 <!-- Catégorie Identité -->
                 <tr>
@@ -85,15 +91,15 @@ try {
                 </tr>
                 <tr>
                     <th>Nom</th>
-                    <td><?= isset($userInfo['nom']) ? htmlspecialchars($userInfo['nom']) : "Non renseigné" ?></td>
+                    <td><input type="text" name="nom" class="editable" value="<?= htmlspecialchars($userInfo['nom'] ?? 'Non renseigné') ?>" readonly></td>
                 </tr>
                 <tr>
                     <th>Prénom</th>
-                    <td><?= isset($userInfo['prenom']) ? htmlspecialchars($userInfo['prenom']) : "Non renseigné" ?></td>
+                    <td><input type="text" name="prenom" class="editable" value="<?= htmlspecialchars($userInfo['prenom'] ?? 'Non renseigné') ?>" readonly></td>
                 </tr>
                 <tr>
                     <th>Pseudo</th>
-                    <td><?= isset($userInfo['pseudo']) ? htmlspecialchars($userInfo['pseudo']) : "Non renseigné" ?></td>
+                    <td><input type="text" name="pseudo" class="editable" value="<?= htmlspecialchars($userInfo['pseudo'] ?? 'Non renseigné') ?>" readonly></td>
                 </tr>
 
                 <!-- Catégorie Coordonnées -->
@@ -102,11 +108,11 @@ try {
                 </tr>
                 <tr>
                     <th>Email</th>
-                    <td><?= isset($userInfo['email']) ? htmlspecialchars($userInfo['email']) : "Non renseigné" ?></td>
+                    <td><input type="email" name="email" class="editable" value="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>" readonly></td>
                 </tr>
                 <tr>
                     <th>Numéro de Téléphone</th>
-                    <td><?= isset($userInfo['numtel']) ? htmlspecialchars($userInfo['numtel']) : "Non renseigné" ?></td>
+                    <td><input type="text" name="numtel" class="editable" value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>" readonly></td>
                 </tr>
 
                 <!-- Catégorie Adresse -->
@@ -115,18 +121,21 @@ try {
                 </tr>
                 <tr>
                     <th>Rue</th>
-                    <td><?= isset($userInfo['rue']) ? htmlspecialchars($userInfo['rue']) : "Non renseigné" ?></td>
+                    <td><input type="text" name="rue" class="editable" value="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>" readonly></td>
                 </tr>
                 <tr>
                     <th>Code Postal</th>
-                    <td><?= isset($userInfo['codepostal']) ? htmlspecialchars($userInfo['codepostal']) : "Non renseigné" ?></td>
+                    <td><input type="text" name="codepostal" class="editable" value="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>" readonly></td>
                 </tr>
                 <tr>
                     <th>Ville</th>
-                    <td><?= isset($userInfo['ville']) ? htmlspecialchars($userInfo['ville']) : "Non renseigné" ?></td>
+                    <td><input type="text" name="ville" class="editable" value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>" readonly></td>
                 </tr>
             </table>
-        <?php endif; ?>
+
+            <!-- Bouton "Enregistrer" -->
+            <button type="submit" id="btnEnregistrer" style="display: none; float: right; margin-top: 20px;">Enregistrer</button>
+        </form>
     </main>
 
     <?php Footer::render(FooterType::Member); ?>

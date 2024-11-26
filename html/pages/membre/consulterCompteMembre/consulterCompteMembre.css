@@ -41,10 +41,9 @@
 body {
     font-family: 'Encode Sans', 'Inter';
     background-color: var(--primaire-membre);
-    margin:auto;
-    padding:auto;
+    margin: auto;
+    padding: auto;
 }
-
 
 main {
     width: 90%;
@@ -57,11 +56,43 @@ main {
     text-align: left;
     align-items: center;
 }
+/* Champs non modifiables (par défaut pour la catégorie Identité) */
+main table input[readonly] {
+    border: none;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 1em;
+    width: 100%;
+    padding: 5px;
+    cursor: not-allowed; /* Empêche toute modification */
+}
+
+/* Champs modifiables */
+main table .editable {
+    border: none;
+    background-color: transparent;
+    color: #333;
+    font-size: 1em;
+    width: 100%;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+main table .editable[readonly] {
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+main table .editable:focus {
+    outline: none;
+    background-color: #e9e9e9;
+    border: 1px solid #a93b95;
+}
 
 /* Titres principaux dans <main> */
 main h1 {
     text-align: center;
-    color: #086DBA;
+    color: var(--primaire-membre);
     font-size: 1.8em;
     margin-bottom: 20px;
 }
@@ -80,13 +111,44 @@ main table th, main table td {
 }
 
 main table th {
-    background-color:#2777b4;
+    background-color: #3186c7;
     color: white;
     font-weight: bold;
 }
 
 main table td {
     background-color: #f9f9f9;
+}
+
+/* Titres des catégories */
+main table th[colspan="2"] {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: var(--font-weight-semi-bold);
+    background-color: #6b3d84;
+    color: white;
+}
+
+/* Champs éditables */
+main table .editable {
+    border: none;
+    background-color: transparent;
+    color: #333;
+    font-size: 1em;
+    width: 100%;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+main table .editable[readonly] {
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+main table .editable:focus {
+    outline: none;
+    background-color: #e9e9e9;
+    border: 1px solid #a93b95;
 }
 
 /* Boutons dans <main> */
@@ -105,3 +167,70 @@ main button:hover {
     background-color: #4b2b63;
 }
 
+/* Conteneur du bouton et des messages */
+.modifier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Bouton "Modifier mes informations" */
+.modifier button {
+    background-color: var(--primaire-membre);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.modifier button:hover {
+    background-color: #044475;
+}
+
+/* Messages (succès et erreur) */
+.modifier p {
+    margin-top: 10px; 
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.modifier p.success {
+    color: green;
+}
+
+.modifier p.error {
+    color: red;
+}
+
+/* Bouton "Enregistrer" */
+#btnEnregistrer {
+    display: none; /* Masqué par défaut */
+    position: fixed; /* Fixé en bas à droite de l'écran */
+    bottom: 20px;
+    right: 20px;
+    background-color: #4CAF50; /* Vert pour signifier une action positive */
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 50px; /* Bouton arrondi */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+    font-size: 1em;
+    cursor: pointer;
+    z-index: 1000; /* S'assurer qu'il est au-dessus des autres éléments */
+    transition: all 0.3s ease; /* Effet de transition */
+}
+
+#btnEnregistrer:hover {
+    background-color: #45a049; /* Couleur plus foncée au survol */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Accentuer l'ombre */
+    transform: translateY(-3px); /* Léger effet de "remontée" */
+}
+
+#btnEnregistrer:active {
+    transform: translateY(2px); /* Effet de clic */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Réduire l'ombre */
+}
