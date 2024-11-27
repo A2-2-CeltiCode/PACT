@@ -62,10 +62,9 @@ STRING
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails de l'offre</title>
-    <link rel="stylesheet" href="detailsOffre-tel.css">
+    <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-
 <body>
     <?php Header::render(HeaderType::Guest); ?>
     <div class=titre-pc>
@@ -103,7 +102,7 @@ STRING
                     <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php endif; ?>
             </div>
-        <?php Label::render("titre-tel", "", "", $offre['titre']); ?>
+        <?php Label::render("titre-tel", "", "", $offre['titre'],"../../../ressources/icone/$typeOffre.svg"); ?>
 
             <div class="offre-infos">
                 <?php
@@ -172,6 +171,12 @@ STRING
         </div>
 
 
+        
+        <div class="offre-detail-tel">
+            <p> A propos:</p>
+            <?php  Label::render("description-tel", "", "", $offre['descriptiondetaillee']);  ?>
+        </div>
+        
         <aside class="contact">
                 <?php
                 Label::render("denomination", "", "", $entreprise['denominationsociale']);
@@ -181,7 +186,6 @@ STRING
                 Button::render("btn-mail", "", " Envoyer un mail", ButtonType::Guest, "", false, "mailto:" . $entreprise['email']);
             ?>
         </aside>
-
 
         <script src="detailsOffre.js"></script>
     </main>
