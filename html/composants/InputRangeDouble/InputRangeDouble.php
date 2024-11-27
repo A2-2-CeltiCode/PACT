@@ -51,17 +51,17 @@ class InputRangeDouble
         // Générer les sliders
         echo '<div class="slider-select-wrapper">';
         echo '<div class="sliders_control">';
-        echo '<input id="fromSlider" type="range" value="' . $from . '" min="' . $min . '" max="' . $max . '"/>';
-        echo '<input id="toSlider" type="range" value="' . $to . '" min="' . $min . '" max="' . $max . '"/>';
+        echo '<input name="minPrix" id="fromSlider" type="range" value="' . $from . '" min="' . $min . '" max="' . $max . '"/>';
+        echo '<input name="maxPrix" id="toSlider" type="range" value="' . $to . '" min="' . $min . '" max="' . $max . '"/>';
         echo '</div>';
         echo '<div class="form_control">';
         echo '<div class="form_control_container">';
         echo '<div class="form_control_container__time">Min</div>';
-        echo '<input class="form_control_container__time__input" type="number" id="fromInput" value="' . $from . '" min="' . $min . '" max="' . $max . '"/>';
+        echo '<input name="prixMin" class="form_control_container__time__input" type="number" id="fromInput" value="' . $from . '" min="' . $min . '" max="' . $max . '"/>';
         echo '</div>';
         echo '<div class="form_control_container">';
         echo '<div class="form_control_container__time">Max</div>';
-        echo '<input class="form_control_container__time__input" type="number" id="toInput" value="' . $to . '" min="' . $min . '" max="' . $max . '"/>';
+        echo '<input name="prixMax"class="form_control_container__time__input" type="number" id="toInput" value="' . $to . '" min="' . $min . '" max="' . $max . '"/>';
         echo '</div>';
         echo '</div>';
         echo '</div>';

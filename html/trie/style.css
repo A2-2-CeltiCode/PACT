@@ -1,0 +1,10 @@
+.heure{
+    display: flex;
+}
+
+.aligne{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

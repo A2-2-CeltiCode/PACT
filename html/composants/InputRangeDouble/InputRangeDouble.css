@@ -77,7 +77,7 @@
     z-index: 1;
   }
 
-  input{
+  #fromSlider, #toSlider {
     border: none !important;
     padding: 0px !important;
   }

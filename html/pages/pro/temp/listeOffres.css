@@ -161,3 +161,22 @@ section {
     display: flex;
     flex-direction: column;
 }
+
+.barre {
+    
+    
+}
+.barre {
+    position: absolute;
+    left: 0;
+}
+
+.trie-hidden {
+    transform: translateX(-100%);
+    transition: transform 0.5s ease-in-out;
+}
+
+.trie-visible {
+    transform: translateX(0);
+    transition: transform 0.5s ease-in-out;
+}

@@ -1,15 +1,11 @@
 function trier(sort) {
     const searchInput = document.querySelector('input[name="titre"]').value;
     const localisationInput = document.querySelector('input[name="localisation"]').value;
-    const minPrixInput = document.querySelector('input[name="minPrix"]').value;
-    const maxPrixInput = document.querySelector('input[name="maxPrix"]').value;
-    const prixMinInput = document.querySelector('input[name="prixMin"]').value;
-    const prixMaxInput = document.querySelector('input[name="prixMax"]').value;
+
     const ouvertureInput = document.querySelector('input[name="ouverture"]').value;
     const fermetureInput = document.querySelector('input[name="fermeture"]').value;
     const etatInput = document.querySelector('select[name="etat"]').value;
     const trieInput = document.querySelector('select[name="trie"]').value;
-    const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
 
     const params = new URLSearchParams(window.location.search);
     if (sort) {
@@ -19,15 +15,11 @@ function trier(sort) {
     }
     if (searchInput) params.set('titre', searchInput);
     if (localisationInput) params.set('localisation', localisationInput);
-    if (minPrixInput) params.set('minPrix', minPrixInput);
-    if (maxPrixInput) params.set('maxPrix', maxPrixInput);
-    if (prixMinInput) params.set('prixMin', prixMinInput);
-    if (prixMaxInput) params.set('prixMax', prixMaxInput);
+
     if (ouvertureInput) params.set('ouverture', ouvertureInput);
     if (fermetureInput) params.set('fermeture', fermetureInput);
     if (etatInput) params.set('etat', etatInput);
     if (trieInput) params.set('trie',trieInput);
-    if (categoryInputs.length > 0) params.set('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `listeOffre.php?${params.toString()}`, true);
@@ -46,31 +38,22 @@ function trier(sort) {
 }
 
 function rechercher() {
-    const searchInput = document.querySelector('input[name="titre"]').value;
-    const localisationInput = document.querySelector('input[name="localisation"]').value;
-    const minPrixInput = document.querySelector('input[name="minPrix"]').value;
-    const maxPrixInput = document.querySelector('input[name="maxPrix"]').value;
-    const prixMinInput = document.querySelector('input[name="prixMin"]').value;
-    const prixMaxInput = document.querySelector('input[name="prixMax"]').value;
-    const ouvertureInput = document.querySelector('input[name="ouverture"]').value;
-    const fermetureInput = document.querySelector('input[name="fermeture"]').value;
-    const etatInput = document.querySelector('select[name="etat"]').value;
-    const trieInput = document.querySelector('select[name="trie"]').value;
+    const searchInput = document.querySelector('input[name="titre"]')?.value || '';
+    const localisationInput = document.querySelector('input[name="localisation"]')?.value || '';
 
-    const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
+    const ouvertureInput = document.querySelector('input[name="ouverture"]')?.value || '';
+    const fermetureInput = document.querySelector('input[name="fermeture"]')?.value || '';
+    const etatInput = document.querySelector('select[name="etat"]')?.value || '';
+    const trieInput = document.querySelector('select[name="trie"]')?.value || '';
 
-    const params = new URLSearchParams();
-    if (searchInput) params.append('titre', searchInput);
-    if (localisationInput) params.append('localisation', localisationInput);
-    if (minPrixInput) params.append('minPrix', minPrixInput);
-    if (maxPrixInput) params.append('maxPrix', maxPrixInput);
-    if (prixMinInput) params.append('prixMin', prixMinInput);
-    if (prixMaxInput) params.append('prixMax', prixMaxInput);
-    if (ouvertureInput) params.append('ouverture', ouvertureInput);
-    if (fermetureInput) params.append('fermeture', fermetureInput);
-    if (etatInput) params.append('etat', etatInput);
-    if (trieInput) params.append('trie',trieInput);
-    if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
+    const params = new URLSearchParams(window.location.search);
+    if (searchInput) params.set('titre', searchInput);
+    if (localisationInput) params.set('localisation', localisationInput);
+
+    if (ouvertureInput) params.set('ouverture', ouvertureInput);
+    if (fermetureInput) params.set('fermeture', fermetureInput);
+    if (etatInput) params.set('etat', etatInput);
+    if (trieInput) params.set('trie', trieInput);
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `listeOffre.php?${params.toString()}`, true);
@@ -105,15 +88,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('searchForm');
     const searchInput = document.querySelector('input[name="titre"]');
     const localisationInput = document.querySelector('input[name="localisation"]');
-    const minPrixInput = document.querySelector('input[name="minPrix"]');
-    const maxPrixInput = document.querySelector('input[name="maxPrix"]');
-    const prixMinInput = document.querySelector('input[name="prixMin"]');
-    const prixMaxInput = document.querySelector('input[name="prixMax"]');
     const ouvertureInput = document.querySelector('input[name="ouverture"]');
     const fermetureInput = document.querySelector('input[name="fermeture"]');
     const etatInput = document.querySelector('select[name="etat"]');
     const trieInput = document.querySelector('select[name="trie"]');
-    const categoryInputs = document.querySelectorAll('input[name="nomcategorie[]"]');
 
     searchInput.addEventListener('input', function() {
         rechercher();
@@ -123,21 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rechercher();
     });
 
-    minPrixInput.addEventListener('input', function() {
-        rechercher();
-    });
-
-    maxPrixInput.addEventListener('input', function() {
-        rechercher();
-    });
-
-    prixMinInput.addEventListener('input', function() {
-        rechercher();
-    });
-
-    prixMaxInput.addEventListener('input', function() {
-        rechercher();
-    });
+    
 
     ouvertureInput.addEventListener('input', function() {
         rechercher();
@@ -155,11 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rechercher();
     });
 
-    categoryInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            rechercher();
-        });
-    });
+    
 
     form.addEventListener('submit', function(event) {
         event.preventDefault(); // Empêche le rechargement de la page

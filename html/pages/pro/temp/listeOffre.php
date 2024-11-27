@@ -25,14 +25,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
 $idCompte = '2';
 $status = $_GET['status'] ?? 'enligne';
 $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-$query = $status === 'enligne' ? 'SELECT * FROM pact.vue_offres WHERE estEnLigne = TRUE and idCompte = ' . $idCompte : 'SELECT * FROM pact._offre WHERE estEnLigne = FALSE and idCompte = ' . $idCompte;
 
-    $stmt = $pdo->query($query);
-    $offres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if (empty($offres)) {
-        $offresMessage = "Aucune offre trouvée.";
-    }
 // Récupération des paramètres de la requête
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'idoffre DESC';
 $titre = isset($_GET['titre']) ? $_GET['titre'] : '';
@@ -44,15 +37,10 @@ $ouverture = isset($_GET['ouverture']) ? $_GET['ouverture'] : null;
 $fermeture = isset($_GET['fermeture']) ? $_GET['fermeture'] : null;
 $trie = isset($_GET['trie']) ? $_GET['trie'] : 'idoffre DESC';
 $query = "SELECT * FROM offres WHERE 1=1";
-$params = [];
 
 $nomcategories = isset($_GET['nomcategorie']) ? explode(',', $_GET['nomcategorie']) : ['Tout'];
 
-if (!empty($_GET['nomcategorie'])) {
-    $categoriesPlaceholders = implode(',', array_fill(0, count($nomcategories), '?'));
-    $query .= " AND nomcategorie IN ($categoriesPlaceholders)";
-    $params = array_merge($params, $nomcategories);
-}
+
 // Récupération des résultats
 $resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat,$status,$idCompte);
 
@@ -86,6 +74,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <link rel="stylesheet" href="../../../ui.css">
     <link rel="stylesheet" href="../../../composants/Label/Label.css">
     <script src="../../../trie/trieGeneral.js"></script>
+    <script src="listeoffre.js"></script>
 </head>
 <?php Header::render(HeaderType::Pro); ?>
 
@@ -98,7 +87,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "", "Créer une Offre", ButtonType::Pro, "", true); ?></a>
     </div>
     <section>
-    <div>
+    <div class="barre trie-hidden">
     <?php
     Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories);
     ?>
@@ -106,7 +95,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <div>
     <br>
     
-    
+    <button id="filtreButton">Filtrer</button>
     <div class="onglets">
         <a href="?status=enligne" class="onglet <?php echo ($status === 'enligne') ? 'actif' : ''; ?>">En ligne</a>
         <a href="?status=horsligne" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>">Hors ligne</a>
@@ -126,7 +115,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     </div>
     </section>
     <?php Footer::render(FooterType::Pro); ?>
-
+    
 </body>
 
 </html>

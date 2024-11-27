@@ -20,6 +20,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/InputRangeDouble/InputRang
 
 class Trie {
     public static function render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories) {
+        echo '<link rel="stylesheet" type="text/css" href="/trie/style.css">';
+
         $optionsCategorie = [
             'Spectacle' => 'Spectacle',
             'Activite' => 'Activite',
@@ -38,22 +40,36 @@ class Trie {
             "idoffre ASC" => "Tri par date croissante",
             "idoffre DESC" => "Tri par date décroissante",
         ];
+        
 
         echo '<form id="searchForm" method="GET" action="">';
+        Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
         echo '<input type="hidden" id="sortInput" name="sort" value="' . htmlspecialchars($sort) . '">';
         echo '<div class="input">';
         Input::render(name:"titre", type:"text", placeholder:'Titre*', value: htmlspecialchars($titre));
         Input::render(name:"localisation", type:"text", placeholder:'localisation', value: htmlspecialchars($localisation));
-        Input::render(name:"minPrix", type:"number", placeholder:'Prix Min', value: htmlspecialchars($minPrix));
-        Input::render(name:"maxPrix", type:"number", placeholder:'Prix Max', value: htmlspecialchars($maxPrix));
-        echo '<div><label for="ouverture">Heure d\'ouverture</label>';
+        echo '<div class="heure">';
+        echo '<div class="aligne"><label for="ouverture">Heure d\'ouverture</label>';
         Input::render(name:"ouverture", type:"time", value: htmlspecialchars($ouverture));
-        echo '</div><div><label for="fermeture">Heure de fermeture</label>';
+        echo '</div><div class="aligne"><label for="fermeture">Heure de fermeture</label>';
         Input::render(name:"fermeture", type:"time", placeholder:'Heure de fermeture', value: htmlspecialchars($fermeture));
         echo '</div>';
-        CheckboxSelect::render('custom-class', 'checkbox-select-id', 'nomcategorie', false, $optionsCategorie, $nomcategories);
+        echo '</div>';
+        echo'<div>';
+        foreach ($optionsCategorie as $value => $label) {
+            Checkbox::render(
+            $class = 'custom-class',
+            $id = 'checkbox-' . htmlspecialchars($value),
+            $name = 'nomcategorie[]',
+            $value = htmlspecialchars($value),
+            $text = $label,
+            $required = false,
+            $checked = in_array($value, $nomcategories)
+            );
+        }
+        echo'</div>';
         Select::render('custom-class', 'select-etat', 'etat', false, $optionsEtat, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
-        Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
+        
         
 
 
@@ -64,10 +80,10 @@ class Trie {
             $required = true,
             $min = 0,
             $max = 100,
-            $from = 20,
-            $to = 80
+            $from = 0,
+            $to = 100
         );
-
+        
         echo '</div></form>';
     }
 }

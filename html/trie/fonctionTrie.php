@@ -84,10 +84,12 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     if ($idcompte !== null && $idcompte !== '') {
         $stmt->bindValue(':idcompte', $idcompte, PDO::PARAM_INT);
     }
-
+    
     // Liaison des catégories
     if (!empty($nomcategories) && !in_array('Tout', $nomcategories)) {
+        error_log(print_r($nomcategories, true));
         foreach ($nomcategories as $index => $category) {
+            
             $stmt->bindValue(":category_$index", $category, PDO::PARAM_STR);
         }
     }
