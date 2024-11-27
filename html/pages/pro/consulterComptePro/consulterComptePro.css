@@ -92,7 +92,7 @@ main table .editable:focus {
 /* Titres principaux dans <main> */
 main h1 {
     text-align: center;
-    color: var(--primaire-pro);
+    color: var(--noir);
     font-size: 1.5em;
     margin-bottom: 10px;
 }
