@@ -1,0 +1,285 @@
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/inter-v18-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: var(--font-weight-normal);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-600.woff2') format('woff2');
+}
+
+body {
+    font-family: 'Encode Sans', 'Inter';
+    background-color: var(--primaire-membre);
+    margin: auto;
+    padding: auto;
+}
+
+main {
+    position: relative; /* Nécessaire pour que le bouton soit positionné en bas à droite de main */
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    background: #fff;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    text-align: left;
+}
+/* Champs non modifiables (par défaut pour la catégorie Identité) */
+main table input[readonly] {
+    border: none;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 1em;
+    width: 100%;
+    padding: 5px;
+    cursor: not-allowed; /* Empêche toute modification */
+}
+
+/* Champs modifiables */
+main table .editable {
+    border: none;
+    background-color: transparent;
+    color: #333;
+    font-size: 1em;
+    width: 100%;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+main table .editable[readonly] {
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+main table .editable:focus {
+    outline: none;
+    background-color: #e9e9e9;
+}
+
+/* Titres principaux dans <main> */
+main h1 {
+    text-align: center;
+    color: var(--noir);
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Tableau des informations dans <main> */
+main table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+main table th, main table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+main table th {
+    background-color: #3186c7;
+    color: white;
+    font-weight: bold;
+}
+
+main table td {
+    background-color: #f9f9f9;
+}
+
+/* Titres des catégories */
+main table th[colspan="2"] {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: var(--font-weight-semi-bold);
+    background-color: #075997;;
+    color: white;
+}
+
+/* Champs éditables */
+main table .editable {
+    border: none;
+    background-color: transparent;
+    color: #333;
+    font-size: 1em;
+    width: 100%;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+main table .editable[readonly] {
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+main table .editable:focus {
+    outline: none;
+    background-color: #e9e9e9;
+}
+
+/* Boutons dans <main> */
+main button {
+    background-color: var(--primaire-membre);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+}
+
+main button:hover {
+    background-color: #044475;
+}
+
+/* Conteneur du bouton et des messages */
+.modifier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Bouton "Modifier mes informations" */
+.modifier button {
+    background-color: var(--primaire-membre);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.modifier button:hover {
+    background-color: #044475;
+}
+
+/* Messages (succès et erreur) */
+.modifier p {
+    margin-top: 10px; 
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.modifier p.success {
+    color: green;
+}
+
+.modifier p.error {
+    color: red;
+}
+
+
+
+/* Bouton "Enregistrer" */
+#btnEnregistrer {
+    display: none; /* Masqué par défaut */
+    position: relative; /* Position relative pour se placer naturellement sous le tableau */
+    margin-top: 20px; /* Espacement au-dessus du bouton */
+    margin-left: auto; /* Aligner à droite */
+    margin-right: 0;
+    background-color: #3b9d3f; /* Couleur verte */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+    transition: all 0.3s ease;
+}
+
+#btnEnregistrer:hover {
+    background-color: #47c94d; /* Couleur verte plus foncée au survol */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); /* Léger effet de levée */
+}
+
+#btnEnregistrer:active {
+    transform: translateY(1px); /* Effet d'enfoncement */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+/* Bouton "Annuler" */
+#btnAnnuler {
+    display: none; /* Masqué par défaut */
+    position: relative; /* Position relative pour se placer naturellement sous le tableau */
+    margin-top: 20px; /* Espacement au-dessus du bouton */
+    margin-left: 10px;
+    background-color: #a02727; /* Couleur verte */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+    transition: all 0.3s ease;
+}
+
+#btnAnnuler:hover {
+    background-color: #e02c10; /* Couleur verte plus foncée au survol */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); /* Léger effet de levée */
+}
+
+#btnAnnuler:active {
+    transform: translateY(1px); /* Effet d'enfoncement */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bouton{
+    display: flex;
+}
+
+#popupMotDePasse{
+    display: none; 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 400px; 
+    padding: 20px; 
+    background: white; 
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; 
+    border-radius: 10px; 
+    z-index: 1000;
+}

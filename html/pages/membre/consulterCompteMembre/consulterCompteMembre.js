@@ -4,9 +4,9 @@
     event.preventDefault();
 
     // Récupérer les champs du formulaire
-    const nom = document.querySelector('input[name="email"]');
-    const prenom = document.querySelector('input[name="email"]');
-    const pseudo = document.querySelector('input[name="email"]');
+    const nom = document.querySelector('input[name="nom"]');
+    const prenom = document.querySelector('input[name="prenom"]');
+    const pseudo = document.querySelector('input[name="pseudo"]');
     const email = document.querySelector('input[name="email"]');
     const numtel = document.querySelector('input[name="numtel"]');
     const rue = document.querySelector('input[name="rue"]');
