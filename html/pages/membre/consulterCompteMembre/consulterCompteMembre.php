@@ -68,22 +68,14 @@ try {
 
         <!-- Bouton "Modifier mes informations" -->
         <div class="modifier">
-            <button onclick="activerModification()">Modifier mes informations</button>
-
-            <!-- Affichage des messages -->
-            <?php if (isset($_SESSION['message'])): ?>
-                <p style="color: green; margin-top: 10px;"><?= htmlspecialchars($_SESSION['message']) ?></p>
-                <?php unset($_SESSION['message']); ?>
-            <?php endif; ?>
-
-            <?php if (isset($_SESSION['error'])): ?>
-                <p style="color: red; margin-top: 10px;"><?= htmlspecialchars($_SESSION['error']) ?></p>
-                <?php unset($_SESSION['error']); ?>
-            <?php endif; ?>
+            <button type="button" onclick="activerModification()">Modifier mes informations</button>
         </div>
 
+        <!-- Affichage des messages d'erreur -->
+        <div id="messageErreur" style="color: red; display: none;"></div>
+
         <!-- Affichage des informations si disponibles -->
-        <form method="post" action="enregistrerModifications.php">
+        <form id="formulaireCompteMembre" method="post" action="enregistrerModifications.php">
             <table border="1">
                 <!-- Catégorie Identité -->
                 <tr>
@@ -91,15 +83,27 @@ try {
                 </tr>
                 <tr>
                     <th>Nom</th>
-                    <td><input type="text" name="nom" class="editable" value="<?= htmlspecialchars($userInfo['nom'] ?? 'Non renseigné') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="nom" class="editable" 
+                            value="<?= htmlspecialchars($userInfo['nom'] ?? 'Non renseigné') ?>" 
+                            readonly data-original="<?= htmlspecialchars($userInfo['nom'] ?? 'Non renseigné') ?>">
+                    </td>
                 </tr>
                 <tr>
                     <th>Prénom</th>
-                    <td><input type="text" name="prenom" class="editable" value="<?= htmlspecialchars($userInfo['prenom'] ?? 'Non renseigné') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="prenom" class="editable" 
+                            value="<?= htmlspecialchars($userInfo['prenom'] ?? 'Non renseigné') ?>" 
+                            readonly data-original="<?= htmlspecialchars($userInfo['prenom'] ?? 'Non renseigné') ?>">
+                        </td>
                 </tr>
                 <tr>
                     <th>Pseudo</th>
-                    <td><input type="text" name="pseudo" class="editable" value="<?= htmlspecialchars($userInfo['pseudo'] ?? 'Non renseigné') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="pseudo" class="editable" 
+                            value="<?= htmlspecialchars($userInfo['pseudo'] ?? 'Non renseigné') ?>" 
+                            readonly data-original="<?= htmlspecialchars($userInfo['pseudo'] ?? 'Non renseigné') ?>">
+                    </td>
                 </tr>
 
                 <!-- Catégorie Coordonnées -->
@@ -108,11 +112,19 @@ try {
                 </tr>
                 <tr>
                     <th>Email</th>
-                    <td><input type="email" name="email" class="editable" value="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>" readonly></td>
+                    <td>
+                        <input type="email" name="email" class="editable" 
+                            value="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>" 
+                            readonly data-original="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>">
+                    </td>
                 </tr>
                 <tr>
                     <th>Numéro de Téléphone</th>
-                    <td><input type="text" name="numtel" class="editable" value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="numtel" class="editable" 
+                            value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>" 
+                            readonly data-original="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>">
+                    </td>
                 </tr>
 
                 <!-- Catégorie Adresse -->
@@ -121,20 +133,32 @@ try {
                 </tr>
                 <tr>
                     <th>Rue</th>
-                    <td><input type="text" name="rue" class="editable" value="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="rue" class="editable" 
+                            value="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>" 
+                            readonly data-original="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>">
+                    </td>
                 </tr>
                 <tr>
                     <th>Code Postal</th>
-                    <td><input type="text" name="codepostal" class="editable" value="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="codepostal" class="editable" 
+                            value="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>" 
+                            readonly data-original="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>">
+                    </td>
                 </tr>
                 <tr>
                     <th>Ville</th>
-                    <td><input type="text" name="ville" class="editable" value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>" readonly></td>
+                    <td><input type="text" name="ville" class="editable" 
+                    value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>" 
+                    readonly data-original="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>"></td>
                 </tr>
             </table>
 
-            <!-- Bouton "Enregistrer" -->
-            <button type="submit" id="btnEnregistrer" style="display: none; float: right; margin-top: 20px;">Enregistrer</button>
+            <div class="bouton">
+            <button type="button" id="btnEnregistrer" style="display: none;" onclick="validerFormulaire(event)">Enregistrer</button>
+                <button type="button" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
+            </div>
         </form>
     </main>
 
