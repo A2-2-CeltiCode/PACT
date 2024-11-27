@@ -66,7 +66,6 @@ try {
       
 
 </head>
-
 <body>
     <?php Header::render(HeaderType::Pro); ?>
 
@@ -75,22 +74,14 @@ try {
 
         <!-- Bouton "Modifier mes informations" -->
         <div class="modifier">
-            <button onclick="activerModification()">Modifier mes informations</button>
-
-            <!-- Affichage des messages -->
-            <?php if (isset($_SESSION['message'])): ?>
-                <p style="color: green; margin-top: 10px;"><?= htmlspecialchars($_SESSION['message']) ?></p>
-                <?php unset($_SESSION['message']); ?>
-            <?php endif; ?>
-
-            <?php if (isset($_SESSION['error'])): ?>
-                <p style="color: red; margin-top: 10px;"><?= htmlspecialchars($_SESSION['error']) ?></p>
-                <?php unset($_SESSION['error']); ?>
-            <?php endif; ?>
+            <button type="button" onclick="activerModification()">Modifier mes informations</button>
         </div>
 
+        <!-- Affichage des messages d'erreur -->
+        <div id="messageErreur" style="color: red; display: none;"></div>
+
         <!-- Formulaire pour afficher et modifier les informations -->
-        <form method="post" action="enregistrerModifications.php">
+        <form id="formulaireComptePro" method="post" action="enregistrerModifications.php">
             <table border="1">
                 <!-- Catégorie Identité -->
                 <tr>
@@ -187,13 +178,13 @@ try {
 
             <!-- Boutons -->
             <div class="bouton">
-                <button type="submit" id="btnEnregistrer" style="display: none;">Enregistrer</button>
+                <button type="button" id="btnEnregistrer" style="display: none;" onclick="validerFormulaire(event)">Enregistrer</button>
                 <button type="button" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
             </div>
         </form>
     </main>
 
-    <?php Footer::render(FooterType::Pro); ?>
+    <?php Footer::render(HeaderType::Pro); ?>
 </body>
 
 </html>
