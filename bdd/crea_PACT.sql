@@ -163,6 +163,10 @@ CREATE TABLE _offre(
         REFERENCES _forfait(nomForfait)
 );
 
+--
+-- TABLE IMAGE
+--
+
 CREATE TABLE _image(
     idOffre   SERIAL,
     idImage   SERIAL,
@@ -190,19 +194,30 @@ CREATE TABLE _facture(
         REFERENCES _adresse(idAdresse)
 );
 
-CREATE TABLE _historique(
+CREATE TABLE _historiqueOption(
     idFacture             SERIAL,
     idOffre               INTEGER,
     nomOption             VARCHAR(50) NOT NULL,
     nbSemaines            INTEGER NOT NULL,
     jourDebut             DATE,
     jourFin               DATE,
-    CONSTRAINT historique_pk PRIMARY KEY(idFacture,idOffre),
-    CONSTRAINT historique_fk_offre FOREIGN KEY (idOffre) 
+    CONSTRAINT historiqueOption_pk PRIMARY KEY(idFacture,idOffre),
+    CONSTRAINT historiqueOption_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),
-    CONSTRAINT historique_fk_option FOREIGN KEY (nomOption)
+    CONSTRAINT historiqueOption_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption),
-    CONSTRAINT historique_fk_facture FOREIGN KEY (idFacture)
+    CONSTRAINT historiqueOption_fk_facture FOREIGN KEY (idFacture)
+        REFERENCES _facture(idFacture)
+);
+
+CREATE TABLE _historiqueEnLigne(
+    idFacture   SERIAL,
+    idOffre     INTEGER,
+    nbJours     INTEGER,
+    CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idFacture,idOffre),
+    CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre) 
+        REFERENCES _offre(idOffre),
+    CONSTRAINT historiqueEnLigne_fk_facture FOREIGN KEY (idFacture)
         REFERENCES _facture(idFacture)
 );
 

@@ -116,3 +116,7 @@ INSERT INTO _contexte (nomContexte) VALUES
 ('Famille'),
 ('Amis'),
 ('Solo');
+
+-- Peupler la table _adresse
+INSERT INTO _adresse (codePostal, ville, rue, numTel) VALUES
+(22300, 'Lannion', 'Rue Edouard Branly','+33 2 96 46 93 00');
