@@ -14,7 +14,7 @@ CREATE TABLE _adresse(
     idAdresse     SERIAL,
     codePostal    INTEGER NOT NULL,
     ville         VARCHAR(50) NOT NULL,
-    rue        VARCHAR(50) NOT NULL,
+    rue           VARCHAR(50) NOT NULL,
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
     CONSTRAINT adresse_pk PRIMARY KEY(idAdresse)
 );
@@ -187,6 +187,8 @@ CREATE TABLE _facture(
     idAdressePACT         INTEGER NOT NULL DEFAULT 1,
     datePrestaServices    DATE NOT NULL,
     dateEcheance          DATE NOT NULL,
+    jourDebut             DATE,
+    jourFin               DATE,
     CONSTRAINT facture_pk PRIMARY KEY(idFacture),
     CONSTRAINT facture_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),
@@ -199,8 +201,7 @@ CREATE TABLE _historiqueOption(
     idOffre               INTEGER,
     nomOption             VARCHAR(50) NOT NULL,
     nbSemaines            INTEGER NOT NULL,
-    jourDebut             DATE,
-    jourFin               DATE,
+    lastUpdate            DATE DEFAULT CURRENT_DATE,
     CONSTRAINT historiqueOption_pk PRIMARY KEY(idFacture,idOffre),
     CONSTRAINT historiqueOption_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),
@@ -214,6 +215,7 @@ CREATE TABLE _historiqueEnLigne(
     idFacture   SERIAL,
     idOffre     INTEGER,
     nbJours     INTEGER,
+    estEnLigne  BOOLEAN,
     CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idFacture,idOffre),
     CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),

@@ -33,7 +33,7 @@ FROM _compte LEFT JOIN _comptePro ON _compte.idCompte = _comptePro.idCompte
 -- VUES OFFRES
 --
 CREATE OR REPLACE VIEW vue_offres AS
-SELECT _offre.idcompte,
+SELECT DISTINCT _offre.idcompte,
             _offre.idoffre,
             _offre.idadresse,
             _offre.nomoption,
@@ -139,7 +139,21 @@ FROM _image;
 --
 -- VUE AVIS
 --
+
 CREATE OR REPLACE VIEW vue_avis AS
 SELECT idAvis, idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis
 FROM _avis;
+
+--
+-- VUES FACTURE
+--
+
+CREATE OR REPLACE VIEW vue_facture_option AS
+SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance, jourDebut, jourFin, nomOption, nbSemaines, lastUpdate
+FROM _facture NATURAL JOIN _historiqueOption;
+
+
+CREATE OR REPLACE VIEW vue_facture_en_ligne AS
+SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance, jourDebut, jourFin, nbJours, estEnLigne
+FROM _facture NATURAL JOIN _historiqueEnLigne;
 

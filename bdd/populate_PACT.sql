@@ -48,24 +48,23 @@ INSERT INTO _compte (mdp, email, idAdresse) VALUES
 ('e92fb5cef0be3f9c9ad78d2872bf084e94fd89b06eb98f3667609ff3640b58f0', 'test@gmail.com', 2),
 ('8b2ad379781f7e2073a1478f80ea507d10e28488d079b3a8fe9602b4892a668c', 'test2@gmail.com', 3),
 ('9e56e2ff9b0cda81821524df739598640c16d4a4ea1d48be97ca331724773531', 'test3@gmail.com', 4),
-('Sandwich4$', 'sandwich4@gmail.com', 8),
-('KinderBueno5$', 'Kinderbueno@gmail.com', 9),
-('Abcde1234$', 'user1@gmail.com', 10),
-('Vwxyz5678$', 'user2@gmail.com', 11),
-('P@ssword8$', 'user3@gmail.com', 12),
-('SecreTpass9$', 'user4@gmail.com', 13),
-('MyPass2020$', 'user5@gmail.com', 14),
-('SecurePass11$', 'user6@gmail.com', 15),
-('P@ssword1234', 'user7@gmail.com', 16),
-('SuperSecure15$', 'user8@gmail.com', 17),
-('Qwerty2024$', 'user9@gmail.com', 18),
-('Pa$$w0rd16', 'user10@gmail.com', 19),
-('OpenAI2024$', 'user11@gmail.com', 20),
-('SecurePass21$', 'user12@gmail.com', 21),
-('TestUser25$', 'user13@gmail.com', 22),
-('PassKey27$', 'user14@gmail.com', 23),
-('Xc#88Secure', 'user15@gmail.com', 24);
-
+('033afd34a37e50cec9b2913c7f20aa9006f72e1e119dade921741716185d2e56', 'sandwich4@gmail.com', 8),
+('7b87d4b5c9d1a076535450b0ceadab100e5d072167337252854ff237db79bbc2', 'Kinderbueno@gmail.com', 9),
+('68985322e106fb7f530bf4fbe97c2ca8a21e1beaf2a4c8d48e815d0034da3ace', 'user1@gmail.com', 10),
+('25d5251779954a8f724f64669723c19768cc2024dcdb43a1a7ce1dbc467fe93a', 'user2@gmail.com', 11),
+('22cc158e741fa180410e00beb00fece49036da48b6cdb5215101ba722bc966b3', 'user3@gmail.com', 12),
+('0facab375f12e5c3372b8a9985943e42353ae50fa5b6778bd6b37b6323f49de1', 'user4@gmail.com', 13),
+('5bd574339da43df97e4c3f82bbbe1ed33a81b249cee14eaec6f42870c1bfe7ff', 'user5@gmail.com', 14),
+('245d09835528ecca628984c91c716106a1c381555a2bd3f89ada498ec37a7b0a', 'user6@gmail.com', 15),
+('501fe884fdbbb0bceafff5f4fd2f3423cd32d435e96a0a85e56cdf067a632894', 'user7@gmail.com', 16),
+('0fa7e7580d41dc88cd65a16d473802ab5854a87e6ddfa43b00f669836ec96d9b', 'user8@gmail.com', 17),
+('420aa0474fa671d1c92abba9df2763a1ac07343f61b5f93bca7618d212313180', 'user9@gmail.com', 18),
+('dce985c7af1ac4aac8ee851ec2507738f870e72882373215848f94d829e244b9', 'user10@gmail.com', 19),
+('3946ab12b74862cfd075b4f69f142b9b524ecadf024426c6206fd9ed547679f1', 'user11@gmail.com', 20),
+('0952c3c1da99414130cf203e6e399b8d5b8d6578b4e25149b14f2397949b10d1', 'user12@gmail.com', 21),
+('3e78f1c32984ed554b602f052a6ee1dccf5e37b59fa0dac6d2712cf119d214dd', 'user13@gmail.com', 22),
+('9011963039465470c0036871db381adacb92ced945356958c58f5054cca0ac2d', 'user14@gmail.com', 23),
+('822b343fb9eecc852f4fe6b4ebd27b35f6dcca6e1a19cc7453c2626d98641389', 'user15@gmail.com', 24);
 
 -- Peupler la table _compteMembre
 INSERT INTO _compteMembre (idCompte,pseudo, prenom, nom) VALUES
@@ -100,13 +99,58 @@ INSERT INTO _compteProPublic (idCompte) VALUES
 (3);
 
 -- Peupler la table _offre
-INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne,idAdresse, heureOuverture, heureFermeture) VALUES
-(2,'Aucune', 'Gratuit', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 7,'06:00','17:00'),
-(2,'En relief', 'Standard', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 2,'07:00','16:00'),
-(2,'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 3,'08:00','15:00'),
-(2,'Aucune', 'Gratuit', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 4,'17:00','01:00'),
-(3,'A la une', 'Standard', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 5,'02:00','14:00'),
-(3,'En relief', 'Premium', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 6,'00:00','10:00');
+INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
+(2,'Aucune', 'Gratuit', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 7,'2024-05-27','06:00','17:00'),
+(2,'En relief', 'Standard', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 2,'2024-10-01','07:00','16:00'),
+(2,'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 3,'2024-03-20','08:00','15:00'),
+(2,'Aucune', 'Gratuit', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 4,'2024-09-15','17:00','01:00'),
+(3,'A la une', 'Standard', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 5,'2024-07-08','02:00','14:00'),
+(3,'En relief', 'Premium', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 6,'2023-11-14','00:00','10:00');
+
+/*INSERT INTO _facture (idFacture, , nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
+
+CREATE TABLE _facture(
+    idFacture, idOffre,
+    idAdressePro          INTEGER NOT NULL,
+    idAdressePACT         INTEGER NOT NULL DEFAULT 1,
+    datePrestaServices    DATE NOT NULL,
+    dateEcheance          DATE NOT NULL,
+    jourDebut             DATE,
+    jourFin               DATE,
+    CONSTRAINT facture_pk PRIMARY KEY(idFacture),
+    CONSTRAINT facture_fk_offre FOREIGN KEY (idOffre) 
+        REFERENCES _offre(idOffre),
+    CONSTRAINT facture_fk_adresse FOREIGN KEY (idAdressePro) 
+        REFERENCES _adresse(idAdresse)
+);
+
+-- Peupler la table _historiqueOption
+INSERT INTO _historiqueOption (idFacture, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
+    idFacture             SERIAL,
+    idOffre               INTEGER,
+    nomOption             VARCHAR(50) NOT NULL,
+    nbSemaines            INTEGER NOT NULL,
+    lastUpdate            DATE DEFAULT CURRENT_DATE,
+    CONSTRAINT historiqueOption_pk PRIMARY KEY(idFacture,idOffre),
+    CONSTRAINT historiqueOption_fk_offre FOREIGN KEY (idOffre) 
+        REFERENCES _offre(idOffre),
+    CONSTRAINT historiqueOption_fk_option FOREIGN KEY (nomOption)
+        REFERENCES _option(nomOption),
+    CONSTRAINT historiqueOption_fk_facture FOREIGN KEY (idFacture)
+        REFERENCES _facture(idFacture)
+);
+
+CREATE TABLE _historiqueEnLigne(
+    idFacture   SERIAL,
+    idOffre     INTEGER,
+    nbJours     INTEGER,
+    estEnLigne  BOOLEAN,
+    CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idFacture,idOffre),
+    CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre) 
+        REFERENCES _offre(idOffre),
+    CONSTRAINT historiqueEnLigne_fk_facture FOREIGN KEY (idFacture)
+        REFERENCES _facture(idFacture)
+);*/
 
 -- Peupler la table _image
 INSERT INTO _image (idOffre, nomImage) VALUES
