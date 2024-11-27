@@ -78,7 +78,12 @@
     $langue = $_POST['langue'] ?? null;
     
 
-    
+    if ($adressePostale) {
+        // Expression régulière pour capturer les chiffres au début
+        preg_match('/^(\d+)\s*(.*)$/', $adressePostale, $matches);
+        $numRue = $matches[1]; // La partie des chiffres
+        $nomRue  = $matches[2];    // Le reste de l'adresse
+    }
     
 
 
@@ -88,16 +93,17 @@
     //Insertion dans la BDD
 
 
-    print_r($adressePostale);
+
     //creation adresse
     $stmt = $dbh->prepare(
-        "INSERT INTO pact._adresse(codePostal, ville, rue, numTel)
-        VALUES(:codePostal, :ville, :rue, :numTel)"
+        "INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel)
+        VALUES(:codePostal, :ville, :nomRue, :numRue, :numTel)"
     );
 
     $stmt->bindValue(':codePostal', $codePostal, $codePostal !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
     $stmt->bindValue(':ville', $ville, $ville !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
-    $stmt->bindValue(':rue', $adressePostale, PDO::PARAM_STR);
+    $stmt->bindValue(':nomRue', $nomRue, $nomRue !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stmt->bindValue(':numRue', $numRue, $numRue !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
     $stmt->bindValue(':numTel', $numeroTelephone, $numeroTelephone !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
     $stmt->execute();
     $idAdresse=$dbh->lastInsertId();
@@ -120,29 +126,28 @@
     $idOffre=$dbh->lastInsertId();
 
     //création et insertion image
-        foreach ($_FILES['monDropZone']['name'] as $key => $val) {
-            $nomImage = $_FILES['monDropZone']['name'][$key];
-            $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
-            $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/" . $idOffre . '/images' . '/';
-        
-            $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
-        
-            $nouveauNomImage = uniqid() . '.' . $extension;
-        
-            if (!file_exists($location)) {
-                mkdir($location, 0777, true);
-            }
-        
-            move_uploaded_file($tmp_name, $location . $nouveauNomImage);
-            $stmt = $dbh->prepare(
-                "INSERT INTO pact._image(idOffre, nomImage) 
-                VALUES(:idOffre, :nomImage)"
-            );
-            $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-            $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
-            $stmt->execute();
-            echo("image insérée");
+    foreach ($_FILES['monDropZone']['name'] as $key => $val) {
+        $nomImage = $_FILES['monDropZone']['name'][$key];
+        $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
+        $location = $_SERVER["DOCUMENT_ROOT"] . "/composants/" . $idOffre . '/images' . '/';
+    
+        $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
+    
+        $nouveauNomImage = uniqid() . '.' . $extension;
+    
+        if (!file_exists($location)) {
+            mkdir($location, 0777, true);
         }
+    
+        move_uploaded_file($tmp_name, $location . $nouveauNomImage);
+        $stmt = $dbh->prepare(
+            "INSERT INTO pact._image(idOffre, nomImage) 
+            VALUES(:idOffre, :nomImage)"
+        );
+        $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+        $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
+        $stmt->execute();
+    }
 
     // Type d'offre : Activité
     if ($typeOffre === "Activite") {

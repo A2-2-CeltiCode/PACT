@@ -64,7 +64,7 @@ EOF;
         echo '<footer id="footer" class="' . $type . '">';
 
         $buttonType = ButtonType::Guest;
-        $buttonText = 'DEVENIR MEMBRE';
+        $buttonText = 'DEVENIR PRO';
 
         if ($type === FooterType::Member) {
             $buttonType = ButtonType::Member;

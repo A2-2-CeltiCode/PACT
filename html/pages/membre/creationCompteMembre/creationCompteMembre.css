@@ -45,7 +45,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #c084b5;
+    background-color: var(--primaire-membre);
 }
 
 img {
@@ -116,12 +116,9 @@ p {
     margin-bottom: 10px;
 }
 
-.messagesErreurs {
-    color: var(--erreur);
-}
-
 .form-texte {
     text-align: center;
+    color: var(--erreur);
 }
 
 #passwordMismatch {

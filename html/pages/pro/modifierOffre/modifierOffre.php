@@ -5,8 +5,9 @@ error_reporting(E_ALL ^ E_WARNING);
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-$idOffre = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
-$crampte = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
+$idOffre =$_SESSION['idOffre'] ;
+
+
 $sql = "SELECT nomcategorie FROM pact._spectacle WHERE idOffre = $idOffre";
 $stmt = $dbh->query($sql);
 $offre2 = $stmt->fetch();
@@ -46,13 +47,6 @@ $guidee = null;
 $carteRestaurant = null;
 $gammeRestaurant = null;
 $typeOffre = null;
-$estEnLigne=null;
-
-$sql = "SELECT numsiren FROM pact._CompteProPrive WHERE idCompte = :idCompte";
-$stmt = $dbh->prepare($sql);
-$stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
-$stmt->execute();
-$numsiren = $stmt->fetchColumn();
 
 if ($offre1 != null) {
     $sql = "SELECT * FROM pact.vue_activite WHERE idOffre = $idOffre";
@@ -112,14 +106,14 @@ if ($offre5 != null) {
 $nomOffre = $vueOffre["titre"];
 $ville = $vueOffre["ville"];
 $codePostal = $vueOffre["codepostal"];
-$rue = $vueOffre["rue"];
+$nomRue = $vueOffre["nomrue"];
+$numRue = $vueOffre["numrue"];
 $numeroTelephone = $vueOffre["numtel"];
 $siteWeb = $vueOffre["siteinternet"];
 $descriptionOffre = $vueOffre["description"];
 $descriptionDetaillee = $vueOffre["descriptiondetaillee"];
 $typeForfait = $vueOffre["nomforfait"];
 $typePromotion = $vueOffre["nomoption"];
-$estEnLigne = $vueOffre["estenligne"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -154,7 +148,8 @@ $estEnLigne = $vueOffre["estenligne"];
 
 <body>
     <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data">
-        
+        <input type="hidden" name="idOffre" value="<?php echo $idOffre; ?>">
+        <input name="typeOffre" type="hidden" value=<?php $typeOffre["nomcategorie"] ?>>
         <?php
         
         ?>
@@ -171,7 +166,7 @@ $estEnLigne = $vueOffre["estenligne"];
                     <label>Information de l'offre</label>
                     <?php Input::render(name: "ville", type: "text", required: "true", placeholder: 'Ville*', value: $ville) ?>
                     <?php Input::render(name: "codePostal", type: "number", required: 'true', placeholder: "Code Postal*", value: $codePostal) ?>
-                    <?php Input::render(name: "adressePostale", id: "adressePostale", type: "text", placeholder: 'Adresse Postale', value: $rue) ?>
+                    <?php Input::render(name: "adressePostale", id: "adressePostale", type: "text", placeholder: 'Adresse Postale', value: $numRue . " " . $nomRue) ?>
 
 
                 </div>
@@ -203,18 +198,58 @@ $estEnLigne = $vueOffre["estenligne"];
 
                 </div>
 
+
+
                 <div>
-                    <label>Est en ligne*</label>
-                    <input type="radio" id="oui" name="estEnLigne" value="true" <?php if ($estEnLigne == "1") echo "checked"; ?>>
-                    <label for="oui">Oui</label>
-                    <input type="radio" id="non" name="estEnLigne" value="false" <?php if ($estEnLigne == "0") echo "checked"; ?>>
-                    <label for="non">Non</label>
+                    <label>Type de forfait*</label>
+                    <?php
+                    $option = null;
+                    $sql = "SELECT nomforfait FROM pact._forfait";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute();
+
+                    $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach ($tabForfait as $forfait) {
+                        $option[$forfait['nomforfait']] = $forfait['nomforfait'];
+                    }
+                    ?>
+                    <?php
+                    Select::render(
+                        name: "typeForfait",
+                        required: true,
+                        options: $option
+                    );
+
+                    ?>
                 </div>
 
-                
-                
+                <div>
+                    <label>Type de promotion de l'offre*</label>
+                    <?php
+                    $option = null;
+                    $sql = "SELECT nomoption FROM pact._option";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute();
 
-                
+                    $tabOption = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach ($tabOption as $type) {
+                        $option[$type['nomoption']] = $type['nomoption'];
+                    }
+
+                    Select::render(
+                        name: "typePromotion",
+                        required: true,
+                        options: $option
+                    );
+                    ?>
+                </div>
+
+                <div>
+                    <label>Photo*</label>
+                    <?php InsererImage::render("monDropZone[]", "Glissez-déposez vos images ici", 5, true, true,['jpg', 'png']); ?>
+                </div>
 
 
 
@@ -462,11 +497,9 @@ $estEnLigne = $vueOffre["estenligne"];
         </section>
         <div class="btns">
             <br>
-            <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
+            <?php Button::render(onClick: "window.location.href = './accueil.php';", text: "Annuler", type:"pro", submit: false,class:"valid"); ?>
             <?php Button::render(text: "Valider", type:"pro", submit: true , class:"valid"); ?>
         </div>
-        <input type="hidden" name="idOffre" value="<?php echo $crampte;?>">
-
 
     </form>
     

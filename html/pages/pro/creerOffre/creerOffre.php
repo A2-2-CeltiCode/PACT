@@ -21,15 +21,7 @@
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-        $sql = "SELECT numsiren FROM pact._CompteProPrive WHERE idCompte = :idCompte";
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
-        $stmt->execute();
-        $numsiren = $stmt->fetchColumn();
 
-
-        $prixPremium=20;
-        $prixStandard=10;
         ?> 
         <title>Création d'une offre</title>
 
@@ -46,7 +38,7 @@
         <form class="info-display" id="myForm" method="post" action="confimationCreationOffre.php" enctype="multipart/form-data">
             <h1>Créez votre Offre</h1>
             <section>
-            
+                
                 <article>
                     <div>
                         <label>Nom de l'offre*</label>
@@ -92,40 +84,27 @@
 
                     
                     <div>
-                        
-
-                        
-
+                        <label>Type de forfait*</label>
                         <?php
-                            
-                            if($numsiren!=null){
-                                ?>
-                                <label>Type de forfait*</label>
-                                <?php
-                                $option=null;
-                                $sql = "SELECT nomforfait FROM pact._forfaitPro";
-                                $stmt = $dbh->prepare($sql); 
-                                $stmt->execute();
-    
-                                $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-    
-                                foreach ($tabForfait as $forfait) {
-                                    $option[$forfait['nomforfait']] = $forfait['nomforfait'];
-                                }
-    
-                                Select::render(
-                                    name: "typeForfait", 
-                                    required: true, 
-                                    options: $option,
-                                    id: "selectForfait"
-                                );
-                                
-                                
-                            }else{
-                                ?><input type="hidden" name="typeForfait" value="Gratuit"><?php
+                            $option=null;
+                            $sql = "SELECT nomforfait FROM pact._forfait";
+                            $stmt = $dbh->prepare($sql); 
+                            $stmt->execute();
+
+                            $tabForfait = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+                            foreach ($tabForfait as $forfait) {
+                                $option[$forfait['nomforfait']] = $forfait['nomforfait'];
                             }
-                            ?>
+                        ?>
+                        <?php 
+                            Select::render(
+                                name: "typeForfait", 
+                                required: true, 
+                                options: $option
+                            );
                             
+                            ?>
                     </div>
                     
                     <div>
@@ -421,20 +400,9 @@
 
                 </article>
             </section> 
-            
-                Prix mensuel de l'offre
-                <div id="prixStandardContainer" style="display: none;">
-                    <label>Prix Standard</label>
-                    <span id="prixStandard"><?php echo($prixStandard); ?> €</span>
-                </div>
-                <div id="prixPremiumContainer" style="display: none;">
-                    <label>Prix Premium</label>
-                    <span id="prixPremium"><?php echo($prixPremium); ?> €</span>
-                </div>
-            
             <div>
                 <br>
-                <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
+                <?php Button::render(onClick:"window.location.href = './accueil.php';", text: "Annuler", type: "pro", submit: false, ); ?>
                 <?php Button::render(text: "Valider", type: "pro", submit: true); ?>
             </div>
 

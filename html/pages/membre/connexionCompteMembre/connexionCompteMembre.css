@@ -38,31 +38,16 @@
     src: url('./assets/fonts/inter-v18-latin_latin-ext-600.woff2') format('woff2');
 }
 
-
 body {
     font-family: 'Encode Sans', 'Inter';
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #c084b5;
+    background-color: var(--primaire-membre);
 }
 
-img {
-    width: 160px;
-    height: 160px;
-}
-
-div {
-    margin-bottom: 5px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-display {
+.conteneur {
     margin: 2% 0;
     background-color: var(--blanc);
     display: flex;
@@ -74,25 +59,88 @@ form {
     box-shadow: 0px 0px 25px var(--noir);
 }
 
+.conteneur img {
+    width: 160px;
+    height: 160px;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 20px 0;
+    color: #333;
+}
 hr {
     display: block;
     width: 80%;
 }
 
-.messagesErreurs {
-    text-align: center;
-    color: var(--erreur);
+.groupe-champ {
+    margin-bottom: 15px;
+    text-align: left;
+    position: relative;
 }
 
-.input-box {
+.groupe-champ label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.lien-mdp-oublie {
+    display: block;
+    margin: 10px 0;
+    font-size: 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.bouton-connexion {
+    background-color: var(--primaire-membre);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.bouton-connexion:hover {
+    background-color: var(--primaire-membre);
+}
+
+.inscription {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #333;
+}
+
+.inscription a {
+    color: var(--primaire-membre);
+    text-decoration: none;
+}
+
+.inscription a:hover {
+    text-decoration: underline;
+}
+
+.conect {
     width: 300px;
 }
 
-.sign-upButton {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
+
+.conteneur {
+    text-align: center;
 }
+
+
+.connecte {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: 20px;
+}
+
 
 label {
     margin-bottom: 50px;
@@ -101,30 +149,8 @@ label {
 
 }
 
-p {
-    font-family: 'Inter';
-    font-size: var(--p-small-font-size);
-    color: var(--noir);
-    margin: 5px 0;
-    font-weight: var(--font-weight-normal);
-}
 
-#necessary-fields-label {
-    color: var(--gris3);
-    font-size: var(--p-small-font-size);
-
-    margin-bottom: 10px;
-}
-
-.messagesErreurs {
-    color: var(--erreur);
-}
-
-.form-texte {
-    text-align: center;
-}
-
-#passwordMismatch {
-    color: var(--erreur);
-    font-size: var(--p-small-font-size);
+.connecte .lien-mdp-oublie {
+    display: block;
+    margin-bottom: 10px; 
 }
