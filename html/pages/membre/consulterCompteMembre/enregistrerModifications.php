@@ -31,9 +31,24 @@ try {
         $codepostal = filter_var($_POST['codepostal'], FILTER_VALIDATE_INT);
         $ville = htmlspecialchars($_POST['ville'], ENT_QUOTES, 'UTF-8');
 
-        // Vérification des données obligatoires
-        if (!$nom || !$prenom || !$pseudo || !$email || !$rue || !$codepostal || !$ville) {
-            throw new Exception("Toutes les informations doivent être correctement renseignées.");
+        if (!preg_match('/^[a-zA-Z]+$/', $nom)) {
+            throw new Exception("Le nom ne doit contenir que des lettres minuscules et majuscules.");
+        }
+
+        if (!preg_match('/^[a-zA-Z]+$/', $prenom)) {
+            throw new Exception("Le prénom ne doit contenir que des lettres minuscules et majuscules.");
+        }
+        
+        if (!preg_match('/^(?=.*@)(?=.*\.).*$/', $email)) {
+            throw new Exception("L'email' doit contenir un '@' et un '.'.");
+        }
+
+        if (!preg_match('/^(?:\D*\d\D*){10}$/', $numtel)) {
+            throw new Exception("Le numéro de téléphone doit contenir exactement 10 chiffres.");
+        }
+        
+        if (!preg_match('/^(?:\D*\d\D*){5}$/', $codepostal)) {
+            throw new Exception("Le code postal doit contenir exactement 5 chiffres.");
         }
 
 
