@@ -13,6 +13,7 @@ use composants\Button\ButtonType;
 use composants\Label\Label;
 use composants\Select\Select;
 use composants\CheckboxSelect\CheckboxSelect;
+use composants\Checkbox\Checkbox;
 
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
@@ -22,6 +23,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Select/Select.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/CheckboxSelect/CheckboxSelect.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Checkbox/Checkbox.php";
 require_once  "fonctionTrie.php";
 
 try {
@@ -134,23 +136,32 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             ],
             isset($_GET['filtre']) ? $_GET['filtre'] : 'tout'
         );
-
-        CheckboxSelect::render(
-            'custom-class',
-            'checkbox-select-id',
-            'nomcategorie',
-            false,
-            [
-                'Spectacle' => 'Spectacle',
-                'Activite' => 'Activite',
-                'Restaurant' => 'Restaurant',
-                'Parc d\'attractions' => 'Parc d\'attractions',
-                'Visite' => 'Visite'
-            ],
-            $nomcategories
-        );
-        
         ?>
+        <hr>
+        <h5>Filtres</h5>
+
+        <?php
+        $options = [
+            ['Activite' => 'Activite', 'name' => 'options[]', 'value' => 'Activite', 'text' => 'Activite', 'checked' => false],
+            ['Spectacle' => 'Spectacle', 'name' => 'options[]', 'value' => 'Spectacle', 'text' => 'Spectacle', 'checked' => false],
+            ['Restaurant' => 'Restaurant', 'name' => 'options[]', 'value' => 'Restaurant', 'text' => 'Restaurant', 'checked' => false],
+            ['Parc d\'attractions' => 'Parc d\'attractions', 'name' => 'options[]', 'value' => 'Parc d\'attractions', 'text' => 'Parc d\'attractions', 'checked' => false],
+            ['Visite' => 'Visite', 'name' => 'options[]', 'value' => 'Visite', 'text' => 'Visite', 'checked' => false],
+        ];
+    
+        foreach ($options as $option) {
+            Checkbox::render(
+                $class = "",
+                $id = $option['id'],
+                $name = $option['name'],
+                $value = $option['value'],
+                $text = $option['text'],
+                $required = false,
+                $checked = $option['checked']
+            );
+        }
+        ?>
+        <hr>
         <input type="hidden" id="sortInput" name="sort" value="<?php echo htmlspecialchars($sort); ?>">
         <div class="input">
         <?php Input::render(name:"titre", type:"text", placeholder:'Titre*', value: htmlspecialchars($titre)); ?>
