@@ -116,6 +116,10 @@ p {
     margin-bottom: 10px;
 }
 
+.messagesErreurs {
+    color: var(--erreur);
+}
+
 .form-texte {
     text-align: center;
 }

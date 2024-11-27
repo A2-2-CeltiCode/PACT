@@ -79,7 +79,8 @@
     $iban = $_POST['iban'] ?? null;
     $ouverture = $_POST['ouverture'] ?? null;
     $fermeture = $_POST['fermeture'] ?? null;
-    
+    $dateSpectacle = $_POST['dateSpectacle'] ?? null;
+    $dateVisite = $_POST['dateVisite'] ?? null;
 
 
 
@@ -172,14 +173,17 @@
         $stmt->bindValue(':prestation', $prestation, PDO::PARAM_STR);
         $stmt->execute();
 
+        
         foreach ($tag as $val) {
+            foreach($val as $lebon){
             $stmt = $dbh->prepare(
                 "INSERT INTO pact._possedeActivite(idOffre, nomTag) 
                 VALUES(:idOffre, :nomTag)"
             );
             $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-            $stmt->bindValue(':nomTag', $val, PDO::PARAM_STR);
+            $stmt->bindValue(':nomTag', $lebon, PDO::PARAM_STR);
             $stmt->execute();
+            }
         }
     }
 
@@ -189,25 +193,31 @@
         insererDuree($dbh, $duree3);
 
         $stmt = $dbh->prepare(
-            "INSERT INTO pact._spectacle(idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite)
-            VALUES(:idOffre, :nomCategorie, :tempsEnMinutes, :valPrix, :capacite)"
+            "INSERT INTO pact._spectacle(idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite,dateevenement)
+            VALUES(:idOffre, :nomCategorie, :tempsEnMinutes, :valPrix, :capacite,:dateevenement)"
         );
         $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
         $stmt->bindValue(':nomCategorie', $typeOffre, PDO::PARAM_STR);
         $stmt->bindValue(':tempsEnMinutes', $duree3, PDO::PARAM_INT);
         $stmt->bindValue(':valPrix', $prix3, PDO::PARAM_STR);
         $stmt->bindValue(':capacite', $capacite, PDO::PARAM_INT);
+        $stmt->bindValue(':dateevenement', $dateSpectacle, PDO::PARAM_STR);
         $stmt->execute();
 
+ 
+
         foreach ($tag as $val) {
+            foreach($val as $lebon){
             $stmt = $dbh->prepare(
                 "INSERT INTO pact._possedeSpectacle(idOffre, nomTag) 
                 VALUES(:idOffre, :nomTag)"
             );
             $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-            $stmt->bindValue(':nomTag', $val, PDO::PARAM_STR);
+            $stmt->bindValue(':nomTag', $lebon, PDO::PARAM_STR);
             $stmt->execute();
+            }
         }
+        
     }
     
     // Type d'offre : Parc d'Attraction
@@ -251,14 +261,17 @@
         $stmt->bindValue(':ageMin', $ageMinimum2, PDO::PARAM_INT);
         $stmt->execute();
 
+        
         foreach ($tag as $val) {
+            foreach($val as $lebon){
             $stmt = $dbh->prepare(
                 "INSERT INTO pact._possedeParcAttractions(idOffre, nomTag) 
                 VALUES(:idOffre, :nomTag)"
             );
             $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-            $stmt->bindValue(':nomTag', $val, PDO::PARAM_STR);
+            $stmt->bindValue(':nomTag', $lebon, PDO::PARAM_STR);
             $stmt->execute();
+            }
         }
         
     }
@@ -268,24 +281,26 @@
         insererPrix($dbh, $prix2);
         insererDuree($dbh, $duree2);
         $stmt = $dbh->prepare(
-            "INSERT INTO pact._visite(idOffre, nomCategorie, tempsEnMinutes, valPrix, estGuidee)
-            VALUES(:idOffre, :nomCategorie, :tempsEnMinutes, :valPrix, :estGuidee)"
+            "INSERT INTO pact._visite(idOffre, nomCategorie, tempsEnMinutes, valPrix, estGuidee, dateevenement)
+            VALUES(:idOffre, :nomCategorie, :tempsEnMinutes, :valPrix, :estGuidee, :datevisite)"
         );
         $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
         $stmt->bindValue(':nomCategorie', $typeOffre, PDO::PARAM_STR);
         $stmt->bindValue(':tempsEnMinutes', $duree2, PDO::PARAM_INT);
         $stmt->bindValue(':valPrix', $prix2, PDO::PARAM_STR);
         $stmt->bindValue(':estGuidee', $guidee, PDO::PARAM_BOOL);
+        $stmt->bindValue(':datevisite', $dateVisite, PDO::PARAM_STR);
         $stmt->execute();
-
         foreach ($tag as $val) {
+            foreach($val as $lebon){
             $stmt = $dbh->prepare(
                 "INSERT INTO pact._possedeVisite(idOffre, nomTag) 
                 VALUES(:idOffre, :nomTag)"
             );
             $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-            $stmt->bindValue(':nomTag', $val, PDO::PARAM_STR);
+            $stmt->bindValue(':nomTag', $lebon, PDO::PARAM_STR);
             $stmt->execute();
+            }
         }
     }
 
@@ -326,16 +341,19 @@
         $stmt->bindValue(':idImage', $carteRestaurant, PDO::PARAM_INT);
         $stmt->execute();
 
+        
+
         foreach ($tag as $val) {
+            foreach($val as $lebon){
             $stmt = $dbh->prepare(
                 "INSERT INTO pact._possedeRestaurant(idOffre, nomTag) 
                 VALUES(:idOffre, :nomTag)"
             );
             $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-            $stmt->bindValue(':nomTag', $val, PDO::PARAM_STR);
+            $stmt->bindValue(':nomTag', $lebon, PDO::PARAM_STR);
             $stmt->execute();
+            }
         }
-
         
 
 

@@ -34,6 +34,15 @@ INSERT INTO _forfait (nomForfait) VALUES
 ('Standard'),
 ('Premium');
 
+-- Peupler la table _forfait
+INSERT INTO _forfaitPublic (nomForfait) VALUES
+('Gratuit');
+
+-- Peupler la table _forfait
+INSERT INTO _forfaitPro (nomForfait) VALUES
+('Standard'),
+('Premium');
+
 -- Peupler la table _language
 INSERT INTO _langage (nomLangage) VALUES
 ('Français'),
@@ -99,3 +108,11 @@ INSERT INTO _tagRestaurant (nomTag) VALUES
 ('Gastronomique'),
 ('Restauration rapide'),
 ('Crêperie');
+
+-- Peupler la table _contexte
+INSERT INTO _contexte (nomContexte) VALUES
+('Affaires'),
+('Couple'),
+('Famille'),
+('Amis'),
+('Solo');

@@ -115,7 +115,7 @@
                             if($numsiren!=null){
                                 if($rib==null){
                                     ?><label>IBAN*</label><?php
-                                    Input::render(name: "iban", type: "text", required: true);
+                                    Input::render(name: "iban", type: "text", required: false);
                                 }
                                 ?>
                                 <label>Type de forfait*</label>
@@ -133,9 +133,9 @@
     
                                 Select::render(
                                     name: "typeForfait", 
-                                    required: true, 
+                                    required: false, 
                                     options: $option,
-                                    style: "width: 300%;"
+                                    
                                 );
                                 
                                 
@@ -162,16 +162,16 @@
                     
                             Select::render(
                                 name: "typePromotion", 
-                                required: true, 
+                                required: false, 
                                 options: $option
                             );
                         ?>
                     </div>
                     <div id="datePromotionContainer" style="display:none;">
                         <label>Date de début de la promotion*</label>
-                        <?php Input::render(name:"datePromotion", type:"week", required:"true") ?>
+                        <?php Input::render(name:"datePromotion", type:"week") ?>
                         <label>Nombre de semaine (max 4 semaine)</label>
-                        <?php Input::render(name:"durepromotion",id:"durepromotion", type:"number", required:"true",min:1,max:4) ?>
+                        <?php Input::render(name:"durepromotion",id:"durepromotion", type:"number",min:1,max:4) ?>
                     </div>
                     
                     <div>
@@ -200,7 +200,7 @@
                             }
                             Select::render(
                                 name: "typeOffre", 
-                                required: true, 
+                                required: false, 
                                 options: $option
                             );
                             
@@ -213,8 +213,10 @@
                             $stmt = $dbh->prepare($sql); 
                             $stmt->execute();
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                            foreach($tabTag as $key => $tabTag){
-                                $tag[$key]=$tabTag['nomtag'];
+                            $tag=[];
+                            foreach($tabTag as $key => $Tag){
+                                $tag[$Tag['nomtag']]=$Tag['nomtag'];
+                                
                             }
                             
                             ?>
@@ -252,11 +254,16 @@
                         $stmt = $dbh->prepare($sql); 
                         $stmt->execute();
                         $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        foreach($tabTag as $key => $tabTag){
-                            $tag[$key]=$tabTag['nomtag'];
+                        $tag=[];
+                        foreach($tabTag as $key => $Tag){
+                            $tag[$Tag['nomtag']]=$Tag['nomtag'];
+                            
                         }
+                        
+
                         ?>
                         <?php 
+                            
                             CheckboxSelect::render(
                                 'checkbox',
                                 "tag_visite_",
@@ -271,6 +278,8 @@
                             <?php Input::render(name: "prix2", type: "number") ?>
                             <label>Durée de la visite</label>
                             <?php Input::render(name: "duree2", type: "number") ?>
+                            <label>Date de la visite</label>
+                            <?php Input::render(name: "dateVisite", type: "date") ?>
                             <label>Visite guidée</label>
                             <input type="radio" id="oui" name="guidee" value="true" onclick="toggleLangue(true)">
                             <label for="oui">Oui</label>
@@ -307,8 +316,10 @@
                             $stmt = $dbh->prepare($sql); 
                             $stmt->execute();
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                            foreach($tabTag as $key => $tabTag){
-                                $tag[$key]=$tabTag['nomtag'];
+                            $tag=[];
+                            foreach($tabTag as $key => $Tag){
+                                $tag[$Tag['nomtag']]=$Tag['nomtag'];
+                                
                             }
                             ?>
                             <?php 
@@ -328,6 +339,8 @@
                             <?php Input::render(name: "capacite", type: "number")?>
                             <label>Durée du spectacle</label>
                             <?php Input::render(name: "duree3", type: "number")?>
+                            <label>Date de l'evenement</label>
+                            <?php Input::render(name: "dateSpectacle", type: "date")?>
                         </div>
                     </div> <!-- End of Spectacle section -->
 
@@ -339,8 +352,10 @@
                             $stmt = $dbh->prepare($sql); 
                             $stmt->execute();
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                            foreach($tabTag as $key => $tabTag){
-                                $tag[$key]=$tabTag['nomtag'];
+                            $tag=[];
+                            foreach($tabTag as $key => $Tag){
+                                $tag[$Tag['nomtag']]=$Tag['nomtag'];
+                                
                             }
                             ?>
                             <?php 
@@ -376,8 +391,10 @@
                             $stmt = $dbh->prepare($sql); 
                             $stmt->execute();
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                            foreach($tabTag as $key => $tabTag){
-                                $tag[$key]=$tabTag['nomtag'];
+                            $tag=[];
+                            foreach($tabTag as $key => $Tag){
+                                $tag[$Tag['nomtag']]=$Tag['nomtag'];
+                                
                             }
                             ?>
                             <?php 

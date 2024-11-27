@@ -73,16 +73,16 @@ class Header
                 <img src="/ressources/icone/logo.svg" alt="Logo PACT">
                 <span class="' . $spanClass . '">PACT</span>
             </a>';
-        Input::render(class: "barre_recherche", placeholder: "Recherche activité, restaurant, lieu...",
+        /*Input::render(class: "barre_recherche", placeholder: "Recherche activité, restaurant, lieu...",
             icon: "/ressources/icone/recherche.svg");
         echo '
             <div>';
         Input::render(placeholder: 'Entrez une localisation...', icon: "/ressources/icone/test.svg");
         echo '
-            </div>';
-
+            </div>';*/
+            
         self::renderNav($type);
-        self::renderLanguageSelector();
+        //self::renderLanguageSelector();
         self::renderAccountSection($type);
         self::renderBurger($type);
 
@@ -103,11 +103,11 @@ class Header
         echo '<nav>';
         if ($type == HeaderType::Guest) {
             echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            echo '<a href="offre.php">Offres</a>';
+            //echo '<a href="offre.php">Offres</a>';
         } elseif ($type == HeaderType::Member) {
             echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            echo '<a href="offre.php">Offres</a>';
-            echo '<a href="offre.php">Favoris</a>';
+            //echo '<a href="offre.php">Offres</a>';
+            //echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
             echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
             echo '<a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>';
@@ -118,7 +118,7 @@ class Header
     /**
      * Rend le sélecteur de langue pour l'en-tête.
      */
-    private static function renderLanguageSelector(): void {
+    /*private static function renderLanguageSelector(): void {
         echo '
         <div class="entete-langue">
             <img class="logo-langue" src="/ressources/icone/logofr.svg" alt="Français">
@@ -128,7 +128,7 @@ class Header
                 <option value="en">English</option>
             </select>
         </div>';
-    }
+    }*/
 
     /**
      * Rend la section du compte en fonction du type d'utilisateur.
@@ -140,13 +140,13 @@ class Header
         if ($type == HeaderType::Guest) {
             Button::render($class = '', $id = 'guest-button', $text = 'S\'inscrire / Se Connecter',
                 $type = ButtonType::Guest,
-                $onClick = "window.location.href='/pages/pro/connexionComptePro/connexionComptePro.php'");
+                $onClick = "window.location.href='/pages/membre/connexionCompteMembre/connexionCompteMembre.php'");
         } elseif ($type == HeaderType::Member) {
-            Button::render($class = '', $id = 'member-button', $text = 'Mon Compte', $type = ButtonType::Member,
-                $onClick = "window.location.href='monCompte.php'");
+            Button::render($class = '', $id = 'member-button', $text = 'Se deconnecter', $type = ButtonType::Member,
+                $onClick = "window.location.href='../../../deconnexion.php'");
         } elseif ($type == HeaderType::Pro) {
             Button::render($class = '', $id = 'pro-button', $text = 'Se deconnecter', $type = ButtonType::Pro,
-                $onClick = "window.location.href='../deconnexion.php'");
+                $onClick = "window.location.href='../../../deconnexion.php'");
         }
         echo '</div>';
     }
@@ -172,7 +172,7 @@ class Header
             echo '<a href="dashboardPro.php">Mes Offres</a>';
             echo '<a href="publierOffre.php">Créer une Offre</a>';
         }
-        self::renderLanguageSelector();
+        //self::renderLanguageSelector();
         self::renderAccountSection($type);
         echo <<<EOF
  </div>
