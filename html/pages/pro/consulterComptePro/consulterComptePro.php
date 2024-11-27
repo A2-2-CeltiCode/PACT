@@ -184,7 +184,7 @@ try {
         </form>
     </main>
 
-    <?php Footer::render(HeaderType::Pro); ?>
+    <?php Footer::render(FooterType::Pro); ?>
 </body>
 
 </html>
