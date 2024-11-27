@@ -72,15 +72,19 @@ try {
     <main>
         <h1>Vos informations professionnelles</h1>
 
-        <!-- Bouton "Modifier mes informations" -->
+        <!-- Boutons principaux -->
         <div class="modifier">
             <button type="button" onclick="activerModification()">Modifier mes informations</button>
+            <button type="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
+
+        <!-- Message d'erreur -->
+        <div id="messageErreur" style="color: red; display: none;"></div>
 
         <!-- Affichage des messages d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
 
-        <!-- Formulaire pour afficher et modifier les informations -->
+        <!-- Formulaire -->
         <form id="formulaireComptePro" method="post" action="enregistrerModifications.php">
             <table border="1">
                 <!-- Catégorie Identité -->
@@ -90,27 +94,22 @@ try {
                 <tr>
                     <th>Dénomination Sociale</th>
                     <td>
-                        <input type="text" name="denominationsociale" 
-                               value="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non renseigné') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non renseigné') ?>">
+                        <input type="text" name="denominationsociale" value="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Raison Sociale</th>
                     <td>
-                        <input type="text" name="raisonsocialepro" 
-                               value="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non renseigné') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non renseigné') ?>">
+                        <input type="text" name="raisonsocialepro" value="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Numéro Siren</th>
                     <td>
-                        <input type="text" name="numsiren" 
-                               value="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non renseigné') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non renseigné') ?>">
+                        <input type="text" name="numsiren" value="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
+
 
                 <!-- Catégorie Coordonnées -->
                 <tr>
@@ -119,17 +118,13 @@ try {
                 <tr>
                     <th>Email</th>
                     <td>
-                        <input type="email" name="email" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>">
+                        <input type="email" name="email" class="editable" value="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Numéro de Téléphone</th>
                     <td>
-                        <input type="text" name="numtel" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>">
+                        <input type="text" name="numtel" class="editable" value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
 
@@ -140,25 +135,19 @@ try {
                 <tr>
                     <th>Rue</th>
                     <td>
-                        <input type="text" name="rue" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>">
+                        <input type="text" name="rue" class="editable" value="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Code Postal</th>
                     <td>
-                        <input type="text" name="codepostal" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>">
+                        <input type="text" name="codepostal" class="editable" value="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Ville</th>
                     <td>
-                        <input type="text" name="ville" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>">
+                        <input type="text" name="ville" class="editable" value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
 
@@ -169,9 +158,7 @@ try {
                 <tr>
                     <th>RIB</th>
                     <td>
-                        <input type="text" name="banquerib" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>">
+                        <input type="text" name="banquerib" class="editable" value="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
             </table>
@@ -182,9 +169,32 @@ try {
                 <button type="button" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
             </div>
         </form>
+         <!-- Popup de changement de mot de passe -->
+        <div id="popupMotDePasse" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; padding: 20px; background: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); border-radius: 10px; z-index: 1000;">
+            <h2>Changer le mot de passe</h2>
+            <form id="formulaireMotDePasse" method="post" action="changerMotDePasse.php">
+                <div>
+                    <label for="ancienMdp">Ancien mot de passe :</label>
+                    <input type="password" id="ancienMdp" name="ancienMdp" required>
+                </div>
+                <div>
+                    <label for="nouveauMdp">Nouveau mot de passe :</label>
+                    <input type="password" id="nouveauMdp" name="nouveauMdp" required>
+                </div>
+                <div>
+                    <label for="confirmerMdp">Confirmer le mot de passe :</label>
+                    <input type="password" id="confirmerMdp" name="confirmerMdp" required>
+                </div>
+                <div id="erreurPopup" style="color: red; display: none; margin-top: 10px;"></div>
+                <div style="margin-top: 20px;">
+                    <button type="button" onclick="validerMotDePasse(event)">Enregistrer</button>
+                    <button type="button" onclick="fermerPopupMotDePasse()">Annuler</button>
+                </div>
+            </form>
+        </div>
     </main>
 
-    <?php Footer::render(FooterType::Pro); ?>
+    <?php Footer::render(HeaderType::Pro); ?>
 </body>
 
 </html>

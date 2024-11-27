@@ -271,3 +271,7 @@ main button:hover {
 .bouton{
     display: flex;
 }
+
+#popupMotDePasse{
+    background-color: gray;
+}
