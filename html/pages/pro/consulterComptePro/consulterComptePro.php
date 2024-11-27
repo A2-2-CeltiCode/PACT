@@ -91,24 +91,24 @@ try {
                     <th>Dénomination Sociale</th>
                     <td>
                         <input type="text" name="denominationsociale" 
-                               value="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non disponible') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non disponible') ?>">
+                               value="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non renseigné') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Raison Sociale</th>
                     <td>
                         <input type="text" name="raisonsocialepro" 
-                               value="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non disponible') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non disponible') ?>">
+                               value="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non renseigné') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Numéro Siren</th>
                     <td>
                         <input type="text" name="numsiren" 
-                               value="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non disponible') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non disponible') ?>">
+                               value="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non renseigné') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
 
@@ -120,16 +120,16 @@ try {
                     <th>Email</th>
                     <td>
                         <input type="email" name="email" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['email'] ?? 'Non disponible') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['email'] ?? 'Non disponible') ?>">
+                               value="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Numéro de Téléphone</th>
                     <td>
                         <input type="text" name="numtel" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non disponible') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non disponible') ?>">
+                               value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
 
@@ -141,24 +141,24 @@ try {
                     <th>Rue</th>
                     <td>
                         <input type="text" name="rue" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['rue'] ?? 'Non disponible') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['rue'] ?? 'Non disponible') ?>">
+                               value="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['rue'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Code Postal</th>
                     <td>
                         <input type="text" name="codepostal" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non disponible') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non disponible') ?>">
+                               value="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Ville</th>
                     <td>
                         <input type="text" name="ville" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non disponible') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['ville'] ?? 'Non disponible') ?>">
+                               value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
 
@@ -170,8 +170,8 @@ try {
                     <th>RIB</th>
                     <td>
                         <input type="text" name="banquerib" class="editable" 
-                               value="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non disponible') ?>" 
-                               readonly data-original="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non disponible') ?>">
+                               value="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
             </table>
