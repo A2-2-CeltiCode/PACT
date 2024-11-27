@@ -6,18 +6,24 @@ function trier(sort) {
     const ouvertureInput = document.querySelector('input[name="ouverture"]').value;
     const fermetureInput = document.querySelector('input[name="fermeture"]').value;
     const etatInput = document.querySelector('select[name="etat"]').value;
+    const trieInput = document.querySelector('select[name="trie"]').value;
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
 
-    const params = new URLSearchParams();
-    params.append('sort', sort);
-    if (searchInput) params.append('titre', searchInput);
-    if (localisationInput) params.append('localisation', localisationInput);
-    if (minPrixInput) params.append('minPrix', minPrixInput);
-    if (maxPrixInput) params.append('maxPrix', maxPrixInput);
-    if (ouvertureInput) params.append('ouverture', ouvertureInput);
-    if (fermetureInput) params.append('fermeture', fermetureInput);
-    if (etatInput) params.append('etat', etatInput);
-    if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
+    const params = new URLSearchParams(window.location.search);
+    if (sort) {
+        params.set('sort', sort);
+    } else if (!params.has('sort')) {
+        params.set('sort', 'default'); // Valeur par défaut si aucun tri n'est spécifié
+    }
+    if (searchInput) params.set('titre', searchInput);
+    if (localisationInput) params.set('localisation', localisationInput);
+    if (minPrixInput) params.set('minPrix', minPrixInput);
+    if (maxPrixInput) params.set('maxPrix', maxPrixInput);
+    if (ouvertureInput) params.set('ouverture', ouvertureInput);
+    if (fermetureInput) params.set('fermeture', fermetureInput);
+    if (etatInput) params.set('etat', etatInput);
+    if (trieInput) params.set('trie',trieInput);
+    if (categoryInputs.length > 0) params.set('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `listeOffre.php?${params.toString()}`, true);
@@ -43,6 +49,8 @@ function rechercher() {
     const ouvertureInput = document.querySelector('input[name="ouverture"]').value;
     const fermetureInput = document.querySelector('input[name="fermeture"]').value;
     const etatInput = document.querySelector('select[name="etat"]').value;
+    const trieInput = document.querySelector('select[name="trie"]').value;
+
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
 
     const params = new URLSearchParams();
@@ -53,6 +61,7 @@ function rechercher() {
     if (ouvertureInput) params.append('ouverture', ouvertureInput);
     if (fermetureInput) params.append('fermeture', fermetureInput);
     if (etatInput) params.append('etat', etatInput);
+    if (trieInput) params.append('trie',trieInput);
     if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
@@ -93,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const ouvertureInput = document.querySelector('input[name="ouverture"]');
     const fermetureInput = document.querySelector('input[name="fermeture"]');
     const etatInput = document.querySelector('select[name="etat"]');
+    const trieInput = document.querySelector('select[name="trie"]');
     const categoryInputs = document.querySelectorAll('input[name="nomcategorie[]"]');
 
     searchInput.addEventListener('input', function() {
@@ -120,6 +130,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     etatInput.addEventListener('change', function() {
+        rechercher();
+    });
+
+    trieInput.addEventListener('change', function() {
         rechercher();
     });
 

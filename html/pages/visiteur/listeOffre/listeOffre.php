@@ -10,9 +10,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controlleurs/Offre/Offre.php';
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Select/Select.php";
 require_once  $_SERVER["DOCUMENT_ROOT"] . '/composants/CheckboxSelect/CheckboxSelect.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/composants/Checkbox/Checkbox.php';
-require_once 'fonctionTrie.php';
+require_once '../../../trie/fonctionTrie.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barretrie.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
+
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
@@ -27,6 +32,7 @@ $maxPrix = isset($_GET['maxPrix']) ? $_GET['maxPrix'] : null;
 $etat= isset($_GET['etat']) ? $_GET['etat'] : 'ouvertetferme';
 $ouverture = isset($_GET['ouverture']) ? $_GET['ouverture'] : null;
 $fermeture = isset($_GET['fermeture']) ? $_GET['fermeture'] : null;
+$trie = isset($_GET['trie']) ? $_GET['trie'] : 'idoffre DESC';
 $query = "SELECT * FROM offres WHERE 1=1";
 $params = [];
 
@@ -38,7 +44,7 @@ if (!empty($_GET['nomcategorie'])) {
     $params = array_merge($params, $nomcategories);
 }
 // Récupération des résultats
-$resultats = getOffres($pdo, $sort, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat);
+$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat);
 
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
@@ -85,74 +91,15 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         gap: 10px;
     }
     </style>
-    <script src="trieGeneral.js"></script>
+    <script src="../../../trie/trieGeneral.js"></script>
 </head>
 <body>
-    <form id="searchForm" method="GET" action="">
-        <!-- Formulaire de tri -->
-        <input type="hidden" id="sortInput" name="sort" value="<?php echo htmlspecialchars($sort); ?>">
-        <div class="input">
-        <?php Input::render(name:"titre", type:"text", placeholder:'Titre*', value: htmlspecialchars($titre)); ?>
-        <?php Input::render(name:"localisation", type:"text", placeholder:'localisation', value: htmlspecialchars($localisation)); ?>
-        <?php Input::render(name:"minPrix", type:"number", placeholder:'Prix Min', value: htmlspecialchars($minPrix)); ?>
-        <?php Input::render(name:"maxPrix", type:"number", placeholder:'Prix Max', value: htmlspecialchars($maxPrix)); ?>
-        <div>
-        <label for="ouverture">Heure d'ouverture</label>
-        <?php Input::render(name:"ouverture", type:"time", value: htmlspecialchars($ouverture)); ?>
-        </div>
-        <div>
-        <label for="fermeture">Heure de fermeture</label>
-        <?php Input::render(name:"fermeture", type:"time", placeholder:'Heure de fermeture', value: htmlspecialchars($fermeture)); ?>
-        </div>
-        <?php
-        $options = [
-            'Spectacle' => 'Spectacle',
-            'Activite' => 'Activite',
-            'Restaurant' => 'Restaurant',
-            'Parc d\'attractions' => 'Parc d\'attractions',
-            'Visite' => 'Visite'
-        ];
-        CheckboxSelect::render(
-            'custom-class',
-            'checkbox-select-id',
-            'nomcategorie',
-            false,
-            $options,
-            $nomcategories
-        );
-        $options = [
-            'ouvertetferme'=> 'Ouvert et fermé',
-            'ouvert'=> 'Ouvert',
-            'ferme'=> 'Fermé'
-        ];
-        Select::render(
-            'custom-class',
-            'select-etat', 
-            'etat',
-            false,
-            [
-                "prixCroissant" => "Tri par prix croissant",
-                "prixDecroissant" => "Tri par prix décroissant",
-                "dateCroissante" => "Tri par date croissante",
-                "dateDecroissante" => "Tri par date décroissante",
-            ],
-            isset($_GET['etat']) ? $_GET['etat'] : 'tout'
-        );
-        
-        ?>
-        <?php Button::render(text: "Rechercher", submit: true); ?>
-        </div>
-    </form>
+    <?php
+    Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories);
+    ?>
     <br>
 
-    <div>
-        <!-- Boutons de tri -->
-        <?php Button::render(text: "Trier par prix croissant", type: "member", onClick: "document.getElementById('sortInput').value='valprix ASC'; trier('valprix ASC')"); ?>
-        <?php Button::render(text: "Trier par prix décroissant", type: "member", onClick: "document.getElementById('sortInput').value='valprix DESC'; trier('valprix DESC')"); ?>
-        <?php Button::render(text: "Trier par date croissante", type: "member", onClick: "document.getElementById('sortInput').value='idoffre ASC'; trier('idoffre ASC')"); ?>
-        <?php Button::render(text: "Trier par date décroissante", type: "member", onClick: "document.getElementById('sortInput').value='idoffre DESC'; trier('idoffre DESC')"); ?>
-        <?php Button::render(text: "Réinitialiser", type: "member", onClick: "window.location.href='/pages/visiteur/listeOffre/listeOffre.php'"); ?>
-    </div>
+   
 
     <div id="nombreOffres">
         <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
