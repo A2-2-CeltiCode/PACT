@@ -20,8 +20,8 @@ body {
 
 .carousel {
     background-color: var(--gris1);
-    width: 22em;
-    height: 22em;
+    width: 25em;
+    height: 25em;
     position: relative;
     border-radius: 10px;
     overflow: hidden;
@@ -33,17 +33,17 @@ body {
 .carousel-images {
     display: flex;
     transition: transform 0.3s ease;
-    width: 22em;
-    height: 22em;
+    width: 25em;
+    height: 25em;
 }
 
 .carousel-image {
-    min-width: 22em;
-    min-height: 22em;
+    min-width: 25em;
+    min-height: 25em;
     display: grid;
     place-items:center;
-    width: 22em;
-    height: 22em;
+    width: 25em;
+    height: 25em;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -181,3 +181,12 @@ li {
     stroke: var(--primaire-pro);
     fill: rgba(0, 0, 0, 0);
 }
+
+.container-gauche{
+display: flex;
+flex-direction: column;
+align-items: center;}
+
+
+
+.retour{position: absolute; margin: 10px;}
