@@ -1,0 +1,163 @@
+body {
+    margin: 0;
+}
+
+.conteneur-offres {
+    width: 70%;
+    max-width: 50em;
+    margin: 1em auto;
+}
+
+
+.conteneur-filtres-offres{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tris{
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gris1);
+    border-radius: 1em;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: white;
+    position: relative !important;
+    right: 150px;
+    margin-top: 10px !important;
+    height: fit-content !important;
+}
+
+.select-wrapper select {
+    width: 300px !important;
+    color: var(--secondaire-pro);
+}
+
+
+.carte-offre {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    width: 45em;
+    height: 12em;
+    border-radius: 1em;
+    border: 1px solid var(--gris1);
+    transition: transform 0.2s ease;
+    margin: 1em auto 4em;
+    position: relative;
+}
+
+.svg-inline svg {
+    stroke: var(--primaire-pro);
+}
+
+.carte-offre:hover {
+    transform: scale(1.02);
+}
+
+.image-offre {
+    flex: 1;
+    border-radius: 1em 0 0 1em;
+    place-items: center;
+    background-color: var(--gris1);
+}
+
+.image-carte {
+    width: 100%;
+    height: 100%;
+    border-radius: 1em 0 0 1em;
+}
+
+.details-offre {
+    flex: 2;
+}
+
+.donnees-offre {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--gris1);
+}
+
+.titre {
+    padding: 0em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.infos-offre {
+    padding: 0em 2em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.prix-offre {
+    padding: 0em 5em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.prix {
+    color: var(--secondaire-pro);
+}
+
+.onglets {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5em 5em;
+    font-size: var(--h2-font-size);
+    font-family: 'Encode Sans';
+}
+
+.onglet {
+    text-decoration: none;
+    color: var(--gris2);
+}
+
+.onglet.actif {
+    text-decoration: underline;
+    color: var(--primaire-pro);
+}
+
+.titre-page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    max-width: 50em;
+    margin: 1em auto;
+}
+
+.button-container {
+    position: absolute;
+    top: 0em;
+    right: 0em;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+}
+
+.button-modif {
+    border-radius: 0px 1em !important;
+}
+.svg-inline svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primaire-pro);
+    fill: rgba(0, 0, 0, 0);
+}
+
+section {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1em 0;
+}
+
+.bouton {
+    display: flex;
+    flex-direction: column;
+}
