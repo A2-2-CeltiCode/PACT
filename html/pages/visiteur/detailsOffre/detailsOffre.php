@@ -62,16 +62,17 @@ STRING
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails de l'offre</title>
-    <link rel="stylesheet" href="detailsOffre.css">
+    <link rel="stylesheet" href="detailsOffre-tel.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 
 <body>
     <?php Header::render(HeaderType::Guest); ?>
+    <div class=titre-pc>
+        <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
+    </div>
     <main>
-        <div class=titre>
-            <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
-        </div>
+
 
         <div class="container">
             <div class="container-gauche">
@@ -102,6 +103,7 @@ STRING
                     <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php endif; ?>
             </div>
+        <?php Label::render("titre-tel", "", "", $offre['titre']); ?>
 
             <div class="offre-infos">
                 <?php
