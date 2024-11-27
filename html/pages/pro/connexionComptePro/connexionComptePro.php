@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['typeUtilisateur'] = "pro";
             
             // Redirige vers le tableau de bord
-            header("Location: ../listeOffres/listeOffres.php");
+            header("Location: ../facture/updateFacture.php");
             exit();
         } else {
             // Mot de passe incorrect
