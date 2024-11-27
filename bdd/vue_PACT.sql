@@ -10,7 +10,7 @@ SET SCHEMA 'pact';
 -- COMPTE MEMBRE
 
 CREATE OR REPLACE VIEW vue_compte_membre AS
-SELECT idCompte, pseudo, mdp, email, numTel, nom, prenom
+SELECT idCompte, pseudo, mdp, email, numTel, nom, prenom, codePostal, ville, rue
 FROM _compte NATURAL JOIN _compteMembre NATURAL JOIN _adresse;
 
 -- COMPTE PRO PRIVE

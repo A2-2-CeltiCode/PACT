@@ -76,7 +76,7 @@ try {
 
         <!-- Affichage des informations si disponibles -->
         <form id="formulaireCompteMembre" method="post" action="enregistrerModifications.php">
-            <table border="1">
+            <table>
                 <!-- Catégorie Identité -->
                 <tr>
                     <th colspan="2" style="background-color: #075997; color: white; text-align: center;">Identité</th>
