@@ -2,7 +2,6 @@
 // Démarrer la session
 session_start();
 
-
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use \composants\Label\Label;
@@ -14,16 +13,20 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
-
-
 // Initialisation des variables
 $message = "";
 $userInfo = [];
-$idCompte = $_SESSION['idCompte']; 
+
+// Configuration de la base de données
+$host = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$password = '13phenix';
+$idCompte = 2; //$_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 try {
     // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Définir le schéma "pact" pour la session
@@ -60,6 +63,8 @@ try {
     <title>Mon Compte</title>
     <link rel="stylesheet" href="consulterComptePro.css">
     <script src="consulterComptePro.js"></script>
+      
+
 </head>
 
 <body>
@@ -93,15 +98,27 @@ try {
                 </tr>
                 <tr>
                     <th>Dénomination Sociale</th>
-                    <td><input type="text" name="denominationsociale" value="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non disponible') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="denominationsociale" 
+                               value="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non disponible') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['denominationsociale'] ?? 'Non disponible') ?>">
+                    </td>
                 </tr>
                 <tr>
                     <th>Raison Sociale</th>
-                    <td><input type="text" name="raisonsocialepro" value="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non disponible') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="raisonsocialepro" 
+                               value="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non disponible') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['raisonsocialepro'] ?? 'Non disponible') ?>">
+                    </td>
                 </tr>
                 <tr>
                     <th>Numéro Siren</th>
-                    <td><input type="text" name="numsiren" value="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non disponible') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="numsiren" 
+                               value="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non disponible') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non disponible') ?>">
+                    </td>
                 </tr>
 
                 <!-- Catégorie Coordonnées -->
@@ -110,11 +127,19 @@ try {
                 </tr>
                 <tr>
                     <th>Email</th>
-                    <td><input type="email" name="email" class="editable" value="<?= htmlspecialchars($userInfo['email'] ?? 'Non disponible') ?>" readonly></td>
+                    <td>
+                        <input type="email" name="email" class="editable" 
+                               value="<?= htmlspecialchars($userInfo['email'] ?? 'Non disponible') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['email'] ?? 'Non disponible') ?>">
+                    </td>
                 </tr>
                 <tr>
                     <th>Numéro de Téléphone</th>
-                    <td><input type="text" name="numtel" class="editable" value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non disponible') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="numtel" class="editable" 
+                               value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non disponible') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non disponible') ?>">
+                    </td>
                 </tr>
 
                 <!-- Catégorie Adresse -->
@@ -123,15 +148,27 @@ try {
                 </tr>
                 <tr>
                     <th>Rue</th>
-                    <td><input type="text" name="rue" class="editable" value="<?= htmlspecialchars($userInfo['rue'] ?? 'Non disponible') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="rue" class="editable" 
+                               value="<?= htmlspecialchars($userInfo['rue'] ?? 'Non disponible') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['rue'] ?? 'Non disponible') ?>">
+                    </td>
                 </tr>
                 <tr>
                     <th>Code Postal</th>
-                    <td><input type="text" name="codepostal" class="editable" value="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non disponible') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="codepostal" class="editable" 
+                               value="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non disponible') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['codepostal'] ?? 'Non disponible') ?>">
+                    </td>
                 </tr>
                 <tr>
                     <th>Ville</th>
-                    <td><input type="text" name="ville" class="editable" value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non disponible') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="ville" class="editable" 
+                               value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non disponible') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['ville'] ?? 'Non disponible') ?>">
+                    </td>
                 </tr>
 
                 <!-- Catégorie Informations bancaires -->
@@ -140,15 +177,18 @@ try {
                 </tr>
                 <tr>
                     <th>RIB</th>
-                    <td><input type="text" name="banquerib" class="editable" value="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non disponible') ?>" readonly></td>
+                    <td>
+                        <input type="text" name="banquerib" class="editable" 
+                               value="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non disponible') ?>" 
+                               readonly data-original="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non disponible') ?>">
+                    </td>
                 </tr>
             </table>
 
+            <!-- Boutons -->
             <div class="bouton">
-                <!-- Bouton "Enregistrer" -->
-                <button type="submit" id="btnEnregistrer">Enregistrer</button>
-                <!-- Bouton "Annuler" -->
-                <button onclick="annulerModification()" id="btnAnnuler">Annuler</button>
+                <button type="submit" id="btnEnregistrer" style="display: none;">Enregistrer</button>
+                <button type="button" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
             </div>
         </form>
     </main>
