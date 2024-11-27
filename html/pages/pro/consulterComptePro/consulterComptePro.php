@@ -170,7 +170,7 @@ try {
             </div>
         </form>
          <!-- Popup de changement de mot de passe -->
-        <div id="popupMotDePasse" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; padding: 20px; background: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); border-radius: 10px; z-index: 1000;">
+        <div id="popupMotDePasse">
             <h2>Changer le mot de passe</h2>
             <form id="formulaireMotDePasse" method="post" action="changerMotDePasse.php">
                 <div>
