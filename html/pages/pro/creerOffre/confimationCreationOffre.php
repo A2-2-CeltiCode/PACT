@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    header("Location: ../listeOffres/listeOffres.php");
+    //header("Location: ../listeOffres/listeOffres.php");
 
     require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);

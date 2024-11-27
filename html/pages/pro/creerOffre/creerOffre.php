@@ -3,13 +3,14 @@
     <html>
     <head>
         <?php
+        
         use composants\Input\Input;
         use composants\Button\Button;
         use \composants\InsererImage\InsererImage;
         use \composants\Checkbox\Checkbox;
         use \composants\Select\Select;
         use \composants\Textarea\Textarea;
-
+        use \composants\CheckboxSelect\CheckboxSelect;
         require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/InsererImage/InsererImage.php";
@@ -19,6 +20,7 @@
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Textarea/Textarea.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Footer/Footer.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/CheckboxSelect/CheckboxSelect.php";
 
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
         $sql = "SELECT numsiren FROM pact._CompteProPrive WHERE idCompte = :idCompte";
@@ -211,22 +213,23 @@
                             $stmt = $dbh->prepare($sql); 
                             $stmt->execute();
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            foreach($tabTag as $key => $tabTag){
+                                $tag[$key]=$tabTag['nomtag'];
+                            }
+                            
                             ?>
-                            <div class="dropdown">
-                            <?php Button::render(onClick: "toggleDropdown('dropdownActivite')", text: "Tag", type: "pro", submit: false, class: "tag"); ?>
-                            <div class="dropdown-content" id="dropdownActivite">
-                                    <?php foreach($tabTag as $index => $tag) { 
-                                        Checkbox::render(
-                                            class: "checkbox",
-                                            id: "tag_activite_" . $index . "_" . $tag['nomtag'], // ID unique
-                                            name: "tag[]",
-                                            value: $tag['nomtag'],
-                                            text: $tag['nomtag'],
-                                            required: false,
-                                            checked: false
+                            
+                                    <?php 
+                                        CheckboxSelect::render(
+                                            'checkbox',
+                                            "tag_activite_",
+                                            "tag[]",
+                                            false,
+                                            $tag,
+
                                         );
-                                    }?>
-                                </div>
+                                    ?>
+                                
                                 
                             </div>
                             <br><br>
@@ -243,31 +246,26 @@
 
                     <!-- Section Visite -->
                     <div id="Visite" class="section" style="display:none;">
-                        <div>
-                            <?php
-                            $sql = "SELECT nomtag FROM pact._tagAutre";
-                            $stmt = $dbh->prepare($sql); 
-                            $stmt->execute();
-                            $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                            ?>
-                            <div class="dropdown">
-                                
-                                <?php Button::render(onClick: "toggleDropdown('dropdownVisite')", text: "Tag", type: "pro", submit: false, class: "tag"); ?>                               
-                                <div class="dropdown-content" id="dropdownVisite">
-                                    <?php foreach($tabTag as $index => $tag) { 
-                                        Checkbox::render(
-                                            class: "checkbox",
-                                            id: "tag_visite_" . $index . "_" . $tag['nomtag'], // ID unique
-                                            name: "tag[]",
-                                            value: $tag['nomtag'],
-                                            text: $tag['nomtag'],
-                                            required: false,
-                                            checked: false
-                                        );
-                                    }?>
-                                </div>
-                                
-                            </div>
+                    <div>
+                        <?php
+                        $sql = "SELECT nomtag FROM pact._tagAutre";
+                        $stmt = $dbh->prepare($sql); 
+                        $stmt->execute();
+                        $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach($tabTag as $key => $tabTag){
+                            $tag[$key]=$tabTag['nomtag'];
+                        }
+                        ?>
+                        <?php 
+                            CheckboxSelect::render(
+                                'checkbox',
+                                "tag_visite_",
+                                "tag[]",
+                                false,
+                                $tag,
+                            );
+                        ?>
+                    </div>
                             <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix2", type: "number") ?>
@@ -283,18 +281,19 @@
                                 $sql = "SELECT nomlangage FROM pact._langage";
                                 $stmt = $dbh->prepare($sql); 
                                 $stmt->execute();
-                                $tabLangue = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-                                foreach($tabLangue as $langue){
-                                    CheckBox::render(
-                                        class: "checkbox",
-                                        id: $langue['nomlangage'],
-                                        name: "langue[]",
-                                        value: $langue['nomlangage'],
-                                        text: $langue['nomlangage'],
-                                        required: false,
-                                        checked: false
-                                    );
+                                $tabLangue = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                foreach($tabLangue as $key => $tabLangue){
+                                    $langue[$key]=$tabLangue['nomlangage'];
                                 }
+                                ?>
+                                <?php 
+                                    CheckboxSelect::render(
+                                        'checkbox',
+                                        "langue_",
+                                        "langue[]",
+                                        false,
+                                        $langue,
+                                    );
                                 ?>
                             </div>
                         </div>
@@ -308,24 +307,20 @@
                             $stmt = $dbh->prepare($sql); 
                             $stmt->execute();
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            foreach($tabTag as $key => $tabTag){
+                                $tag[$key]=$tabTag['nomtag'];
+                            }
                             ?>
-                            <div class="dropdown">
-                            <?php Button::render(onClick: "toggleDropdown('dropdownSpectacle')", text: "Tag", type: "pro", submit: false, class: "tag"); ?>                               
-                                <div class="dropdown-content" id="dropdownSpectacle">
-                                    <?php foreach($tabTag as $index => $tag) { 
-                                        Checkbox::render(
-                                            class: "checkbox",
-                                            id: "tag_spectacle_" . $index . "_" . $tag['nomtag'], // ID unique
-                                            name: "tag[]",
-                                            value: $tag['nomtag'],
-                                            text: $tag['nomtag'],
-                                            required: false,
-                                            checked: false
-                                        );
-                                    }?>
-                                </div>
-                                
-                            </div>
+                            <?php 
+                                CheckboxSelect::render(
+                                    'checkbox',
+                                    "tag_spectacle_",
+                                    "tag[]",
+                                    false,
+                                    $tag,
+                                );
+                            ?>
+                        </div>
                             <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix3", type: "number") ?>
@@ -344,24 +339,20 @@
                             $stmt = $dbh->prepare($sql); 
                             $stmt->execute();
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            foreach($tabTag as $key => $tabTag){
+                                $tag[$key]=$tabTag['nomtag'];
+                            }
                             ?>
-                            <div class="dropdown">
-                            <?php Button::render(onClick: "toggleDropdown('dropdownParc')", text: "Tag", type: "pro", submit: false, class: "tag"); ?>                               
-
-                                <div class="dropdown-content" id="dropdownParc">
-                                    <?php foreach($tabTag as $index => $tag) { 
-                                        Checkbox::render(
-                                            class: "checkbox",
-                                            id: "tag_parc_" . $index . "_" . $tag['nomtag'], // ID unique
-                                            name: "tag[]",
-                                            value: $tag['nomtag'],
-                                            text: $tag['nomtag'],
-                                            required: false,
-                                            checked: false
-                                        );
-                                    }?>
-                                </div>
-                            </div>
+                            <?php 
+                                CheckboxSelect::render(
+                                    'checkbox',
+                                    "tag_parc_",
+                                    "tag[]",
+                                    false,
+                                    $tag,
+                                );
+                            ?>
+                        </div>
                             <br><br>
                             
                             <label>Prix*</label>
@@ -385,24 +376,20 @@
                             $stmt = $dbh->prepare($sql); 
                             $stmt->execute();
                             $tabTag = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            foreach($tabTag as $key => $tabTag){
+                                $tag[$key]=$tabTag['nomtag'];
+                            }
                             ?>
-                            <div class="dropdown">
-                            <?php Button::render(onClick: "toggleDropdown('dropdownRestaurant')", text: "Tag",type: "pro", submit: false, class: "tag"); ?>                               
-
-                                <div class="dropdown-content" id="dropdownRestaurant">
-                                    <?php foreach($tabTag as $index => $tag) { 
-                                        Checkbox::render(
-                                            class: "checkbox",
-                                            id: "tag_restaurant_" . $index . "_" . $tag['nomtag'], // ID unique
-                                            name: "tag[]",
-                                            value: $tag['nomtag'],
-                                            text: $tag['nomtag'],
-                                            required: false,
-                                            checked: false
-                                        );
-                                    }?>
-                                </div>
-                            </div>
+                            <?php 
+                                CheckboxSelect::render(
+                                    'checkbox',
+                                    "tag_restaurant_",
+                                    "tag[]",
+                                    false,
+                                    $tag,
+                                );
+                            ?>
+                        </div>
                             <br>
                             <div>
                                 <label>Carte du Restaurant</label>
