@@ -16,13 +16,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 
 
-// Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['idCompte'])) {
-    header("Location: login.php"); 
-    exit;
-}
-
-
 // Initialisation des variables
 $message = "";
 $userInfo = [];
@@ -30,7 +23,7 @@ $idCompte = $_SESSION['idCompte'];
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Définir le schéma "pact" pour la session
@@ -151,8 +144,12 @@ try {
                 </tr>
             </table>
 
-            <!-- Bouton "Enregistrer" -->
-            <button type="submit" id="btnEnregistrer" style="display: none; float: right; margin-top: 20px;">Enregistrer</button>
+            <div class="bouton">
+                <!-- Bouton "Enregistrer" -->
+                <button type="submit" id="btnEnregistrer">Enregistrer</button>
+                <!-- Bouton "Annuler" -->
+                <button onclick="annulerModification()" id="btnAnnuler">Annuler</button>
+            </div>
         </form>
     </main>
 

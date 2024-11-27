@@ -46,15 +46,15 @@ body {
 }
 
 main {
+    position: relative; /* Nécessaire pour que le bouton soit positionné en bas à droite de main */
+    padding: 30px;
     width: 90%;
     max-width: 800px;
     background: #fff;
-    padding: 30px;
+    margin: 20px auto;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    margin: 20px auto;
     text-align: left;
-    align-items: center;
 }
 /* Champs non modifiables (par défaut pour la catégorie Identité) */
 main table input[readonly] {
@@ -206,31 +206,68 @@ main button:hover {
     color: red;
 }
 
+
+
 /* Bouton "Enregistrer" */
 #btnEnregistrer {
     display: none; /* Masqué par défaut */
-    position: fixed; /* Fixé en bas à droite de l'écran */
-    bottom: 20px;
-    right: 20px;
-    background-color: #4CAF50; /* Vert pour signifier une action positive */
+    position: relative; /* Position relative pour se placer naturellement sous le tableau */
+    margin-top: 20px; /* Espacement au-dessus du bouton */
+    margin-left: auto; /* Aligner à droite */
+    margin-right: 0;
+    background-color: #3b9d3f; /* Couleur verte */
     color: white;
     border: none;
-    padding: 15px 25px;
-    border-radius: 50px; /* Bouton arrondi */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre subtile */
-    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px; /* Coins arrondis */
     cursor: pointer;
-    z-index: 1000; /* S'assurer qu'il est au-dessus des autres éléments */
-    transition: all 0.3s ease; /* Effet de transition */
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+    transition: all 0.3s ease;
 }
 
 #btnEnregistrer:hover {
-    background-color: #45a049; /* Couleur plus foncée au survol */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Accentuer l'ombre */
-    transform: translateY(-3px); /* Léger effet de "remontée" */
+    background-color: #47c94d; /* Couleur verte plus foncée au survol */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); /* Léger effet de levée */
 }
 
 #btnEnregistrer:active {
-    transform: translateY(2px); /* Effet de clic */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Réduire l'ombre */
+    transform: translateY(1px); /* Effet d'enfoncement */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+/* Bouton "Annuler" */
+#btnAnnuler {
+    display: none; /* Masqué par défaut */
+    position: relative; /* Position relative pour se placer naturellement sous le tableau */
+    margin-top: 20px; /* Espacement au-dessus du bouton */
+    margin-left: 10px;
+    background-color: #a02727; /* Couleur verte */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+    transition: all 0.3s ease;
+}
+
+#btnAnnuler:hover {
+    background-color: #c93b25; /* Couleur verte plus foncée au survol */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); /* Léger effet de levée */
+}
+
+#btnAnnuler:active {
+    transform: translateY(1px); /* Effet d'enfoncement */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bouton{
+    display: flex;
 }

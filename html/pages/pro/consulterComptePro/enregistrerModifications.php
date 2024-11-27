@@ -3,17 +3,11 @@
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
-// Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['idCompte'])) {
-    header("Location: login.php");
-    exit;
-}
-
 $idCompte = $_SESSION['idCompte'];
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $user, $password);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Définir le schéma "pact" pour la session
