@@ -11,6 +11,7 @@ body {
     padding: 20px;
     max-width: 70em;
     margin: 0 auto;
+    margin-bottom: 5em;
     display: flex;
     gap: 20px;
     background: var(--white);
@@ -41,23 +42,24 @@ body {
     min-width: 25em;
     min-height: 25em;
     display: grid;
-    place-items:center;
+    place-items: center;
     width: 25em;
     height: 25em;
     object-fit: cover;
     border-radius: 10px;
 }
-.carousel-button.desactive{
+
+.carousel-button.desactive {
     display: none;
 }
 
-.carousel-button:has(~ .carousel-images > .pas-images){
+.carousel-button:has(~ .carousel-images > .pas-images) {
     display: none;
 }
 
 .carousel-button {
     z-index: 2;
-    position:absolute;
+    position: absolute;
     top: 45%;
     background-color: rgba(0, 0, 0, 0.5);
     border: none;
@@ -94,7 +96,7 @@ body {
     width: 45%;
 }
 
-.offre-info > label {
+.offre-info>label {
     width: fit-content;
     max-width: 60%;
 }
@@ -175,18 +177,31 @@ li {
     fill: var(--primaire-pro);
 }
 
-.offre-description svg:first-of-type{
+.offre-description svg:first-of-type {
     width: 20px;
     height: 20px;
     stroke: var(--primaire-pro);
     fill: rgba(0, 0, 0, 0);
 }
 
-.container-gauche{
-display: flex;
-flex-direction: column;
-align-items: center;}
+.container-gauche {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 
 
-.retour{position: absolute; margin: 10px;}
+.retour {
+    background-color: var(--primaire-pro);
+    border: none;
+    cursor: pointer;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:fixed;
+    margin: 1em;
+}

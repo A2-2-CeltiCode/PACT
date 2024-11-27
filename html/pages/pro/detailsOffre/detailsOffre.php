@@ -73,7 +73,7 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <?php Header::render(HeaderType::Pro); ?>
-<?php Button::render(class: "retour", submit: false, type: ButtonType::Pro,path: "../listeOffres/listeOffres.php");?>
+<button class="retour"><a href="../listeOffres/listeOffres.php"><img src="../../../ressources/icone/arrow_left.svg"></a></button>
 <body>
     <div class=titre>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
