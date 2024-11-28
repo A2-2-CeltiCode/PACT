@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const rib = document.querySelector("input[name='banquerib']").value;
 
         // Validation des champs
-        if (!/^\d{2}( \d{2}){4}$/.test(numTel)) {
+        if (!/^(\d{2}([ .])?){4}\d{2}$/.test(numTel)) {
             erreurs.push("Le numéro de téléphone doit être au format : 01 02 03 04 05.");
         }
         if (!/^\d{5}$/.test(codePostal)) {
