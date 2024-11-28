@@ -29,7 +29,7 @@ try {
         $banquerib = htmlspecialchars($_POST['banquerib'], ENT_QUOTES, 'UTF-8');
 
           // Vérification du format du numéro de téléphone
-          if (!preg_match('/^(\d{2} ){4}\d{2}$/', $numtel)) {
+          if (!preg_match('/^(\d{2}([ .])?){4}\d{2}$/', $numtel)) {
             throw new Exception("Le numéro de téléphone doit être au format : 01 02 03 04 05.");
         }
 
