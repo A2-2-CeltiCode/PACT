@@ -180,15 +180,15 @@ try {
             <form id="formulaireMotDePasse" method="post" action="changerMotDePasse.php">
                 <div>
                     <label for="ancienMdp">Ancien mot de passe :</label>
-                    <input type="password" id="ancienMdp" name="ancienMdp" required>
+                    <input type="password" class="champsMdp" id="ancienMdp" name="ancienMdp" required>
                 </div>
                 <div>
                     <label for="nouveauMdp">Nouveau mot de passe :</label>
-                    <input type="password" id="nouveauMdp" name="nouveauMdp" required>
+                    <input type="password" class="champsMdp" id="nouveauMdp" name="nouveauMdp" required>
                 </div>
                 <div>
                     <label for="confirmerMdp">Confirmer le mot de passe :</label>
-                    <input type="password" id="confirmerMdp" name="confirmerMdp" required>
+                    <input type="password" class="champsMdp" id="confirmerMdp" name="confirmerMdp" required>
                 </div>
                 <div id="erreurPopup" style="color: red; display: none; margin-top: 10px;"></div>
                 <div style="margin-top: 20px;">

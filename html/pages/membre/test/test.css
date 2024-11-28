@@ -165,28 +165,34 @@ main button:hover {
     background-color: #044475;
 }
 
-/* Conteneur du bouton et des messages */
 .modifier {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center; 
+    align-items: center; 
+    gap: 20px;
     margin-bottom: 20px;
 }
 
-/* Bouton "Modifier mes informations" */
 .modifier button {
-    background-color: var(--primaire-membre);
+    background-color: var(--primaire-membre);;
     color: white;
     border: none;
     padding: 10px 20px;
+    margin: 0; 
     border-radius: 5px;
     cursor: pointer;
     font-size: 1em;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .modifier button:hover {
     background-color: #044475;
+    transform: translateY(-2px); 
+}
+
+.modifier button:active {
+    background-color: #044475;
+    transform: translateY(1px); 
 }
 
 /* Messages (succès et erreur) */
@@ -282,4 +288,19 @@ main button:hover {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; 
     border-radius: 10px; 
     z-index: 1000;
+}
+
+.champsMdp {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.champsMdp:focus {
+    border-color: #007BFF;
+    outline: none;
 }

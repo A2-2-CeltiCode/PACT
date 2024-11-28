@@ -25,23 +25,23 @@ try {
         $codepostal = filter_var($_POST['codepostal'], FILTER_VALIDATE_INT);
         $ville = htmlspecialchars($_POST['ville'], ENT_QUOTES, 'UTF-8');
 
-        if (!preg_match('/^[a-zA-Z]+$/', $nom)) {
+        if (!preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[-\s][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/', $nom)) {
             throw new Exception("Le nom ne doit contenir que des lettres minuscules et majuscules.");
         }
 
-        if (!preg_match('/^[a-zA-Z]+$/', $prenom)) {
+        if (!preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[-\s][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/', $prenom)) {
             throw new Exception("Le prénom ne doit contenir que des lettres minuscules et majuscules.");
         }
         
-        if (!preg_match('/^(?=.*@)(?=.*\.).*$/', $email)) {
+        if (!preg_match('/^[^\s@]+@[^\s@]+.[^\s@]+$/', $email)) {
             throw new Exception("L'email' doit contenir un '@' et un '.'.");
         }
 
-        if (!preg_match('/^(?:\D*\d\D*){10}$/', $numtel)) {
+        if (!preg_match('/^\d{2}([ .]?\d{2}){4}$/', $numtel)) {
             throw new Exception("Le numéro de téléphone doit contenir exactement 10 chiffres.");
         }
         
-        if (!preg_match('/^(?:\D*\d\D*){5}$/', $codepostal)) {
+        if (!preg_match('/^\d{5}$/', $codepostal)) {
             throw new Exception("Le code postal doit contenir exactement 5 chiffres.");
         }
 

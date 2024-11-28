@@ -1,130 +1,191 @@
- // Activer la modification des champs
- function activerModification() {
-    document.querySelectorAll('.editable').forEach(function (element) {
-        element.removeAttribute('readonly');
-        element.style.backgroundColor = '#f0f0f0'; // Indiquer visuellement la modification
-    });
+document.addEventListener("DOMContentLoaded", () => {
+    const btnModifier = document.querySelector(".modifier button[onclick='activerModification()']");
+    const btnChangerMotDePasse = document.querySelector(".modifier button[onclick='ouvrirPopupMotDePasse()']");
+    const btnEnregistrer = document.getElementById("btnEnregistrer");
+    const btnAnnuler = document.getElementById("btnAnnuler");
+    const editableInputs = document.querySelectorAll("input.editable");
+    const messageErreur = document.getElementById("messageErreur");
 
-    // Afficher les boutons "Enregistrer" et "Annuler"
-    document.getElementById('btnEnregistrer').style.display = 'block';
-    document.getElementById('btnAnnuler').style.display = 'block';
+    // Variables pour la pop-up de changement de mot de passe
+    const popupMotDePasse = document.getElementById("popupMotDePasse");
+    const erreurPopup = document.getElementById("erreurPopup");
+    const formChangerMotDePasse = document.getElementById("formulaireMotDePasse");
 
-    // Afficher les champs de mot de passe
-    document.getElementById('changerMdp').style.display = 'table-row-group';
-    document.getElementById('motDePassePlaceholder').style.display = 'none';
-}
+    /**
+     * Activer la modification des champs.
+     */
+    function activerModification() {
+        editableInputs.forEach(input => {
+            input.removeAttribute("readonly");
+            input.style.backgroundColor = "#f0f0f0"; // Indiquer visuellement que le champ est modifiable
+        });
 
-// Annuler les modifications et désactiver les champs
-function annulerModification() {
-    document.querySelectorAll('.editable').forEach(function (element) {
-        // Restaurer la valeur originale
-        element.value = element.getAttribute('data-original');
-        // Désactiver le champ
-        element.setAttribute('readonly', true);
-        element.style.backgroundColor = '#f9f9f9'; // Retour au style initial
-    });
+        btnEnregistrer.style.display = "inline-block";
+        btnAnnuler.style.display = "inline-block";
+        btnModifier.disabled = true;
 
-    // Masquer les boutons "Enregistrer" et "Annuler"
-    document.getElementById('btnEnregistrer').style.display = 'none';
-    document.getElementById('btnAnnuler').style.display = 'none';
-
-    // Réinitialiser les champs de mot de passe et masquer les options de changement
-    document.getElementById('ancienMdp').value = '';
-    document.getElementById('nouveauMdp').value = '';
-    document.getElementById('confirmerMdp').value = '';
-    document.getElementById('changerMdp').style.display = 'none';
-    document.getElementById('motDePassePlaceholder').style.display = 'table-row';
-
-    // Effacer le message d'erreur s'il existe
-    const messageErreur = document.getElementById('messageErreur');
-    messageErreur.style.display = 'none';
-    messageErreur.innerHTML = '';
-}
-
-// Valider le formulaire avant soumission
-function validerFormulaire(event) {
-    // Empêcher l'envoi du formulaire par défaut
-    event.preventDefault();
-
-    // Récupérer les champs du formulaire
-    const nom = document.querySelector('input[name="nom"]');
-    const prenom = document.querySelector('input[name="prenom"]');
-    const pseudo = document.querySelector('input[name="pseudo"]');
-    const email = document.querySelector('input[name="email"]');
-    const numtel = document.querySelector('input[name="numtel"]');
-    const rue = document.querySelector('input[name="rue"]');
-    const codepostal = document.querySelector('input[name="codepostal"]');
-    const ville = document.querySelector('input[name="ville"]');
-
-
-    // Initialiser les messages d'erreur
-    let erreurs = [];
-
-    // Validation de l'email
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regexEmail.test(email.value)) {
-        erreurs.push("L'email n'est pas valide.");
+        // Effacer les messages d'erreur s'ils existent
+        effacerMessageErreur();
     }
 
-    // Validation du numéro de téléphone (exemple : 01 02 03 04 05)
-    const regexNumTel = /^(\d{2} ){4}\d{2}$/;
-    if (!regexNumTel.test(numtel.value)) {
-        erreurs.push("Le numéro de téléphone doit contenir exactement 10 chiffres");
+    /**
+     * Annuler les modifications et restaurer les valeurs originales.
+     */
+    function annulerModification() {
+        editableInputs.forEach(input => {
+            input.value = input.dataset.original; // Restaurer la valeur originale
+            input.setAttribute("readonly", "readonly");
+            input.style.backgroundColor = "#f9f9f9"; // Retour au style initial
+        });
+
+        btnEnregistrer.style.display = "none";
+        btnAnnuler.style.display = "none";
+        btnModifier.disabled = false;
+
+        // Effacer les messages d'erreur s'ils existent
+        effacerMessageErreur();
     }
 
-    // Validation du code postal (5 chiffres)
-    const regexCodePostal = /^\d{5}$/;
-    if (!regexCodePostal.test(codepostal.value)) {
-        erreurs.push("Le code postal doit contenir exactement 5 chiffres.");
+    /**
+     * Valider le formulaire principal avant soumission.
+     */
+    function validerFormulaire(event) {
+        event.preventDefault();
+        let erreurs = [];
+    
+        const champs = {
+            nom: {
+                element: document.querySelector('input[name="nom"]'),
+                regex: /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[-\s][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/,
+                message: "Le champ 'Nom' contient des caractères invalides.",
+            },
+            prenom: {
+                element: document.querySelector('input[name="prenom"]'),
+                regex: /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[-\s][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/,
+                message: "Le champ 'Prénom' contient des caractères invalides.",
+            },
+            email: {
+                element: document.querySelector('input[name="email"]'),
+                regex: /^[^\s@]+@[^\s@]+.[^\s@]+$/,
+                message: "L'adresse e-mail n'est pas valide.",
+            },
+            numtel: {
+                element: document.querySelector('input[name="numtel"]'),
+                regex: /^\d{2}([ .]?\d{2}){4}$/,
+                message: "Le numéro de téléphone doit contenir 10 chiffres.",
+            },
+            codepostal: {
+                element: document.querySelector('input[name="codepostal"]'),
+                regex: /^\d{5}$/,
+                message: "Le code postal doit contenir exactement 5 chiffres.",
+            },
+        };
+    
+        for (const champ in champs) {
+            const { element, regex, message } = champs[champ];
+            if (!regex.test(element.value)) {
+                erreurs.push(message);
+            }
+        }
+    
+        if (erreurs.length > 0) {
+            afficherMessageErreur(erreurs);
+        } else {
+            document.getElementById("formulaireCompteMembre").submit();
+        }
     }
 
-    // Validation des champs obligatoires (non vides)
-    if (!rue.value.trim() || !ville.value.trim() || !banquerib.value.trim()) {
-        erreurs.push("Tous les champs obligatoires doivent être remplis.");
+    /**
+     * Ouvrir la pop-up de changement de mot de passe.
+     */
+    function ouvrirPopupMotDePasse() {
+        popupMotDePasse.style.display = "block";
     }
 
-    // Afficher les erreurs ou soumettre le formulaire
-    const messageErreur = document.getElementById('messageErreur');
-    if (erreurs.length > 0) {
-        messageErreur.innerHTML = erreurs.join('<br>');
-        messageErreur.style.display = 'block';
-        // Ramener en haut de la page pour voir les erreurs
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-        // Soumettre le formulaire si tout est valide
-        document.getElementById('formulaireCompteMembre').submit();
+    /**
+     * Fermer la pop-up de changement de mot de passe.
+     */
+    function fermerPopupMotDePasse() {
+        popupMotDePasse.style.display = "none";
+        effacerMessageErreurPopup();
+
+        // Réinitialiser les champs de la pop-up
+        formChangerMotDePasse.reset();
     }
-}
 
-function ouvrirPopupMotDePasse() {
-    document.getElementById('popupMotDePasse').style.display = 'block';
-}
+    /**
+     * Valider les champs de changement de mot de passe.
+     */
+    function validerMotDePasse(event) {
+        event.preventDefault();
 
-function fermerPopupMotDePasse() {
-    document.getElementById('popupMotDePasse').style.display = 'none';
-    document.getElementById('ancienMdp').value = '';
-    document.getElementById('nouveauMdp').value = '';
-    document.getElementById('confirmerMdp').value = '';
-    document.getElementById('erreurPopup').style.display = 'none';
-}
+        const ancienMdp = document.getElementById("ancienMdp").value;
+        const nouveauMdp = document.getElementById("nouveauMdp").value;
+        const confirmerMdp = document.getElementById("confirmerMdp").value;
 
-function validerMotDePasse(event) {
-    event.preventDefault();
+        let erreurs = [];
+        const regexMdp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    const ancienMdp = document.getElementById('ancienMdp').value;
-    const nouveauMdp = document.getElementById('nouveauMdp').value;
-    const confirmerMdp = document.getElementById('confirmerMdp').value;
+        if (!ancienMdp) {
+            erreurs.push("L'ancien mot de passe est requis.");
+        }
+        if (!regexMdp.test(nouveauMdp)) {
+            erreurs.push("Le nouveau mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
+        }
+        if (nouveauMdp !== confirmerMdp) {
+            erreurs.push("Les mots de passe ne correspondent pas.");
+        }
 
-    let erreurs = [];
-    if (!ancienMdp) erreurs.push("L'ancien mot de passe est requis.");
-    if (nouveauMdp.length < 8) erreurs.push("Le nouveau mot de passe doit contenir au moins 8 caractères.");
-    if (nouveauMdp !== confirmerMdp) erreurs.push("Les mots de passe ne correspondent pas.");
-
-    const messageErreur = document.getElementById('erreurPopup');
-    if (erreurs.length > 0) {
-        messageErreur.innerHTML = erreurs.join('<br>');
-        messageErreur.style.display = 'block';
-    } else {
-        document.getElementById('formulaireMotDePasse').submit();
+        if (erreurs.length > 0) {
+            afficherMessageErreurPopup(erreurs);
+        } else {
+            formChangerMotDePasse.submit();
+        }
     }
-}
+
+    /**
+     * Afficher un message d'erreur principal.
+     */
+    function afficherMessageErreur(erreurs) {
+        messageErreur.innerHTML = erreurs.join("<br>");
+        messageErreur.style.display = "block";
+    }
+
+    /**
+     * Effacer le message d'erreur principal.
+     */
+    function effacerMessageErreur() {
+        messageErreur.style.display = "none";
+        messageErreur.innerHTML = "";
+    }
+
+    /**
+     * Afficher un message d'erreur dans la pop-up.
+     */
+    function afficherMessageErreurPopup(erreurs) {
+        erreurPopup.innerHTML = erreurs.join("<br>");
+        erreurPopup.style.display = "block";
+    }
+
+    /**
+     * Effacer les messages d'erreur dans la pop-up.
+     */
+    function effacerMessageErreurPopup() {
+        erreurPopup.style.display = "none";
+        erreurPopup.innerHTML = "";
+    }
+
+    // Écouteurs d'événements
+    btnModifier.addEventListener("click", activerModification);
+    btnAnnuler.addEventListener("click", annulerModification);
+    btnEnregistrer.addEventListener("click", validerFormulaire);
+    btnChangerMotDePasse.addEventListener("click", ouvrirPopupMotDePasse);
+
+    // Boutons de la pop-up
+    document
+        .querySelector("#popupMotDePasse button[onclick='validerMotDePasse(event)']")
+        .addEventListener("click", validerMotDePasse);
+    document
+        .querySelector("#popupMotDePasse button[onclick='fermerPopupMotDePasse()']")
+        .addEventListener("click", fermerPopupMotDePasse);
+});
