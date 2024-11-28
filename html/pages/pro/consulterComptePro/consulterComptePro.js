@@ -17,14 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function activerModification() {
         editableInputs.forEach(input => {
             input.removeAttribute("readonly");
-            input.style.backgroundColor = "#f0f0f0"; // Indiquer visuellement que le champ est modifiable
+            input.style.backgroundColor = "#f0f0f0"; 
         });
 
         btnEnregistrer.style.display = "inline-block";
         btnAnnuler.style.display = "inline-block";
         btnModifier.disabled = true;
 
-        // Effacer les messages d'erreur s'ils existent
         effacerMessageErreur();
     }
 
@@ -33,9 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function annulerModification() {
         editableInputs.forEach(input => {
-            input.value = input.dataset.original; // Restaurer la valeur originale
+            input.value = input.dataset.original; 
             input.setAttribute("readonly", "readonly");
-            input.style.backgroundColor = "#f9f9f9"; // Retour au style initial
+            input.style.backgroundColor = "#f9f9f9";
         });
 
         btnEnregistrer.style.display = "none";
@@ -76,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Afficher les erreurs ou soumettre le formulaire
         if (erreurs.length > 0) {
             afficherMessageErreur(erreurs);
-            window.scrollTo(0, 0); // Revenir en haut de la page pour afficher les erreurs
+            window.scrollTo(0, 0); 
         } else {
             document.getElementById("formulaireComptePro").submit();
         }
@@ -96,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
         popupMotDePasse.style.display = "none";
         effacerMessageErreurPopup();
 
-        // Réinitialiser les champs de la pop-up
         formChangerMotDePasse.reset();
     }
 
@@ -154,13 +152,11 @@ document.addEventListener("DOMContentLoaded", () => {
         erreurPopup.innerHTML = "";
     }
 
-    // Écouteurs d'événements
     btnModifier.addEventListener("click", activerModification);
     btnAnnuler.addEventListener("click", annulerModification);
     btnEnregistrer.addEventListener("click", validerFormulaire);
     btnChangerMotDePasse.addEventListener("click", ouvrirPopupMotDePasse);
 
-    // Boutons de la pop-up
     document
         .querySelector("#popupMotDePasse button[onclick='validerMotDePasse(event)']")
         .addEventListener("click", validerMotDePasse);

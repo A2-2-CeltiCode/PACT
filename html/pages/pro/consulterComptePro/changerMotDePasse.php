@@ -35,13 +35,10 @@ try {
         $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $user, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Définir le schéma "pact" pour la session
         $pdo->exec("SET search_path TO pact");
 
-        // Hacher l'ancien mot de passe pour la vérification
         $ancienMdpHash = hash('sha256', $ancienMdp);
 
-        // Vérifier l'ancien mot de passe
         $sql = "SELECT mdp FROM _compte WHERE idCompte = :idCompte";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
@@ -52,10 +49,8 @@ try {
             throw new Exception("L'ancien mot de passe est incorrect.");
         }
 
-        // Hacher le nouveau mot de passe
         $nouveauMdpHash = hash('sha256', $nouveauMdp);
 
-        // Mettre à jour le mot de passe dans la base de données
         $sqlUpdate = "UPDATE _compte SET mdp = :nouveauMdp WHERE idCompte = :idCompte";
         $stmtUpdate = $pdo->prepare($sqlUpdate);
         $stmtUpdate->bindParam(':nouveauMdp', $nouveauMdpHash, PDO::PARAM_STR);
