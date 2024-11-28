@@ -8,7 +8,7 @@ $host = 'localhost';
 $dbname = 'postgres';
 $user = 'postgres';
 $password = '13phenix';
-$idCompte = 2; //$_SESSION['idCompte']; // ID de l'utilisateur connecté
+$idCompte = 2; // $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 try {
     // Vérifier si le formulaire a été soumis
@@ -23,8 +23,10 @@ try {
             throw new Exception("Tous les champs sont requis.");
         }
 
-        if (strlen($nouveauMdp) < 8) {
-            throw new Exception("Le nouveau mot de passe doit contenir au moins 8 caractères.");
+        // Vérification des critères du nouveau mot de passe
+        $regexMdp = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
+        if (!preg_match($regexMdp, $nouveauMdp)) {
+            throw new Exception("Le nouveau mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
         }
 
         if ($nouveauMdp !== $confirmerMdp) {
@@ -37,8 +39,8 @@ try {
 
         $pdo->exec("SET search_path TO pact");
 
+        // Vérifier l'ancien mot de passe
         $ancienMdpHash = hash('sha256', $ancienMdp);
-
         $sql = "SELECT mdp FROM _compte WHERE idCompte = :idCompte";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
@@ -49,8 +51,8 @@ try {
             throw new Exception("L'ancien mot de passe est incorrect.");
         }
 
+        // Mettre à jour le mot de passe
         $nouveauMdpHash = hash('sha256', $nouveauMdp);
-
         $sqlUpdate = "UPDATE _compte SET mdp = :nouveauMdp WHERE idCompte = :idCompte";
         $stmtUpdate = $pdo->prepare($sqlUpdate);
         $stmtUpdate->bindParam(':nouveauMdp', $nouveauMdpHash, PDO::PARAM_STR);

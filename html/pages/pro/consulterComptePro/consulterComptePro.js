@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Validation des champs
         if (!/^(\d{2}([ .])?){4}\d{2}$/.test(numTel)) {
-            erreurs.push("Le numéro de téléphone doit être au format : 01 02 03 04 05.");
+            erreurs.push("Le numéro de téléphone doit être au format : 01.02.03.04.05, 01 02 03 04 05 ou 0102030405.");
         }
         if (!/^\d{5}$/.test(codePostal)) {
             erreurs.push("Le code postal doit contenir exactement 5 chiffres.");
@@ -109,9 +109,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const confirmerMdp = document.getElementById("confirmerMdp").value;
 
         let erreurs = [];
-        if (!ancienMdp) erreurs.push("L'ancien mot de passe est requis.");
-        if (nouveauMdp.length < 8) erreurs.push("Le nouveau mot de passe doit contenir au moins 8 caractères.");
-        if (nouveauMdp !== confirmerMdp) erreurs.push("Les mots de passe ne correspondent pas.");
+        const regexMdp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (!ancienMdp) {
+            erreurs.push("L'ancien mot de passe est requis.");
+        }
+        if (!regexMdp.test(nouveauMdp)) {
+            erreurs.push("Le nouveau mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
+        }
+        if (nouveauMdp !== confirmerMdp) {
+            erreurs.push("Les mots de passe ne correspondent pas.");
+        }
 
         if (erreurs.length > 0) {
             afficherMessageErreurPopup(erreurs);
