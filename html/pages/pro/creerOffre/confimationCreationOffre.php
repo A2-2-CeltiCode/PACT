@@ -38,6 +38,18 @@
         }
     }
 
+    function getMondayFromWeek($weekInput) {
+        
+    
+        // Séparer l'année et le numéro de la semaine à partir de l'input
+        list($year, $week) = sscanf($weekInput, "%d-W%d");
+    
+        // Calculer le lundi de la semaine donnée
+        $date = new DateTime();
+        $date->setISODate($year, $week); // Définit la date au lundi de la semaine
+        return $date->format('Y-m-d'); // Retourne le lundi au format YYYY-MM-DD
+    }
+
     // Récupération des données du formulaire
     $nomOffre = $_POST['nomOffre'] ?? null;
     $ville = $_POST['ville'] ?? null;
@@ -81,7 +93,11 @@
     $fermeture = $_POST['fermeture'] ?? null;
     $dateSpectacle = $_POST['dateSpectacle'] ?? null;
     $dateVisite = $_POST['dateVisite'] ?? null;
-
+    $datePromotion = $_POST['datePromotion'] ?? null;
+    $durepromotion = $_POST['durepromotion'] ?? null;
+    
+    
+    $datePromotion = getMondayFromWeek($datePromotion);
 
 
     $dbh = new PDO("$driver:host=$server;dbname=$dbname",$dbuser, $dbpass);
@@ -154,6 +170,18 @@
             $stmt->execute();
             echo("image insérée");
         }
+    
+        // Insertion dans la table historiqueOption
+    $stmt = $dbh->prepare(
+        "INSERT INTO pact._historiqueOption(idOffre, nomOption, nbSemaines, debutOption, finOption)
+        VALUES(:idOffre, :nomOption, :nbSemaines, :debutOption, :finOption)"
+    );
+    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+    $stmt->bindValue(':nomOption', $typePromotion, PDO::PARAM_STR);
+    $stmt->bindValue(':nbSemaines', $durepromotion, PDO::PARAM_INT);
+    $stmt->bindValue(':debutOption', $datePromotion, PDO::PARAM_STR);
+    $stmt->bindValue(':finOption', date('Y-m-d', strtotime($datePromotion. ' + '. $durepromotion .' weeks')), PDO::PARAM_STR);
+    $stmt->execute();
 
     // Type d'offre : Activité
     if ($typeOffre === "Activite") {
@@ -356,5 +384,5 @@
         }
         
 
-
+        echo("gg bro");
     }
