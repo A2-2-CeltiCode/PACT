@@ -285,3 +285,18 @@ main button:hover {
     border-radius: 10px; 
     z-index: 1000;
 }
+
+.champsMdp {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.champsMdp:focus {
+    border-color: #007BFF;
+    outline: none;
+}
