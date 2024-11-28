@@ -167,29 +167,37 @@ main button:hover {
     background-color: #4b2b63;
 }
 
-/* Conteneur du bouton et des messages */
 .modifier {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    gap: 20px; /* Espacement entre les boutons */
+    margin-bottom: 20px; /* Espacement sous les boutons */
 }
 
-/* Bouton "Modifier mes informations" */
+/* Boutons dans .modifier */
 .modifier button {
     background-color: #6b3d84;
     color: white;
     border: none;
     padding: 10px 20px;
+    margin: 0; /* Supprime les marges pour un espacement uniforme via gap */
     border-radius: 5px;
     cursor: pointer;
     font-size: 1em;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .modifier button:hover {
     background-color: #4b2b63;
+    transform: translateY(-2px); /* Léger effet de levée */
 }
+
+.modifier button:active {
+    background-color: #4b2b63;
+    transform: translateY(1px); /* Effet d'enfoncement */
+}
+
 
 /* Messages (succès et erreur) */
 .modifier p {
