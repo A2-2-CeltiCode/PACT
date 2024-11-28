@@ -22,7 +22,7 @@ $idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $dbuser, $dbpass);
+    $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Définir le schéma "pact" pour la session
