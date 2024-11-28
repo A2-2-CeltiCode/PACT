@@ -72,17 +72,26 @@ try {
     <main>
         <h1>Vos informations professionnelles</h1>
 
+        <!-- Affichage des messages de succès ou d'erreur -->
+        <?php if (isset($_SESSION['message'])): ?>
+            <div style="color: green; margin-bottom: 20px; text-align: center;">
+                <?= htmlspecialchars($_SESSION['message']) ?>
+            </div>
+            <?php unset($_SESSION['message']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div style="color: red; margin-bottom: 20px; text-align: center;">
+                <?= htmlspecialchars($_SESSION['error']) ?>
+            </div>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+
         <!-- Boutons principaux -->
         <div class="modifier">
             <button type="button" onclick="activerModification()">Modifier mes informations</button>
             <button type="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
-
-        <!-- Message d'erreur -->
-        <div id="messageErreur" style="color: red; display: none;"></div>
-
-        <!-- Affichage des messages d'erreur -->
-        <div id="messageErreur" style="color: red; display: none;"></div>
 
         <!-- Formulaire -->
         <form id="formulaireComptePro" method="post" action="enregistrerModifications.php">
@@ -109,7 +118,6 @@ try {
                         <input type="text" name="numsiren" value="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['numsiren'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
-
 
                 <!-- Catégorie Coordonnées -->
                 <tr>
@@ -169,7 +177,8 @@ try {
                 <button type="button" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
             </div>
         </form>
-         <!-- Popup de changement de mot de passe -->
+
+        <!-- Popup de changement de mot de passe -->
         <div id="popupMotDePasse">
             <h2>Changer le mot de passe</h2>
             <form id="formulaireMotDePasse" method="post" action="changerMotDePasse.php">
@@ -194,7 +203,7 @@ try {
         </div>
     </main>
 
-    <?php Footer::render(FooterType::Pro); ?>
+    <?php Footer::render(HeaderType::Pro); ?>
 </body>
 
 </html>
