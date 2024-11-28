@@ -166,10 +166,7 @@ section {
     
     
 }
-.barre {
-    position: absolute;
-    left: 0;
-}
+
 
 .trie-hidden {
     transform: translateX(-100%);
