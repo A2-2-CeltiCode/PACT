@@ -201,6 +201,8 @@ CREATE TABLE _historiqueOption(
     idOffre               INTEGER,
     nomOption             VARCHAR(50) NOT NULL,
     nbSemaines            INTEGER NOT NULL,
+    debutOption		 DATE NOT NULL,
+    finOption			 DATE NOT NULL,
     lastUpdate            DATE DEFAULT CURRENT_DATE,
     CONSTRAINT historiqueOption_pk PRIMARY KEY(idFacture,idOffre),
     CONSTRAINT historiqueOption_fk_offre FOREIGN KEY (idOffre) 
