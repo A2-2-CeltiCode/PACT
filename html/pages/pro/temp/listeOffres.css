@@ -36,6 +36,12 @@ body {
     color: var(--secondaire-pro);
 }
 
+.checkbox-wrapper {
+    background-color: var(--gris1) !important;
+    padding-left: 5px !important;
+    border-radius: 1em;
+    border: 1px solid var(--gris1);
+}
 
 .carte-offre {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -162,18 +168,46 @@ section {
     flex-direction: column;
 }
 
-.barre {
-    
-    
+.nombreOffres{
+    font-family: 'Inter', sans-serif !important;
+    font-size: var(--p-medium-font-size) !important;
+    color: var(--noir) !important;
+    margin: 5px 0 !important;
+    font-weight: var(--font-weight-normal) !important;
 }
 
-
-.trie-hidden {
-    transform: translateX(-100%);
-    transition: transform 0.5s ease-in-out;
+.sliders_control {
+    padding-top: 10px;
 }
 
-.trie-visible {
-    transform: translateX(0);
-    transition: transform 0.5s ease-in-out;
+.barre{
+    margin-top: 40px;
+    margin-right: 40px;
+}
+
+#styleShadow{
+    height: fit-content;
+    padding: 20px 10px 10px 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--gris1);
+    border-radius: 1em;
+}
+
+.test{
+    width: 285px !important;
+}
+
+.stretch{
+    display: grid !important;
+    gap: 10px !important;
+}
+
+.form_control{
+    justify-content: space-evenly !important;
+    color: var(--secondaire-pro) !important;
+}
+
+p{
+    display: flex !important;
+    justify-content: center !important;
 }

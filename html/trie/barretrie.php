@@ -1,4 +1,4 @@
-<?php
+d<?php
 use \composants\Select\Select;
 use \composants\CheckboxSelect\CheckboxSelect;
 use \composants\Checkbox\Checkbox;
@@ -44,10 +44,22 @@ class Trie {
 
         echo '<form id="searchForm" method="GET" action="">';
         Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
+        Select::render('custom-class', 'select-etat', 'etat', false, $optionsEtat, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
+        ?>
+        <hr>
+        <?php
         echo '<input type="hidden" id="sortInput" name="sort" value="' . htmlspecialchars($sort) . '">';
         echo '<div class="input">';
-        Input::render(name:"titre", type:"text", placeholder:'Titre*', value: htmlspecialchars($titre));
-        Input::render(name:"localisation", type:"text", placeholder:'localisation', value: htmlspecialchars($localisation));
+        echo '<div style="display: grid; gap: 1px;">';
+        Input::render(name:"titre",class:'test', type:"text", placeholder:'Titre*', value: htmlspecialchars($titre));
+        ?>
+        <br>
+        <?php
+        Input::render(name:"localisation",class:'test', type:"text", placeholder:'localisation', value: htmlspecialchars($localisation));
+        echo '</div>';
+        ?>
+        <hr>
+        <?php
         echo '<div class="heure">';
         echo '<div class="aligne"><label for="ouverture">Heure d\'ouverture</label>';
         Input::render(name:"ouverture", type:"time", value: htmlspecialchars($ouverture));
@@ -55,7 +67,12 @@ class Trie {
         Input::render(name:"fermeture", type:"time", placeholder:'Heure de fermeture', value: htmlspecialchars($fermeture));
         echo '</div>';
         echo '</div>';
-        echo'<div>';
+        ?>
+        <hr>
+        <?php
+        echo'<div id="styleShadow">';
+        
+        
         foreach ($optionsCategorie as $value => $label) {
             Checkbox::render(
             $class = 'custom-class',
@@ -68,9 +85,11 @@ class Trie {
             );
         }
         echo'</div>';
-        Select::render('custom-class', 'select-etat', 'etat', false, $optionsEtat, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
-        
-        
+
+        ?>
+        <hr>
+        <p>Prix :</p>
+        <?php
 
 
         InputRangeDouble::render(

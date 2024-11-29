@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
 use \composants\Select\Select;
 use \composants\CheckboxSelect\CheckboxSelect;
 use \composants\Checkbox\Checkbox;
@@ -24,7 +25,7 @@ require_once "../../../composants/CartePro/offre.php";
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
 $idCompte = '2';
 $status = $_GET['status'] ?? 'enligne';
-$pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+$pdo = new PDO("$driver:host=$server;port=5432;dbname=$dbname", $dbuser, $dbpass);
 
 // Récupération des paramètres de la requête
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'idoffre DESC';
@@ -86,8 +87,12 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <h1>Mes Offres</h1>
         <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "", "Créer une Offre", ButtonType::Pro, "", true); ?></a>
     </div>
+    <div class="onglets">
+        <a href="?status=enligne" class="onglet <?php echo ($status === 'enligne') ? 'actif' : ''; ?>">En ligne</a>
+        <a href="?status=horsligne" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>">Hors ligne</a>
+    </div>
     <section>
-    <div class="barre trie-hidden">
+    <div class="barre trie-visible" id="styleShadow">
     <?php
     Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories);
     ?>
@@ -95,16 +100,12 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <div>
     <br>
     
-    <button id="filtreButton">Filtrer</button>
-    <div class="onglets">
-        <a href="?status=enligne" class="onglet <?php echo ($status === 'enligne') ? 'actif' : ''; ?>">En ligne</a>
-        <a href="?status=horsligne" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>">Hors ligne</a>
-    </div>
+   
     
     
-    <div id="nombreOffres">
-        <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
-    </div>
+    <p id="nombreOffres">
+       Nombre d'offres affichées : <?php echo count($resultats); ?>
+    </p>
     <div id="resultats" class="offres-container">
         <!-- Affichage des résultats -->
         <?php
