@@ -170,7 +170,7 @@ try {
 
             <!-- Boutons -->
             <div class="bouton">
-                <button type="button" id="btnEnregistrer" style="display: none;" onclick="validerFormulaire(event)">Enregistrer</button>
+                <button type="button" id="btnEnregistrer" style="display: none;" onclick="validerMotDePasse(event)">Enregistrer</button>
                 <button type="button" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
             </div>
         </form>
