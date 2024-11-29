@@ -144,9 +144,12 @@ class Header
         } elseif ($type == HeaderType::Member) {
             Button::render($class = '', $id = 'member-button', $text = 'Se deconnecter', $type = ButtonType::Member,
                 $onClick = "window.location.href='../../../deconnexion.php'");
+                //$onClick = "window.location.href='../../../deconnexion.php'");
         } elseif ($type == HeaderType::Pro) {
             Button::render($class = '', $id = 'pro-button', $text = 'Se deconnecter', $type = ButtonType::Pro,
                 $onClick = "window.location.href='../../../deconnexion.php'");
+            Button::render($class = '', $id = 'pro-button', $text = 'Mon espace', $type = ButtonType::Pro,
+                $onClick = "window.location.href='../consulterComptePro/consulterComptePro.php'");
         }
         echo '</div>';
     }
