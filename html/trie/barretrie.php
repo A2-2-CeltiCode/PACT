@@ -20,7 +20,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/InputRangeDouble/InputRang
 
 
 class Trie {
-    public static function render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories) {
+    public static function render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories,$status=null) {
         echo '<link rel="stylesheet" type="text/css" href="/trie/style.css">';
 
         $optionsCategorie = [
@@ -103,7 +103,9 @@ class Trie {
             $from = 0,
             $to = 100
         );
-        
+        if($status !== null){
+            echo '<input type="hidden" id="status" name="status" value="' . htmlspecialchars($status) . '">';
+        }
         echo '</div></form>';
     }
 }

@@ -88,20 +88,20 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "", "Créer une Offre", ButtonType::Pro, "", true); ?></a>
     </div>
     <div class="onglets">
+        
         <a href="?status=enligne" class="onglet <?php echo ($status === 'enligne') ? 'actif' : ''; ?>">En ligne</a>
         <a href="?status=horsligne" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>">Hors ligne</a>
     </div>
     <section>
     <div class="barre trie-visible" id="styleShadow">
     <?php
-    Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories);
+    Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories,$status);
     ?>
     </div>
-    <div class="rangement">
+    <div>
     <br>
     
    
-    
     
     
     <p id="nombreOffres">

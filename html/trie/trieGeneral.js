@@ -17,6 +17,7 @@ function trier(sort) {
     const fermetureInput = document.querySelector('input[name="fermeture"]').value;
     const etatInput = document.querySelector('select[name="etat"]').value;
     const trieInput = document.querySelector('select[name="trie"]').value;
+    const statusInput = document.querySelector('input[name="status"]').value;
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
 
     const params = new URLSearchParams(window.location.search);
@@ -35,6 +36,7 @@ function trier(sort) {
     if (fermetureInput) params.set('fermeture', fermetureInput);
     if (etatInput) params.set('etat', etatInput);
     if (trieInput) params.set('trie', trieInput);
+    if (statusInput) params.set('status', statusInput);
     if (categoryInputs.length > 0) params.set('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
@@ -64,6 +66,7 @@ function rechercher() {
     const fermetureInput = document.querySelector('input[name="fermeture"]').value;
     const etatInput = document.querySelector('select[name="etat"]').value;
     const trieInput = document.querySelector('select[name="trie"]').value;
+    const statusInput = document.querySelector('input[name="status"]').value;
 
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
 
@@ -78,6 +81,7 @@ function rechercher() {
     if (fermetureInput) params.append('fermeture', fermetureInput);
     if (etatInput) params.append('etat', etatInput);
     if (trieInput) params.append('trie', trieInput);
+    if (statusInput) params.append('status', statusInput);
     if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
@@ -121,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const fermetureInput = document.querySelector('input[name="fermeture"]');
     const etatInput = document.querySelector('select[name="etat"]');
     const trieInput = document.querySelector('select[name="trie"]');
+    const statusInput = document.querySelector('input[name="status"]');
     const categoryInputs = document.querySelectorAll('input[name="nomcategorie[]"]');
 
     searchInput.addEventListener('input', function () {
@@ -133,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     minPrixInput.addEventListener('input', debounce(function () {
         rechercher();
-    },  10));
+    }, 10));
 
     maxPrixInput.addEventListener('input', debounce(function () {
         rechercher();
@@ -160,6 +165,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     trieInput.addEventListener('change', function () {
+        rechercher();
+    });
+
+    statusInput.addEventListener('input', function () {
         rechercher();
     });
 
