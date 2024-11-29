@@ -192,9 +192,9 @@ try {
                     <input type="password" class="champsMdp" id="confirmerMdp" name="confirmerMdp" required>
                 </div>
                 <div id="erreurPopup" style="color: red; display: none; margin-top: 10px;"></div>
-                <div style="margin-top: 20px;">
-                    <button type="button" onclick="validerMotDePasse(event)">Enregistrer</button>
-                    <button type="button" onclick="fermerPopupMotDePasse()">Annuler</button>
+                <div class="bouton" style="margin-top: 20px;">
+                    <button type="button" id="btnEnregistrerMdp" onclick="validerMotDePasse(event)">Enregistrer</button>
+                    <button type="button" id="btnAnnulerMdp" onclick="fermerPopupMotDePasse()">Annuler</button>
                 </div>
             </form>
         </div>

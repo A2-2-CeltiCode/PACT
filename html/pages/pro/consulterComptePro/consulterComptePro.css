@@ -308,3 +308,63 @@ main button:hover {
     border-color: #007BFF;
     outline: none;
 }
+
+/* Bouton "Enregistrer" */
+#btnEnregistrerMdp {
+    display: none; 
+    position: relative;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: 0;
+    background-color: #3b9d3f; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+    transition: all 0.3s ease;
+}
+
+#btnEnregistrerMdp:hover {
+    background-color: #47c94d; 
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+#btnEnregistrerMdp:active {
+    transform: translateY(1px); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+/* Bouton "Annuler" */
+#btnAnnulerMdp {
+    display: none; 
+    position: relative; 
+    margin-top: 20px; 
+    margin-left: 10px;
+    background-color: #a02727;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; 
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+    transition: all 0.3s ease;
+}
+
+#btnAnnulerMdp:hover {
+    background-color: #e02c10; 
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+#btnAnnulerMdp:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

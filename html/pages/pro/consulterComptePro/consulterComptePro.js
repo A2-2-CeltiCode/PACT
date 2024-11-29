@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnChangerMotDePasse = document.querySelector(".modifier button[onclick='ouvrirPopupMotDePasse()']");
     const btnEnregistrer = document.getElementById("btnEnregistrer");
     const btnAnnuler = document.getElementById("btnAnnuler");
+    const btnEnregistrerMdp = document.getElementById("btnEnregistrerMdp");
+    const btnAnnulerMdp = document.getElementById("btnAnnulerMdp");
     const editableInputs = document.querySelectorAll("input.editable");
     const messageErreur = document.getElementById("messageErreur");
 
@@ -86,6 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function ouvrirPopupMotDePasse() {
         popupMotDePasse.style.display = "block";
+        btnEnregistrerMdp.style.display = "inline-block";
+        btnAnnulerMdp.style.display = "inline-block";
     }
 
     /**
