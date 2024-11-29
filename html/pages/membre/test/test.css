@@ -304,3 +304,96 @@ main button:hover {
     border-color: #007BFF;
     outline: none;
 }
+
+/* Media query pour les petits écrans (smartphones) */
+@media (max-width: 768px) {
+
+    body {
+        background-color: white;
+    }
+
+    /* Ajuster le conteneur principal */
+    main {
+        width: 95%; /* Réduit la largeur sur mobile */
+        padding: 20px;
+        box-shadow: none; /* Supprime l'ombre pour un style plus épuré */
+    }
+
+    /* Tableau adapté au défilement horizontal */
+    main table {
+        overflow-x: auto;
+        white-space: nowrap;
+        border: none; /* Supprime les bordures */
+    }
+
+    main table th, main table td {
+        display: block;
+        width: 100%; /* Chaque ligne occupe toute la largeur */
+        box-sizing: border-box;
+    }
+
+    main table th[colspan="2"] {
+        font-size: 1em; /* Taille plus petite */
+    }
+
+    /* Ajustement des boutons */
+    main button, .modifier button {
+        width: 100%; /* Les boutons occupent toute la largeur */
+        font-size: 1em;
+        margin: 10px 0;
+    }
+
+    .modifier {
+        flex-direction: column; /* Les boutons sont empilés */
+        align-items: stretch; /* Étirement pour remplir */
+    }
+
+    /* Popup responsive */
+    #popupMotDePasse {
+        width: 90%;
+    }
+
+    /* Style pour que le tableau occupe toute la largeur */
+main table {
+    width: 100%; /* Occuper 100% de l'espace disponible */
+    border-collapse: collapse; /* Fusionne les bordures pour un look propre */
+    table-layout: fixed; /* Les colonnes occupent un espace égal */
+}
+
+/* Ajuster les cellules */
+main table th,
+main table td {
+    width: 50%; /* Chaque cellule (à gauche et à droite) occupe 50% */
+    text-align: left; /* Aligner le contenu à gauche */
+    padding: 10px; /* Ajouter un espace intérieur */
+}
+
+
+
+main table th, main table td {
+    display: block; /* Rendre chaque cellule une ligne */
+    width: 100%; /* Chaque cellule prend toute la largeur */
+}
+
+main table td {
+    padding: 15px; /* Plus d'espace sur mobile */
+}
+
+
+/* Pour s'assurer que le tableau occupe tout l'espace */
+main table {
+    width: 100%;
+    border-collapse: collapse; /* Supprime les espaces entre les bordures */
+    margin: 0 auto; /* Centre le tableau */
+    margin-right: 10px;
+  }
+  
+  main table th, 
+  main table td {
+    width: 100%; /* Chaque cellule occupe 50% */
+    text-align: left; 
+  
+
+
+}
+}

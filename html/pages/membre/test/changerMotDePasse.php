@@ -29,7 +29,7 @@ try {
         }
 
         // Connexion à la base de données
-        $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $dbuser, $dbpass);
+        $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $dbuser, $dbpass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $pdo->exec("SET search_path TO pact");

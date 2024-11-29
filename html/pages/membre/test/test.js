@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAnnuler = document.getElementById("btnAnnuler");
     const editableInputs = document.querySelectorAll("input.editable");
     const messageErreur = document.getElementById("messageErreur");
+    const footer = document.getElementsByTagName("footer")[0];
 
     // Variables pour la pop-up de changement de mot de passe
     const popupMotDePasse = document.getElementById("popupMotDePasse");
@@ -23,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
         btnEnregistrer.style.display = "inline-block";
         btnAnnuler.style.display = "inline-block";
         btnModifier.disabled = true;
+        footer.classList.remove('footer-fixed');
+        footer.classList.add('footer-relative');
 
         // Effacer les messages d'erreur s'ils existent
         effacerMessageErreur();
@@ -41,6 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
         btnEnregistrer.style.display = "none";
         btnAnnuler.style.display = "none";
         btnModifier.disabled = false;
+        footer.classList.remove('footer-relative');
+        footer.classList.add('footer-fixed');
+    
 
         // Effacer les messages d'erreur s'ils existent
         effacerMessageErreur();
