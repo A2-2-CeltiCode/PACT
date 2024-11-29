@@ -1,4 +1,4 @@
-d<?php
+<?php
 use \composants\Select\Select;
 use \composants\CheckboxSelect\CheckboxSelect;
 use \composants\Checkbox\Checkbox;
