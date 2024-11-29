@@ -213,8 +213,8 @@ main button:hover {
 
 
 /* Bouton "Enregistrer" */
-#btnEnregistrer {
-    display: none; /* Masqué par défaut */
+#btnEnregistrer, #btnMdpEnregistrer {
+
     position: relative; /* Position relative pour se placer naturellement sous le tableau */
     margin-top: 20px; /* Espacement au-dessus du bouton */
     margin-left: auto; /* Aligner à droite */
@@ -230,13 +230,13 @@ main button:hover {
     transition: all 0.3s ease;
 }
 
-#btnEnregistrer:hover {
+#btnEnregistrer:hover, #btnMdpEnregistrer:hover {
     background-color: #47c94d; /* Couleur verte plus foncée au survol */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px); /* Léger effet de levée */
 }
 
-#btnEnregistrer:active {
+#btnEnregistrer:active, #btnMdpEnregistrer:active {
     transform: translateY(1px); /* Effet d'enfoncement */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
@@ -245,8 +245,8 @@ main button:hover {
 
 
 /* Bouton "Annuler" */
-#btnAnnuler {
-    display: none; /* Masqué par défaut */
+#btnAnnuler, #btnMdpAnnuler{
+
     position: relative; /* Position relative pour se placer naturellement sous le tableau */
     margin-top: 20px; /* Espacement au-dessus du bouton */
     margin-left: 10px;
@@ -261,13 +261,13 @@ main button:hover {
     transition: all 0.3s ease;
 }
 
-#btnAnnuler:hover {
+#btnAnnuler:hover, #btnMdpAnnuler:hover {
     background-color: #e02c10; /* Couleur verte plus foncée au survol */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px); /* Léger effet de levée */
 }
 
-#btnAnnuler:active {
+#btnAnnuler:active, #btnMdpAnnuler:active {
     transform: translateY(1px); /* Effet d'enfoncement */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

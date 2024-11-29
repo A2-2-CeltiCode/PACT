@@ -3,7 +3,9 @@
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
-$idCompte = $_SESSION['idCompte']; //$_SESSION['idCompte']; // Récupération de l'ID depuis la session
+
+$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
+
 
 try {
     // Vérifier si le formulaire a été soumis
@@ -19,7 +21,7 @@ try {
         }
 
         // Vérification des critères du nouveau mot de passe
-        $regexMdp = '/^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/';
+        $regexMdp = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
         if (!preg_match($regexMdp, $nouveauMdp)) {
             throw new Exception("Le nouveau mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
         }
@@ -29,7 +31,7 @@ try {
         }
 
         // Connexion à la base de données
-        $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $dbuser, $dbpass);
+        $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $pdo->exec("SET search_path TO pact");
