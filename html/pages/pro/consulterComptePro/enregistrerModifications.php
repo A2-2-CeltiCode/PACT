@@ -4,7 +4,7 @@ session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
 
-$idCompte = 2; //$_SESSION['idCompte']; // ID de l'utilisateur connecté
+$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 try {
     // Connexion à la base de données

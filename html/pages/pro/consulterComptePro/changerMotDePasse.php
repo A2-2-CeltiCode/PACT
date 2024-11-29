@@ -6,6 +6,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
 $idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
+
 try {
     // Vérifier si le formulaire a été soumis
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
