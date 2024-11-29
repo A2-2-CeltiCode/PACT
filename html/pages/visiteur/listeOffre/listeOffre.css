@@ -1,0 +1,117 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.titre-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #25daa5;
+    color: white;
+}
+
+.titre-page h1 {
+    margin: 0;
+}
+
+.titre-page a {
+    text-decoration: none;
+}
+
+section {
+    padding: 20px;
+}
+
+.barre {
+    margin-bottom: 20px;
+}
+
+/* Styles pour les boutons */
+.button-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.button-container button {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background-color: #25daa5;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+    background-color: #1eae8b;
+}
+
+/* Styles pour les onglets */
+.onglets {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.onglet {
+    padding: 10px 20px;
+    background-color: #ddd;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.onglet:hover {
+    background-color: #ccc;
+}
+
+.onglet.actif {
+    background-color: #25daa5;
+    color: white;
+}
+
+/* Styles pour les offres */
+.offres-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.offre {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 20px);
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+}
+
+.offre:hover {
+    transform: translateY(-5px);
+}
+
+/* Styles pour le nombre d'offres */
+#nombreOffres {
+    margin-bottom: 20px;
+}
+
+/* Animation pour la classe Trie */
+.trie-hidden {
+    transform: translateX(-100%);
+    transition: transform 0.5s ease-in-out;
+}
+
+.trie-visible {
+    transform: translateX(0);
+    transition: transform 0.5s ease-in-out;
+}

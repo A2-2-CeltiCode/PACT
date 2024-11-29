@@ -45,7 +45,6 @@ if (!empty($_GET['nomcategorie'])) {
 }
 // Récupération des résultats
 $resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat);
-
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     header('Content-Type: application/json');
@@ -67,6 +66,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <meta charset="UTF-8">
     <title>Recherche d'Offres</title>
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="listeOffres.css">
     <style>
     .offres-container {
         display: flex;

@@ -1,3 +1,11 @@
+function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
 function trier(sort) {
     const searchInput = document.querySelector('input[name="titre"]').value;
     const localisationInput = document.querySelector('input[name="localisation"]').value;
@@ -26,7 +34,7 @@ function trier(sort) {
     if (ouvertureInput) params.set('ouverture', ouvertureInput);
     if (fermetureInput) params.set('fermeture', fermetureInput);
     if (etatInput) params.set('etat', etatInput);
-    if (trieInput) params.set('trie',trieInput);
+    if (trieInput) params.set('trie', trieInput);
     if (categoryInputs.length > 0) params.set('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
@@ -38,7 +46,7 @@ function trier(sort) {
             const resultatsContainer = document.getElementById('resultats');
             resultatsContainer.innerHTML = response.offres.join('');
             document.getElementById('nombreOffres').innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
-            
+
             applyStyles();
         }
     };
@@ -69,13 +77,13 @@ function rechercher() {
     if (ouvertureInput) params.append('ouverture', ouvertureInput);
     if (fermetureInput) params.append('fermeture', fermetureInput);
     if (etatInput) params.append('etat', etatInput);
-    if (trieInput) params.append('trie',trieInput);
+    if (trieInput) params.append('trie', trieInput);
     if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `listeOffre.php?${params.toString()}`, true);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.onload = function () {      
+    xhr.onload = function () {
         if (xhr.status === 200) {
             try {
                 const response = JSON.parse(xhr.responseText);
@@ -101,7 +109,7 @@ function applyStyles() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('searchForm');
     const searchInput = document.querySelector('input[name="titre"]');
     const localisationInput = document.querySelector('input[name="localisation"]');
@@ -115,53 +123,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const trieInput = document.querySelector('select[name="trie"]');
     const categoryInputs = document.querySelectorAll('input[name="nomcategorie[]"]');
 
-    searchInput.addEventListener('input', function() {
+    searchInput.addEventListener('input', function () {
         rechercher();
     });
 
-    localisationInput.addEventListener('input', function() {
+    localisationInput.addEventListener('input', function () {
         rechercher();
     });
 
-    minPrixInput.addEventListener('input', function() {
+    minPrixInput.addEventListener('input', debounce(function () {
+        rechercher();
+    },  10));
+
+    maxPrixInput.addEventListener('input', debounce(function () {
+        rechercher();
+    }, 10));
+
+    prixMinInput.addEventListener('input', function () {
         rechercher();
     });
 
-    maxPrixInput.addEventListener('input', function() {
+    prixMaxInput.addEventListener('input', function () {
         rechercher();
     });
 
-    prixMinInput.addEventListener('input', function() {
+    ouvertureInput.addEventListener('input', function () {
         rechercher();
     });
 
-    prixMaxInput.addEventListener('input', function() {
+    fermetureInput.addEventListener('input', function () {
         rechercher();
     });
 
-    ouvertureInput.addEventListener('input', function() {
+    etatInput.addEventListener('change', function () {
         rechercher();
     });
 
-    fermetureInput.addEventListener('input', function() {
-        rechercher();
-    });
-
-    etatInput.addEventListener('change', function() {
-        rechercher();
-    });
-
-    trieInput.addEventListener('change', function() {
+    trieInput.addEventListener('change', function () {
         rechercher();
     });
 
     categoryInputs.forEach(input => {
-        input.addEventListener('change', function() {
+        input.addEventListener('change', function () {
             rechercher();
         });
     });
 
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault(); // Empêche le rechargement de la page
         rechercher();
     });
