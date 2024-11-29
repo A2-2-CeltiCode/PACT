@@ -18,12 +18,16 @@ $message = "";
 $userInfo = [];
 
 
-
-$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
+// Configuration de la base de données
+$host = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$password = '13phenix';
+$idCompte = 2; // $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Définir le schéma "pact" pour la session
@@ -83,6 +87,7 @@ try {
             </div>
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
+        <div id="messageErreur" style="color: red; display: none;"></div>
 
         <!-- Boutons principaux -->
         <div class="modifier">
@@ -167,6 +172,8 @@ try {
                     </td>
                 </tr>
             </table>
+
+
 
             <!-- Boutons -->
             <div class="bouton">

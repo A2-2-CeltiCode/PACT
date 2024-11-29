@@ -2,9 +2,12 @@
 // Démarrer la session
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
-
-
-$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
+// Configuration de la base de données
+$host = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$password = '13phenix';
+$idCompte = 2; // $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 
 try {
@@ -31,7 +34,7 @@ try {
         }
 
         // Connexion à la base de données
-        $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+        $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $user, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $pdo->exec("SET search_path TO pact");
@@ -45,7 +48,10 @@ try {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$result || $result['mdp'] !== $ancienMdpHash) {
-            throw new Exception("L'ancien mot de passe est incorrect.");
+            // Enregistrer un message d'erreur dans la session
+            $_SESSION['error'] = "L'ancien mot de passe saisi est incorrect.";
+            header("Location: consulterComptePro.php");
+            exit;
         }
 
         // Mettre à jour le mot de passe
@@ -56,14 +62,14 @@ try {
         $stmtUpdate->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
         $stmtUpdate->execute();
 
-        // Message de succès
+        // Enregistrer un message de succès dans la session
         $_SESSION['message'] = "Le mot de passe a été changé avec succès.";
+        header("Location: consulterComptePro.php");
+        exit;
     }
 } catch (Exception $e) {
-    // Gestion des erreurs
+    // Enregistrer les erreurs dans la session
     $_SESSION['error'] = "Erreur : " . $e->getMessage();
+    header("Location: consulterComptePro.php");
+    exit;
 }
-
-// Rediriger vers la page précédente
-header("Location: consulterComptePro.php");
-exit;
