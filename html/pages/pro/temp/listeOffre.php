@@ -103,6 +103,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
    
     
     
+    
     <p id="nombreOffres">
        Nombre d'offres affichées : <?php echo count($resultats); ?>
     </p>

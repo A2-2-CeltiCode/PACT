@@ -202,6 +202,7 @@ section {
     gap: 10px !important;
 }
 
+
 .form_control{
     justify-content: space-evenly !important;
     color: var(--secondaire-pro) !important;

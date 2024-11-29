@@ -18,6 +18,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/InputRangeDouble/InputRangeDouble.php';
 
 
+
 class Trie {
     public static function render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories) {
         echo '<link rel="stylesheet" type="text/css" href="/trie/style.css">';
