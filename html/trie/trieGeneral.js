@@ -113,6 +113,27 @@ function applyStyles() {
     });
 }
 
+function changerStatus(nouveauStatus) {
+    // Mettre à jour la classe des onglets
+    document.querySelectorAll('.onglet').forEach(onglet => {
+        onglet.classList.remove('actif');
+    });
+
+    // Ajouter la classe actif à l'onglet cliqué
+    event.target.classList.add('actif');
+
+    // Mettre à jour le statut dans l'URL sans recharger la page
+    const url = new URL(window.location);
+    url.searchParams.set('status', nouveauStatus);
+    window.history.pushState({}, '', url);
+
+    // Mettre à jour le champ caché status
+    document.querySelector('input[name="status"]').value = nouveauStatus;
+
+    // Appeler la fonction rechercher
+    rechercher();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('searchForm');
     const searchInput = document.querySelector('input[name="titre"]');
