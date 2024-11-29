@@ -83,12 +83,16 @@ try {
             </div>
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
-
+        
         <!-- Boutons principaux -->
         <div class="modifier">
-            <button type="button" onclick="activerModification()">Modifier mes informations</button>
+            <button id="modifier" type="button">Modifier mes informations</button>
             <button type="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
+        
+        <p id="messageErreur">
+            
+        </p>
 
         <!-- Formulaire -->
         <form id="formulaireComptePro" method="post" action="enregistrerModifications.php">

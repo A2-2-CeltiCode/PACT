@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const btnModifier = document.querySelector(".modifier button[onclick='activerModification()']");
+    const btnModifier = document.getElementById("modifier"); // document.querySelector(".modifier button[onclick='activerModification()']");
     const btnChangerMotDePasse = document.querySelector(".modifier button[onclick='ouvrirPopupMotDePasse()']");
     const btnEnregistrer = document.getElementById("btnEnregistrer");
     const btnAnnuler = document.getElementById("btnAnnuler");
@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         effacerMessageErreur();
     }
+
+    document.getElementById("modifier").addEventListener("click", activerModification);
 
     /**
      * Annuler les modifications et restaurer les valeurs originales.
