@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const editableInputs = document.querySelectorAll("input.editable");
     const messageErreur = document.getElementById("messageErreur");
 
-    // Variables pour la pop-up de changement de mot de passe
     const popupMotDePasse = document.getElementById("popupMotDePasse");
     const erreurPopup = document.getElementById("erreurPopup");
     const formChangerMotDePasse = document.getElementById("formulaireMotDePasse");
@@ -19,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function activerModification() {
         editableInputs.forEach(input => {
             input.removeAttribute("readonly");
-            input.style.backgroundColor = "#f0f0f0"; 
+            input.style.backgroundColor = "#f0f0f0";
         });
 
         btnEnregistrer.style.display = "inline-block";
@@ -34,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function annulerModification() {
         editableInputs.forEach(input => {
-            input.value = input.dataset.original; 
+            input.value = input.dataset.original;
             input.setAttribute("readonly", "readonly");
             input.style.backgroundColor = "#f9f9f9";
         });
@@ -43,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAnnuler.style.display = "none";
         btnModifier.disabled = false;
 
-        // Effacer les messages d'erreur s'ils existent
         effacerMessageErreur();
     }
 
@@ -73,11 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!/^[a-zA-Z0-9]{1,34}$/.test(rib)) {
             erreurs.push("Le RIB doit contenir jusqu'à 34 caractères alphanumériques.");
         }
+        
 
         // Afficher les erreurs ou soumettre le formulaire
         if (erreurs.length > 0) {
             afficherMessageErreur(erreurs);
-            window.scrollTo(0, 0); 
+            window.scrollTo(0, 0);
         } else {
             document.getElementById("formulaireComptePro").submit();
         }
@@ -107,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function validerMotDePasse(event) {
         event.preventDefault();
+        console.log("Bouton Enregistrer Mot de Passe cliqué");
 
         const ancienMdp = document.getElementById("ancienMdp").value;
         const nouveauMdp = document.getElementById("nouveauMdp").value;
@@ -128,6 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (erreurs.length > 0) {
             afficherMessageErreurPopup(erreurs);
         } else {
+            console.log("Mot de passe valide, soumission...");
             formChangerMotDePasse.submit();
         }
     }
@@ -164,15 +165,13 @@ document.addEventListener("DOMContentLoaded", () => {
         erreurPopup.innerHTML = "";
     }
 
+    // Événements pour les boutons principaux
     btnModifier.addEventListener("click", activerModification);
     btnAnnuler.addEventListener("click", annulerModification);
     btnEnregistrer.addEventListener("click", validerFormulaire);
     btnChangerMotDePasse.addEventListener("click", ouvrirPopupMotDePasse);
 
-    document
-        .querySelector("#popupMotDePasse button[onclick='validerMotDePasse(event)']")
-        .addEventListener("click", validerMotDePasse);
-    document
-        .querySelector("#popupMotDePasse button[onclick='fermerPopupMotDePasse()']")
-        .addEventListener("click", fermerPopupMotDePasse);
+    // Événements pour la pop-up de mot de passe
+    btnEnregistrerMdp.addEventListener("click", validerMotDePasse);
+    btnAnnulerMdp.addEventListener("click", fermerPopupMotDePasse);
 });
