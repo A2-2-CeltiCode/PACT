@@ -32,32 +32,58 @@
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-    $offresSql = $dbh->query(<<<STRING
-SELECT titre                                                                       AS nom,
-       nomcategorie                                                                AS type,
-       offre.ville,
-       (SELECT nomimage as idimage
-        FROM pact._image
-        WHERE pact._image.idoffre = offre.idoffre FETCH FIRST 1 ROW ONLY) as idimage,
+    $offresProchesSql = $dbh->query("select distinct vue_offres.titre AS nom, nomcategorie AS type, vue_offres.ville, nomimage as idimage, idoffre, COALESCE(ppv.denominationsociale, ppu.denominationsociale) AS nomProprio, tempsenminutes AS duree, avg(note) AS note from pact.vue_offres LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte JOIN pact.vue_avis USING (idOffre) GROUP BY nom, type, vue_offres.ville, idimage, idOffre, nomProprio, duree, nomoption");
+
+    $offresUnesSql = $dbh->query(<<<STRING
+select distinct vue_offres.titre                                                                       AS nom,
+       nomcategorie                                    AS type,
+       vue_offres.ville,
+       nomimage as idimage,
        idoffre,
        COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
-       tempsenminutes                                                              AS duree
-FROM (SELECT titre, nomcategorie, ville, tempsenminutes, idoffre, idcompte
-      FROM pact.vue_spectacle
-      UNION
-      SELECT titre, nomcategorie, ville, tempsenminutes, idoffre, idcompte
-      FROM pact.vue_activite
-      UNION
-      SELECT titre, nomcategorie, ville, NULL AS tempsenminutes, idoffre, idcompte
-      FROM pact.vue_parc_attractions
-      UNION
-      SELECT titre, nomcategorie, ville, tempsenminutes, idoffre, idcompte
-      FROM pact.vue_visite
-      UNION
-      SELECT titre, nomcategorie, ville, NULL AS tempsenminutes, idoffre, idcompte
-      FROM pact.vue_restaurant) as offre
-         LEFT JOIN pact.vue_compte_pro_prive ppv ON offre.idcompte = ppv.idcompte
-         LEFT JOIN pact.vue_compte_pro_public ppu ON offre.idcompte = ppu.idcompte
+       tempsenminutes                                                              AS duree,
+       nomoption,
+       AVG(note) AS note
+from pact.vue_offres
+LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
+         LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
+JOIN pact.vue_avis USING (idOffre)
+WHERE nomoption = 'A la une'
+GROUP BY nom,
+   type,
+   vue_offres.ville,
+   idimage,
+   idOffre,
+   nomProprio,
+   duree,
+   nomoption
+STRING
+    );
+
+    $offresNoteSql = $dbh->query(<<<STRING
+select
+   distinct pact.vue_offres.titre AS nom,
+   nomcategorie AS type,
+   vue_offres.ville,
+   nomimage as idimage,
+   idoffre,
+   COALESCE(ppv.denominationsociale,ppu.denominationsociale) AS nomProprio,
+   tempsenminutes AS duree,
+   nomoption,
+   AVG(note) AS note
+from pact.vue_offres
+   LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
+   LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
+   JOIN pact.vue_avis USING (idOffre)
+GROUP BY nom,
+   type,
+   vue_offres.ville,
+   idimage,
+   idOffre,
+   nomProprio,
+   duree,
+   nomoption
+ORDER BY 9 DESC
 STRING
     );
 
@@ -66,10 +92,20 @@ STRING
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();
 }
-$offreProches = [];
-foreach ($offresSql as $item) {
+/*$offreProches = [];
+foreach ($offresProchesSql as $item) {
     $offreProches[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
-        $item['idoffre'], $item['duree']);
+        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption']);
+}*/
+$offreUnes = [];
+foreach ($offresUnesSql as $item) {
+    $offreUnes[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
+        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption']);
+}
+$offresNote = [];
+foreach ($offresNoteSql as $item) {
+    $offresNote[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
+        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption']);
 }
 ?>
 
@@ -81,10 +117,10 @@ foreach ($offresSql as $item) {
 </div>
 <main>
     <div>
-        <h2>Autour de vous</h2>
+        <h2>À la une!</h2>
         <div class="carrousel">
             <?php
-            foreach ($offreProches as $item) {
+            foreach ($offreUnes as $item) {
                 echo $item;
             }
             ?>
@@ -103,10 +139,10 @@ foreach ($offresSql as $item) {
         </div>
     </div>
     <div>
-        <h2>Les plus recommandées</h2>
-        <div class="carrousel">
+        <h2>Les mieux notées</h2>
+        <div class="carrousel mixed">
             <?php
-            foreach ($offreProches as $item) {
+            foreach ($offresNote as $item) {
                 echo $item;
             }
             ?>
@@ -124,14 +160,14 @@ foreach ($offresSql as $item) {
             </button>
         </div>
     </div>
-    <div>
+<!--    <div>
         <h2>Les mieux noté!</h2>
         <div class="carrousel">
             <?php
-            foreach ($offreProches as $item) {
+/*            foreach ($offreProches as $item) {
                 echo $item;
             }
-            ?>
+            */?>
         </div>
         <div>
             <button>
@@ -145,7 +181,7 @@ foreach ($offresSql as $item) {
                 </span>
             </button>
         </div>
-    </div>
+    </div>-->
 </main>
 <?php isset($_SESSION["idCompte"])?Footer::render(type: FooterType::Member):Footer::render(); ?>
 </body>
