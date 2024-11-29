@@ -2,13 +2,16 @@
 // Démarrer la session
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
-
-
-$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
+// Configuration de la base de données
+$host = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$password = '13phenix';
+$idCompte = 2; // $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Définir le schéma "pact" pour la session

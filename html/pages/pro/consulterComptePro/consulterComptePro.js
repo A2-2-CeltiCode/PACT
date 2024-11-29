@@ -108,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function validerMotDePasse(event) {
         event.preventDefault();
-        console.log("Bouton Enregistrer Mot de Passe cliqué");
 
         const ancienMdp = document.getElementById("ancienMdp").value;
         const nouveauMdp = document.getElementById("nouveauMdp").value;
@@ -130,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (erreurs.length > 0) {
             afficherMessageErreurPopup(erreurs);
         } else {
-            console.log("Mot de passe valide, soumission...");
             formChangerMotDePasse.submit();
         }
     }
