@@ -2,6 +2,8 @@
 // Démarrer la session
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
+
+
 $idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 try {

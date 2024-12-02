@@ -2,6 +2,7 @@
 // Démarrer la session
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
+
 $idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 
@@ -43,8 +44,7 @@ try {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$result || $result['mdp'] !== $ancienMdpHash) {
-            // Enregistrer un message d'erreur dans la session
-            $_SESSION['error'] = "L'ancien mot de passe saisi est incorrect.";
+            $_SESSION['error'] = "L'ancien mot de passe est incorrect.";
             header("Location: consulterComptePro.php");
             exit;
         }
@@ -64,7 +64,7 @@ try {
     }
 } catch (Exception $e) {
     // Enregistrer les erreurs dans la session
-    $_SESSION['error'] = "Erreur : " . $e->getMessage();
+    $_SESSION['error'] = $e->getMessage();
     header("Location: consulterComptePro.php");
     exit;
 }
