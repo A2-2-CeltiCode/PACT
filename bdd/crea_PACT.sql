@@ -392,11 +392,10 @@ CREATE TABLE _avis(
 
 CREATE TABLE _imageAvis(
     idAvis      INTEGER,
-    idImage     INTEGER,
+    --idImage     INTEGER,
+    nomImage    VARCHAR(50),
     CONSTRAINT imageAvis_fk_avis FOREIGN KEY (idAvis)
-        REFERENCES _avis(idAvis),
-    CONSTRAINT imageAvis_fk_image FOREIGN KEY(idImage)
-        REFERENCES _image(idImage)
+        REFERENCES _avis(idAvis)
 );
 
 --

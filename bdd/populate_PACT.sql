@@ -107,50 +107,9 @@ INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descrip
 (3,'A la une', 'Standard', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 5,'2024-07-08','02:00','14:00'),
 (3,'En relief', 'Premium', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 6,'2023-11-14','00:00','10:00');
 
-/*INSERT INTO _facture (idFacture, , nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
+--INSERT INTO _facture (idAdressePro, datePrestaServices, dateEcheance) VALUES
 
-CREATE TABLE _facture(
-    idFacture, idOffre,
-    idAdressePro          INTEGER NOT NULL,
-    idAdressePACT         INTEGER NOT NULL DEFAULT 1,
-    datePrestaServices    DATE NOT NULL,
-    dateEcheance          DATE NOT NULL,
-    jourDebut             DATE,
-    jourFin               DATE,
-    CONSTRAINT facture_pk PRIMARY KEY(idFacture),
-    CONSTRAINT facture_fk_offre FOREIGN KEY (idOffre) 
-        REFERENCES _offre(idOffre),
-    CONSTRAINT facture_fk_adresse FOREIGN KEY (idAdressePro) 
-        REFERENCES _adresse(idAdresse)
-);
 
--- Peupler la table _historiqueOption
-INSERT INTO _historiqueOption (idFacture, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
-    idFacture             SERIAL,
-    idOffre               INTEGER,
-    nomOption             VARCHAR(50) NOT NULL,
-    nbSemaines            INTEGER NOT NULL,
-    lastUpdate            DATE DEFAULT CURRENT_DATE,
-    CONSTRAINT historiqueOption_pk PRIMARY KEY(idFacture,idOffre),
-    CONSTRAINT historiqueOption_fk_offre FOREIGN KEY (idOffre) 
-        REFERENCES _offre(idOffre),
-    CONSTRAINT historiqueOption_fk_option FOREIGN KEY (nomOption)
-        REFERENCES _option(nomOption),
-    CONSTRAINT historiqueOption_fk_facture FOREIGN KEY (idFacture)
-        REFERENCES _facture(idFacture)
-);
-
-CREATE TABLE _historiqueEnLigne(
-    idFacture   SERIAL,
-    idOffre     INTEGER,
-    nbJours     INTEGER,
-    estEnLigne  BOOLEAN,
-    CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idFacture,idOffre),
-    CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre) 
-        REFERENCES _offre(idOffre),
-    CONSTRAINT historiqueEnLigne_fk_facture FOREIGN KEY (idFacture)
-        REFERENCES _facture(idFacture)
-);*/
 
 -- Peupler la table _image
 INSERT INTO _image (idOffre, nomImage) VALUES

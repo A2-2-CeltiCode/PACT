@@ -65,13 +65,10 @@ try {
 <body>
     <?php Header::render(HeaderType::Pro); ?>
     <nav>
-        <?php Button::render(submit: true, type: "pro", text: "Mes informations");
-        Button::render(submit: true, type: "pro", text: "Mes factures");?>
+        <?php Button::render(submit: true, type: "pro", text: "Mes informations", onClick: showInfos());
+        Button::render(submit: true, type: "pro", text: "Mes factures", onClick: showFacture());?>
     </nav>
     <main>
-        <?php //if($POST['pagePro'] == "info"){?>
-
-        
         <h1>Vos informations professionnelles</h1>
 
         <!-- Affichage des messages de succès ou d'erreur -->
@@ -210,10 +207,7 @@ try {
                 </div>
             </form>
         </div>
-        <?php// } ?>
-
     </main>
-
     <?php Footer::render(HeaderType::Pro); ?>
 </body>
 
