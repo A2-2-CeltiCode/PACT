@@ -132,6 +132,10 @@ CREATE OR REPLACE VIEW vue_image_offre (idOffre, idImage) AS
 SELECT idOffre, idImage
 FROM _image;
 
+CREATE OR REPLACE VIEW vue_image_avis (idAvis, idImage) AS
+SELECT idAvis, idImage
+FROM _imageAvis ;
+
 --
 -- VUE AVIS
 --
