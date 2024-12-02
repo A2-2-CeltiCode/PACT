@@ -2,10 +2,12 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $facture = $dbh->query("SELECT * FROM pact.vue_facture WHERE idfacture = 1", PDO::FETCH_ASSOC)->fetch();
+    $offre = $dbh->query('SELECT * FROM pact._offre' . ' WHERE idoffre = 1', PDO::FETCH_ASSOC)->fetch();
+    $client = $dbh->query("SELECT * FROM pact.vue_compte_membre WHERE idcompte = 1", PDO::FETCH_ASSOC)->fetch();
+    $pro = $dbh->query("SELECT * FROM pact.vue_compte_pro WHERE idcompte = 2", PDO::FETCH_ASSOC)->fetch();
 
-    $stmt = $dbh->prepare("SELECT * FROM pact._facture WHERE idfacture = 1");
-    $stmt->execute();
-    $offres = $stmt->fetchAll();
+    $dateDuJour = date("Y-m-d");
 
 
 } catch (PDOException $e) {
@@ -23,12 +25,19 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
     <title>Facturation</title>
 </head>
+<pre><?php /*
+    <?php print_r($facture)?>
+    <?php print_r($offre)?>
+    <?php print_r($client)?>
+    <?php print_r($pro)?>
+    */
+    ?>
+</pre>
 
 <header>
     <h1>Facture</h1>
     <img class="logo" src="/ressources/icone/logo.svg" alt="Logo PACT">
 </header>
-
 <body>
     <main>
         <table class="partie">
@@ -38,7 +47,7 @@ try {
             </tr>
             <tr>
                 <td></td>
-                <td>22 Avenue des Martins 4450 Ville</td>
+                <td><?php echo $pro['rue'] .', '. $pro['codepostal'] .' '. $pro['ville'] ?></td>
         </table>
         <table class="partie">
             <tr>
@@ -47,7 +56,7 @@ try {
             </tr>
             <tr>
                 <td></td>
-                <td>55 Avenue des Clients</td>
+                <td><?php echo $client['rue'] .', '. $client['codepostal'] .' '. $client['ville'] ?></td>
         </table>
 
         <table class="info-facture">
@@ -59,11 +68,11 @@ try {
                 <th>Date d'échéance du règlement</th>
             </tr>
             <tr>
-                <td>21.05.2000</td>
-                <td>36</td>
-                <td>L'offre de Caca</td>
-                <td>40.06.0000</td>
-                <td>4 jours</td>
+                <td><?php echo $dateDuJour?></td>
+                <td><?php echo $facture['idfacture']?></td>
+                <td><?php echo $offre['titre']?></td>
+                <td><?php echo $facture['dateprestaservices']?></td>
+                <td><?php echo $facture['dateecheance']?></td>
             </tr>
         </table>
         <table class="tarifs-facture" cellspacing="0" cellpadding="0">
@@ -76,7 +85,7 @@ try {
                 <th>Option activée TTC</th>
             </tr>
             <tr>
-                <td>Service de caca</td>
+                <td><?php echo $offre['nomoption'] ?></td>
                 <td>4 caca</td>
                 <td>15€</td>
                 <td>18€</td>
@@ -84,23 +93,7 @@ try {
                 <td>5€</td>
             </tr>
             <tr>
-                <td>Service de caca</td>
-                <td>4 caca</td>
-                <td>15€</td>
-                <td>18€</td>
-                <td>2€</td>
-                <td>5€</td>
-            </tr>
-            <tr>
-                <td>Service de caca</td>
-                <td>4 caca</td>
-                <td>15€</td>
-                <td>18€</td>
-                <td>2€</td>
-                <td>5€</td>
-            </tr>
-            <tr>
-                <td>Service de caca</td>
+                <td><?php echo $offre['nomforfait']?></td>
                 <td>4 caca</td>
                 <td>15€</td>
                 <td>18€</td>
