@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    width: fit-content;
 }
 
 .select-wrapper select {
