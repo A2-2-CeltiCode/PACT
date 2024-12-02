@@ -16,8 +16,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 // Initialisation des variables
 $message = "";
 $userInfo = [];
-
-
+$POST['pagePro'] = "info";
 
 $idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
@@ -66,10 +65,13 @@ try {
 <body>
     <?php Header::render(HeaderType::Pro); ?>
     <nav>
-        <?php /*Button::render(submit: true, type: "pro", text: "Mes informations");
-        Button::render(submit: true, type: "pro", text: "Mes factures");*/?>
+        <?php Button::render(submit: true, type: "pro", text: "Mes informations");
+        Button::render(submit: true, type: "pro", text: "Mes factures");?>
     </nav>
     <main>
+        <?php //if($POST['pagePro'] == "info"){?>
+
+        
         <h1>Vos informations professionnelles</h1>
 
         <!-- Affichage des messages de succès ou d'erreur -->
@@ -91,7 +93,7 @@ try {
 
         <!-- Formulaire -->
         <form id="formulaireComptePro" method="post" action="enregistrerModifications.php">
-            <table border="1">
+            <table>
                 <!-- Catégorie Identité -->
                 <tr>
                     <th colspan="2" style="background-color: #6b3d84; color: white; text-align: center;">Identité</th>
@@ -208,6 +210,7 @@ try {
                 </div>
             </form>
         </div>
+        <?php// } ?>
 
     </main>
 

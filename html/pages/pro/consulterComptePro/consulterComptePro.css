@@ -374,8 +374,10 @@ main button:hover {
 /*body > nav{
     position: fixed;
     display: flex;
-    justify-content: space-around;
     flex-direction: column;
     top: 100px;
     left: 300px;
+    padding: 30px;
+    background: #fff;
+    margin: 20px auto;
 }*/
