@@ -67,10 +67,22 @@ FROM _offre LEFT JOIN _spectacle ON _offre.idoffre = _spectacle.idoffre
 
 -- VISITE
 CREATE OR REPLACE VIEW vue_visite AS
-SELECT idCompte, idOffre, idAdresse, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
-       nomCategorie, codePostal, ville, rue, numTel, valPrix, tempsEnMinutes, estGuidee, estEnLigne, dateEvenement
-FROM _offre NATURAL JOIN _categorie NATURAL JOIN _visite NATURAL JOIN _adresse NATURAL JOIN _option
-            NATURAL JOIN _forfait NATURAL JOIN _prix NATURAL JOIN _duree;
+SELECT 
+    o.idCompte, o.idOffre, a.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, 
+    o.descriptionDetaillee, o.siteInternet, c.nomCategorie, a.codePostal, a.ville, a.rue, 
+    a.numTel, p.valPrix, d.tempsEnMinutes, v.estGuidee, o.estEnLigne, v.dateEvenement
+FROM 
+    _offre o
+LEFT JOIN _visite v ON o.idOffre = v.idOffre
+LEFT JOIN _categorie c ON v.nomCategorie = c.nomCategorie
+LEFT JOIN _adresse a ON o.idAdresse = a.idAdresse
+LEFT JOIN _option op ON o.nomOption = op.nomOption
+LEFT JOIN _forfait f ON o.nomForfait = f.nomForfait
+LEFT JOIN _prix p ON v.valPrix = p.valPrix
+LEFT JOIN _duree d ON v.tempsEnMinutes = d.tempsEnMinutes
+WHERE v.estGuidee IS NOT NULL;
+
+
 
 CREATE OR REPLACE VIEW vue_visite_guidee AS
 SELECT idOffre, nomLangage
@@ -116,10 +128,22 @@ FROM _possedeActivite;
 
 -- PARC D'ATTRACTIONS
 CREATE OR REPLACE VIEW vue_parc_attractions AS
-SELECT idCompte, idOffre, idAdresse, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
-       nomCategorie, codePostal, ville, rue, numTel, valPrix, ageMin, nbAttractions, idImage, nomImage, estEnLigne
-FROM _offre NATURAL JOIN _categorie NATURAL JOIN _parcAttractions NATURAL JOIN _adresse NATURAL JOIN _option
-            NATURAL JOIN _forfait NATURAL JOIN _prix NATURAL JOIN _image;
+SELECT 
+    o.idCompte, o.idOffre, a.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, 
+    o.descriptionDetaillee, o.siteInternet, c.nomCategorie, a.codePostal, a.ville, a.rue, 
+    a.numTel, p.valPrix, pa.ageMin, pa.nbAttractions, i.idImage, i.nomImage, o.estEnLigne
+FROM 
+    _offre o
+LEFT JOIN _parcAttractions pa ON o.idOffre = pa.idOffre
+LEFT JOIN _categorie c ON pa.nomCategorie = c.nomCategorie
+LEFT JOIN _adresse a ON o.idAdresse = a.idAdresse
+LEFT JOIN _option op ON o.nomOption = op.nomOption
+LEFT JOIN _forfait f ON o.nomForfait = f.nomForfait
+LEFT JOIN _prix p ON pa.valPrix = p.valPrix
+LEFT JOIN _image i ON o.idOffre = i.idOffre
+WHERE nbAttractions IS NOT NULL;
+
+
 
 CREATE OR REPLACE VIEW vue_tags_parc_attractions (idOffre, nomTag) AS
 SELECT idOffre, nomTag
