@@ -74,27 +74,19 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <link rel="stylesheet" href="listeOffre.css">
     <link rel="stylesheet" href="listeOffre.js">
     <script src="../../../trie/trieGeneral.js"></script>
+    
 </head>
 <body>
+    <input type="hidden" name="status" value="null" />
+    <!-- Nouveau bouton pour afficher/masquer barretrie -->
+    <button id="toggleBarretrieButton">Afficher/Masquer Barre de Tri</button>
 
-<input type="hidden" name="status" value="null" />
-
-        <?php Button::render("btnpopup", "", "filtres", ButtonType::Member, "", true); ?>
-
-    <div class="popup" id="popup">
-        <h2>Voici la popup</h2>
-        <p>Ce contenu est affiché dynamiquement.</p>
-        <button class="close-btn" id="closePopup">Fermer</button>
-    </div>
-
-
-
+    <div id="barretrie">
     <?php
     Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories);
     ?>
+    </div>
     <br>
-
-   
 
     <div id="nombreOffres">
         <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
@@ -108,6 +100,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         }
         ?>
     </div>
+
+   
+    <script src="listeOffre.js"></script>
 </body>
 <?php Footer::render(FooterType::Member); ?>
 </html>
