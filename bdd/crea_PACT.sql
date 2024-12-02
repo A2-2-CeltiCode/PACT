@@ -211,6 +211,7 @@ CREATE TABLE _annulationOption(
     debutOption		DATE NOT NULL,
     idOffre       INTEGER NOT NULL,
     nomOption     VARCHAR(50) NOT NULL,
+    estAnnulee    BOOLEAN DEFAULT FALSE,
     CONSTRAINT annulationOption_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),
     CONSTRAINT annulationOption_fk_option FOREIGN KEY (nomOption)
@@ -219,7 +220,7 @@ CREATE TABLE _annulationOption(
         REFERENCES _souscription(nbSemaines,debutOption)
 );
 
-/*CREATE TABLE _historiqueEnLigne(
+CREATE TABLE _historiqueEnLigne(
     idFacture         SERIAL,
     idOffre           INTEGER,
     nbJours           INTEGER,
@@ -230,7 +231,7 @@ CREATE TABLE _annulationOption(
         REFERENCES _offre(idOffre),
     CONSTRAINT historiqueEnLigne_fk_facture FOREIGN KEY (idFacture)
         REFERENCES _facture(idFacture)
-);*/
+);
 
 --
 -- TABLE CATEGORY

@@ -65,7 +65,10 @@ try {
 </head>
 <body>
     <?php Header::render(HeaderType::Pro); ?>
-
+    <?php /*<nav>
+        <p>test</p>
+        <!--</button type="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>-->
+    </nav> */?>
     <main>
         <h1>Vos informations professionnelles</h1>
 

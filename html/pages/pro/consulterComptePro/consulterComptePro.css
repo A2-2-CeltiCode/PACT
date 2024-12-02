@@ -370,3 +370,11 @@ main button:hover {
 .boutonMdp{
     display: flex;
 }
+
+/*nav{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 100px;
+    left: 300px;
+}*/
