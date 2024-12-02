@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const btnModifier = document.getElementById("modifier"); // document.querySelector(".modifier button[onclick='activerModification()']");
+    const btnModifier = document.getElementById("modifier"); 
     const btnChangerMotDePasse = document.querySelector(".modifier button[onclick='ouvrirPopupMotDePasse()']");
     const btnEnregistrer = document.getElementById("btnEnregistrer");
     const btnAnnuler = document.getElementById("btnAnnuler");
@@ -11,6 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const popupMotDePasse = document.getElementById("popupMotDePasse");
     const erreurPopup = document.getElementById("erreurPopup");
     const formChangerMotDePasse = document.getElementById("formulaireMotDePasse");
+
+    // Rouvrir la pop-up si une erreur est détectée (via PHP)
+    if (erreurPopup && erreurPopup.textContent.trim() !== "") {
+        popupMotDePasse.style.display = "block";
+    }
 
     /**
      * Activer la modification des champs.
@@ -73,7 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!/^[a-zA-Z0-9]{1,34}$/.test(rib)) {
             erreurs.push("Le RIB doit contenir jusqu'à 34 caractères alphanumériques.");
         }
-        
 
         // Afficher les erreurs ou soumettre le formulaire
         if (erreurs.length > 0) {
@@ -97,10 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
      * Fermer la pop-up de changement de mot de passe.
      */
     function fermerPopupMotDePasse() {
+        const popupMotDePasse = document.getElementById("popupMotDePasse");
         popupMotDePasse.style.display = "none";
-        effacerMessageErreurPopup();
-
-        formChangerMotDePasse.reset();
+        const erreurPopup = document.getElementById("erreurPopup");
+        erreurPopup.style.display = "none";
+        erreurPopup.innerHTML = "";
     }
 
     /**
@@ -145,8 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
      * Effacer le message d'erreur principal.
      */
     function effacerMessageErreur() {
-        messageErreur.style.display = "none";
-        messageErreur.innerHTML = "";
+        if (messageErreur) {
+            messageErreur.style.display = "none";
+            messageErreur.innerHTML = "";
+        }
     }
 
     /**

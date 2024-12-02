@@ -311,7 +311,6 @@ main button:hover {
 
 /* Bouton "Enregistrer" */
 #btnEnregistrerMdp {
-    display: none; 
     position: relative;
     margin-top: 20px;
     margin-left: auto;
@@ -343,7 +342,6 @@ main button:hover {
 
 /* Bouton "Annuler" */
 #btnAnnulerMdp {
-    display: none; 
     position: relative; 
     margin-top: 20px; 
     margin-left: 10px;
