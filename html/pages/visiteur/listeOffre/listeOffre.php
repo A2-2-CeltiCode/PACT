@@ -79,7 +79,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
         <?php Button::render("btnpopup", "", "filtres", ButtonType::Member, "", true); ?>
 
-    
+
     <div class="popup" id="popup">
         <h2>Voici la popup</h2>
         <p>Ce contenu est affiché dynamiquement.</p>

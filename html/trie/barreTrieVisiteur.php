@@ -42,7 +42,6 @@ class Trie {
             "idoffre DESC" => "Tri par date décroissante",
         ];
         
-
         echo '<form id="searchForm" method="GET" action="">';
         echo '<div class="triviennois">';
         Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');

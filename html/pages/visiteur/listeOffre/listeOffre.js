@@ -3,6 +3,7 @@ const closePopupButton = document.getElementById('closePopup');
 const popup = document.getElementById('popup');
 const popupOverlay = document.getElementById('popupOverlay');
 
+
 // Fonction pour afficher la popup
 openPopupButton.addEventListener('click', () => {
         popup.style.display = 'fixed';
