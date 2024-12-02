@@ -199,26 +199,27 @@ CREATE TABLE _facture(
         REFERENCES _adresse(idAdresse)
 );
 
-CREATE TABLE _souscriptionOP(
+CREATE TABLE _souscription(
     nbSemaines     INTEGER NOT NULL,
     debutOption		 DATE NOT NULL,
     --finOption			 DATE NOT NULL,
-    CONSTRAINT souscriptionOP_pk PRIMARY KEY(nbSemaines,debutOption)
+    CONSTRAINT souscription_pk PRIMARY KEY(nbSemaines,debutOption)
 );
 
-/*CREATE TABLE _annulationOption(
+CREATE TABLE _annulationOption(
     nbSemaines    INTEGER NOT NULL,
     debutOption		DATE NOT NULL,
     idOffre       INTEGER NOT NULL,
     nomOption     VARCHAR(50) NOT NULL,
-    CONSTRAINT souscriptionOP_pk PRIMARY KEY(nbSemaines,debutOption),
     CONSTRAINT annulationOption_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),
     CONSTRAINT annulationOption_fk_option FOREIGN KEY (nomOption)
-        REFERENCES _option(nomOption)
-);*/
+        REFERENCES _option(nomOption),
+    CONSTRAINT annulationOption_fk_souscription FOREIGN KEY (nbSemaines,debutOption)
+        REFERENCES _souscription(nbSemaines,debutOption)
+);
 
-CREATE TABLE _historiqueEnLigne(
+/*CREATE TABLE _historiqueEnLigne(
     idFacture         SERIAL,
     idOffre           INTEGER,
     nbJours           INTEGER,
@@ -229,7 +230,7 @@ CREATE TABLE _historiqueEnLigne(
         REFERENCES _offre(idOffre),
     CONSTRAINT historiqueEnLigne_fk_facture FOREIGN KEY (idFacture)
         REFERENCES _facture(idFacture)
-);
+);*/
 
 --
 -- TABLE CATEGORY
@@ -388,13 +389,14 @@ CREATE TABLE _avis(
         REFERENCES _compte(idCompte)
 );
 
-/*CREATE TABLE _reponse(
+CREATE TABLE _imageAvis(
     idAvis      INTEGER,
-    commentaire VARCHAR(50),
-    dateRep     DATE DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT reponse_fk_avis FOREIGN KEY (idAvis)
-        REFERENCES _avis(idAvis)
-);*/
+    idImage     INTEGER,
+    CONSTRAINT imageAvis_fk_avis FOREIGN KEY (idAvis)
+        REFERENCES _avis(idAvis),
+    CONSTRAINT imageAvis_fk_image FOREIGN KEY(idImage)
+        REFERENCES _image(idImage)
+);
 
 --
 -- TABLE ASSOCIATION GUIDEE

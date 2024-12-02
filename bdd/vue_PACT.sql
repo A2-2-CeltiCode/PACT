@@ -144,13 +144,6 @@ FROM _avis;
 -- VUES FACTURE
 --
 
-/*CREATE OR REPLACE VIEW vue_facture_option AS
-SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance, jourDebut, jourFin, nomOption, nbSemaines, lastUpdate
-FROM _facture NATURAL JOIN _historiqueOption;
-
-
-CREATE OR REPLACE VIEW vue_facture_en_ligne AS
-SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance, jourDebut, jourFin, nbJours, estEnLigne
-FROM _facture NATURAL JOIN _historiqueEnLigne;
-
-*/
+CREATE OR REPLACE VIEW vue_facture AS
+SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance
+FROM _facture;
