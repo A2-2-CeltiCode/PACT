@@ -2,8 +2,8 @@
 // Démarrer la session
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
-// Configuration de la base de données
 
+// Configuration de la base de données
 try {
     // Vérifier si le formulaire a été soumis
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -33,6 +33,7 @@ try {
         $pdo->exec("SET search_path TO pact");
 
         // Vérifier l'ancien mot de passe
+        $idCompte = $_SESSION['idCompte']; // Récupérer l'identifiant de l'utilisateur connecté
         $ancienMdpHash = hash('sha256', $ancienMdp);
         $sql = "SELECT mdp FROM _compte WHERE idCompte = :idCompte";
         $stmt = $pdo->prepare($sql);
@@ -41,6 +42,7 @@ try {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$result || $result['mdp'] !== $ancienMdpHash) {
+            // Enregistrer un message d'erreur dans la session
             $_SESSION['error'] = "L'ancien mot de passe est incorrect.";
             header("Location: consulterCompteMembre.php");
             exit;

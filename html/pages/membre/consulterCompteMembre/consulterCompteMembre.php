@@ -69,6 +69,15 @@ try {
     <main>
         <h1>Vos informations personnelles</h1>
 
+        <!-- Affichage des messages de succès ou d'erreur -->
+        <?php if (isset($_SESSION['message'])): ?>
+            <div style="color: green; margin-bottom: 20px; text-align: center;">
+                <?= htmlspecialchars($_SESSION['message']) ?>
+            </div>
+            <?php unset($_SESSION['message']); ?>
+        <?php endif; ?>
+
+
         <!-- Boutons principaux -->
         <div class="modifier">
             <button type="button" onclick="activerModification()">Modifier mes informations</button>
@@ -81,12 +90,14 @@ try {
         <!-- Affichage des messages d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
 
+        <hr id="separation">
+
         <!-- Formulaire -->
         <form id="formulaireCompteMembre" method="post" action="enregistrerModifications.php">
         <table>
                 <!-- Catégorie Identité -->
                 <tr>
-                    <th colspan="2" style="background-color: #075997; color: white; text-align: center;">Identité</th>
+                    <th colspan="2" class="thhead" style="background-color: #075997; color: white; text-align: center;">Identité</th>
                 </tr>
                 <tr>
                     <th>Nom</th>
@@ -115,7 +126,7 @@ try {
 
                 <!-- Catégorie Coordonnées -->
                 <tr>
-                    <th colspan="2" style="background-color: #075997; color: white; text-align: center;">Coordonnées</th>
+                    <th colspan="2" class="thhead" style="background-color: #075997; color: white; text-align: center;">Coordonnées</th>
                 </tr>
                 <tr>
                     <th>Email</th>
@@ -136,7 +147,7 @@ try {
 
                 <!-- Catégorie Adresse -->
                 <tr>
-                    <th colspan="2" style="background-color: #075997; color: white; text-align: center;">Adresse</th>
+                    <th colspan="2" class="thhead"  style="background-color: #075997; color: white; text-align: center;">Adresse</th>
                 </tr>
                 <tr>
                     <th>Rue</th>
@@ -191,7 +202,7 @@ try {
                         <?php unset($_SESSION['error']); ?>
                     <?php endif; ?>
                 </div>
-                <div style="margin-top: 20px;">
+                <div id="btnMdp"style="margin-top: 20px;">
                     <button type="submit" id="btnMdpEnregistrer">Enregistrer</button>
                     <button type="button" id="btnMdpAnnuler" onclick="fermerPopupMotDePasse()">Annuler</button>
                 </div>

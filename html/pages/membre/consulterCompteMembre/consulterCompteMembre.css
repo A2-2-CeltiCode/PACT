@@ -217,7 +217,6 @@ main button:hover {
 
     position: relative; /* Position relative pour se placer naturellement sous le tableau */
     margin-top: 20px; /* Espacement au-dessus du bouton */
-    margin-left: auto; /* Aligner à droite */
     margin-right: 0;
     background-color: #3b9d3f; /* Couleur verte */
     color: white;
@@ -291,7 +290,7 @@ main button:hover {
 }
 
 .champsMdp {
-    width: 90%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 15px;
     border: 2px solid #ccc;
@@ -303,6 +302,10 @@ main button:hover {
 .champsMdp:focus {
     border-color: #007BFF;
     outline: none;
+}
+
+#separation {
+    display: none;
 }
 
 /* Media query pour les petits écrans (smartphones) */
@@ -338,7 +341,7 @@ main button:hover {
 
     /* Ajustement des boutons */
     main button, .modifier button {
-        width: 100%; /* Les boutons occupent toute la largeur */
+        width: 40%; /* Les boutons occupent toute la largeur */
         font-size: 1em;
         margin: 10px 0;
     }
@@ -392,8 +395,38 @@ main table {
   main table td {
     width: 100%; /* Chaque cellule occupe 50% */
     text-align: left; 
-  
 
 
+}
+
+#btnMdp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.bouton {
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.modifier {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.thhead {
+    margin-top: 20px;
+}
+
+#separation {
+    display: block;
+    border: none;
+    height: 0.1em;
+    /* Set the hr color */
+    color: var(--primaire-membre);  /* old IE */
+    background-color: var(--primaire-membre);  /* Modern Browsers */
 }
 }
