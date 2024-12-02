@@ -1,4 +1,6 @@
 <?php
+
+use composants\Button\ButtonType;
 error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
 use \composants\Select\Select;
 use \composants\CheckboxSelect\CheckboxSelect;
@@ -14,7 +16,7 @@ require_once '../../../trie/fonctionTrie.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barretrie.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barreTrieVisiteur.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
@@ -60,40 +62,32 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 // Si ce n'est pas une requête AJAX, inclure le HTML complet
 ?>
+<?php Header::render(HeaderType::Member); ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Recherche d'Offres</title>
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="listeOffres.css">
-    <style>
-    .offres-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px; 
-    }
-    .offre {
-        margin: 10px auto;
-    }
-    .button-container {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .button-container button {
-        height: 40px;
-        display: flex;
-        align-items: center;
-    }
-    .input {
-        display: flex;
-        gap: 10px;
-    }
-    </style>
+    <link rel="stylesheet" href="listeOffre.css">
+    <link rel="stylesheet" href="listeOffre.js">
     <script src="../../../trie/trieGeneral.js"></script>
 </head>
 <body>
+
+        <?php Button::render("btnpopup", "", "filtres", ButtonType::Member, "", true); ?>
+
+    
+    <div class="popup" id="popup">
+        <h2>Voici la popup</h2>
+        <p>Ce contenu est affiché dynamiquement.</p>
+        <button class="close-btn" id="closePopup">Fermer</button>
+    </div>
+
+
+
     <?php
     Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories);
     ?>
@@ -114,4 +108,5 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         ?>
     </div>
 </body>
+<?php Footer::render(FooterType::Member); ?>
 </html>
