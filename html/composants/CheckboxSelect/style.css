@@ -1,55 +1,70 @@
 .checkbox-select-wrapper {
     position: relative;
     display: inline-block;
+    width: 100%;
+    margin: 0 !important;
 }
 
 .checkbox-select {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
+    background-color: #fff;
+    min-width: 100%;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    border-radius: 8px;
-    padding: 10px;
-    transition: opacity 0.2s ease;
-    opacity: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
 .checkbox-select.show {
     display: block;
-    opacity: 1;
 }
 
 .checkbox-select label {
     display: block;
     padding: 8px 16px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
 }
 
 .checkbox-select label:hover {
     background-color: #f1f1f1;
 }
 
-.checkbox-select input[type="checkbox"] {
-    margin-right: 10px;
+.checkbox-select-wrapper::before {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+    color: #333;
+    
 }
 
-.checkbox-select button {
-    border-radius: 8px;
-    border: none;
-    padding: 10px 15px;
-    color: white;
-    background-color: #007bff;
-    transition: background-color 0.2s ease;
-}
-
-.checkbox-select button:hover {
-    background-color: #0056b3;
+.checkbox-select-wrapper button {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: white;
     cursor: pointer;
+    text-align: left;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
-.checkbox-select button:active {
-    transform: scale(0.97);
+.checkbox-select-wrapper button:hover {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 1px #007BFF;
 }

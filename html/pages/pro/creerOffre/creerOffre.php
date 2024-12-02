@@ -201,7 +201,8 @@
                             Select::render(
                                 name: "typeOffre", 
                                 required: false, 
-                                options: $option
+                                options: $option,
+                                id: "typeOffre"
                             );
                             
                         ?>
@@ -223,18 +224,18 @@
                             
                                     <?php 
                                         CheckboxSelect::render(
-                                            'checkbox',
-                                            "tag_activite_",
-                                            "tag[]",
-                                            false,
-                                            $tag,
+                                            class: 'checkbox',
+                                            id: "tag_activite_",
+                                            name: "tag[]",
+                                            required: false,
+                                            options: $tag,
+                                            buttonText: "Tag"
 
                                         );
                                     ?>
                                 
-                                
+                                <div class="selected-values"></div>
                             </div>
-                            <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix1", type: "number") ?>
                             <label>Âge minimum</label>
@@ -265,15 +266,17 @@
                         <?php 
                             
                             CheckboxSelect::render(
-                                'checkbox',
-                                "tag_visite_",
-                                "tag[]",
-                                false,
-                                $tag,
+                                class: 'checkbox',
+                                id: "tag_visite_",
+                                name: "tag[]",
+                                required: false,
+                                options: $tag,
+                                buttonText: "Tag"
                             );
+                            
                         ?>
+                        <div class="selected-values"></div>
                     </div>
-                            <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix2", type: "number") ?>
                             <label>Durée de la visite</label>
@@ -297,11 +300,12 @@
                                 ?>
                                 <?php 
                                     CheckboxSelect::render(
-                                        'checkbox',
-                                        "langue_",
-                                        "langue[]",
-                                        false,
-                                        $langue,
+                                        class: 'checkbox',
+                                        id: "langue_",
+                                        name: "langue[]",
+                                        required: false,
+                                        options: $langue,
+                                        buttonText: "Langue"
                                     );
                                 ?>
                             </div>
@@ -324,15 +328,17 @@
                             ?>
                             <?php 
                                 CheckboxSelect::render(
-                                    'checkbox',
-                                    "tag_spectacle_",
-                                    "tag[]",
-                                    false,
-                                    $tag,
+                                    class: 'checkbox',
+                                    id: "tag_spectacle_",
+                                    name: "tag[]",
+                                    required: false,
+                                    options: $tag,
+                                    buttonText: "Tag"
                                 );
                             ?>
+                            <div class="selected-values"></div>
                         </div>
-                            <br><br>
+                            
                             <label>Prix*</label>
                             <?php Input::render(name: "prix3", type: "number") ?>
                             <label>Capacité d'accueil</label>
@@ -360,15 +366,17 @@
                             ?>
                             <?php 
                                 CheckboxSelect::render(
-                                    'checkbox',
-                                    "tag_parc_",
-                                    "tag[]",
-                                    false,
-                                    $tag,
+                                    class: 'checkbox',
+                                    id: "tag_parc_",
+                                    name: "tag[]",
+                                    required: false,
+                                    options: $tag,
+                                    buttonText: "Tag"
                                 );
                             ?>
+                            <div class="selected-values"></div>
                         </div>
-                            <br><br>
+                            
                             
                             <label>Prix*</label>
                             <?php Input::render(name: "prix4", type: "number") ?>
@@ -399,15 +407,16 @@
                             ?>
                             <?php 
                                 CheckboxSelect::render(
-                                    'checkbox',
-                                    "tag_restaurant_",
-                                    "tag[]",
-                                    false,
-                                    $tag,
+                                    class: 'checkbox',
+                                    id: "tag_restaurant_",
+                                    name: "tag[]",
+                                    required: false,
+                                    options: $tag,
+                                    buttonText: "Tag"
                                 );
                             ?>
+                            <div class="selected-values"></div>
                         </div>
-                            <br>
                             <div>
                                 <label>Carte du Restaurant</label>
                                 <?php InsererImage::render("carteRestaurant", "Glissez-déposez vos images ici", 1, false,false,['pdf']);?>
@@ -432,16 +441,18 @@
                             </div>
                             <div>
                                 <label>Type de repas</label>
-                                <br><br>
+                                <br>
                                 <input type="checkbox" id="dejeuner" name="typeRepas[]" value="Dejeuner">
                                 <label for="dejeuner">Dejeuner</label>
                                 <input type="checkbox" id="diner" name="typeRepas[]" value="Diner">
                                 <label for="diner">Diner</label>
                                 <input type="checkbox" id="snack" name="typeRepas[]" value="Snack">
                                 <label for="snack">Snack</label>
+                                
                             </div>
                         </div>
-                    </div> <!-- End of Restaurant section -->
+                    </div> 
+                    
 
 
 
@@ -452,10 +463,14 @@
                 <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
                 <?php Button::render(text: "Valider", type: "pro", submit: true); ?>
             </div>
-
+    <script>
+        
+    </script>
+    </body>
         </form>
         <?php Footer::render(FooterType::Pro); ?>
     </body>
     
     <script src="creerOffre.js"></script>
+    </html> 
     </html>

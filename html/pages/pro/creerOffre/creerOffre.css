@@ -121,3 +121,8 @@ article{
 .input-wrapper {
     width: 90% !important;
 }
+
+#selected-values{
+    display: flex;
+    flex-direction: column;
+}

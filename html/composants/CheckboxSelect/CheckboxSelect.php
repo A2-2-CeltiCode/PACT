@@ -21,6 +21,7 @@ class CheckboxSelect
      * @param bool $required Indique si le champ est requis.
      * @param array $options Tableau associatif des options (clé => valeur).
      * @param array $selected Valeurs sélectionnées par défaut.
+     * @param string $buttonText Texte affiché sur le bouton.
      */
     public static function render(
         $class = "",
@@ -28,35 +29,13 @@ class CheckboxSelect
         $name = "",
         $required = false,
         $options = [],
-        $selected = []
+        $selected = [],
+        $buttonText = "Sélectionner"
     ) {
         // Inclure le CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<style>
-                .checkbox-select-wrapper {
-                    position: relative;
-                    display: inline-block;
-                }
-                .checkbox-select {
-                    display: none;
-                    position: absolute;
-                    background-color: #f9f9f9;
-                    min-width: 160px;
-                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                    z-index: 1;
-                }
-                .checkbox-select.show {
-                    display: block;
-                }
-                .checkbox-select label {
-                    display: block;
-                    padding: 8px 16px;
-                    cursor: pointer;
-                }
-                .checkbox-select label:hover {
-                    background-color: #f1f1f1;
-                }
-            </style>';
+            echo '<link rel="stylesheet" href="/composants/CheckboxSelect/style.css">';
+            
             self::$cssIncluded = true;
         }
 
@@ -70,7 +49,8 @@ class CheckboxSelect
 
         // Générer le bouton pour afficher la liste déroulante
         echo '<div class="checkbox-select-wrapper">';
-        echo '<button type="button" onclick="toggleCheckboxSelect(\'' . $id . '\')">Sélectionner</button>';
+        
+        echo '<button type="button" onclick="toggleCheckboxSelect(\'' . $id . '\')">' . htmlspecialchars($buttonText) . '</button>';
         echo '<div id="' . $id . '" class="checkbox-select">';
 
         // Générer les options avec cases à cocher
