@@ -96,7 +96,7 @@ INSERT INTO _compteProPrive (idCompte,numSiren) VALUES
 (2, 'numerosiren1');
 
 INSERT INTO _compteProPublic (idCompte) VALUES
-(3);
+(3),(4);
 
 -- Peupler la table _offre
 INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES

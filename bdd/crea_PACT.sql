@@ -42,24 +42,27 @@ CREATE TABLE _gamme(
 --
 
 CREATE TABLE _option(
-    nomOption  VARCHAR(50),
-    prixOption NUMERIC(5,2),
-    CONSTRAINT option_pk PRIMARY KEY(nomOption),
-    CONSTRAINT option_fk_prix FOREIGN KEY (prixOption) 
-        REFERENCES _prix(valPrix)
+    nomOption   VARCHAR(50),
+    prixHT      NUMERIC(5,2) NOT NULL,
+    prixTTC     NUMERIC(5,2) NOT NULL,
+    CONSTRAINT option_pk PRIMARY KEY(nomOption)
 );
 
 --
 -- TABLE FORFAIT
 --
 
-CREATE TABLE _forfait( -- a modif peut être
+CREATE TABLE _forfait(
     nomForfait  VARCHAR(50),
+    prixHT      NUMERIC(5,2) NOT NULL,
+    prixTTC     NUMERIC(5,2) NOT NULL,
     CONSTRAINT forfait_pk PRIMARY KEY(nomForfait)
 );
 
 CREATE TABLE _forfaitPublic( -- a modif peut être
     nomForfait  VARCHAR(50),
+    prixHT      NUMERIC(5,2) NOT NULL,
+    prixTTC     NUMERIC(5,2) NOT NULL,
     CONSTRAINT forfaitPublic_fk_forfait FOREIGN KEY (nomForfait) 
         REFERENCES _forfait(nomForfait),
     CONSTRAINT forfaitPublic_pk PRIMARY KEY(nomForfait)
@@ -67,6 +70,8 @@ CREATE TABLE _forfaitPublic( -- a modif peut être
 
 CREATE TABLE _forfaitPro( -- a modif peut être
     nomForfait  VARCHAR(50),
+    prixHT      NUMERIC(5,2) NOT NULL,
+    prixTTC     NUMERIC(5,2) NOT NULL,
     CONSTRAINT forfaitPro_fk_forfait FOREIGN KEY (nomForfait) 
         REFERENCES _forfait(nomForfait),
     CONSTRAINT forfaitPro_pk PRIMARY KEY(nomForfait)
@@ -100,7 +105,7 @@ CREATE TABLE _compte (
     mdp         VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NOT NULL,
     CONSTRAINT compte_pk PRIMARY KEY(idCompte),
-    CONSTRAINT compte_fk_adresse FOREIGN KEY (idAdresse) 
+    CONSTRAINT compte_fk_adresse FOREIGN KEY (idAdresse)
         REFERENCES _adresse(idAdresse)
 );
 
@@ -170,7 +175,7 @@ CREATE TABLE _offre(
 CREATE TABLE _image(
     idOffre   SERIAL,
     idImage   SERIAL,
-    nomImage      VARCHAR(50) NOT NULL,
+    nomImage  VARCHAR(50) NOT NULL,
     CONSTRAINT image_pk PRIMARY KEY(idImage),
     CONSTRAINT image_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre)
@@ -187,8 +192,6 @@ CREATE TABLE _facture(
     idAdressePACT         INTEGER NOT NULL DEFAULT 1,
     datePrestaServices    DATE NOT NULL,
     dateEcheance          DATE NOT NULL,
-    jourDebut             DATE,
-    jourFin               DATE,
     CONSTRAINT facture_pk PRIMARY KEY(idFacture),
     CONSTRAINT facture_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),
@@ -196,28 +199,31 @@ CREATE TABLE _facture(
         REFERENCES _adresse(idAdresse)
 );
 
-CREATE TABLE _historiqueOption(
-    idFacture             SERIAL,
-    idOffre               INTEGER,
-    nomOption             VARCHAR(50) NOT NULL,
-    nbSemaines            INTEGER NOT NULL,
+CREATE TABLE _souscriptionOP(
+    nbSemaines     INTEGER NOT NULL,
     debutOption		 DATE NOT NULL,
-    finOption			 DATE NOT NULL,
-    lastUpdate            DATE DEFAULT CURRENT_DATE,
-    CONSTRAINT historiqueOption_pk PRIMARY KEY(idFacture,idOffre),
-    CONSTRAINT historiqueOption_fk_offre FOREIGN KEY (idOffre) 
-        REFERENCES _offre(idOffre),
-    CONSTRAINT historiqueOption_fk_option FOREIGN KEY (nomOption)
-        REFERENCES _option(nomOption),
-    CONSTRAINT historiqueOption_fk_facture FOREIGN KEY (idFacture)
-        REFERENCES _facture(idFacture)
+    --finOption			 DATE NOT NULL,
+    CONSTRAINT souscriptionOP_pk PRIMARY KEY(nbSemaines,debutOption)
 );
 
+/*CREATE TABLE _annulationOption(
+    nbSemaines    INTEGER NOT NULL,
+    debutOption		DATE NOT NULL,
+    idOffre       INTEGER NOT NULL,
+    nomOption     VARCHAR(50) NOT NULL,
+    CONSTRAINT souscriptionOP_pk PRIMARY KEY(nbSemaines,debutOption),
+    CONSTRAINT annulationOption_fk_offre FOREIGN KEY (idOffre) 
+        REFERENCES _offre(idOffre),
+    CONSTRAINT annulationOption_fk_option FOREIGN KEY (nomOption)
+        REFERENCES _option(nomOption)
+);*/
+
 CREATE TABLE _historiqueEnLigne(
-    idFacture   SERIAL,
-    idOffre     INTEGER,
-    nbJours     INTEGER,
-    estEnLigne  BOOLEAN,
+    idFacture         SERIAL,
+    idOffre           INTEGER,
+    nbJours           INTEGER,
+    estEnLigne        BOOLEAN,
+    jourDebutNbJours  INTEGER,
     CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idFacture,idOffre),
     CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),

@@ -1,10 +1,10 @@
 SET SCHEMA 'pact';
 
 -- Peupler la table _option
-INSERT INTO _option (nomOption) VALUES
-('Aucune'),
-('En relief'),
-('A la une');
+INSERT INTO _option (nomOption, prixHT, prixTTC) VALUES
+('Aucune', 0.0, 0.0),
+('En relief', 16.68, 20.0),
+('A la une', 8.34, 10.0);
 
 -- Peupler la table _gamme
 INSERT INTO _gamme (nomGamme) VALUES
@@ -29,19 +29,19 @@ INSERT INTO _categorie (nomCategorie) VALUES
 ('Restaurant');
 
 -- Peupler la table _forfait
-INSERT INTO _forfait (nomForfait) VALUES
-('Gratuit'),
-('Standard'),
-('Premium');
+INSERT INTO _forfait (nomForfait,prixHT,prixTTC) VALUES
+('Gratuit', 0.0, 0.0),
+('Standard', 1.67, 2.0),
+('Premium', 3.34, 4.0);
 
 -- Peupler la table _forfait
-INSERT INTO _forfaitPublic (nomForfait) VALUES
-('Gratuit');
+INSERT INTO _forfaitPublic (nomForfait,prixHT,prixTTC) VALUES
+('Gratuit', 0.0, 0.0);
 
 -- Peupler la table _forfait
-INSERT INTO _forfaitPro (nomForfait) VALUES
-('Standard'),
-('Premium');
+INSERT INTO _forfaitPro (nomForfait,prixHT,prixTTC) VALUES
+('Standard', 1.67, 2.0),
+('Premium', 3.34, 4.0);
 
 -- Peupler la table _language
 INSERT INTO _langage (nomLangage) VALUES

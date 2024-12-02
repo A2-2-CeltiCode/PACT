@@ -1,7 +1,4 @@
---
--- SCHEMA
---
-set schema 'pact';
+SET SCHEMA 'pact';
 
 --
 -- VUES COMPTES
@@ -23,12 +20,11 @@ FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN 
 
 -- COMPTE PRO
 CREATE OR REPLACE VIEW vue_compte_pro AS
-SELECT _compte.idCompte, _compte.mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, _adresse.idAdresse, codePostal, ville, rue
-FROM _compte LEFT JOIN _comptePro ON _compte.idCompte = _comptePro.idCompte
-             LEFT JOIN _compteProPrive ON _compte.idCompte = _compteProPrive.idCompte
-             LEFT JOIN _compteProPublic ON _compte.idCompte = _compteProPublic.idCompte
-             LEFT JOIN _adresse ON _compte.idAdresse = _adresse.idAdresse;
-
+SELECT c.idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, c.idAdresse, codePostal, ville, rue
+FROM _compte c LEFT JOIN _comptePro cp ON c.idCompte = cp.idCompte
+			LEFT JOIN _compteProPrive cppr ON c.idCompte = cppr.idCompte 
+			LEFT JOIN _adresse a ON c.idAdresse = a.idAdresse
+WHERE denominationSociale IS NOT NULL;
 --
 -- VUES OFFRES
 --
@@ -148,7 +144,7 @@ FROM _avis;
 -- VUES FACTURE
 --
 
-CREATE OR REPLACE VIEW vue_facture_option AS
+/*CREATE OR REPLACE VIEW vue_facture_option AS
 SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance, jourDebut, jourFin, nomOption, nbSemaines, lastUpdate
 FROM _facture NATURAL JOIN _historiqueOption;
 
@@ -157,3 +153,4 @@ CREATE OR REPLACE VIEW vue_facture_en_ligne AS
 SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance, jourDebut, jourFin, nbJours, estEnLigne
 FROM _facture NATURAL JOIN _historiqueEnLigne;
 
+*/
