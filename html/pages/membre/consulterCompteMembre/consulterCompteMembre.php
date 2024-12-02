@@ -192,7 +192,7 @@ try {
                     <?php endif; ?>
                 </div>
                 <div style="margin-top: 20px;">
-                    <button type="submit" id="btnEnregistrerMdp">Enregistrer</button>
+                    <button type="submit" id="btnMdpEnregistrer">Enregistrer</button>
                     <button type="button" id="btnMdpAnnuler" onclick="fermerPopupMotDePasse()">Annuler</button>
                 </div>
             </form>

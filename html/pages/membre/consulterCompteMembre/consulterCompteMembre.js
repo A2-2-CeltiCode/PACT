@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAnnuler = document.getElementById("btnAnnuler");
     const editableInputs = document.querySelectorAll("input.editable");
     const messageErreur = document.getElementById("messageErreur");
+    const btnEnregistrerMdp = document.getElementById("btnMdpEnregistrer");
+    const btnAnnulerMdp = document.getElementById("btnMdpAnnuler");
     const footer = document.getElementsByTagName("footer")[0];
 
     // Variables pour la pop-up de changement de mot de passe
@@ -193,6 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
     btnAnnuler.addEventListener("click", annulerModification);
     btnEnregistrer.addEventListener("click", validerFormulaire);
     btnChangerMotDePasse.addEventListener("click", ouvrirPopupMotDePasse);
+    // Événements pour la pop-up de mot de passe
+    btnEnregistrerMdp.addEventListener("click", validerMotDePasse);
+    btnAnnulerMdp.addEventListener("click", fermerPopupMotDePasse);
 
     // Boutons de la pop-up
     document
