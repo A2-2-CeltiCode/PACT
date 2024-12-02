@@ -82,10 +82,15 @@ FROM _possedeVisite;
 
 -- SPECTACLE
 CREATE OR REPLACE VIEW vue_spectacle AS
-SELECT idCompte, idOffre, idAdresse, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
-       nomCategorie, codePostal, ville, rue, numTel, valPrix, tempsEnMinutes, capacite, estEnLigne, dateEvenement
-FROM _offre NATURAL JOIN _categorie NATURAL JOIN _spectacle NATURAL JOIN _adresse NATURAL JOIN _option
-            NATURAL JOIN _forfait NATURAL JOIN _prix NATURAL JOIN _duree;
+SELECT o.idCompte, o.idOffre, o.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, o.descriptionDetaillee, o.siteInternet,
+       c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, p.valPrix, d.tempsEnMinutes, s.capacite, o.estEnLigne, s.dateEvenement
+FROM _offre o INNER JOIN _option op ON o.nomOption = op.nomOption
+              INNER JOIN _forfait f ON o.nomForfait = f.nomForfait
+              INNER JOIN _spectacle s ON o.idOffre = s.idOffre
+              INNER JOIN _adresse a ON o.idAdresse = a.idAdresse
+              INNER JOIN _categorie c ON s.nomCategorie = c.nomCategorie
+              INNER JOIN _prix p ON s.valPrix = p.valPrix
+              INNER JOIN _duree d ON s.tempsEnMinutes = d.tempsEnMinutes;
 
 CREATE OR REPLACE VIEW vue_tags_spectacle (idOffre, nomTag) AS
 SELECT idOffre, nomTag
@@ -93,10 +98,17 @@ FROM _possedeSpectacle;
 
 -- ACTIVITE
 CREATE OR REPLACE VIEW vue_activite AS
-SELECT idCompte, idOffre, idAdresse, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet,
-       nomCategorie, codePostal, ville, rue, numTel, valPrix, tempsEnMinutes, ageMin, prestation, estEnLigne
-FROM _offre NATURAL JOIN _categorie NATURAL JOIN _activite NATURAL JOIN _adresse NATURAL JOIN _option
-            NATURAL JOIN _forfait NATURAL JOIN _prix NATURAL JOIN _duree;
+SELECT o.idCompte, o.idOffre, o.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, o.descriptionDetaillee, 
+    o.siteInternet, o.creaDate, c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, p.valPrix, d.tempsEnMinutes, 
+    ac.ageMin, ac.prestation, o.estEnLigne, o.heureOuverture, o.heureFermeture, f.prixHT, f.prixTTC
+FROM _offre o
+INNER JOIN _option op ON o.nomOption = op.nomOption
+INNER JOIN _forfait f ON o.nomForfait = f.nomForfait
+INNER JOIN _activite ac ON o.idOffre = ac.idOffre
+INNER JOIN _adresse a ON o.idAdresse = a.idAdresse
+INNER JOIN _categorie c ON ac.nomCategorie = c.nomCategorie
+INNER JOIN _prix p ON ac.valPrix = p.valPrix
+INNER JOIN _duree d ON ac.tempsEnMinutes = d.tempsEnMinutes;
 
 CREATE OR REPLACE VIEW vue_tags_activite (idOffre, nomTag) AS
 SELECT idOffre, nomTag
