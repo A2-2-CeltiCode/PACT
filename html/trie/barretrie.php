@@ -50,7 +50,7 @@ class Trie {
         <hr>
         <?php
         echo '<input type="hidden" id="sortInput" name="sort" value="' . htmlspecialchars($sort) . '">';
-        echo '<div class="input">';
+        echo '<div id="input" class="input">';
         echo '<div style="display: grid; gap: 1px;">';
         Input::render(name:"titre",class:'test', type:"text", placeholder:'Titre*', value: htmlspecialchars($titre));
         ?>
@@ -105,6 +105,8 @@ class Trie {
         );
             echo '<input type="hidden" id="status" name="status" value="' . htmlspecialchars($status) . '">';
         
-        echo '</div></form>';
+        echo '</div>';
+        echo '</div>';
+        echo '</form>';
     }
 }
