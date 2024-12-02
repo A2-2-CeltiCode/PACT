@@ -118,7 +118,7 @@ try {
                 <tr>
                     <th>Pseudo</th>
                     <td>
-                        <input type="text" name="pseudo" class="editable" 
+                        <input type="text" name="pseudo" 
                             value="<?= htmlspecialchars($userInfo['pseudo'] ?? 'Non renseigné') ?>" 
                             readonly data-original="<?= htmlspecialchars($userInfo['pseudo'] ?? 'Non renseigné') ?>">
                     </td>

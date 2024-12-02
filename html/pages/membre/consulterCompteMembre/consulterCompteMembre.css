@@ -273,6 +273,7 @@ main button:hover {
 
 .bouton{
     display: flex;
+    justify-content: end;
 }
 
 #popupMotDePasse{
@@ -308,6 +309,14 @@ main button:hover {
     display: none;
 }
 
+footer {
+    margin-top: 100px;
+}
+
+@media (min-witdh: 769px) {
+    
+}
+
 /* Media query pour les petits écrans (smartphones) */
 @media (max-width: 768px) {
 
@@ -320,6 +329,7 @@ main button:hover {
         width: 95%; /* Réduit la largeur sur mobile */
         padding: 20px;
         box-shadow: none; /* Supprime l'ombre pour un style plus épuré */
+        margin-bottom: 20px;
     }
 
     /* Tableau adapté au défilement horizontal */
