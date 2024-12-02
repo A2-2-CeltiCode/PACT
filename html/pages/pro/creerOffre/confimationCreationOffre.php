@@ -172,16 +172,16 @@
         }
     
         // Insertion dans la table historiqueOption
-    $stmt = $dbh->prepare(
-        "INSERT INTO pact._historiqueOption(idOffre, nomOption, nbSemaines, debutOption, finOption)
-        VALUES(:idOffre, :nomOption, :nbSemaines, :debutOption, :finOption)"
-    );
-    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-    $stmt->bindValue(':nomOption', $typePromotion, PDO::PARAM_STR);
-    $stmt->bindValue(':nbSemaines', $durepromotion, PDO::PARAM_INT);
-    $stmt->bindValue(':debutOption', $datePromotion, PDO::PARAM_STR);
-    $stmt->bindValue(':finOption', date('Y-m-d', strtotime($datePromotion. ' + '. $durepromotion .' weeks')), PDO::PARAM_STR);
-    $stmt->execute();
+    // $stmt = $dbh->prepare(
+    //     "INSERT INTO pact._historiqueOption(idOffre, nomOption, nbSemaines, debutOption, finOption)
+    //     VALUES(:idOffre, :nomOption, :nbSemaines, :debutOption, :finOption)"
+    // );
+    // $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+    // $stmt->bindValue(':nomOption', $typePromotion, PDO::PARAM_STR);
+    // $stmt->bindValue(':nbSemaines', $durepromotion, PDO::PARAM_INT);
+    // $stmt->bindValue(':debutOption', $datePromotion, PDO::PARAM_STR);
+    // $stmt->bindValue(':finOption', date('Y-m-d', strtotime($datePromotion. ' + '. $durepromotion .' weeks')), PDO::PARAM_STR);
+    // $stmt->execute();
 
     // Type d'offre : Activité
     if ($typeOffre === "Activite") {
