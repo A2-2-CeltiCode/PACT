@@ -2,12 +2,8 @@
 // Démarrer la session
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
-// Configuration de la base de données
-$host = 'localhost';
-$dbname = 'postgres';
-$user = 'postgres';
-$password = '13phenix';
-$idCompte = 2; // $_SESSION['idCompte']; // ID de l'utilisateur connecté
+
+$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 
 try {
@@ -34,7 +30,7 @@ try {
         }
 
         // Connexion à la base de données
-        $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $user, $password);
+        $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $pdo->exec("SET search_path TO pact");

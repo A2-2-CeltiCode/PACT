@@ -18,16 +18,12 @@ $message = "";
 $userInfo = [];
 
 
-// Configuration de la base de données
-$host = 'localhost';
-$dbname = 'postgres';
-$user = 'postgres';
-$password = '13phenix';
-$idCompte = 2; // $_SESSION['idCompte']; // ID de l'utilisateur connecté
+
+$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO("pgsql:host=$host;port=5433;dbname=$dbname", $user, $password);
+    $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Définir le schéma "pact" pour la session
@@ -202,7 +198,7 @@ try {
                         <?php unset($_SESSION['error']); ?>
                     <?php endif; ?>
                 </div>
-                
+
                 <div class="boutonMdp" style="margin-top: 20px;">
                     <button type="submit" id="btnEnregistrerMdp">Enregistrer</button>
                     <button type="button" id="btnAnnulerMdp" onclick="fermerPopupMotDePasse()">Annuler</button>
