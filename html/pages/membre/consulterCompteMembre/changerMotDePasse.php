@@ -2,10 +2,7 @@
 // Démarrer la session
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
-
-
-$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
-
+// Configuration de la base de données
 
 try {
     // Vérifier si le formulaire a été soumis
@@ -33,7 +30,6 @@ try {
         // Connexion à la base de données
         $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
         $pdo->exec("SET search_path TO pact");
 
         // Vérifier l'ancien mot de passe
@@ -45,7 +41,9 @@ try {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$result || $result['mdp'] !== $ancienMdpHash) {
-            throw new Exception("L'ancien mot de passe est incorrect.");
+            $_SESSION['error'] = "L'ancien mot de passe est incorrect.";
+            header("Location: consulterCompteMembre.php");
+            exit;
         }
 
         // Mettre à jour le mot de passe
@@ -56,14 +54,14 @@ try {
         $stmtUpdate->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
         $stmtUpdate->execute();
 
-        // Message de succès
+        // Enregistrer un message de succès dans la session
         $_SESSION['message'] = "Le mot de passe a été changé avec succès.";
+        header("Location: consulterCompteMembre.php");
+        exit;
     }
 } catch (Exception $e) {
-    // Gestion des erreurs
-    $_SESSION['error'] = "Erreur : " . $e->getMessage();
+    // Enregistrer les erreurs dans la session
+    $_SESSION['error'] = $e->getMessage();
+    header("Location: consulterCompteMembre.php");
+    exit;
 }
-
-// Rediriger vers la page précédente
-header("Location: test.php");
-exit;

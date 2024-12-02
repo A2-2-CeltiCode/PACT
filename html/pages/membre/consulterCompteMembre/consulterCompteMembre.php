@@ -2,7 +2,6 @@
 // Démarrer la session
 session_start();
 
-
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use \composants\Label\Label;
@@ -14,6 +13,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
+// Initialisation des variables
+$message = "";
+$userInfo = [];
 
 // Initialisation des variables
 $message = "";
@@ -56,27 +58,32 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Compte</title>
     <link rel="stylesheet" href="consulterCompteMembre.css">
-    <link rel="stylesheet" href="../../../ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <script src="consulterCompteMembre.js"></script>
-</head>
+      
 
+</head>
 <body>
     <?php Header::render(HeaderType::Member); ?>
 
     <main>
         <h1>Vos informations personnelles</h1>
 
-        <!-- Bouton "Modifier mes informations" -->
+        <!-- Boutons principaux -->
         <div class="modifier">
             <button type="button" onclick="activerModification()">Modifier mes informations</button>
+            <button type="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
+
+        <!-- Message d'erreur -->
+        <div id="messageErreur" style="color: red; display: none;"></div>
 
         <!-- Affichage des messages d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
 
-        <!-- Affichage des informations si disponibles -->
+        <!-- Formulaire -->
         <form id="formulaireCompteMembre" method="post" action="enregistrerModifications.php">
-            <table>
+        <table>
                 <!-- Catégorie Identité -->
                 <tr>
                     <th colspan="2" style="background-color: #075997; color: white; text-align: center;">Identité</th>
@@ -155,13 +162,44 @@ try {
                 </tr>
             </table>
 
+            <!-- Boutons -->
             <div class="bouton">
-            <button type="button" id="btnEnregistrer" style="display: none;" onclick="validerFormulaire(event)">Enregistrer</button>
+                <button type="button" id="btnEnregistrer" style="display: none;" onclick="validerFormulaire(event)">Enregistrer</button>
                 <button type="button" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
             </div>
         </form>
+        <!-- Popup de changement de mot de passe -->
+        <div id="popupMotDePasse" style="display: <?= isset($_SESSION['error']) ? 'block' : 'none' ?>;">
+            <h2>Changer le mot de passe</h2>
+            <form id="formulaireMotDePasse" method="post" action="changerMotDePasse.php">
+                <div>
+                    <label for="ancienMdp">Ancien mot de passe :</label>
+                    <input type="password" class="champsMdp" id="ancienMdp" name="ancienMdp" required>
+                </div>
+                <div>
+                    <label for="nouveauMdp">Nouveau mot de passe :</label>
+                    <input type="password" class="champsMdp" id="nouveauMdp" name="nouveauMdp" required>
+                </div>
+                <div>
+                    <label for="confirmerMdp">Confirmer le mot de passe :</label>
+                    <input type="password" class="champsMdp" id="confirmerMdp" name="confirmerMdp" required>
+                </div>
+                <!-- Affichage des messages d'erreur ou de succès -->
+                <div id="erreurPopup" style="color: red; text-align: center; margin-bottom: 20px;">
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <?= htmlspecialchars($_SESSION['error']) ?>
+                        <?php unset($_SESSION['error']); ?>
+                    <?php endif; ?>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button type="submit" id="btnEnregistrerMdp">Enregistrer</button>
+                    <button type="button" id="btnMdpAnnuler" onclick="fermerPopupMotDePasse()">Annuler</button>
+                </div>
+            </form>
+        </div>
     </main>
 
-    <?php Footer::render(FooterType::Member); ?>
+    <?php Footer::render(HeaderType::Member); ?>
 </body>
+
 </html>
