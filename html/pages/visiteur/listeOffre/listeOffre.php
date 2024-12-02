@@ -77,6 +77,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 </head>
 <body>
 
+<input type="hidden" name="status" value="null" />
+
         <?php Button::render("btnpopup", "", "filtres", ButtonType::Member, "", true); ?>
 
     <div class="popup" id="popup">
