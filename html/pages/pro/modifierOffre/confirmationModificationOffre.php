@@ -139,8 +139,11 @@ $carteRestaurant = $_POST['carteRestaurant'] ?? null;
 $planParc = $_POST['planParc'] ?? null;
 $langue = $_POST['langue'] ?? null;
 $enLigne = $_POST['estEnLigne'] ?? null;
+$options = $_POST['options'] ?? null;
 
-
+if($options==true){
+    $typePromotion = "Aucune";
+}
 
 
 
@@ -171,7 +174,7 @@ $stmt->execute();
 echo $enLigne;
 $stmt = $dbh->prepare(
     "UPDATE pact._offre SET titre = :titre, description = :description, descriptionDetaillee = :descriptionDetaillee, 
-    siteInternet = :siteInternet, nomOption = :nomOption, nomForfait = :nomForfait, estEnLigne = :estEnLigne 
+    siteInternet = :siteInternet, nomOption = :nomOption, estEnLigne = :estEnLigne 
     WHERE idOffre = :idOffre" // Assuming you have an idOffre
 );
 $stmt->bindValue(':titre', $nomOffre, $nomOffre !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
@@ -179,7 +182,6 @@ $stmt->bindValue(':description', $descriptionOffre, $descriptionOffre !== null ?
 $stmt->bindValue(':descriptionDetaillee', $descriptionDetaillee, $descriptionDetaillee !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':siteInternet', $siteWeb, $siteWeb !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':nomOption', $typePromotion, $typePromotion !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
-$stmt->bindValue(':nomForfait', $typeForfait, $typeForfait !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':estEnLigne', $enLigne, $enLigne !== null ? PDO::PARAM_BOOL : PDO::PARAM_NULL);
 $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT); // Assuming $idOffre is defined
 $stmt->execute();
@@ -422,4 +424,24 @@ if ($typeOffre === "Restauration") {
         $stmt->bindValue(':nomTag', $val, PDO::PARAM_STR);
         $stmt->execute();
     }
+}
+if ($options == true) {
+    $stmt = $dbh->prepare(
+        "SELECT debutOption FROM pact._annulationOption WHERE idOffre = :idOffre"
+    );
+    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+    $stmt->execute();
+    $debutOption = $stmt->fetch(PDO::FETCH_COLUMN);
+}
+
+
+if ($options == true && $debutOption>= date("Y-m-d")) {
+    $stmt = $dbh->prepare(
+        "UPDATE pact._annulationOption
+        SET estAnnulee = :estAnnulee
+        WHERE idOffre = :idOffre"
+    );
+    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+    $stmt->bindValue(':estAnnulee', true, PDO::PARAM_BOOL);
+    $stmt->execute();
 }

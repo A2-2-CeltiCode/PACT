@@ -22,8 +22,9 @@ class InsererImage
      * @param bool $multiple Permet de déposer plusieurs fichiers.
      * @param bool $required Spécifie si l'entrée est obligatoire ou non.
      * @param array $acceptedExtensions Extensions d'image acceptées (ex: ['jpg', 'png']).
+     * @param string $name Nom de l'attribut name pour l'input.
      */
-    public static function render($id = "drop-zone", $message = "Déposez une image ou cliquez ici", $maxFiles = 5, $multiple = true, $required = false, $acceptedExtensions = [])
+    public static function render($id = "drop-zone", $message = "Déposez une image ou cliquez ici", $maxFiles = 5, $multiple = true, $required = false, $acceptedExtensions = [], $name = "fileInput")
     {
         // Inclure le CSS une seule fois
         if (!self::$cssIncluded) {
@@ -51,8 +52,9 @@ class InsererImage
         // Rendre la zone de dépôt d'image avec les paramètres dynamiques
         echo "
         <div class='drop-zone' id='{$id}' data-id='{$id}' data-max-files='{$maxFiles}'>{$message}</div>
-        <input type='file' id='fileInput-{$id}' name='{$id}' {$acceptStr} {$multipleAttr} {$requiredAttr} style='display: none;'>
+        <input type='file' id='fileInput-{$id}' name='{$name}' {$acceptStr} {$multipleAttr} {$requiredAttr} style='display: none;'>
         <div id='successMessage-{$id}' style='display:none; color: green;'>Image ajoutée avec succès !</div><br>
         ";
     }
 }
+

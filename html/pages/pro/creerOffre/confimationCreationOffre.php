@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    //header("Location: ../listeOffres/listeOffres.php");
+    header("Location: ../listeOffres/listeOffres.php");
 
     require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
@@ -242,9 +242,9 @@
     if ($typeOffre === "parc") {
         insererPrix($dbh, $prix4);
 
-        foreach ($_FILES['monDropZone']['name'] as $key => $val) {
-            $nomImage = $_FILES['monDropZone']['name'][$key];
-            $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
+        foreach ($_FILES['planParc']['name'] as $key => $val) {
+            $nomImage = $_FILES['planParc']['name'][$key];
+            $tmp_name = $_FILES['planParc']['tmp_name'][$key];
             $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/" . $idOffre . '/carte' . '/';
             
             $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
@@ -264,18 +264,19 @@
             $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
             $stmt->execute();
             echo("image insérée");
+            $planParc = $dbh->lastInsertId();
         }
-        $planParc = $dbh->lastInsertId();
+        
 
         $stmt = $dbh->prepare(
-            "INSERT INTO pact._parcAttractions(idOffre, nomCategorie, valPrix, idImage, nbAttractions, ageMin)
-            VALUES(:idOffre, :nomCategorie, :valPrix, :idImage, :nbAttractions, :ageMin)"
+            "INSERT INTO pact._parcAttractions(idOffre, nomCategorie, valPrix, carteparc, nbAttractions, ageMin)
+            VALUES(:idOffre, :nomCategorie, :valPrix, :carteparc, :nbAttractions, :ageMin)"
         );
         
         $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
         $stmt->bindValue(':nomCategorie', "Parc d'attractions", PDO::PARAM_STR);
         $stmt->bindValue(':valPrix', $prix4, PDO::PARAM_STR);
-        $stmt->bindValue(':idImage', $planParc, PDO::PARAM_INT);
+        $stmt->bindValue(':carteparc', $planParc, PDO::PARAM_INT);
         $stmt->bindValue(':nbAttractions', $nombreAttractions, PDO::PARAM_INT);
         $stmt->bindValue(':ageMin', $ageMinimum2, PDO::PARAM_INT);
         $stmt->execute();
@@ -324,11 +325,11 @@
     }
 
     // Type d'offre : Restauration
-    if ($typeOffre === "Restauration") {
+    if ($typeOffre === "Restaurant") {
 
-        foreach ($_FILES['monDropZone']['name'] as $key => $val) {
-            $nomImage = $_FILES['monDropZone']['name'][$key];
-            $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
+        foreach ($_FILES['carteRestaurant']['name'] as $key => $val) {
+            $nomImage = $_FILES['carteRestaurant']['name'][$key];
+            $tmp_name = $_FILES['carteRestaurant']['tmp_name'][$key];
             $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/" . $idOffre . '/carte' . '/';
         
             $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
@@ -339,25 +340,30 @@
                 mkdir($location, 0777, true);
             }
         
-            move_uploaded_file($tmp_name, $location . $nouveauNomImage);
-            $stmt = $dbh->prepare(
-                "INSERT INTO pact._image(idOffre, nomImage) 
-                VALUES(:idOffre, :nomImage)"
-            );
-            $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-            $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
-            $stmt->execute();
-            echo("image insérée");
+            if (move_uploaded_file($tmp_name, $location . $nouveauNomImage)) {
+                $stmt = $dbh->prepare(
+                    "INSERT INTO pact._image(idOffre, nomImage) 
+                    VALUES(:idOffre, :nomImage)"
+                );
+                $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+                $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
+                $stmt->execute();
+                echo("image insérée");
+                $carteRestaurant = $dbh->lastInsertId();
+                echo($carteRestaurant);
+            } else {
+                echo("Failed to move uploaded file.");
+            }
         }
-        $carteRestaurant = $dbh->lastInsertId();
+        
 
         $stmt = $dbh->prepare(
-            "INSERT INTO pact._restaurant(idOffre, nomCategorie, gammeRestaurant, idImage)
-            VALUES(:idOffre, :nomCategorie, , :gammeRestaurant, :idImage)"
+            "INSERT INTO pact._restaurant(idOffre, nomCategorie, nomgamme, menurestaurant)
+            VALUES(:idOffre, :nomCategorie , :nomgamme, :idImage)"
         );
         $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
         $stmt->bindValue(':nomCategorie', $typeOffre, PDO::PARAM_STR);
-        $stmt->bindValue(':gammeRestaurant', $gammeRestaurant, PDO::PARAM_STR);
+        $stmt->bindValue(':nomgamme', $gammeRestaurant, PDO::PARAM_STR);
         $stmt->bindValue(':idImage', $carteRestaurant, PDO::PARAM_INT);
         $stmt->execute();
 
@@ -397,7 +403,7 @@ $stmt->bindValue(':dateEcheance', $dateEcheance, PDO::PARAM_STR);
 $stmt->execute();
 $idFacture = $dbh->lastInsertId();
 
-
+if($typePromotion!="Aucune"){
 // Insertion dans la table _annulationOption
 $stmt = $dbh->prepare(
     "INSERT INTO pact._annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee)
@@ -409,7 +415,7 @@ $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
 $stmt->bindValue(':nomOption', $typePromotion, PDO::PARAM_STR);
 $stmt->bindValue(':estAnnulee', false, PDO::PARAM_BOOL);
 $stmt->execute();
-
+}
 // Insertion dans la table _historiqueEnLigne
 $stmt = $dbh->prepare(
     "INSERT INTO pact._historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours)

@@ -5,8 +5,9 @@ error_reporting(E_ALL ^ E_WARNING);
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-$idOffre = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
+$idOffre = $_POST['idOffre'] ?? 1;
 $crampte = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
+
 $sql = "SELECT nomcategorie FROM pact._spectacle WHERE idOffre = $idOffre";
 $stmt = $dbh->query($sql);
 $offre2 = $stmt->fetch();
@@ -121,7 +122,7 @@ $descriptionDetaillee = $vueOffre["descriptiondetaillee"];
 $typeForfait = $vueOffre["nomforfait"];
 $typePromotion = $vueOffre["nomoption"];
 $estEnLigne = $vueOffre["estenligne"];
-
+$options = $vueOffre["nomoption"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -157,7 +158,7 @@ $estEnLigne = $vueOffre["estenligne"];
 
 <body>
     <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data">
-        
+        <input type="hidden" name="typePromotion" value=$typePromotion ?>">
         <?php
         
         ?>
@@ -208,37 +209,32 @@ $estEnLigne = $vueOffre["estenligne"];
 
                 <div>
                     <label>Est en ligne*</label>
+                    <br>
                     <input type="radio" id="oui" name="estEnLigne" value="true" <?php if ($estEnLigne == "1") echo "checked"; ?>>
                     <label for="oui">Oui</label>
                     <input type="radio" id="non" name="estEnLigne" value="false" <?php if ($estEnLigne == "0") echo "checked"; ?>>
                     <label for="non">Non</label>
                 </div>
 
-                <div>
-                
-                </div>
+                <br>
 
                 <div>
-                    <label>Type de promotion de l'offre*</label>
+                    
                     <?php
-                    $option = null;
-                    $sql = "SELECT nomoption FROM pact._option";
-                    $stmt = $dbh->prepare($sql);
-                    $stmt->execute();
 
-                    $tabOption = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                    foreach ($tabOption as $type) {
-                        $option[$type['nomoption']] = $type['nomoption'];
+                    if($options!="Aucune"){
+                        ?>
+                        <label>Voulez vous annuler l'option ?</label>
+                        <br>
+                        <input type="radio" id="oui" name="options" value="true" >
+                        <label for="oui">Oui</label>
+                        <input type="radio" id="non" name="options" value="false" checked>
+                        <label for="non">Non</label>
+                        <?php
                     }
-
-                    Select::render(
-                        name: "typePromotion",
-                        required: true,
-                        options: $option
-                    );
                     ?>
                 </div>
+                <br>
 
                 
 

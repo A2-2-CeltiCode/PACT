@@ -176,7 +176,7 @@
                     
                     <div>
                         <label>Photo*</label>   
-                        <?php InsererImage::render("monDropZone[]", "Glissez-déposez vos images ici", 5,true,true,['jpg', 'png']);?>
+                        <?php InsererImage::render("monDropZone[]", "Glissez-déposez vos images ici", 5,true,true,['jpg', 'png'],"monDropZone[]");?>
                     </div>
 
 
@@ -384,7 +384,7 @@
                             <?php Input::render(name: "nombreAttractions", type: "number");?>
                             <div>
                                 <label>Plan du Parc</label>
-                                <?php InsererImage::render("planParc", "Glissez-déposez vos images ici", 1, false,false,['pdf']);?>
+                                <?php InsererImage::render("planParc[]", "Glissez-déposez vos images ici", 1, false,false,['pdf'],"planParc[]");?>
                             </div>
                             <label>Âge minimum</label>
                             <?php Input::render(name: "ageMinimum2", type: "number") ?>
@@ -419,7 +419,7 @@
                         </div>
                             <div>
                                 <label>Carte du Restaurant</label>
-                                <?php InsererImage::render("carteRestaurant", "Glissez-déposez vos images ici", 1, false,false,['pdf']);?>
+                                <?php InsererImage::render("carteRestaurant[]", "Glissez-déposez vos images ici", 1, false,false,['pdf'],"carteRestaurant[]");?>
                             </div>
                             <div>
                                 <label>Gamme du restaurant</label>
