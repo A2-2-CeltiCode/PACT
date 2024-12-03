@@ -1,5 +1,4 @@
-set schema 'pact'
-;
+SET SCHEMA 'pact';
 
 -- Peupler la table _prix
 INSERT INTO _prix (valPrix) VALUES
@@ -101,14 +100,13 @@ INSERT INTO _compteProPublic (idCompte) VALUES
 
 -- Peupler la table _offre
 INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
-(2,'Aucune', 'Gratuit', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 7,'2024-05-27','06:00','17:00'),
-(2,'En relief', 'Standard', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 2,'2024-10-01','07:00','16:00'),
+(2,'En relief', 'Standard', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 7,'2024-09-13','06:00','17:00'),
+(2,'A la une', 'Premium', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 2,'2024-10-01','07:00','16:00'),
 (2,'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 3,'2024-03-20','08:00','15:00'),
 (2,'Aucune', 'Gratuit', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 4,'2024-09-15','17:00','01:00'),
 (3,'A la une', 'Standard', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 5,'2024-07-08','02:00','14:00'),
 (3,'En relief', 'Premium', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 6,'2023-11-14','00:00','10:00');
 
--- INSERT INTO _facture (idAdressePro, datePrestaServices, dateEcheance) VALUES
 -- Peupler la table _image
 INSERT INTO _image (idOffre, nomImage) VALUES
 (1, 'saintbrieuc1.jpg'),
@@ -195,7 +193,6 @@ INSERT INTO _avis (idOffre,idCompte, commentaire, note, titre, contexteVisite, d
 (6, 14,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 4.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
 (6, 15,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 5.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17');
 
-
 INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES
 (1, '2024-09-01','2024-10-20'),
 (1, '2024-10-01','2024-11-20'),
@@ -204,10 +201,10 @@ INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES
 (2, '2024-11-01','2024-12-20');
 
 INSERT INTO _souscription (nbSemaines, debutOption) VALUES
-(3, '2024-09-13'),
+(1, '2024-09-13'),
 (4, '2024-09-27'),
-(2, '2024-10-15'),
-(1, '2024-11-13');
+(3, '2024-10-15'),
+(2, '2024-11-13');
 
 INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours) VALUES
 (1,1,20,'2024-09-02'),
@@ -217,8 +214,13 @@ INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours) VA
 (4,2,4,'2024-10-29'),
 (5,2,4,'2024-10-29');
 
+INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee) VALUES
+(1, '2024-09-13',1,'En relief',False),
+(4, '2024-09-27',1,'En relief',True),
+(3, '2024-10-15',1,'A la une',False),
+(2, '2024-11-13',1,'En relief',True);
+
 INSERT INTO _imageavis VALUES
 (9, 'test.png'),
 (11, 'baldachi.png'),
 (11, 'pearto.png');
-
