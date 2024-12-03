@@ -140,11 +140,9 @@ $planParc = $_POST['planParc'] ?? null;
 $langue = $_POST['langue'] ?? null;
 $enLigne = $_POST['estEnLigne'] ?? null;
 $options = $_POST['options'] ?? null;
-
-if($options==true){
+if($options==="true"){
     $typePromotion = "Aucune";
 }
-
 
 
 

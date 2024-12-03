@@ -158,7 +158,8 @@ $options = $vueOffre["nomoption"];
 
 <body>
     <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data">
-        <input type="hidden" name="typePromotion" value=$typePromotion ?>">
+
+        <input type="hidden" name="typePromotion" value="<?php echo $options; ?>">
         <?php
         
         ?>
