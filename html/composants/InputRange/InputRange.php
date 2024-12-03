@@ -43,12 +43,11 @@ class InputRange
         // Générer le slider
         echo '<div class="slider-select-wrapper">';
         echo '<div class="sliders_control">';
-        echo '<input name="' . $name . '" id="' . $id . '" type="range" value="' . $value . '" min="' . $min . '" max="' . $max . '" oninput="syncInputValue(this)"/>';
+        echo '<input name="' . $name . '" id="' . $id . '" type="range" value="' . $value . '" min="' . $min . '" max="' . $max . '" step="0.5" oninput="syncInputValue(this)"/>';
         echo '</div>';
         echo '<div class="form_control">';
         echo '<div class="form_control_container">';
-        echo '<div class="form_control_container__time">Valeur</div>';
-        echo '<input name="' . 'inputnote'. 'Value" class="form_control_container__time__input" type="number" id="' . $id . 'Input" value="' . $value . '" min="' . $min . '" max="' . $max . '" oninput="syncSliderValue(this)"/>';
+        echo '<input name="' . 'inputnote'. 'Value" class="form_control_container__time__input" type="number" id="' . $id . 'Input" value="' . $value . '" min="' . $min . '" max="' . $max . '" step="0.5" oninput="syncSliderValue(this)"/>';
         echo '</div>';
         echo '</div>';
         echo '</div>';

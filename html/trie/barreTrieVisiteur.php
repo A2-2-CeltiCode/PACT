@@ -8,6 +8,8 @@ use composants\Button\Button;
 use composants\InputRangeDouble\InputRangeDouble;
 use composants\Button\ButtonType;
 
+use composants\InputRange\InputRange;
+    
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controlleurs/Offre/Offre.php';
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Select/Select.php";
 require_once  $_SERVER["DOCUMENT_ROOT"] . '/composants/CheckboxSelect/CheckboxSelect.php';
@@ -17,6 +19,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/InputRangeDouble/InputRangeDouble.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/InputRange/InputRange.php';
 
 
 
@@ -91,6 +94,16 @@ class Trie {
             $max = 100,
             $from = 0,
             $to = 100
+        );
+
+        InputRange::render(
+            $class = "monoslider",
+            $id = "rangeSlider",
+            $name = "note",
+            $required = true,
+            $min = 1,
+            $max = 5,
+            $value = 1
         );
         echo '</div>';
 

@@ -41,6 +41,7 @@ $etat= isset($_GET['etat']) ? $_GET['etat'] : 'ouvertetferme';
 $ouverture = isset($_GET['ouverture']) ? $_GET['ouverture'] : null;
 $fermeture = isset($_GET['fermeture']) ? $_GET['fermeture'] : null;
 $trie = isset($_GET['trie']) ? $_GET['trie'] : 'idoffre DESC';
+$note = isset($_GET['note']) ? $_GET['note'] : null;
 $query = "SELECT * FROM offres WHERE 1=1";
 $params = [];
 
@@ -52,7 +53,7 @@ if (!empty($_GET['nomcategorie'])) {
     $params = array_merge($params, $nomcategories);
 }
 // Récupération des résultats
-$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat);
+$resultats = getOffres(pdo: $pdo, sort: $trie, minPrix: $minPrix, maxPrix: $maxPrix, titre: $titre, nomcategories: $nomcategories, ouverture: $ouverture, fermeture: $fermeture, localisation: $localisation,etat: $etat, note:$note);
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     header('Content-Type: application/json');
