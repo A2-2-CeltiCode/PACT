@@ -35,4 +35,37 @@ function toggleMenu() {
     }
 }
 
+function toggleArrow() {
+    const profileOption = document.getElementById('profile-option');
+    const selectMenu = document.getElementById('selecteur-profil');
+
+    // Ajouter un log pour déboguer
+    console.log("Valeur sélectionnée : ", selectMenu.value);
+
+    // Vérifier si l'option sélectionnée est la valeur par défaut ou une autre
+    if (selectMenu.value === "default") {
+        profileOption.textContent = 'Mon compte ▼'; // Menu fermé
+    } else {
+        profileOption.textContent = 'Mon compte ▲'; // Menu déroulé
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const selectMenu = document.getElementById('selecteur-profil');
+
+
+    // Vérifier si le selecteur-profil existe
+    if (selectMenu) {
+        selectMenu.addEventListener('click', function() {
+            toggleArrow();
+        });
+    } else {
+        console.error("L'élément selecteur-profil n'a pas été trouvé.");
+    }
+
+    console.log("JavaScript chargé.");
+
+});
+
+
 hamburger.addEventListener("click", toggleMenu);

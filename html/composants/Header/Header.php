@@ -131,6 +131,29 @@ class Header
     }*/
 
     /**
+     * Rend le sélecteur de langue pour l'en-tête.
+     */
+    private static function renderProfileOptionSelector(string $profileClass): void {
+        
+        if ($type == HeaderType::Member) {
+            $chemin ="/pages/membre/consulterCompteMembre/consulterCompteMembre.php";
+        } else if ($type == HeaderType::Pro){
+            $chemin ="/pages/pro/consulterComptePro/consulterComptePro.php";
+        }
+        echo '
+        <div class="entete-profil">
+            <label for="selecteur-profil"></label>
+            <select class="selecteur-profil ' . $profileClass . '" id="selecteur-profil" onchange="location = this.value;" onclick="toggleArrow()">
+                <option value="default" hidden id="profile-option">Mon compte ▼</option>
+                <option value="' . $chemin . '">Accéder à mon Espace</option>
+                <option value="/deconnexion.php">Déconnexion</option>
+            </select>
+        </div>';
+
+    }
+    
+
+    /**
      * Rend la section du compte en fonction du type d'utilisateur.
      *
      * @param string $type Le type d'utilisateur (Guest, Member, Pro).
@@ -142,15 +165,9 @@ class Header
                 $type = ButtonType::Guest,
                 $onClick = "window.location.href='/pages/membre/connexionCompteMembre/connexionCompteMembre.php'");
         } elseif ($type == HeaderType::Member) {
-            Button::render($class = '', $id = 'member-button', $text = 'Se deconnecter', $type = ButtonType::Member,
-                $onClick = "window.location.href='../../../deconnexion.php'");
-            Button::render($class = '', $id = 'member-button', $text = 'Mon espace', $type = ButtonType::Member,
-                $onClick = "window.location.href='../../membre/consulterCompteMembre/consulterCompteMembre.php'");
+            self::renderProfileOptionSelector('profil-member');
         } elseif ($type == HeaderType::Pro) {
-            Button::render($class = '', $id = 'pro-button', $text = 'Se deconnecter', $type = ButtonType::Pro,
-                $onClick = "window.location.href='../../../deconnexion.php'");
-            Button::render($class = '', $id = 'pro-button', $text = 'Mon espace', $type = ButtonType::Pro,
-                $onClick = "window.location.href='../consulterComptePro/consulterComptePro.php'");
+            self::renderProfileOptionSelector('profil-pro');
         }
         echo '</div>';
     }
