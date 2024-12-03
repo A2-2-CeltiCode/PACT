@@ -171,17 +171,7 @@
             echo("image insérée");
         }
     
-        // Insertion dans la table historiqueOption
-    // $stmt = $dbh->prepare(
-    //     "INSERT INTO pact._historiqueOption(idOffre, nomOption, nbSemaines, debutOption, finOption)
-    //     VALUES(:idOffre, :nomOption, :nbSemaines, :debutOption, :finOption)"
-    // );
-    // $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-    // $stmt->bindValue(':nomOption', $typePromotion, PDO::PARAM_STR);
-    // $stmt->bindValue(':nbSemaines', $durepromotion, PDO::PARAM_INT);
-    // $stmt->bindValue(':debutOption', $datePromotion, PDO::PARAM_STR);
-    // $stmt->bindValue(':finOption', date('Y-m-d', strtotime($datePromotion. ' + '. $durepromotion .' weeks')), PDO::PARAM_STR);
-    // $stmt->execute();
+
 
     // Type d'offre : Activité
     if ($typeOffre === "Activite") {
@@ -384,5 +374,52 @@
         }
         
 
-        echo("gg bro");
+        
+
     }
+// Insertion dans la table _facture
+$stmt = $dbh->prepare(
+    "INSERT INTO _facture(idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance)
+    VALUES(:idOffre, :idAdressePro, :idAdressePACT, :datePrestaServices, :dateEcheance)"
+);
+$stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+$stmt->bindValue(':idAdressePro', $idAdressePro, PDO::PARAM_INT);
+$stmt->bindValue(':idAdressePACT', $idAdressePACT, PDO::PARAM_INT);
+$stmt->bindValue(':datePrestaServices', $datePrestaServices, PDO::PARAM_STR);
+$stmt->bindValue(':dateEcheance', $dateEcheance, PDO::PARAM_STR);
+$stmt->execute();
+
+// Insertion dans la table _souscription
+$stmt = $dbh->prepare(
+    "INSERT INTO _souscription(nbSemaines, debutOption)
+    VALUES(:nbSemaines, :debutOption)"
+);
+$stmt->bindValue(':nbSemaines', $nbSemaines, PDO::PARAM_INT);
+$stmt->bindValue(':debutOption', $debutOption, PDO::PARAM_STR);
+$stmt->execute();
+
+// Insertion dans la table _annulationOption
+$stmt = $dbh->prepare(
+    "INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee)
+    VALUES(:nbSemaines, :debutOption, :idOffre, :nomOption, :estAnnulee)"
+);
+$stmt->bindValue(':nbSemaines', $nbSemaines, PDO::PARAM_INT);
+$stmt->bindValue(':debutOption', $debutOption, PDO::PARAM_STR);
+$stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+$stmt->bindValue(':nomOption', $nomOption, PDO::PARAM_STR);
+$stmt->bindValue(':estAnnulee', $estAnnulee, PDO::PARAM_BOOL);
+$stmt->execute();
+
+// Insertion dans la table _historiqueEnLigne
+$stmt = $dbh->prepare(
+    "INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, estEnLigne, jourDebutNbJours)
+    VALUES(:idFacture, :idOffre, :nbJours, :estEnLigne, :jourDebutNbJours)"
+);
+$stmt->bindValue(':idFacture', $idFacture, PDO::PARAM_INT);
+$stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+$stmt->bindValue(':nbJours', $nbJours, PDO::PARAM_INT);
+$stmt->bindValue(':estEnLigne', $estEnLigne, PDO::PARAM_BOOL);
+$stmt->bindValue(':jourDebutNbJours', $jourDebutNbJours, PDO::PARAM_INT);
+$stmt->execute();
+
+    echo("gg bro");
