@@ -201,10 +201,10 @@ INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES
 (2, '2024-11-01','2024-12-20');
 
 INSERT INTO _souscription (nbSemaines, debutOption) VALUES
-(1, '2024-09-13'),
-(4, '2024-09-27'),
-(3, '2024-10-15'),
-(2, '2024-11-13');
+(1, '2024-09-09'),
+(4, '2024-09-23'),
+(3, '2024-10-14'),
+(2, '2024-11-11');
 
 INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours) VALUES
 (1,1,20,'2024-09-02'),
@@ -215,10 +215,10 @@ INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours) VA
 (5,2,4,'2024-10-29');
 
 INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee) VALUES
-(1, '2024-09-13',1,'En relief',False),
-(4, '2024-09-27',1,'En relief',True),
-(3, '2024-10-15',1,'A la une',False),
-(2, '2024-11-13',1,'En relief',True);
+(1, '2024-09-09',1,'En relief',False),
+(4, '2024-09-23',1,'En relief',True),
+(3, '2024-10-14',1,'A la une',False),
+(2, '2024-11-11',1,'En relief',True);
 
 INSERT INTO _imageavis VALUES
 (9, 'test.png'),
