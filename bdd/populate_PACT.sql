@@ -1,4 +1,5 @@
-SET SCHEMA 'pact';
+set schema 'pact'
+;
 
 -- Peupler la table _prix
 INSERT INTO _prix (valPrix) VALUES
@@ -107,10 +108,7 @@ INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descrip
 (3,'A la une', 'Standard', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 5,'2024-07-08','02:00','14:00'),
 (3,'En relief', 'Premium', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 6,'2023-11-14','00:00','10:00');
 
---INSERT INTO _facture (idAdressePro, datePrestaServices, dateEcheance) VALUES
-
-
-
+-- INSERT INTO _facture (idAdressePro, datePrestaServices, dateEcheance) VALUES
 -- Peupler la table _image
 INSERT INTO _image (idOffre, nomImage) VALUES
 (1, 'saintbrieuc1.jpg'),
@@ -197,6 +195,7 @@ INSERT INTO _avis (idOffre,idCompte, commentaire, note, titre, contexteVisite, d
 (6, 14,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 4.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
 (6, 15,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 5.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17');
 
+
 INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES
 (1, '2024-09-01','2024-10-20'),
 (1, '2024-10-01','2024-11-20'),
@@ -217,3 +216,9 @@ INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours) VA
 (3,1,15,'2024-10-29'),
 (4,2,4,'2024-10-29'),
 (5,2,4,'2024-10-29');
+
+INSERT INTO _imageavis VALUES
+(9, 'test.png'),
+(11, 'baldachi.png'),
+(11, 'pearto.png');
+
