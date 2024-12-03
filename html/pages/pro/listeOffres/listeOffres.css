@@ -8,6 +8,45 @@ body {
     margin: 1em auto;
 }
 
+
+.conteneur-filtres-offres{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tris{
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gris1);
+    border-radius: 1em;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: white;
+    position: relative !important;
+    right: 150px;
+    margin-top: 10px !important;
+    height: fit-content !important;
+}
+
+.select-wrapper select {
+    width: 300px !important;
+    color: var(--secondaire-pro);
+}
+
+.input{
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+}
+
+h5{
+    text-decoration: underline !important;;
+}
+
+
 .carte-offre {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -96,6 +135,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 70%;
+    max-width: 50em;
+    margin: 1em auto;
 }
 
 .button-container {
