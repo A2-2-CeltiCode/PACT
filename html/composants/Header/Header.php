@@ -134,15 +134,22 @@ class Header
      * Rend le sélecteur de langue pour l'en-tête.
      */
     private static function renderProfileOptionSelector(string $profileClass): void {
+        
+        if ($type == HeaderType::Member) {
+            $chemin ="/pages/membre/consulterCompteMembre/consulterCompteMembre.php";
+        } else if ($type == HeaderType::Pro){
+            $chemin ="/pages/pro/consulterComptePro/consulterComptePro.php";
+        }
         echo '
         <div class="entete-profil">
             <label for="selecteur-profil"></label>
             <select class="selecteur-profil ' . $profileClass . '" id="selecteur-profil" onchange="location = this.value;" onclick="toggleArrow()">
                 <option value="default" hidden id="profile-option">Mon compte ▼</option>
-                <option value="/pages/membre/consulterCompteMembre/consulterCompteMembre.php">Accéder à mon Espace</option>
+                <option value="' . $chemin . '">Accéder à mon Espace</option>
                 <option value="/deconnexion.php">Déconnexion</option>
             </select>
         </div>';
+
     }
     
 
