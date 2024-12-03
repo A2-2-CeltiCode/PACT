@@ -59,15 +59,9 @@ try {
     <title>Mon Compte</title>
     <link rel="stylesheet" href="consulterComptePro.css">
     <script src="consulterComptePro.js"></script>
-      
-
 </head>
 <body>
     <?php Header::render(HeaderType::Pro); ?>
-    <nav>
-        <?php Button::render(submit: true, type: "pro", text: "Mes informations", onClick: showInfos());
-        Button::render(submit: true, type: "pro", text: "Mes factures", onClick: showFacture());?>
-    </nav>
     <main>
         <h1>Vos informations professionnelles</h1>
 

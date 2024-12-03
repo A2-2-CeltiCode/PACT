@@ -3,8 +3,8 @@ SET SCHEMA 'pact';
 -- Peupler la table _option
 INSERT INTO _option (nomOption, prixHT, prixTTC) VALUES
 ('Aucune', 0.0, 0.0),
-('En relief', 16.68, 20.0),
-('A la une', 8.34, 10.0);
+('En relief', 8.34, 10.0),
+('A la une', 16.68, 20.0);
 
 -- Peupler la table _gamme
 INSERT INTO _gamme (nomGamme) VALUES

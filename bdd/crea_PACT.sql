@@ -187,20 +187,16 @@ CREATE TABLE _image(
 
 CREATE TABLE _facture(
     idFacture             SERIAL,
-    idOffre               INTEGER,
-    idAdressePro          INTEGER NOT NULL,
-    idAdressePACT         INTEGER NOT NULL DEFAULT 1,
+    idOffre               INTEGER NOT NULL,
     datePrestaServices    DATE NOT NULL,
     dateEcheance          DATE NOT NULL,
     CONSTRAINT facture_pk PRIMARY KEY(idFacture),
     CONSTRAINT facture_fk_offre FOREIGN KEY (idOffre) 
-        REFERENCES _offre(idOffre),
-    CONSTRAINT facture_fk_adresse FOREIGN KEY (idAdressePro) 
-        REFERENCES _adresse(idAdresse)
+        REFERENCES _offre(idOffre)
 );
 
 CREATE TABLE _souscription(
-    nbSemaines     INTEGER NOT NULL,
+    nbSemaines     INTEGER NOT NULL CHECK (nbSemaines >= 1 AND nbSemaines <= 4),
     debutOption		 DATE NOT NULL,
     --finOption			 DATE NOT NULL,
     CONSTRAINT souscription_pk PRIMARY KEY(nbSemaines,debutOption)
@@ -224,9 +220,8 @@ CREATE TABLE _historiqueEnLigne(
     idFacture         SERIAL,
     idOffre           INTEGER,
     nbJours           INTEGER,
-    estEnLigne        BOOLEAN,
-    jourDebutNbJours  INTEGER,
-    CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idFacture,idOffre),
+    jourDebutNbJours  DATE,
+    CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idFacture,idOffre,jourDebutNbJours),
     CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),
     CONSTRAINT historiqueEnLigne_fk_facture FOREIGN KEY (idFacture)

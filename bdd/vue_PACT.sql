@@ -184,6 +184,6 @@ FROM _avis;
 -- VUES FACTURE
 --
 
-CREATE OR REPLACE VIEW vue_facture AS
+/*CREATE OR REPLACE VIEW vue_facture AS
 SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance
-FROM _facture;
+FROM _facture;*/

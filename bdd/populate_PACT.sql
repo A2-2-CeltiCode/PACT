@@ -162,8 +162,8 @@ INSERT INTO _possedeVisite (idOffre, nomTag) VALUES
 
 -- Peupler la table _avis
 INSERT INTO _avis (idOffre,idCompte, commentaire, note, titre, contexteVisite, dateVisite) VALUES
-(1, 1,'Une visite magnifique avec des guides passionnants et une vue incroyable sur Saint-Brieuc.', 5.0, 'Incroyable visite', 'Famille', '2024-11-10'),
-(2, 1,'Le spectacle était décevant, les marionnettes manquaient de finesse et les tours de cartes étaient trop répétitifs.', 2.5, 'Deception...', 'Amis', '2024-11-15'),
+(1, 1,'Une visite magnifique avec des guides passionnants et une vue incroyable sur Saint-Brieuc.', 5.0, 'Incroyable visite', 'Famille', '2024-09-10'),
+(2, 1,'Le spectacle était décevant, les marionnettes manquaient de finesse et les tours de cartes étaient trop répétitifs.', 2.5, 'Deception...', 'Amis', '2024-10-15'),
 (3, 1,'Super parc d’attractions, les enfants ont adoré ! Il y a beaucoup d’attractions adaptées pour tous les âges.', 4.5, 'Je recommande pour la famille', 'Famille', '2024-11-18'),
 (4, 1,'Le restaurant était incroyable, une expérience culinaire de haute qualité. Un peu cher, mais ça en valait la peine.', 5.0, 'Délicieux repas', 'Couple', '2024-11-20'),
 (5, 1,'L’activité de plongée était fantastique. Le matériel était neuf et la plongée dans les eaux claires de Lorient a été un moment inoubliable.', 5.0, 'Magnifique environnement sous-marins', 'Amis', '2024-11-22'),
@@ -196,3 +196,24 @@ INSERT INTO _avis (idOffre,idCompte, commentaire, note, titre, contexteVisite, d
 (6, 13,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 4.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
 (6, 14,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 4.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
 (6, 15,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 5.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17');
+
+INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES
+(1, '2024-09-01','2024-10-20'),
+(1, '2024-10-01','2024-11-20'),
+(1, '2024-11-01','2024-12-20'),
+(2, '2024-10-01','2024-11-20'),
+(2, '2024-11-01','2024-12-20');
+
+INSERT INTO _souscription (nbSemaines, debutOption) VALUES
+(3, '2024-09-13'),
+(4, '2024-09-27'),
+(2, '2024-10-15'),
+(1, '2024-11-13');
+
+INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours) VALUES
+(1,1,20,'2024-09-02'),
+(2,1,12,'2024-10-15'),
+(2,1,15,'2024-10-29'),
+(3,1,15,'2024-10-29'),
+(4,2,4,'2024-10-29'),
+(5,2,4,'2024-10-29');
