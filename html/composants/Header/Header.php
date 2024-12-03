@@ -135,15 +135,15 @@ class Header
      */
     private static function renderProfileOptionSelector(string $profileClass): void {
         
-        if ($type == HeaderType::Member) {
+        if ($profileClass == "profil-member") {
             $chemin ="/pages/membre/consulterCompteMembre/consulterCompteMembre.php";
-        } else if ($type == HeaderType::Pro){
+        } else if ($profileClass == "profil-pro"){
             $chemin ="/pages/pro/consulterComptePro/consulterComptePro.php";
         }
         echo '
         <div class="entete-profil">
             <label for="selecteur-profil"></label>
-            <select class="selecteur-profil ' . $profileClass . '" id="selecteur-profil" onchange="location = this.value;" onclick="toggleArrow()">
+            <select class="selecteur-profil ' . $profileClass . '" id="selecteur-profil" onchange="window.location.href =this.value;" onclick="toggleArrow()">
                 <option value="default" hidden id="profile-option">Mon compte ▼</option>
                 <option value="' . $chemin . '">Accéder à mon Espace</option>
                 <option value="/deconnexion.php">Déconnexion</option>
