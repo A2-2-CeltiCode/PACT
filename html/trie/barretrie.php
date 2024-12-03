@@ -5,6 +5,7 @@ use \composants\Checkbox\Checkbox;
 use controlleurs\Offre\Offre;
 use composants\Input\Input;
 use composants\Button\Button;
+use composants\InputRange\InputRange;
 use composants\InputRangeDouble\InputRangeDouble;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controlleurs/Offre/Offre.php';
@@ -16,11 +17,13 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/InputRangeDouble/InputRangeDouble.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/InputRange/InputRange.php';
+
 
 
 
 class Trie {
-    public static function render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories,$status=null) {
+    public static function render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories,$status=null,$note) {
         echo '<link rel="stylesheet" type="text/css" href="/trie/style.css">';
 
         $optionsCategorie = [
@@ -40,6 +43,8 @@ class Trie {
             "valprix DESC" => "Tri par prix décroissant",
             "idoffre ASC" => "Tri par date croissante",
             "idoffre DESC" => "Tri par date décroissante",
+            "moynotes DESC" => "Tri par note décroissante",
+            "moynotes ASC" => "Tri par note croissante"
         ];
         
 
@@ -103,6 +108,17 @@ class Trie {
             $from = 0,
             $to = 100
         );
+
+        InputRange::render(
+            $class = "custom-slider",
+            $id = "rangeSlider",
+            $name = "note",
+            $required = true,
+            $min = 1,
+            $max = 5,
+            $value = 1
+        );
+
             echo '<input type="hidden" id="status" name="status" value="' . htmlspecialchars($status) . '">';
         
         echo '</div>';

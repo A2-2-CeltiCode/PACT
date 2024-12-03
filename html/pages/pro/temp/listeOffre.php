@@ -37,13 +37,14 @@ $etat= isset($_GET['etat']) ? $_GET['etat'] : 'ouvertetferme';
 $ouverture = isset($_GET['ouverture']) ? $_GET['ouverture'] : null;
 $fermeture = isset($_GET['fermeture']) ? $_GET['fermeture'] : null;
 $trie = isset($_GET['trie']) ? $_GET['trie'] : 'idoffre DESC';
+$note = isset($_GET['note']) ? $_GET['note'] : null;
 $query = "SELECT * FROM offres WHERE 1=1";
 
 $nomcategories = isset($_GET['nomcategorie']) ? explode(',', $_GET['nomcategorie']) : ['Tout'];
 
 
 // Récupération des résultats
-$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat,$status,$idCompte);
+$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat,$status,$idCompte,$note);
 
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
@@ -95,7 +96,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <section>
     <div class="barre trie-visible" id="styleShadow">
     <?php
-    Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories,$status);
+    Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories,$status,$note);
     ?>
     </div>
     <div <div class="rangement">

@@ -84,17 +84,41 @@ function setToggleAccessible(currentTarget) {
   }
 }
 
-const fromSlider = document.querySelector('#fromSlider');
-const toSlider = document.querySelector('#toSlider');
-const fromInput = document.querySelector('#fromInput');
-const toInput = document.querySelector('#toInput');
-fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
-setToggleAccessible(toSlider);
+document.addEventListener('DOMContentLoaded', function() {
+    const fromSlider = document.querySelector('#fromSlider');
+    const toSlider = document.querySelector('#toSlider');
+    const fromInput = document.querySelector('#fromInput');
+    const toInput = document.querySelector('#toInput');
 
-fromInput.onfocus = () => fromInput.value = '';
-toInput.onfocus = () => toInput.value = '';
+    function syncFromSlider() {
+        fromInput.value = fromSlider.value;
+    }
 
-fromSlider.oninput = () => controlFromSlider(fromSlider, toSlider, fromInput);
-toSlider.oninput = () => controlToSlider(fromSlider, toSlider, toInput);
-fromInput.oninput = () => controlFromInput(fromSlider, fromInput, toInput, toSlider);
-toInput.oninput = () => controlToInput(toSlider, fromInput, toInput, toSlider);
+    function syncToSlider() {
+        toInput.value = toSlider.value;
+    }
+
+    function syncFromInput() {
+        fromSlider.value = fromInput.value;
+    }
+
+    function syncToInput() {
+        toSlider.value = toInput.value;
+    }
+
+    fromSlider.addEventListener('input', syncFromSlider);
+    toSlider.addEventListener('input', syncToSlider);
+    fromInput.addEventListener('input', syncFromInput);
+    toInput.addEventListener('input', syncToInput);
+
+    fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+    setToggleAccessible(toSlider);
+
+    fromInput.onfocus = () => fromInput.value = '';
+    toInput.onfocus = () => toInput.value = '';
+
+    fromSlider.oninput = () => controlFromSlider(fromSlider, toSlider, fromInput);
+    toSlider.oninput = () => controlToSlider(fromSlider, toSlider, toInput);
+    fromInput.oninput = () => controlFromInput(fromSlider, fromInput, toInput, toSlider);
+    toInput.oninput = () => controlToInput(toSlider, fromInput, toInput, toSlider);
+});

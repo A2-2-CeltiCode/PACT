@@ -1,6 +1,6 @@
 <?php
 
-function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix = null, $titre = null, $nomcategories = [], $ouverture = null, $fermeture = null, $localisation = null, $etat = null, $estenligne = null, $idcompte = null) {
+function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix = null, $titre = null, $nomcategories = [], $ouverture = null, $fermeture = null, $localisation = null, $etat = null, $estenligne = null, $idcompte = null,$note=null) {
     $sql = "SELECT * FROM pact.vue_offres WHERE 1=1";
 
     // Ajout des filtres
@@ -47,6 +47,9 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
             )";
         }
     }
+    if($note !== null && $note !== ''){
+        $sql .= " AND moynotes >= :note";
+    }
     if ($estenligne !== null && $estenligne !== '') {
         $sql .= " AND estenligne = :estenligne";
     }
@@ -81,9 +84,14 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     if ($estenligne !== null && $estenligne !== '') {
         $stmt->bindValue(':estenligne', $estenligne === 'enligne' ? true : false, PDO::PARAM_BOOL);
     }
+    if($note !== null && $note !== ''){
+        $stmt->bindValue(':note', $note, PDO::PARAM_INT);
+    }
+
     if ($idcompte !== null && $idcompte !== '') {
         $stmt->bindValue(':idcompte', $idcompte, PDO::PARAM_INT);
     }
+
     
     // Liaison des catégories
     if (!empty($nomcategories) && !in_array('Tout', $nomcategories)) {

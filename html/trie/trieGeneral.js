@@ -12,13 +12,12 @@ function rechercher() {
     const localisationInput = document.querySelector('input[name="localisation"]').value;
     const minPrixInput = document.querySelector('input[name="minPrix"]').value;
     const maxPrixInput = document.querySelector('input[name="maxPrix"]').value;
-    const prixMinInput = document.querySelector('input[name="prixMin"]').value;
-    const prixMaxInput = document.querySelector('input[name="prixMax"]').value;
     const ouvertureInput = document.querySelector('input[name="ouverture"]').value;
     const fermetureInput = document.querySelector('input[name="fermeture"]').value;
     const etatInput = document.querySelector('select[name="etat"]').value;
     const trieInput = document.querySelector('select[name="trie"]').value;
     const statusInput = document.querySelector('input[name="status"]').value;
+    const noteInput = document.querySelector('input[name="note"]').value; // Ajout de la sélection de l'input note
 
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
 
@@ -27,13 +26,12 @@ function rechercher() {
     if (localisationInput) params.append('localisation', localisationInput);
     if (minPrixInput) params.append('minPrix', minPrixInput);
     if (maxPrixInput) params.append('maxPrix', maxPrixInput);
-    if (prixMinInput) params.append('prixMin', prixMinInput);
-    if (prixMaxInput) params.append('prixMax', prixMaxInput);
     if (ouvertureInput) params.append('ouverture', ouvertureInput);
     if (fermetureInput) params.append('fermeture', fermetureInput);
     if (etatInput) params.append('etat', etatInput);
     if (trieInput) params.append('trie', trieInput);
     if (statusInput) params.append('status', statusInput);
+    if (noteInput) params.append('note', noteInput); // Ajout de la note aux paramètres
     if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
@@ -92,14 +90,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const localisationInput = document.querySelector('input[name="localisation"]');
     const minPrixInput = document.querySelector('input[name="minPrix"]');
     const maxPrixInput = document.querySelector('input[name="maxPrix"]');
-    const prixMinInput = document.querySelector('input[name="prixMin"]');
-    const prixMaxInput = document.querySelector('input[name="prixMax"]');
     const ouvertureInput = document.querySelector('input[name="ouverture"]');
     const fermetureInput = document.querySelector('input[name="fermeture"]');
     const etatInput = document.querySelector('select[name="etat"]');
     const trieInput = document.querySelector('select[name="trie"]');
     const statusInput = document.querySelector('input[name="status"]');
     const categoryInputs = document.querySelectorAll('input[name="nomcategorie[]"]');
+    const noteInput = document.querySelector('input[name="note"]'); // Ajout de l'input note
 
     searchInput.addEventListener('input', function () {
         rechercher();
@@ -116,14 +113,6 @@ document.addEventListener('DOMContentLoaded', function () {
     maxPrixInput.addEventListener('input', debounce(function () {
         rechercher();
     }, 10));
-
-    prixMinInput.addEventListener('input', function () {
-        rechercher();
-    });
-
-    prixMaxInput.addEventListener('input', function () {
-        rechercher();
-    });
 
     ouvertureInput.addEventListener('input', function () {
         rechercher();
@@ -149,6 +138,10 @@ document.addEventListener('DOMContentLoaded', function () {
         input.addEventListener('change', function () {
             rechercher();
         });
+    });
+
+    noteInput.addEventListener('input', function () { // Ajout de l'écouteur d'événement pour l'input note
+        rechercher();
     });
 
     form.addEventListener('submit', function (event) {
