@@ -209,10 +209,10 @@ INSERT INTO _souscription (nbSemaines, debutOption) VALUES
 INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours) VALUES
 (1,1,20,'2024-09-02'),
 (2,1,12,'2024-10-15'),
-(2,1,15,'2024-10-29'),
-(3,1,15,'2024-10-29'),
-(4,2,4,'2024-10-29'),
-(5,2,4,'2024-10-29');
+(2,1,2,'2024-10-29'),
+(3,1,13,'2024-11-01'),
+(4,2,2,'2024-10-29'),
+(5,2,2,'2024-11-01');
 
 INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee) VALUES
 (1, '2024-09-09',1,'En relief',False),

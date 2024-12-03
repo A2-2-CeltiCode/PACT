@@ -1,5 +1,4 @@
-set schema 'pact'
-;
+SET SCHEMA 'pact';
 
 --
 -- VUES COMPTES
@@ -26,15 +25,20 @@ FROM _compte c LEFT JOIN _comptePro cp ON c.idCompte = cp.idCompte
 			LEFT JOIN _compteProPrive cppr ON c.idCompte = cppr.idCompte 
 			LEFT JOIN _adresse a ON c.idAdresse = a.idAdresse
 WHERE denominationSociale IS NOT NULL;
+
+--
+-- VUE AVIS
+--
+
+CREATE OR REPLACE VIEW vue_avis AS
+SELECT idAvis, idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis
+FROM _avis;
+
 --
 -- VUES OFFRES
 --
 CREATE OR REPLACE VIEW vue_offres AS
-SELECT DISTINCT _offre.idcompte,
-            _offre.idoffre,
-            _offre.idadresse,
-            _offre.nomoption,
-            _offre.nomforfait,
+SELECT DISTINCT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _offre.nomforfait,
        _offre.titre, _offre.description, _offre.descriptiondetaillee, _offre.siteinternet, _offre.heureOuverture, _offre.heureFermeture,_adresse.codepostal, _adresse.ville,
        COALESCE(_spectacle.nomcategorie, _activite.nomcategorie, _visite.nomcategorie, _parcattractions.nomcategorie, _restaurant.nomcategorie) AS nomcategorie,
        _adresse.rue, _adresse.numtel,
@@ -42,7 +46,7 @@ SELECT DISTINCT _offre.idcompte,
        COALESCE(_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix, NULL::numeric) AS valprix,
        COALESCE(_spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes, NULL::integer) AS tempsenminutes,
        _spectacle.capacite, COALESCE(_activite.agemin,_parcattractions.agemin) AS ageMin, _activite.prestation,
-       _visite.estguidee, _restaurant.nomgamme, _parcattractions.nbattractions,_offre.estenligne,
+       _visite.estguidee, _restaurant.nomgamme, _parcattractions.nbattractions,_offre.estenligne,AVG(note) AS moyNotes,
         CASE
             WHEN _spectacle.idoffre IS NOT NULL THEN 'Spectacle'::text
             WHEN _restaurant.idoffre IS NOT NULL THEN 'Restaurant'::text
@@ -64,7 +68,14 @@ FROM _offre LEFT JOIN _spectacle ON _offre.idoffre = _spectacle.idoffre
                  LEFT JOIN _forfait ON _offre.nomforfait::text = _forfait.nomforfait::text
                  LEFT JOIN _prix ON COALESCE(_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix) = _prix.valprix
                  LEFT JOIN _duree ON COALESCE(_spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes) = _duree.tempsenminutes
-                 LEFT JOIN _image ON _offre.idoffre = _image.idoffre;
+                 LEFT JOIN _image ON _offre.idoffre = _image.idoffre
+                 LEFT JOIN vue_avis ON vue_avis.idOffre = _offre.idoffre
+GROUP BY _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _offre.nomforfait,
+       _offre.titre, _offre.description, _offre.descriptiondetaillee, _offre.siteinternet, _offre.heureOuverture, _offre.heureFermeture,_adresse.codepostal, _adresse.ville,
+       _adresse.rue, _adresse.numtel, _spectacle.dateEvenement,_visite.dateEvenement,_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix,
+       _spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes,_spectacle.capacite,_activite.agemin,_parcattractions.agemin, _activite.prestation,
+       _spectacle.nomcategorie, _activite.nomcategorie, _visite.nomcategorie, _parcattractions.nomcategorie, _restaurant.nomcategorie,
+       _visite.estguidee, _restaurant.nomgamme, _parcattractions.nbattractions,_offre.estenligne, type_offre, nomimage;
 
 -- VISITE
 CREATE OR REPLACE VIEW vue_visite AS
@@ -82,6 +93,7 @@ LEFT JOIN _forfait f ON o.nomForfait = f.nomForfait
 LEFT JOIN _prix p ON v.valPrix = p.valPrix
 LEFT JOIN _duree d ON v.tempsEnMinutes = d.tempsEnMinutes
 WHERE v.estGuidee IS NOT NULL;
+
 
 
 CREATE OR REPLACE VIEW vue_visite_guidee AS
@@ -143,7 +155,6 @@ LEFT JOIN _prix p ON pa.valPrix = p.valPrix
 LEFT JOIN _image i ON o.idOffre = i.idOffre
 WHERE nbAttractions IS NOT NULL;
 
-
 CREATE OR REPLACE VIEW vue_tags_parc_attractions (idOffre, nomTag) AS
 SELECT idOffre, nomTag
 FROM _possedeParcAttractions;
@@ -167,22 +178,14 @@ CREATE OR REPLACE VIEW vue_image_offre (idOffre, idImage) AS
 SELECT idOffre, idImage
 FROM _image;
 
-CREATE OR REPLACE VIEW vue_image_avis (idAvis, nomImage) AS
+CREATE OR REPLACE VIEW vue_image_avis (idAvis, idImage) AS
 SELECT idAvis, nomImage
 FROM _imageAvis ;
 
 --
--- VUE AVIS
---
-CREATE OR REPLACE VIEW vue_avis AS
-SELECT idAvis, idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis
-FROM _avis;
-
---
 -- VUES FACTURE
 --
+
 /*CREATE OR REPLACE VIEW vue_facture AS
 SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance
 FROM _facture;*/
-
-
