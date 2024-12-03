@@ -1,74 +1,97 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
-try {
+
+function getMoisPrestation($mois)
+{
+    $moisMapping = [
+        "1" => "Janvier",
+        "2" => "Février",
+        "3" => "Mars",
+        "4" => "Avril",
+        "5" => "Mai",
+        "6" => "Juin",
+        "7" => "Juillet",
+        "8" => "Août",
+        "9" => "Septembre",
+        "10" => "Octobre",
+        "11" => "Novembre",
+        "12" => "Décembre"
+    ];
+    return $moisMapping[$mois] ?? "Mois invalide";
+}
 
 
-    $idOffre = 3;
-    $idAdresse = 5;
-    $idCompte = 3;
-    $idFacture = 1;
+function calculerJoursRestants($jourDebut, $nbjours) {
+    $dateDebut = new DateTime($jourDebut);
+    $jourCourant = (int)$dateDebut->format('d');
+    $mois = (int)$dateDebut->format('m');
+    $annee = (int)$dateDebut->format('Y');
 
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-    $offre = $dbh->query('SELECT * FROM pact._offre' . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $pro = $dbh->query('SELECT * FROM pact.vue_compte_pro WHERE idcompte = ' . $idCompte, PDO::FETCH_ASSOC)->fetch();
+    $joursDansMois = 0;
 
-    $nomPACT = "PACT";
-    $adressePACT = $dbh->query('SELECT * FROM pact._adresse' . ' WHERE idadresse = ' . $idAdresse, PDO::FETCH_ASSOC)->fetch();
-    $dateDuJour = date("d-m-Y");
-    $facture = $dbh->query('SELECT * FROM pact.vue_facture WHERE idfacture = ' . $idFacture, PDO::FETCH_ASSOC)->fetch();
-
-    $semaines_actifs = $dbh->query('SELECT * FROM pact._annulationoption WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
-
-    $mois_prestation = date(format: 'm', timestamp: strtotime($facture['dateprestaservices']));
-
-    switch ($mois_prestation) {
-        case "1":
-            $mois_prestation = "Janvier";
+    switch ($mois) {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            $joursDansMois = 31;
             break;
-        case "2":
-            $mois_prestation = "Février";
+        case 4: case 6: case 9: case 11:
+            $joursDansMois = 30;
             break;
-        case "3":
-            $mois_prestation = "Mars";
-            break;
-        case "4":
-            $mois_prestation = "Avril";
-            break;
-        case "5":
-            $mois_prestation = "Mai";
-            break;
-        case "6":
-            $mois_prestation = "Juin";
-            break;
-        case "7":
-            $mois_prestation = "Juillet";
-            break;
-        case "8":
-            $mois_prestation = "Août";
-            break;
-        case "9":
-            $mois_prestation = "Septembre";
-            break;
-        case "10":
-            $mois_prestation = "Octobre";
-            break;
-        case "11":
-            $mois_prestation = "Novembre";
-            break;
-        case "12":
-            $mois_prestation = "Décembre";
+        case 2:
+            $joursDansMois = ($annee % 4 === 0 && ($annee % 100 !== 0 || $annee % 400 === 0)) ? 29 : 28;
             break;
         default:
-            $mois_prestation = "Mois invalide";
-            break;
+            throw new Exception("Mois invalide : $mois");
     }
 
+    $joursRestantMois = $joursDansMois - $jourCourant + 1;
+    return min($nbjours, $joursRestantMois);
+}
 
-    $date_prestation = $mois_prestation . ' ' . date('Y', strtotime($facture['dateprestaservices']));
+try {
+    $idOffre = 1;
+    $idAdresse = 5;
+    $idCompte = 3;
+    $idFacture = 2;
 
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+
+    $offre = $dbh->prepare('SELECT * FROM pact._offre WHERE idoffre = :idOffre');
+    $offre->execute(['idOffre' => $idOffre]);
+    $offre = $offre->fetch(PDO::FETCH_ASSOC);
+
+    $pro = $dbh->prepare('SELECT * FROM pact.vue_compte_pro WHERE idcompte = :idCompte');
+    $pro->execute(['idCompte' => $idCompte]);
+    $pro = $pro->fetch(PDO::FETCH_ASSOC);
+
+    $adressePACT = $dbh->prepare('SELECT * FROM pact._adresse WHERE idadresse = :idAdresse');
+    $adressePACT->execute(['idAdresse' => $idAdresse]);
+    $adressePACT = $adressePACT->fetch(PDO::FETCH_ASSOC);
+
+    $facture = $dbh->prepare('SELECT * FROM pact._facture WHERE idfacture = :idFacture');
+    $facture->execute(['idFacture' => $idFacture]);
+    $facture = $facture->fetch(PDO::FETCH_ASSOC);
+
+    $semainesActifs = $dbh->prepare('SELECT * FROM pact._annulationoption WHERE idoffre = :idOffre');
+    $semainesActifs->execute(['idOffre' => $idOffre]);
+    $semainesActifs = $semainesActifs->fetchAll(PDO::FETCH_ASSOC);
+
+    $moisPrestation = getMoisPrestation(date('m', strtotime($facture['dateprestaservices'])));
+    $datePrestation = $moisPrestation . ' ' . date('Y', strtotime($facture['dateprestaservices']));
+    $dateDuJour = date("d-m-Y");
+
+    $forfaitQuery = $dbh->prepare('SELECT * FROM pact._offre JOIN pact._forfait USING(nomforfait) WHERE idoffre = :idOffre');
+    $forfaitQuery->execute(['idOffre' => $idOffre]);
+    $forfait = $forfaitQuery->fetchAll(PDO::FETCH_ASSOC);
+
+    $optionsFiltrees = array_filter($semainesActifs, function ($option) use ($facture) {
+        $moisPrestationNum = date('m', strtotime($facture['dateprestaservices']));
+        $anneePrestation = date('Y', strtotime($facture['dateprestaservices']));
+        $moisOption = date('m', strtotime($option['debutoption']));
+        $anneeOption = date('Y', strtotime($option['debutoption']));
+        return $moisOption == $moisPrestationNum && $anneeOption == $anneePrestation && !$option['estannulee'];
+    });
 } catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br>";
-    die();
+    die("Erreur : " . $e->getMessage());
 }
 ?>
 <!DOCTYPE html>
@@ -81,132 +104,109 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
     <title>Facturation</title>
 </head>
-<pre><?php
-//print_r($semaines_actifs) ?>
-</pre>
-
-<header>
-    <h1>Facture</h1>
-    <img class="logo" src="/ressources/icone/logo.svg" alt="Logo PACT">
-</header>
 
 <body>
+    <header>
+        <h1>Facture</h1>
+        <img class="logo" src="/ressources/icone/logo.svg" alt="Logo PACT">
+    </header>
     <main>
         <table class="partie">
             <tr>
                 <th>Vendeur</th>
-                <td><?php echo $nomPACT ?></td>
+                <td>PACT</td>
             </tr>
             <tr>
                 <td></td>
-                <td><?php echo $adressePACT['rue'] . ', ' . $adressePACT['codepostal'] . ' ' . $adressePACT['ville'] ?>
-                </td>
+                <td><?php echo "{$adressePACT['rue']}, {$adressePACT['codepostal']} {$adressePACT['ville']}"; ?></td>
+            </tr>
         </table>
         <table class="partie">
             <tr>
                 <th>Professionnel</th>
-                <td><?php echo $pro['denominationsociale'] . ' - ' . $pro['raisonsocialepro'] ?></td>
+                <td><?php echo "{$pro['denominationsociale']} - {$pro['raisonsocialepro']}"; ?></td>
             </tr>
             <tr>
                 <td></td>
-                <td><?php echo $pro['rue'] . ', ' . $pro['codepostal'] . ' ' . $pro['ville'] ?></td>
+                <td><?php echo "{$pro['rue']}, {$pro['codepostal']} {$pro['ville']}"; ?></td>
+            </tr>
         </table>
-
         <table class="info-facture">
             <tr>
                 <th>Date d'émission</th>
                 <th>Numéro de facture</th>
                 <th>Nom de l'offre</th>
-                <th>Date de la prestation de services</th>
-                <th>Date d'échéance du règlement</th>
+                <th>Date de prestation</th>
+                <th>Date d'échéance</th>
             </tr>
             <tr>
-                <td><?php echo $dateDuJour ?></td>
-                <td><?php echo $facture['idfacture'] ?></td>
-                <td><?php echo $offre['titre'] ?></td>
-                <td><?php echo $date_prestation ?></td>
-                <td><?php echo date("d-m-Y", strtotime($facture['dateecheance'])) ?></td>
+                <td><?php echo $dateDuJour; ?></td>
+                <td><?php echo $facture['idfacture']; ?></td>
+                <td><?php echo $offre['titre']; ?></td>
+                <td><?php echo $datePrestation; ?></td>
+                <td><?php echo date("d-m-Y", strtotime($facture['dateecheance'])); ?></td>
             </tr>
         </table>
-        <?php
-
-        try {
-            // Récupération des prix des forfaits
-            $forfaits = $dbh->query('SELECT * FROM pact._forfait', PDO::FETCH_ASSOC)->fetchAll(PDO::FETCH_ASSOC);
-
-            // Récupération des prix des options
-            $options = $dbh->query('SELECT * FROM pact._option', PDO::FETCH_ASSOC)->fetchAll(PDO::FETCH_ASSOC);
-
-            // Indexer les forfaits et options par nom
-            $forfaits_indexed = [];
-            foreach ($forfaits as $forfait) {
-                $forfaits_indexed[$forfait['nomforfait']] = $forfait;
-            }
-
-            $options_indexed = [];
-            foreach ($options as $option) {
-                $options_indexed[$option['nomoption']] = $option;
-            }
-
-        } catch (PDOException $e) {
-            print "Erreur !: " . $e->getMessage() . "<br>";
-            die();
-        }
-        ?>
-        <table class="tarifs-facture" cellspacing="0" cellpadding="0">
+        <table class="tarifs-facture">
             <tr>
                 <th>Nom du service</th>
-                <th>Quantité du service</th>
+                <th>Quantité</th>
                 <th>Prix HT</th>
                 <th>Prix TTC</th>
                 <th>Total</th>
             </tr>
-            <?php
-            $totalHT = 0;
-            $totalTTC = 0;
+            <?php foreach ($optionsFiltrees as $option): ?>
+                <?php
+                $prixOptionHT = $dbh->prepare('SELECT prixht FROM pact._option WHERE nomoption = :nomOption');
+                $prixOptionHT->execute(['nomOption' => $option['nomoption']]);
+                $prixHT = $prixOptionHT->fetchColumn();
 
-            foreach ($semaines_actifs as $service) {
-                // Récupérer les informations de l'option
-                $option = $options_indexed[$service['nomoption']] ?? ['prixht' => 0, 'prixttc' => 0];
-
-                // Calculer le total pour cette option
-                $prixHT = $option['prixht'];
-                $prixTTC = $option['prixttc'];
-                $quantite = $service['nbsemaines'];
-                $totalOptionHT = $prixHT * $quantite;
-                $totalOptionTTC = $prixTTC * $quantite;
-
-                // Ajouter aux totaux globaux
-                $totalHT += $totalOptionHT;
-                $totalTTC += $totalOptionTTC;
+                $prixOptionTTC = $dbh->prepare('SELECT prixttc FROM pact._option WHERE nomoption = :nomOption');
+                $prixOptionTTC->execute(['nomOption' => $option['nomoption']]);
+                $prixTTC = $prixOptionTTC->fetchColumn();
                 ?>
                 <tr>
-                    <td><?php echo $service['nomoption']; ?></td>
-                    <td><?php echo $quantite . ' semaines'; ?></td>
-                    <td><?php echo number_format($prixHT, 2, ',', ' ') . '€'; ?></td>
-                    <td><?php echo number_format($prixTTC, 2, ',', ' ') . '€'; ?></td>
-                    <td><?php echo number_format($totalOptionTTC, 2, ',', ' ') . '€'; ?></td>
+                    <td><?php echo $option['nomoption']; ?></td>
+                    <td><?php echo "{$option['nbsemaines']} semaines"; ?></td>
+                    <td><?php echo "{$prixHT}€"; ?></td>
+                    <td><?php echo "{$prixTTC}€"; ?></td>
+                    <td><?php echo ($prixTTC * $option['nbsemaines']) . "€"; ?></td>
                 </tr>
-            <?php } ?>
+            <?php endforeach;
+
+            // Exemple pour obtenir une ligne spécifique depuis _historiqueenligne
+            $queryHistorique = $dbh->prepare('SELECT * FROM pact._historiqueenligne WHERE idoffre = :idOffre');
+            $queryHistorique->execute(['idOffre' => $idOffre]);
+            $historique = $queryHistorique->fetch(PDO::FETCH_ASSOC);
+            
+            $joursRestants = calculerJoursRestants($historique['jourdebutnbjours'], $historique['nbjours']);
+            ?>
+            
+            <tr>
+                <td><?php echo $forfait[0]['nomforfait']; ?></td>
+                <td><?php echo $joursRestants . " jours"; ?></td>
+                <td>Test</td>
+                <td>Test</td>
+                <td>Test</td>
+            </tr>
         </table>
+
 
         <table class="total">
             <tr>
                 <th>Total HT</th>
-                <td><?php echo number_format($totalHT, 2, ',', ' ') . '€'; ?></td>
+                <td></td>
             </tr>
             <tr>
                 <th>Total TVA</th>
-                <td><?php echo number_format($totalTTC - $totalHT, 2, ',', ' ') . '€'; ?></td>
+                <td></td>
             </tr>
             <tr>
                 <th>Total TTC</th>
-                <td><?php echo number_format($totalTTC, 2, ',', ' ') . '€'; ?></td>
+                <td></td>
             </tr>
         </table>
-
     </main>
 </body>
 
 </html>
-<?php //lien de référence pour la facturation https://www.zervant.com/fr/modele-facture/#pid=1 ?>
