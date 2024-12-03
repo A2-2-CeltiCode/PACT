@@ -200,11 +200,11 @@ INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES
 (2, '2024-10-01','2024-11-20'),
 (2, '2024-11-01','2024-12-20');
 
-INSERT INTO _souscription (nbSemaines, debutOption) VALUES
+/*INSERT INTO _souscription (nbSemaines, debutOption) VALUES
 (1, '2024-09-09'),
 (4, '2024-09-23'),
 (3, '2024-10-14'),
-(2, '2024-11-11');
+(2, '2024-11-11');*/
 
 INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours) VALUES
 (1,1,20,'2024-09-02'),

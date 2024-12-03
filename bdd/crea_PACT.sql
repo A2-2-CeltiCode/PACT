@@ -195,12 +195,12 @@ CREATE TABLE _facture(
         REFERENCES _offre(idOffre)
 );
 
-CREATE TABLE _souscription(
+/*CREATE TABLE _souscription(
     nbSemaines     INTEGER NOT NULL CHECK (nbSemaines >= 1 AND nbSemaines <= 4),
     debutOption		 DATE NOT NULL,
-    --finOption			 DATE NOT NULL,
+  --finOption			 DATE NOT NULL,
     CONSTRAINT souscription_pk PRIMARY KEY(nbSemaines,debutOption)
-);
+);*/
 
 CREATE TABLE _annulationOption(
     nbSemaines    INTEGER NOT NULL,
@@ -211,9 +211,9 @@ CREATE TABLE _annulationOption(
     CONSTRAINT annulationOption_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),
     CONSTRAINT annulationOption_fk_option FOREIGN KEY (nomOption)
-        REFERENCES _option(nomOption),
+        REFERENCES _option(nomOption)/*,
     CONSTRAINT annulationOption_fk_souscription FOREIGN KEY (nbSemaines,debutOption)
-        REFERENCES _souscription(nbSemaines,debutOption)
+        REFERENCES _souscription(nbSemaines,debutOption)*/
 );
 
 CREATE TABLE _historiqueEnLigne(

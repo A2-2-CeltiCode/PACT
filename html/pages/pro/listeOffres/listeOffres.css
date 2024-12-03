@@ -36,16 +36,12 @@ body {
     color: var(--secondaire-pro);
 }
 
-.input{
-    display: grid;
-    gap: 10px;
-    justify-items: center;
+.checkbox-wrapper {
+    background-color: var(--gris1) !important;
+    padding-left: 5px !important;
+    border-radius: 1em;
+    border: 1px solid var(--gris1);
 }
-
-h5{
-    text-decoration: underline !important;;
-}
-
 
 .carte-offre {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -159,4 +155,76 @@ footer {
     height: 20px;
     stroke: var(--primaire-pro);
     fill: rgba(0, 0, 0, 0);
+}
+
+section {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1em 0;
+}
+
+.bouton {
+    display: flex;
+    flex-direction: column;
+}
+
+.nombreOffres{
+    font-family: 'Inter', sans-serif !important;
+    font-size: var(--p-medium-font-size) !important;
+    color: var(--noir) !important;
+    margin: 5px 0 !important;
+    font-weight: var(--font-weight-normal) !important;
+}
+
+.sliders_control {
+    padding-top: 10px;
+}
+
+.barre{
+    margin-top: 40px;
+    margin-right: 40px;
+}
+
+#styleShadow{
+    height: fit-content;
+    padding: 20px 10px 10px 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--gris1);
+    border-radius: 1em;
+}
+
+.test{
+    width: 285px !important;
+}
+
+.stretch{
+    display: grid !important;
+    gap: 10px !important;
+}
+
+
+.form_control{
+    justify-content: space-evenly !important;
+    color: var(--secondaire-pro) !important;
+}
+
+p{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.rangement{
+    width: 722px;
+}
+
+#searchForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="range"] {
+
+    background-color: var(--secondaire-pro) !important; 
+
 }
