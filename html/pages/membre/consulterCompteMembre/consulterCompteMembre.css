@@ -1,0 +1,442 @@
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Encode Sans';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('/ressources/polices/encode-sans-v19-latin_latin-ext-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-normal);
+    src: url('/ressources/polices/inter-v18-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: var(--font-weight-normal);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: var(--font-weight-semi-bold);
+    src: url('./assets/fonts/inter-v18-latin_latin-ext-600.woff2') format('woff2');
+}
+
+body {
+    font-family: 'Encode Sans', 'Inter';
+    background-color: var(--primaire-membre);
+    margin: auto;
+    padding: auto;
+}
+
+main {
+    position: relative; /* Nécessaire pour que le bouton soit positionné en bas à droite de main */
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    background: #fff;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    text-align: left;
+}
+/* Champs non modifiables (par défaut pour la catégorie Identité) */
+main table input[readonly] {
+    border: none;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 1em;
+    width: 100%;
+    padding: 5px;
+    cursor: not-allowed; /* Empêche toute modification */
+}
+
+/* Champs modifiables */
+main table .editable {
+    border: none;
+    background-color: transparent;
+    color: #333;
+    font-size: 1em;
+    width: 100%;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+main table .editable[readonly] {
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+main table .editable:focus {
+    outline: none;
+    background-color: #e9e9e9;
+}
+
+/* Titres principaux dans <main> */
+main h1 {
+    text-align: center;
+    color: var(--noir);
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Tableau des informations dans <main> */
+main table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+main table th, main table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+main table th {
+    background-color: #3186c7;
+    color: white;
+    font-weight: bold;
+}
+
+main table td {
+    background-color: #f9f9f9;
+}
+
+/* Titres des catégories */
+main table th[colspan="2"] {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: var(--font-weight-semi-bold);
+    background-color: #075997;;
+    color: white;
+}
+
+/* Champs éditables */
+main table .editable {
+    border: none;
+    background-color: transparent;
+    color: #333;
+    font-size: 1em;
+    width: 100%;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+main table .editable[readonly] {
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+main table .editable:focus {
+    outline: none;
+    background-color: #e9e9e9;
+}
+
+/* Boutons dans <main> */
+main button {
+    background-color: var(--primaire-membre);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+}
+
+main button:hover {
+    background-color: #044475;
+}
+
+.modifier {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.modifier button {
+    background-color: var(--primaire-membre);;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modifier button:hover {
+    background-color: #044475;
+    transform: translateY(-2px); 
+}
+
+.modifier button:active {
+    background-color: #044475;
+    transform: translateY(1px); 
+}
+
+/* Messages (succès et erreur) */
+.modifier p {
+    margin-top: 10px; 
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.modifier p.success {
+    color: green;
+}
+
+.modifier p.error {
+    color: red;
+}
+
+
+
+/* Bouton "Enregistrer" */
+#btnEnregistrer, #btnMdpEnregistrer {
+
+    position: relative; /* Position relative pour se placer naturellement sous le tableau */
+    margin-top: 20px; /* Espacement au-dessus du bouton */
+    margin-right: 0;
+    background-color: #3b9d3f; /* Couleur verte */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+    transition: all 0.3s ease;
+}
+
+#btnEnregistrer:hover, #btnMdpEnregistrer:hover {
+    background-color: #47c94d; /* Couleur verte plus foncée au survol */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); /* Léger effet de levée */
+}
+
+#btnEnregistrer:active, #btnMdpEnregistrer:active {
+    transform: translateY(1px); /* Effet d'enfoncement */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+/* Bouton "Annuler" */
+#btnAnnuler, #btnMdpAnnuler{
+
+    position: relative; /* Position relative pour se placer naturellement sous le tableau */
+    margin-top: 20px; /* Espacement au-dessus du bouton */
+    margin-left: 10px;
+    background-color: #a02727; /* Couleur verte */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+    transition: all 0.3s ease;
+}
+
+#btnAnnuler:hover, #btnMdpAnnuler:hover {
+    background-color: #e02c10; /* Couleur verte plus foncée au survol */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); /* Léger effet de levée */
+}
+
+#btnAnnuler:active, #btnMdpAnnuler:active {
+    transform: translateY(1px); /* Effet d'enfoncement */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bouton{
+    display: flex;
+    justify-content: end;
+}
+
+#popupMotDePasse{
+    display: none; 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 400px; 
+    padding: 20px; 
+    background: white; 
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; 
+    border-radius: 10px; 
+    z-index: 1000;
+}
+
+.champsMdp {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.champsMdp:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+#separation {
+    display: none;
+}
+
+footer {
+    margin-top: 100px;
+}
+
+@media (min-witdh: 769px) {
+    
+}
+
+/* Media query pour les petits écrans (smartphones) */
+@media (max-width: 768px) {
+
+    body {
+        background-color: white;
+    }
+
+    /* Ajuster le conteneur principal */
+    main {
+        width: 95%; /* Réduit la largeur sur mobile */
+        padding: 20px;
+        box-shadow: none; /* Supprime l'ombre pour un style plus épuré */
+        margin-bottom: 20px;
+    }
+
+    /* Tableau adapté au défilement horizontal */
+    main table {
+        overflow-x: auto;
+        white-space: nowrap;
+        border: none; /* Supprime les bordures */
+    }
+
+    main table th, main table td {
+        display: block;
+        width: 100%; /* Chaque ligne occupe toute la largeur */
+        box-sizing: border-box;
+    }
+
+    main table th[colspan="2"] {
+        font-size: 1em; /* Taille plus petite */
+    }
+
+    /* Ajustement des boutons */
+    main button, .modifier button {
+        width: 40%; /* Les boutons occupent toute la largeur */
+        font-size: 1em;
+        margin: 10px 0;
+    }
+
+    .modifier {
+        flex-direction: column; /* Les boutons sont empilés */
+        align-items: stretch; /* Étirement pour remplir */
+    }
+
+    /* Popup responsive */
+    #popupMotDePasse {
+        width: 90%;
+    }
+
+    /* Style pour que le tableau occupe toute la largeur */
+main table {
+    width: 100%; /* Occuper 100% de l'espace disponible */
+    border-collapse: collapse; /* Fusionne les bordures pour un look propre */
+    table-layout: fixed; /* Les colonnes occupent un espace égal */
+}
+
+/* Ajuster les cellules */
+main table th,
+main table td {
+    width: 50%; /* Chaque cellule (à gauche et à droite) occupe 50% */
+    text-align: left; /* Aligner le contenu à gauche */
+    padding: 10px; /* Ajouter un espace intérieur */
+}
+
+
+
+main table th, main table td {
+    display: block; /* Rendre chaque cellule une ligne */
+    width: 100%; /* Chaque cellule prend toute la largeur */
+}
+
+main table td {
+    padding: 15px; /* Plus d'espace sur mobile */
+}
+
+
+/* Pour s'assurer que le tableau occupe tout l'espace */
+main table {
+    width: 100%;
+    border-collapse: collapse; /* Supprime les espaces entre les bordures */
+    margin: 0 auto; /* Centre le tableau */
+    margin-right: 10px;
+  }
+  
+  main table th, 
+  main table td {
+    width: 100%; /* Chaque cellule occupe 50% */
+    text-align: left; 
+
+
+}
+
+#btnMdp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.bouton {
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.modifier {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.thhead {
+    margin-top: 20px;
+}
+
+#separation {
+    display: block;
+    border: none;
+    height: 0.1em;
+    /* Set the hr color */
+    color: var(--primaire-membre);  /* old IE */
+    background-color: var(--primaire-membre);  /* Modern Browsers */
+}
+}

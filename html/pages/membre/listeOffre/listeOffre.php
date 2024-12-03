@@ -22,7 +22,7 @@ require_once '../../../trie/fonctionTrie.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barreTrieVisiteur.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barreTrieMembre.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
@@ -68,7 +68,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 // Si ce n'est pas une requête AJAX, inclure le HTML complet
 ?>
-<?php Header::render(HeaderType::Guest); ?>
+<?php Header::render(HeaderType::Member); ?>
 
 
 <!DOCTYPE html>
@@ -114,5 +114,5 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
    
     <script src="listeOffre.js"></script>
 </body>
-<?php Footer::render(FooterType::Guest); ?>
+<?php Footer::render(FooterType::Member); ?>
 </html>
