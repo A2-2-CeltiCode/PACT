@@ -1,45 +1,3 @@
-.popup {
-    display: none; /* La popup est cachée par défaut */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    border-radius: 8px;
-}
-
-/* Fond d'écran semi-transparent pour la popup */
-.popup-overlay {
-    display: none; /* Masqué par défaut */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
-
-/* Bouton pour fermer la popup */
-.close-btn {
-    margin-top: 10px;
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.close-btn:hover {
-    background-color: #ff1a1a;
-}
-
-
-
 .offres-container {
     display: flex;
     flex-wrap: wrap;
@@ -66,11 +24,12 @@
 .select-wrapper{
     display: flex !important;
     width: 220px !important;
+    margin-bottom: 0 !important;
 
 }
 
 .select-wrapper select{
-    color: var(--primaire-visiteur) !important;
+    color: var(--primaire-membre) !important;
 }
 
 .triviennois{
@@ -79,6 +38,7 @@
     flex-direction: row !important;
     gap: 20px !important;
     justify-content: center !important;
+    margin-top: 20px !important;
 }
 
 #styleShadow{
@@ -87,7 +47,10 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--gris1);
     border-radius: 1em;
+    
 }
+
+
 
 .checkbox-wrapper{
     background-color: var(--gris1) !important;
@@ -102,7 +65,7 @@
 }
 
 .form_control_container{
-    color:var(--primaire-visiteur) !important;
+    color:var(--primaire-membre) !important;
 }
 
 input[type="number"]{
@@ -110,5 +73,77 @@ input[type="number"]{
 }
 
 .input{
-    display: none;
+    display: block;
+    margin-top: 20px;
+}
+
+.tri-somie{
+    display: flex;
+    width: 380px;
+    height: 40px;
+    gap: 20px;
+    padding: 10px 12px;
+}
+
+.styletitre::placeholder{
+    color : var(--primaire-membre) !important;
+    font-size: 16px;
+}
+
+.heure{
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: 302px !important;
+}
+
+.input{
+    display: flex !important;
+    justify-content: space-evenly !important;
+    max-width: 0;
+    overflow: hidden;
+    transition: max-width 0.5s ease-in-out;
+    position: fixed; /* Position fixe pour superposer */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ajoute une ombre pour l'effet */
+    background-color: white;
+    z-index: 1000; /* Assure que l'élément est au-dessus des autres */
+    padding: 10px; /* Pas de padding initial */
+    border: 1px solid var(--gris1);
+    border-radius: 1em;
+}
+
+.input.open{
+    max-width: 1000px !important;
+    z-index: 1000 !important;
+    /* position: relative !important; */
+
+}
+
+#nombreOffres{
+    padding-left: 20px !important;
+}
+
+.toggleBarretrieButton{
+    transition: all 0.5s ease-in !important;
+}
+
+.page-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent grey */
+    z-index: 1000; /* Ensure it's above other content */
+    display: none; /* Hidden by default */
+}
+
+.page-overlay.active {
+    display: block; /* Show when active */
+}
+
+
+.centrer{
+    display: flex !important;
+    justify-content: center !important;
 }

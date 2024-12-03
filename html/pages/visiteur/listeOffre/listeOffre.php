@@ -77,13 +77,17 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     
 </head>
 <body>
+<div id="pageOverlay" class="page-overlay"></div>
+
+
     <input type="hidden" name="status" value="null" />
     <!-- Nouveau bouton pour afficher/masquer barretrie -->
-    <button id="toggleBarretrieButton">Afficher/Masquer Barre de Tri</button>
+    
 
     <div id="barretrie">
     <?php
     Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories);
+    
     ?>
     </div>
     <br>
