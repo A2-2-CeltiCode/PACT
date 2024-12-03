@@ -32,31 +32,7 @@ class CheckboxSelect
     ) {
         // Inclure le CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<style>
-                .checkbox-select-wrapper {
-                    position: relative;
-                    display: inline-block;
-                }
-                .checkbox-select {
-                    display: none;
-                    position: absolute;
-                    background-color: #f9f9f9;
-                    min-width: 160px;
-                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                    z-index: 1;
-                }
-                .checkbox-select.show {
-                    display: block;
-                }
-                .checkbox-select label {
-                    display: block;
-                    padding: 8px 16px;
-                    cursor: pointer;
-                }
-                .checkbox-select label:hover {
-                    background-color: #f1f1f1;
-                }
-            </style>';
+            echo '<link rel="stylesheet" type="text/css" href="/composants/CheckboxSelect/style.css">';
             self::$cssIncluded = true;
         }
 
@@ -108,3 +84,4 @@ class CheckboxSelect
         </script>';
     }
 }
+
