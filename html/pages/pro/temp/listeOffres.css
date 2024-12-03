@@ -222,3 +222,9 @@ p{
     flex-direction: column;
     align-items: center;
 }
+
+input[type="range"] {
+
+    background-color: var(--secondaire-pro) !important; 
+
+}

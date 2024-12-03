@@ -99,7 +99,7 @@ class Trie {
 
 
         InputRangeDouble::render(
-            $class = "custom-slider",
+            $class = "duoslider",
             $id = "rangeSlider",
             $name = "range",
             $required = true,
@@ -110,7 +110,7 @@ class Trie {
         );
 
         InputRange::render(
-            $class = "custom-slider",
+            $class = "monoslider",
             $id = "rangeSlider",
             $name = "note",
             $required = true,

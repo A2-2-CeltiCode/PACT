@@ -1,19 +1,15 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const sliders = document.querySelectorAll('input[type="range"]');
-    const inputs = document.querySelectorAll('input[type="number"]');
+// ...existing code...
+function syncInputValue(slider) {
+    const input = document.getElementById(slider.id + 'Input');
+    if (input) {
+        input.value = slider.value;
+    }
+}
 
-    sliders.forEach((slider, index) => {
-        const input = inputs[index];
-
-        function syncSliderAndInput() {
-            input.value = slider.value;
-        }
-
-        function syncInputAndSlider() {
-            slider.value = input.value;
-        }
-
-        slider.addEventListener('input', syncSliderAndInput);
-        input.addEventListener('input', syncInputAndSlider);
-    });
-});
+function syncSliderValue(input) {
+    const slider = document.getElementById(input.id.replace('Input', ''));
+    if (slider) {
+        slider.value = input.value;
+    }
+}
+// ...existing code...
