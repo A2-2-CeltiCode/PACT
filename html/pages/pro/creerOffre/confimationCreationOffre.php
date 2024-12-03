@@ -377,49 +377,54 @@
         
 
     }
+
+
+
+
+$datePrestaServices = date('Y-m-01'); // Premier jour du mois en cours
+$dateEcheance = date('Y-m-20', strtotime('+1 month')); // 20 du mois suivant
+
 // Insertion dans la table _facture
 $stmt = $dbh->prepare(
-    "INSERT INTO _facture(idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance)
-    VALUES(:idOffre, :idAdressePro, :idAdressePACT, :datePrestaServices, :dateEcheance)"
+    "INSERT INTO pact._facture(idOffre, datePrestaServices, dateEcheance)
+    VALUES(:idOffre, :datePrestaServices, :dateEcheance)"
 );
 $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-$stmt->bindValue(':idAdressePro', $idAdressePro, PDO::PARAM_INT);
-$stmt->bindValue(':idAdressePACT', $idAdressePACT, PDO::PARAM_INT);
 $stmt->bindValue(':datePrestaServices', $datePrestaServices, PDO::PARAM_STR);
 $stmt->bindValue(':dateEcheance', $dateEcheance, PDO::PARAM_STR);
 $stmt->execute();
+$idFacture = $dbh->lastInsertId();
 
 // Insertion dans la table _souscription
 $stmt = $dbh->prepare(
-    "INSERT INTO _souscription(nbSemaines, debutOption)
+    "INSERT INTO pact._souscription(nbSemaines, debutOption)
     VALUES(:nbSemaines, :debutOption)"
 );
-$stmt->bindValue(':nbSemaines', $nbSemaines, PDO::PARAM_INT);
-$stmt->bindValue(':debutOption', $debutOption, PDO::PARAM_STR);
+$stmt->bindValue(':nbSemaines', $durepromotion, PDO::PARAM_INT);
+$stmt->bindValue(':debutOption', $datePromotion, PDO::PARAM_STR);
 $stmt->execute();
 
 // Insertion dans la table _annulationOption
 $stmt = $dbh->prepare(
-    "INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee)
+    "INSERT INTO pact._annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee)
     VALUES(:nbSemaines, :debutOption, :idOffre, :nomOption, :estAnnulee)"
 );
-$stmt->bindValue(':nbSemaines', $nbSemaines, PDO::PARAM_INT);
-$stmt->bindValue(':debutOption', $debutOption, PDO::PARAM_STR);
+$stmt->bindValue(':nbSemaines', $durepromotion, PDO::PARAM_INT);
+$stmt->bindValue(':debutOption', $datePromotion, PDO::PARAM_STR);
 $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-$stmt->bindValue(':nomOption', $nomOption, PDO::PARAM_STR);
-$stmt->bindValue(':estAnnulee', $estAnnulee, PDO::PARAM_BOOL);
+$stmt->bindValue(':nomOption', $typePromotion, PDO::PARAM_STR);
+$stmt->bindValue(':estAnnulee', false, PDO::PARAM_BOOL);
 $stmt->execute();
 
 // Insertion dans la table _historiqueEnLigne
 $stmt = $dbh->prepare(
-    "INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, estEnLigne, jourDebutNbJours)
-    VALUES(:idFacture, :idOffre, :nbJours, :estEnLigne, :jourDebutNbJours)"
+    "INSERT INTO pact._historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours)
+    VALUES(:idFacture, :idOffre, :nbJours, :jourDebutNbJours)"
 );
 $stmt->bindValue(':idFacture', $idFacture, PDO::PARAM_INT);
 $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-$stmt->bindValue(':nbJours', $nbJours, PDO::PARAM_INT);
-$stmt->bindValue(':estEnLigne', $estEnLigne, PDO::PARAM_BOOL);
-$stmt->bindValue(':jourDebutNbJours', $jourDebutNbJours, PDO::PARAM_INT);
+$stmt->bindValue(':nbJours', 1, PDO::PARAM_INT);
+$stmt->bindValue(':jourDebutNbJours', date("Y-m-d"), PDO::PARAM_INT);
 $stmt->execute();
 
     echo("gg bro");
