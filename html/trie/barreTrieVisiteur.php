@@ -47,15 +47,13 @@ class Trie {
         echo '<form id="searchForm" method="GET" action="">';
         echo '<div class="triviennois">';
         echo '<div class="tri-somie">';
+        echo '<img class="btnfiltres" id="toggleBarretrieButton" src="/ressources/icone/filteron.svg" alt="filtre"  />';
         Input::render(name:"titre",class:'styletitre', type:"text", placeholder:'Titre*', value: htmlspecialchars($titre));
 
         Input::render(name:"localisation",class:'styletitre', type:"text", placeholder:'localisation', value: htmlspecialchars($localisation));
         echo '</div>';
         Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
         
-        echo '</div>';
-        echo '<div class="centrer">';
-        Button::render(class:'btnfiltres',id:'toggleBarretrieButton',text:'Filtres',type:ButtonType::Member,onClick:'',submit:false);
         echo '</div>';
 
         echo '<input type="hidden" id="sortInput" name="sort" value="' . htmlspecialchars($sort) . '">';

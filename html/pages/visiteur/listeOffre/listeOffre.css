@@ -30,6 +30,7 @@
 
 .select-wrapper select{
     color: var(--primaire-membre) !important;
+    border: 1px solid var(--gris2) !important;
 }
 
 .triviennois{
@@ -79,7 +80,7 @@ input[type="number"]{
 
 .tri-somie{
     display: flex;
-    width: 380px;
+    width: 440px;
     height: 40px;
     gap: 20px;
     padding: 10px 12px;
@@ -98,7 +99,7 @@ input[type="number"]{
 }
 
 .input{
-    display: flex !important;
+    display: none ;
     justify-content: space-evenly !important;
     max-width: 0;
     overflow: hidden;
@@ -120,7 +121,7 @@ input[type="number"]{
 }
 
 #nombreOffres{
-    padding-left: 20px !important;
+    padding-left: 35px !important;
 }
 
 .toggleBarretrieButton{
@@ -146,4 +147,11 @@ input[type="number"]{
 .centrer{
     display: flex !important;
     justify-content: center !important;
+}
+
+
+.btnfiltres{
+    background-color: var(--primaire-membre) !important;
+    border: 1px solid var(--primaire-membre) !important;
+    border-radius: 0.5em !important;
 }
