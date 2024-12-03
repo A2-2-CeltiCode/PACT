@@ -6,54 +6,6 @@ function debounce(func, wait) {
     };
 }
 
-function trier(sort) {
-    const searchInput = document.querySelector('input[name="titre"]').value;
-    const localisationInput = document.querySelector('input[name="localisation"]').value;
-    const minPrixInput = document.querySelector('input[name="minPrix"]').value;
-    const maxPrixInput = document.querySelector('input[name="maxPrix"]').value;
-    const prixMinInput = document.querySelector('input[name="prixMin"]').value;
-    const prixMaxInput = document.querySelector('input[name="prixMax"]').value;
-    const ouvertureInput = document.querySelector('input[name="ouverture"]').value;
-    const fermetureInput = document.querySelector('input[name="fermeture"]').value;
-    const etatInput = document.querySelector('select[name="etat"]').value;
-    const trieInput = document.querySelector('select[name="trie"]').value;
-    const statusInput = document.querySelector('input[name="status"]').value;
-    const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
-
-    const params = new URLSearchParams(window.location.search);
-    if (sort) {
-        params.set('sort', sort);
-    } else if (!params.has('sort')) {
-        params.set('sort', 'default'); // Valeur par défaut si aucun tri n'est spécifié
-    }
-    if (searchInput) params.set('titre', searchInput);
-    if (localisationInput) params.set('localisation', localisationInput);
-    if (minPrixInput) params.set('minPrix', minPrixInput);
-    if (maxPrixInput) params.set('maxPrix', maxPrixInput);
-    if (prixMinInput) params.set('prixMin', prixMinInput);
-    if (prixMaxInput) params.set('prixMax', prixMaxInput);
-    if (ouvertureInput) params.set('ouverture', ouvertureInput);
-    if (fermetureInput) params.set('fermeture', fermetureInput);
-    if (etatInput) params.set('etat', etatInput);
-    if (trieInput) params.set('trie', trieInput);
-    if (statusInput) params.set('status', statusInput);
-    if (categoryInputs.length > 0) params.set('nomcategorie', categoryInputs.join(','));
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `listeOffre.php?${params.toString()}`, true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            const resultatsContainer = document.getElementById('resultats');
-            resultatsContainer.innerHTML = response.offres.join('');
-            document.getElementById('nombreOffres').innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
-
-            applyStyles();
-        }
-    };
-    xhr.send();
-}
 
 function rechercher() {
     const searchInput = document.querySelector('input[name="titre"]').value;
