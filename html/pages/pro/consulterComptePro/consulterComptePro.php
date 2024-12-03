@@ -2,6 +2,13 @@
 // Démarrer la session
 session_start();
 
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['idCompte'])) {
+    header("Location: ../connexionComptePro/connexionComptePro.php"); // Redirige vers une page de connexion si l'utilisateur n'est pas connecté
+    exit;
+}
+
+
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use \composants\Label\Label;
