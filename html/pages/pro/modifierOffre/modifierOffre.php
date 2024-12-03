@@ -271,7 +271,7 @@ $estEnLigne = $vueOffre["estenligne"];
 
                                         );
                                     ?>
-                                
+                                <div class="selected-values"></div>
                                 
                             </div>
                             <br><br>
@@ -309,6 +309,7 @@ $estEnLigne = $vueOffre["estenligne"];
                                 $tag,
                             );
                         ?>
+                        <div class="selected-values"></div>
                     </div>
                             <br><br>
                             <label>Prix*</label>
@@ -321,22 +322,24 @@ $estEnLigne = $vueOffre["estenligne"];
                             <input type="radio" id="non" name="guidee" value="false" onclick="toggleLangue(false)">
                             <label for="non">Non</label>
                             <div id="langue" style="display: none;">
-                                <?php
+                            <?php
                                 $sql = "SELECT nomlangage FROM pact._langage";
-                                $stmt = $dbh->prepare($sql);
+                                $stmt = $dbh->prepare($sql); 
                                 $stmt->execute();
                                 $tabLangue = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($tabLangue as $langue) {
-                                    CheckboxSelect::render(
-                                        class: "checkbox",
-                                        id: "langue_" . $langue['nomlangage'], 
-                                        name: "langue[]",
-                                        value: $langue['nomlangage'],
-                                        text: $langue['nomlangage'],
-                                        required: false,
-                                        checked: false
-                                    );
+                                foreach($tabLangue as $key => $tabLangue){
+                                    $langue[$key]=$tabLangue['nomlangage'];
                                 }
+                                ?>
+                                <?php 
+                                    CheckboxSelect::render(
+                                        class: 'checkbox',
+                                        id: "langue_",
+                                        name: "langue[]",
+                                        required: false,
+                                        options: $langue,
+                                        buttonText: "Langue"
+                                    );
                                 ?>
                             </div>
                         </div>
@@ -366,6 +369,7 @@ $estEnLigne = $vueOffre["estenligne"];
                                     $tag,
                                 );
                             ?>
+                            <div class="selected-values"></div>
                         </div>
                             <br><br>
                             <label>Prix*</label>
@@ -400,6 +404,7 @@ $estEnLigne = $vueOffre["estenligne"];
                                     $tag,
                                 );
                             ?>
+                            <div class="selected-values"></div>
                         </div>
                             <br><br>
                             <label>Prix*</label>
@@ -437,7 +442,9 @@ $estEnLigne = $vueOffre["estenligne"];
                                     false,
                                     $tag,
                                 );
+                                
                             ?>
+                            <div class="selected-values"></div>
                         </div>
                             <br>
                             <div>
@@ -465,23 +472,18 @@ $estEnLigne = $vueOffre["estenligne"];
                             <div>
                                 <label>Type de repas</label>
                                 <br><br>
-                                <?php
-                                $sql = "SELECT nomrepas FROM pact._repas";
-                                $stmt = $dbh->prepare($sql);
-                                $stmt->execute();
-                                $tabnomrepas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($tabnomrepas as $nomrepas) {
-                                    CheckboxSelect::render(
-                                        class: "checkbox",
-                                        id: "repas_" . $nomrepas['nomrepas'],
-                                        name: "repas[]",
-                                        value: $nomrepas['nomrepas'],
-                                        text: $nomrepas['nomrepas'],
-                                        required: false,
-                                        checked: false
-                                    );
-                                }
-                                ?>
+                                <div>
+                                <label>Type de repas</label>
+                                <br>
+                                <input type="checkbox" id="dejeuner" name="typeRepas[]" value="Dejeuner">
+                                <label for="dejeuner">Dejeuner</label>
+                                <input type="checkbox" id="diner" name="typeRepas[]" value="Diner">
+                                <label for="diner">Diner</label>
+                                <input type="checkbox" id="snack" name="typeRepas[]" value="Snack">
+                                <label for="snack">Snack</label>
+                                
+                            </div>
+                                
                             </div>
                         </div>
                     </div>
