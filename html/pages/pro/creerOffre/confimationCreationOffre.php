@@ -168,7 +168,7 @@
             $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
             $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
             $stmt->execute();
-            echo("image insérée");
+            
         }
     
 
@@ -245,8 +245,8 @@
         foreach ($_FILES['monDropZone']['name'] as $key => $val) {
             $nomImage = $_FILES['monDropZone']['name'][$key];
             $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
-            $location = '../../ressources/' . $idOffre . '/images' . '/';
-        
+            $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/" . $idOffre . '/carte' . '/';
+            
             $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
         
             $nouveauNomImage = uniqid() . '.' . $extension;
@@ -263,6 +263,7 @@
             $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
             $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
             $stmt->execute();
+            echo("image insérée");
         }
         $planParc = $dbh->lastInsertId();
 
@@ -328,7 +329,7 @@
         foreach ($_FILES['monDropZone']['name'] as $key => $val) {
             $nomImage = $_FILES['monDropZone']['name'][$key];
             $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
-            $location = '../../ressources/' . $idOffre . '/images' . '/';
+            $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/" . $idOffre . '/carte' . '/';
         
             $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
         
@@ -346,6 +347,7 @@
             $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
             $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
             $stmt->execute();
+            echo("image insérée");
         }
         $carteRestaurant = $dbh->lastInsertId();
 
@@ -395,14 +397,6 @@ $stmt->bindValue(':dateEcheance', $dateEcheance, PDO::PARAM_STR);
 $stmt->execute();
 $idFacture = $dbh->lastInsertId();
 
-// Insertion dans la table _souscription
-$stmt = $dbh->prepare(
-    "INSERT INTO pact._souscription(nbSemaines, debutOption)
-    VALUES(:nbSemaines, :debutOption)"
-);
-$stmt->bindValue(':nbSemaines', $durepromotion, PDO::PARAM_INT);
-$stmt->bindValue(':debutOption', $datePromotion, PDO::PARAM_STR);
-$stmt->execute();
 
 // Insertion dans la table _annulationOption
 $stmt = $dbh->prepare(
