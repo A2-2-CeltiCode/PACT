@@ -78,6 +78,55 @@ body > header {
     }
 }
 
+.entete-profil {
+    position: relative;
+    display: inline-block;
+}
+
+.selecteur-profil {
+    width: 200px; /* Largeur du sélecteur */
+    padding: 10px; /* Espacement interne */
+    color: white; /* Texte blanc */
+    border: none; /* Pas de bordures */
+    border-radius: 5px; /* Bordures arrondies */
+    font-size: 14px; /* Taille du texte */
+    text-align: center; /* Texte centré */
+    cursor: pointer; /* Curseur pointeur au survol */
+    appearance: none; /* Supprimer le style natif */
+    -webkit-appearance: none; /* Pour compatibilité Safari */
+}
+
+.selecteur-profil.profil-member {
+    background-color: var(--primaire-membre); /* Fond bleu */
+}
+
+.selecteur-profil.profil-pro {
+    background-color: var(--primaire-pro); /* Fond mauve */
+}
+
+.selecteur-profil.profil-member:hover {
+    background-color: #044475; /* Changer la couleur au survol */
+}
+
+.selecteur-profil.profil-member:focus {
+    outline: none; /* Supprimer les bordures de focus par défaut */
+    box-shadow: 0 0 5px #044475; /* Ajouter une lueur de focus */
+}
+
+.selecteur-profil.profil-pro:hover {
+    background-color: #4b2b63; /* Changer la couleur au survol */
+}
+
+.selecteur-profil.profil-member:focus {
+    outline: none; /* Supprimer les bordures de focus par défaut */
+    box-shadow: 0 0 5px #4b2b63; /* Ajouter une lueur de focus */
+}
+
+.selecteur-profil option {
+    background-color: white; /* Fond blanc pour les options déroulantes */
+    color: black; /* Texte noir dans les options */
+}
+
 
 .span-pact-guest {
     color: var(--primaire-visiteur);
