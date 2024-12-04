@@ -21,19 +21,29 @@ function getMoisPrestation($mois)
 }
 
 
-function calculerJoursRestants($jourDebut, $nbjours) {
+function calculerJoursRestants($jourDebut, $nbjours)
+{
     $dateDebut = new DateTime($jourDebut);
-    $jourCourant = (int)$dateDebut->format('d');
-    $mois = (int)$dateDebut->format('m');
-    $annee = (int)$dateDebut->format('Y');
+    $jourCourant = (int) $dateDebut->format('d');
+    $mois = (int) $dateDebut->format('m');
+    $annee = (int) $dateDebut->format('Y');
 
     $joursDansMois = 0;
 
     switch ($mois) {
-        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
             $joursDansMois = 31;
             break;
-        case 4: case 6: case 9: case 11:
+        case 4:
+        case 6:
+        case 9:
+        case 11:
             $joursDansMois = 30;
             break;
         case 2:
@@ -151,59 +161,61 @@ try {
             <tr>
                 <th>Nom du service</th>
                 <th>Quantité</th>
-                <th>Prix HT</th>
-                <th>Prix TTC</th>
-                <th>Total</th>
+                <th>Prix HT unitaire</th>
+                <th>Prix TTC unitaire</th>
+                <th>Total TTC</th>
             </tr>
             <?php foreach ($optionsFiltrees as $option): ?>
                 <?php
                 $prixOptionHT = $dbh->prepare('SELECT prixht FROM pact._option WHERE nomoption = :nomOption');
                 $prixOptionHT->execute(['nomOption' => $option['nomoption']]);
-                $prixHT = $prixOptionHT->fetchColumn();
+                $priOptionxHT = $prixOptionHT->fetchColumn();
 
                 $prixOptionTTC = $dbh->prepare('SELECT prixttc FROM pact._option WHERE nomoption = :nomOption');
                 $prixOptionTTC->execute(['nomOption' => $option['nomoption']]);
-                $prixTTC = $prixOptionTTC->fetchColumn();
+                $prixOptionTTC = $prixOptionTTC->fetchColumn();
+
+                $prixOptionTotal = $prixOptionTTC * $option['nbsemaines'];
                 ?>
                 <tr>
                     <td><?php echo $option['nomoption']; ?></td>
                     <td><?php echo "{$option['nbsemaines']} semaines"; ?></td>
-                    <td><?php echo "{$prixHT}€"; ?></td>
-                    <td><?php echo "{$prixTTC}€"; ?></td>
-                    <td><?php echo ($prixTTC * $option['nbsemaines']) . "€"; ?></td>
+                    <td><?php echo "{$priOptionxHT}€" ?></td>
+                    <td><?php echo "{$prixOptionTTC}€" ?></td>
+                    <td><strong><?php echo "{$prixOptionTotal}€" ?></strong></td>
                 </tr>
             <?php endforeach;
-
-            // Exemple pour obtenir une ligne spécifique depuis _historiqueenligne
             $queryHistorique = $dbh->prepare('SELECT * FROM pact._historiqueenligne WHERE idoffre = :idOffre');
             $queryHistorique->execute(['idOffre' => $idOffre]);
             $historique = $queryHistorique->fetch(PDO::FETCH_ASSOC);
-            
+
             $joursRestants = calculerJoursRestants($historique['jourdebutnbjours'], $historique['nbjours']);
-            ?>
-            
+            $prixForfaitHT = $forfait[0]['prixht'];
+            $prixForfaitTTC = $forfait[0]['prixttc'];
+            $prixForfaitTotal = $joursRestants * $forfait[0]['prixttc'];
+                ?>
+
             <tr>
                 <td><?php echo $forfait[0]['nomforfait']; ?></td>
                 <td><?php echo $joursRestants . " jours"; ?></td>
-                <td>Test</td>
-                <td>Test</td>
-                <td>Test</td>
+                <td><?php echo "{$prixForfaitHT}€" ?></td>
+                <td><?php echo "{$prixForfaitTTC}€" ?></td>
+                <td><strong><?php echo "{$prixForfaitTotal}€" ?></strong></td>
             </tr>
         </table>
 
+        <?php $TotalHT = $$prixForfaitHT = $forfait[0]['prixht'] * $joursRestants + $priOptionxHT * $option['nbsemaines'];
+        $TotalTTC = $prixForfaitTotal + $prixOptionTotal;
 
+        ?>
         <table class="total">
             <tr>
                 <th>Total HT</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Total TVA</th>
-                <td></td>
+                <td><?php echo "{$TotalHT}€" ?></td>
             </tr>
             <tr>
                 <th>Total TTC</th>
-                <td></td>
+                <td><?php echo "{$TotalTTC}€" ?></td>
             </tr>
         </table>
     </main>
