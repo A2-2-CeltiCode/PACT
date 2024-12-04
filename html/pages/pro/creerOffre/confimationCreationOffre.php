@@ -418,13 +418,11 @@ $stmt->execute();
 }
 // Insertion dans la table _historiqueEnLigne
 $stmt = $dbh->prepare(
-    "INSERT INTO pact._historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours)
-    VALUES(:idFacture, :idOffre, :nbJours, :jourDebutNbJours)"
+    "INSERT INTO pact._historiqueenligne(idOffre, jourdebut)
+    VALUES( :idOffre, :jourdebut)"
 );
-$stmt->bindValue(':idFacture', $idFacture, PDO::PARAM_INT);
 $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-$stmt->bindValue(':nbJours', 1, PDO::PARAM_INT);
-$stmt->bindValue(':jourDebutNbJours', date("Y-m-d"), PDO::PARAM_INT);
+$stmt->bindValue(':jourdebut', date("Y-m-d"), PDO::PARAM_INT);
 $stmt->execute();
 
     echo("gg bro");

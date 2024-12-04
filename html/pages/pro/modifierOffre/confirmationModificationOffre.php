@@ -443,3 +443,42 @@ if ($options == true && $debutOption>= date("Y-m-d")) {
     $stmt->bindValue(':estAnnulee', true, PDO::PARAM_BOOL);
     $stmt->execute();
 }
+
+if($enLigne=="false") {
+    $stmt = $dbh->prepare(
+        "UPDATE pact._historiqueenligne
+        SET jourFin = :jourFin
+        WHERE idOffre = :idoffre AND jourDebut = (
+            SELECT MAX(jourDebut) FROM pact._historiqueenligne WHERE idoffre = :idoffre
+        )"
+    );
+    $stmt->bindValue(':idoffre', $idOffre, PDO::PARAM_INT);
+    $stmt->bindValue(':jourFin', date("Y-m-d"), PDO::PARAM_STR);
+    $stmt->execute();
+}else{
+    $stmt = $dbh->prepare("
+    SELECT jourfin FROM pact._historiqueenligne WHERE idoffre = :idoffre ORDER BY jourfin DESC LIMIT 1");
+    $stmt->bindValue(':idoffre', $idOffre, PDO::PARAM_INT);
+    $stmt->execute();
+    $jourFin = $stmt->fetch(PDO::FETCH_COLUMN);
+    echo($jourFin);
+    if($jourFin !== date("Y-m-d")) {
+        $stmt = $dbh->prepare(
+            "INSERT INTO pact._historiqueenligne(idOffre, jourDebut)
+            VALUES(:idOffre, :jourDebut)"
+            );
+        $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+        $stmt->bindValue(':jourDebut', date('Y-m-d'), PDO::PARAM_STR);
+        $stmt->execute();
+    }else{
+        $stmt = $dbh->prepare(
+            "UPDATE pact._historiqueenligne
+            SET jourFin = NULL
+            WHERE idOffre = :idoffre AND jourDebut = (
+                SELECT MAX(jourDebut) FROM pact._historiqueenligne WHERE idoffre = :idoffre
+            )"
+        );
+        $stmt->bindValue(':idoffre', $idOffre, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+}
