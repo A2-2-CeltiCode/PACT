@@ -23,6 +23,7 @@ require_once "../../../composants/CartePro/offre.php";
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
+
 $idCompte = '2';
 $status = $_GET['status'] ?? 'enligne';
 $pdo = new PDO("$driver:host=$server;port=5432;dbname=$dbname", $dbuser, $dbpass);
