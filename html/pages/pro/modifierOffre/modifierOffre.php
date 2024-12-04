@@ -28,6 +28,9 @@ $sql = "SELECT nomcategorie FROM pact._restaurant WHERE idOffre = $idOffre";
 $stmt = $dbh->query($sql);
 $offre5 = $stmt->fetch();
 
+
+
+
 $prix1 = null;
 $prix2 = null;
 $prix3 = null;
@@ -54,6 +57,15 @@ $stmt = $dbh->prepare($sql);
 $stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
 $stmt->execute();
 $numsiren = $stmt->fetchColumn();
+
+$debutOption = null;
+$stmt = $dbh->prepare(
+    "SELECT debutOption FROM pact._annulationOption WHERE idOffre = :idOffre"
+);
+$stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+$stmt->execute();
+$debutOption = $stmt->fetch(PDO::FETCH_COLUMN);
+$currentDate = date("Y-m-d");
 
 if ($offre1 != null) {
     $sql = "SELECT * FROM pact.vue_activite WHERE idOffre = $idOffre";
@@ -153,6 +165,34 @@ $options = $vueOffre["nomoption"];
     <script src="modificationOffre.js"></script>
     <link rel="stylesheet" href="../../../ui.css">
     <link rel="stylesheet" href="modificationOffre.css">
+    <script>
+        function confirmCancelOption(message) {
+            return confirm(message);
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const cancelOptionRadios = document.querySelectorAll('input[name="options"]');
+            cancelOptionRadios.forEach(radio => {
+                radio.addEventListener('change', (event) => {
+                    if (event.target.value === 'true') {
+                        <?php if ($debutOption >= $currentDate) { ?>
+                            if (!confirmCancelOption("Êtes-vous sûr de vouloir annuler l'option ? Vous ne paierez pas l'option.")) {
+                                event.target.checked = false;
+                                document.getElementById('non').checked = true;
+                            }else
+                        <?php } else { ?>
+                            if (!confirmCancelOption("Êtes-vous sûr de vouloir annuler l'option ? Vous paierez quand même l'option.")) {
+                                event.target.checked = false;
+                                document.getElementById('non').checked = true;
+                            }else{
+                                document.getElementById('non').checked = false;
+                            }
+                        <?php } ?>
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <?php Header::render(HeaderType::Pro); ?>
 
@@ -211,9 +251,9 @@ $options = $vueOffre["nomoption"];
                 <div>
                     <label>Est en ligne*</label>
                     <br>
-                    <input type="radio" id="oui" name="estEnLigne" value="true" <?php if ($estEnLigne == "1") echo "checked"; ?>>
+                    <input type="radio" id="vrai" name="estEnLigne" value="true" <?php if ($estEnLigne == "1") echo "checked"; ?>>
                     <label for="oui">Oui</label>
-                    <input type="radio" id="non" name="estEnLigne" value="false" <?php if ($estEnLigne == "0") echo "checked"; ?>>
+                    <input type="radio" id="faux" name="estEnLigne" value="false" <?php if ($estEnLigne == "0") echo "checked"; ?>>
                     <label for="non">Non</label>
                 </div>
 
@@ -222,11 +262,18 @@ $options = $vueOffre["nomoption"];
                 <div>
                     
                     <?php
-
+                    $stmt = $dbh->prepare(
+                        "SELECT debutOption FROM pact._annulationOption WHERE idOffre = :idOffre"
+                    );
+                    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $debutOption = $stmt->fetch(PDO::FETCH_COLUMN);
+                    
                     if($options!="Aucune"){
                         ?>
-                        <label>Voulez vous annuler l'option ?</label>
+                        <label>Voulez vous annuler l'option <br> <?php  echo(htmlspecialchars(strtolower($options))) ?> ?</label>
                         <br>
+
                         <input type="radio" id="oui" name="options" value="true" >
                         <label for="oui">Oui</label>
                         <input type="radio" id="non" name="options" value="false" checked>
