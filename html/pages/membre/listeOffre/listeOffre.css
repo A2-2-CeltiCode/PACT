@@ -63,6 +63,12 @@
 
 .sliders_control{
     min-width: 150px !important;
+    min-height: 20px !important;
+
+}
+
+.slider-select-wrapper{
+    padding-top: 10px !important;
 }
 
 .form_control_container{

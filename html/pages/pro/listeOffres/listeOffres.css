@@ -160,3 +160,7 @@ footer {
     stroke: var(--primaire-pro);
     fill: rgba(0, 0, 0, 0);
 }
+
+.sliders_control {
+    min-height: 20px !important;
+}

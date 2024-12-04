@@ -63,6 +63,7 @@
 
 .sliders_control{
     min-width: 150px !important;
+    padding-top: 10px !important;
 }
 
 .form_control_container{
