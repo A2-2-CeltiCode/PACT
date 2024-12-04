@@ -217,15 +217,12 @@ CREATE TABLE _annulationOption(
 );
 
 CREATE TABLE _historiqueEnLigne(
-    idFacture         SERIAL,
-    idOffre           INTEGER,
-    nbJours           INTEGER,
-    jourDebutNbJours  DATE,
-    CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idFacture,idOffre,jourDebutNbJours),
+    idOffre       INTEGER,
+    jourDebut     DATE,
+    jourFin       DATE,
+    CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idOffre,jourDebut),
     CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre) 
-        REFERENCES _offre(idOffre),
-    CONSTRAINT historiqueEnLigne_fk_facture FOREIGN KEY (idFacture)
-        REFERENCES _facture(idFacture)
+        REFERENCES _offre(idOffre)
 );
 
 --

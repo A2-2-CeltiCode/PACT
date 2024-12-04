@@ -206,13 +206,12 @@ INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES
 (3, '2024-10-14'),
 (2, '2024-11-11');*/
 
-INSERT INTO _historiqueEnLigne(idFacture, idOffre, nbJours, jourDebutNbJours) VALUES
-(1,1,20,'2024-09-02'),
-(2,1,12,'2024-10-15'),
-(2,1,2,'2024-10-29'),
-(3,1,13,'2024-11-01'),
-(4,2,2,'2024-10-29'),
-(5,2,2,'2024-11-01');
+INSERT INTO _historiqueEnLigne(idOffre, jourDebut, jourFin) VALUES
+(1,'2024-09-02','2024-09-22'),
+(1,'2024-10-15','2024-10-27'),
+(1,'2024-10-29','2024-11-13'),
+(1,'2024-11-19', null),
+(2,'2024-10-29','2024-11-03');
 
 INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee) VALUES
 (1, '2024-09-09',1,'En relief',False),
