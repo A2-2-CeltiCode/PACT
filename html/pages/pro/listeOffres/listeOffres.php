@@ -258,6 +258,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                             <input type="hidden" name="idOffre" value="<?php echo $idoffre;?>">
                             <?php Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true); ?>
                         </form>
+                        
                     </div>
                 </div>
             <?php endforeach; ?>
