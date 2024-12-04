@@ -28,6 +28,10 @@ table {
 
 .partie {
     margin: 3em 10vw;
+    border: 1px solid var(--gris2);
+    border-radius: 3px;
+    padding: 1em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .partie td {
