@@ -36,7 +36,7 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     if ($localisation !== null && $localisation !== '') {
         $sql .= " AND (LOWER(rue) LIKE LOWER(:localisation) OR LOWER(ville) LIKE LOWER(:localisation) OR LOWER(CAST(codepostal AS TEXT)) LIKE LOWER(:localisation))";
     }
-    if ($etat !== null && $etat !== '') {
+    if ($etat !== null && $etat !== '' && $etat !== 'ouvertetferme') {
         if ($etat === 'ouvert') {
             $sql .= " AND (
                 (heureouverture < heurefermeture AND CURRENT_TIME BETWEEN heureouverture AND heurefermeture) OR
@@ -49,7 +49,7 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
             )";
         }
     }
-    if($note !== null && $note !== ''){
+    if($note !== null && $note !== '' && $note != 0){
         $sql .= " AND moynotes >= :note";
     }
     if ($estenligne !== null && $estenligne !== '') {
@@ -86,7 +86,7 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     if ($estenligne !== null && $estenligne !== '') {
         $stmt->bindValue(':estenligne', $estenligne === 'enligne' ? true : false, PDO::PARAM_BOOL);
     }
-    if($note !== null && $note !== ''){
+    if($note !== null && $note !== '' && $note != 0){
         $stmt->bindValue(':note', $note, PDO::PARAM_INT);
     }
 
