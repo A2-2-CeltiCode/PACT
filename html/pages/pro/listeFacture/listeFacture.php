@@ -4,6 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/pages/pro/facture/creationFacture.php";
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
 $idOffre = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
 
@@ -13,6 +14,9 @@ $sth = $dbh->prepare($sql);
 $sth->bindValue(':idoffre', $idOffre, PDO::PARAM_INT);
 $sth->execute();
 $factures = $sth->fetchAll();
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -51,11 +55,14 @@ $factures = $sth->fetchAll();
                 
 
                 foreach ($factures as $facture) {
+                    
                     setlocale(LC_TIME, 'fr_FR.UTF-8');
                     $date = strftime('%B %Y', strtotime($facture['dateprestaservices']));
+                    $moisAnnee = date('m-Y', strtotime($facture['dateprestaservices']));
+                    
                     echo "<tr>";
                     echo "<td>{$date}</td>";
-                    echo "<td><a href='path/to/factures/{$facture['file']}' download>Télécharger</a></td>";
+                    echo "<td><a href='renderFacture.php?idfacture={$facture['idfacture']}&idoffre={$idOffre}&mois={$moisAnnee}' target='_blank'>Télécharger ({$moisAnnee})</a></td>";
                     echo "</tr>";
                 }
                 ?>
@@ -65,3 +72,4 @@ $factures = $sth->fetchAll();
     <?php Footer::render(FooterType::Member); ?>
 </body>
 </html>
+

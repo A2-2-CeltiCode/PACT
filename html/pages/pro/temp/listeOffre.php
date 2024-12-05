@@ -1,4 +1,5 @@
 <?php
+session_start();
 error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
 use \composants\Select\Select;
 use \composants\CheckboxSelect\CheckboxSelect;
@@ -25,7 +26,7 @@ require_once "./verifFindemois.php";
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
-
+$_SESSION['idCompte']=2;
 $idCompte = '2';
 $status = $_GET['status'] ?? 'enligne';
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
