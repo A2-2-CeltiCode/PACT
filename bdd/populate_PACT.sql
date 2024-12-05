@@ -305,15 +305,15 @@ INSERT INTO _historiqueEnLigne(idOffre, jourDebut, jourFin) VALUES
 
 INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee) VALUES
 (1, '2024-09-09',1, 'En relief',False),
-(2, '2024-10-04',1, 'A la une' ,false),
+(2, '2024-10-07',1, 'A la une' ,false),
 (4, '2024-09-23',1, 'En relief',True),
 (3, '2024-10-14',1, 'A la une',False),
-(2, '2024-12-01',1, 'A la une',false),
-(4, '2024-10-01',2, 'En relief',False),
-(2, '2024-11-10',2, 'A la une' ,false),
-(4, '2024-12-01',2, 'A la une' ,false),
+(2, '2024-12-02',1, 'A la une',false),
+(4, '2024-10-14',2, 'En relief',False),
+(2, '2024-11-11',2, 'A la une' ,false),
+(4, '2024-12-02',2, 'A la une' ,false),
 (4, '2024-12-02',3, 'En relief',true),
-(4, '2024-12-04',3, 'A la une' ,false),
+(4, '2024-12-02',3, 'A la une' ,false),
 (4, '2024-09-23',4, 'En relief',True),
 (3, '2024-10-14',4, 'A la une',False);
 
