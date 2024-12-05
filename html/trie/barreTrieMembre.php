@@ -66,9 +66,8 @@ class Trie {
 
         
      
-        echo'<div id="styleShadow">';
-        
-        
+        echo '<div class="agencement">';
+        echo '<div class="categorie" id="styleShadow">';
         foreach ($optionsCategorie as $value => $label) {
             Checkbox::render(
             $class = 'custom-class',
@@ -80,10 +79,9 @@ class Trie {
             $checked = in_array($value, $nomcategories)
             );
         }
-        echo'</div>';
-
-        echo '<div class="agencement">';
+        echo '</div>';
         echo '<div class="prix" id="styleShadow">'; 
+        echo '<label for="rangeSlider">Prix</label>';
         InputRangeDouble::render(
             $class = "custom-slider",
             $id = "rangeSlider",
@@ -94,7 +92,9 @@ class Trie {
             $from = 0,
             $to = 100
         );
-
+        echo '</div>';
+        echo '<div class="note" id="styleShadow">';
+        echo '<label for="rangeSlider">Note</label>';
         InputRange::render(
             $class = "monoslider",
             $id = "rangeSlider",
@@ -105,8 +105,8 @@ class Trie {
             $value = 0
         );
         echo '</div>';
-
-        echo '<div class="heure">';
+        
+        echo '<div class="heure" id="styleShadow">';
         echo '<div class="aligne"><label for="ouverture">Heure d\'ouverture</label>';
         Input::render(name:"ouverture", type:"time", value: htmlspecialchars($ouverture));
         echo '</div><div class="aligne"><label for="fermeture">Heure de fermeture</label>';

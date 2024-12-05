@@ -47,7 +47,7 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
             )";
         }
     }
-    if($note !== null && $note !== '' && $note != 0){
+    if($note !== null && $note !== ''){
         $sql .= " AND moynotes >= :note";
     }
     if ($estenligne !== null && $estenligne !== '') {
@@ -84,7 +84,7 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     if ($estenligne !== null && $estenligne !== '') {
         $stmt->bindValue(':estenligne', $estenligne === 'enligne' ? true : false, PDO::PARAM_BOOL);
     }
-    if($note !== null && $note !== '' && $note != 0){
+    if($note !== null && $note !== ''){
         $stmt->bindValue(':note', $note, PDO::PARAM_INT);
     }
 

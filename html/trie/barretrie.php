@@ -114,9 +114,9 @@ class Trie {
             $id = "rangeSlider",
             $name = "note",
             $required = true,
-            $min = 0,
+            $min = 1,
             $max = 5,
-            $value = 0
+            $value = 1
         );
 
             echo '<input type="hidden" id="status" name="status" value="' . htmlspecialchars($status) . '">';
