@@ -354,7 +354,10 @@ div.drop-zone {
     color: #333;
 }
 
-
+#btn-suppr {
+    display: flex;
+    align-items: center;
+}
 
 @media screen and (max-width: 1024px) {
     .liste-avis > div:last-child {

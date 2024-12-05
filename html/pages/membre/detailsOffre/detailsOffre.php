@@ -244,7 +244,7 @@ try {
                         <label for="datevisite">date de la visite :
                             <?php Input::render(id: "datevisite", type: "date", name: "datevisite", required: true, placeholder: "date de la visite") ?>
                         </label>
-                        <input type="hidden" name="idoffre" value="<?=$idOffre?>" />
+                        <input type="hidden" name="idoffre" value="<?=$idOffre?>">
                         <textarea name="contenu" id="contenu" maxlength="255" required="required" spellcheck="true" placeholder="Explication de votre note et précision suplémentaire" rows="4" cols="75"></textarea>
                         <div>
                         <?php InsererImage::render(id: "dropzone[]", message: "Déposez une image ou cliquez ici (facultatif)", acceptedExtensions: ['png', 'jpg', 'jpeg', 'HEIC']); ?>
@@ -256,7 +256,11 @@ try {
                         ?>
                         <div style="display: flex; flex-direction: column; justify-content: center; height: 100%">
                             <p>Vous ne pouvez mettre qu'un seul avis par offre, veuillez supprimmer votre avis pour en
-                                mettre un autre</p>
+                                mettre un autre (Attention, il n'y a pas de retour en arrière!)</p>
+                            <form style="height: auto" method="post" action="/pages/membre/avis/supprimerAvis.php">
+                                <input type="hidden" name="idoffre" value="<?=$idOffre?>">
+                                <?php Button::render(class: "bg-membre", id: 'btn-suppr', text: file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/delete.svg") . "Supprimer", submit: true) ?>
+                            </form>
                         </div>
                     <?php
                     }
