@@ -29,7 +29,7 @@
 }
 
 .select-wrapper select{
-    color: var(--primaire-visiteur) !important;
+    color: var(--primaire-membre) !important;
     border: 1px solid var(--gris2) !important;
 }
 
@@ -63,11 +63,16 @@
 
 .sliders_control{
     min-width: 150px !important;
+    min-height: 20px !important;
+
+}
+
+.slider-select-wrapper{
     padding-top: 10px !important;
 }
 
 .form_control_container{
-    color:var(--primaire-visiteur) !important;
+    color:var(--primaire-membre) !important;
 }
 
 input[type="number"]{
@@ -88,7 +93,7 @@ input[type="number"]{
 }
 
 .styletitre::placeholder{
-    color : var(--primaire-visiteur) !important;
+    color : var(--primaire-membre) !important;
     font-size: 16px;
 }
 
@@ -153,8 +158,8 @@ input[type="number"]{
 
 
 .btnfiltres{
-    background-color: var(--primaire-visiteur) !important;
-    border: 1px solid var(--primaire-visiteur) !important;
+    background-color: var(--primaire-membre) !important;
+    border: 1px solid var(--primaire-membre) !important;
     border-radius: 0.5em !important;
 }
 

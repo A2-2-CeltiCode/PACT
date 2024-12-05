@@ -22,7 +22,7 @@ require_once '../../../trie/fonctionTrie.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barreTrieVisiteur.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barreTrieMembre.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
@@ -41,7 +41,6 @@ $etat= isset($_GET['etat']) ? $_GET['etat'] : 'ouvertetferme';
 $ouverture = isset($_GET['ouverture']) ? $_GET['ouverture'] : null;
 $fermeture = isset($_GET['fermeture']) ? $_GET['fermeture'] : null;
 $trie = isset($_GET['trie']) ? $_GET['trie'] : 'idoffre DESC';
-$note = isset($_GET['note']) ? $_GET['note'] : null;
 $query = "SELECT * FROM offres WHERE 1=1";
 $params = [];
 
@@ -53,7 +52,7 @@ if (!empty($_GET['nomcategorie'])) {
     $params = array_merge($params, $nomcategories);
 }
 // Récupération des résultats
-$resultats = getOffres(pdo: $pdo, sort: $trie, minPrix: $minPrix, maxPrix: $maxPrix, titre: $titre, nomcategories: $nomcategories, ouverture: $ouverture, fermeture: $fermeture, localisation: $localisation,etat: $etat, note:$note);
+$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat);
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     header('Content-Type: application/json');
@@ -72,7 +71,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 // Si ce n'est pas une requête AJAX, inclure le HTML complet
 ?>
-<?php Header::render(HeaderType::Guest); ?>
+<?php Header::render(HeaderType::Member); ?>
 
 
 <!DOCTYPE html>
@@ -121,5 +120,5 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
    
     <script src="listeOffre.js"></script>
 </body>
-<?php Footer::render(FooterType::Guest); ?>
+<?php Footer::render(FooterType::Member); ?>
 </html>
