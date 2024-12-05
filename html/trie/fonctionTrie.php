@@ -4,10 +4,10 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     $sql = "SELECT * FROM pact.vue_offres WHERE 1=1";
 
     // Ajout des filtres
-    if ($minPrix !== null && $minPrix !== '') {
+    if ($minPrix !== null && $minPrix !== ''&& $minPrix != 0) {
         $sql .= " AND valprix >= :minPrix";
     }
-    if ($maxPrix !== null && $maxPrix !== '') {
+    if ($maxPrix !== null && $maxPrix !== ''&& $maxPrix != 100) {
         $sql .= " AND valprix <= :maxPrix";
     }
     if ($titre !== null && $titre !== '') {
@@ -63,10 +63,10 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     $stmt = $pdo->prepare($sql);
 
     // Liaison des paramètres
-    if ($minPrix !== null && $minPrix !== '') {
+    if ($minPrix !== null && $minPrix !== ''&& $minPrix != 0) {
         $stmt->bindValue(':minPrix', $minPrix, PDO::PARAM_INT);
     }
-    if ($maxPrix !== null && $maxPrix !== '') {
+    if ($maxPrix !== null && $maxPrix !== ''&& $maxPrix != 100) {
         $stmt->bindValue(':maxPrix', $maxPrix, PDO::PARAM_INT);
     }
     if ($titre !== null && $titre !== '') {
