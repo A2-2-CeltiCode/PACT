@@ -23,7 +23,10 @@ class Input
      * @param int|null $minLength Longueur minimale de la saisie.
      * @param int|null $maxLength Longueur maximale de la saisie.
      * @param string   $pattern   Modèle de validation pour le champ.
+     * @param string   $placeholder Placeholder pour le champ de saisie.
      * @param string   $icon      Chemin vers l'icône SVG à afficher à gauche du champ.
+     * @param int|null $min       Valeur minimale pour le champ de saisie.
+     * @param int|null $max       Valeur maximale pour le champ de saisie.
      */
     public static function render(string $class = "",
                                   string $id = "",
@@ -34,8 +37,10 @@ class Input
                                   ?int   $minLength = null,
                                   ?int   $maxLength = null,
                                   string $pattern = "",
-                                         $placeholder = "",
-                                  string $icon = ""): void {
+                                  string $placeholder = "",
+                                  string $icon = "",
+                                  ?int   $min = null,
+                                  ?int   $max = null): void {
         // Définir le modèle par défaut selon le type
         switch ($type) {
             case 'email':
@@ -51,7 +56,7 @@ class Input
         // Préparer les attributs de l'input
         $attrs = ['type' => $type, 'class' => $class, 'id' => $id, 'name' => $name, 'value' => $value,
             'placeholder' => $placeholder, 'required' => $required ? 'required' : '', 'minlength' => $minLength,
-            'maxlength' => $maxLength, 'pattern' => $pattern];
+            'maxlength' => $maxLength, 'pattern' => $pattern, 'min' => $min, 'max' => $max];
 
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
