@@ -2,7 +2,7 @@
 
 function calculerJoursEnLigne(PDO $pdo, int $idOffre, string $mois): int {
     // Préparer la requête pour récupérer les jours de début et de fin pour l'offre donnée
-    $sql = "SELECT jourdebut, jourfin FROM pact._historiqueenligne WHERE idoffre = :idOffre AND TO_CHAR(jourdebut, 'YYYY-MM') = :mois";
+    $sql = "SELECT jourdebut, jourfin FROM pact._historiqueenligne WHERE idoffre = :idOffre AND TO_CHAR(jourdebut, 'MM-YYYY') = :mois";
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
     $stmt->bindValue(':mois', $mois, PDO::PARAM_STR);
@@ -15,6 +15,7 @@ function calculerJoursEnLigne(PDO $pdo, int $idOffre, string $mois): int {
     
     // Parcourir les résultats et calculer le nombre de jours en ligne
     foreach ($rows as $row) {
+        
         $jourDebut = new DateTime($row['jourdebut']);
         $jourFin = new DateTime($row['jourfin']);
         
