@@ -19,14 +19,21 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barretrie.php";
 require_once "../../../composants/CartePro/offre.php";
-
+require_once "./verifFacture.php";
+require_once "./verifHistorique.php";
+require_once "./verifFindemois.php";
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
-$idCompte = '2';
+
+$idCompte = $_SESSION['idCompte'];
 $status = $_GET['status'] ?? 'enligne';
+$dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 $pdo = new PDO("$driver:host=$server;port=5432;dbname=$dbname", $dbuser, $dbpass);
 
+verifierEtCreerFacturesMensuelles($idCompte, $dbh);
+verifierEtCreerHistoriqueMensuel($idCompte, $dbh);
+mettreAJourJourFin($dbh, $idCompte);
 // Récupération des paramètres de la requête
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'idoffre DESC';
 $titre = isset($_GET['titre']) ? $_GET['titre'] : '';
@@ -80,6 +87,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 <?php Header::render(HeaderType::Pro); ?>
 
 <body>
+    
+
+
     <div class="titre-page">
         <h1>Mes Offres</h1>
         <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "", "Créer une Offre", ButtonType::Pro, "", true); ?></a>
@@ -97,6 +107,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     </div>
     <div <div class="rangement">
     <br>
+    
+   
+    
     
     <p id="nombreOffres">
        Nombre d'offres affichées : <?php echo count($resultats); ?>

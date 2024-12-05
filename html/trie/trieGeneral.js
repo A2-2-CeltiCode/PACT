@@ -37,7 +37,7 @@ function rechercher() {
     if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `listeOffre.php?${params.toString()}`, true);
+    xhr.open('GET', `listeOffres.php?${params.toString()}`, true);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.onload = function () {
         if (xhr.status === 200) {
