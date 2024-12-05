@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Sauvegarder l'ID du compte dans la session
             $_SESSION['idCompte'] = $compte['idcompte'];
             $_SESSION['typeUtilisateur'] = "membre";
-            
+
             // Redirige vers le tableau de bord
             header("Location: ../" . ($_GET["context"] ?? "accueil/accueil.php"));
             exit();
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         <!-- Lien pour créer un compte -->
         <div class="inscription">
-            Vous n'avez pas de compte ? <a href="../creationComptePro/creationComptePro.php">Créez un compte dès maintenant</a>
+            Vous n'avez pas de compte ? <a href="../creationCompteMembre/creationCompteMembre.php">Créez un compte dès maintenant</a>
         </div>
     </div>
 </body>

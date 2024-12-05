@@ -1,0 +1,170 @@
+.offres-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+}
+.offre {
+    margin: 10px auto;
+}
+.button-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.button-container button {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+.input {
+    display: flex;
+    gap: 10px;
+}
+
+.select-wrapper{
+    display: flex !important;
+    width: 220px !important;
+    margin-bottom: 0 !important;
+
+}
+
+.select-wrapper select{
+    color: var(--primaire-visiteur) !important;
+    border: 1px solid var(--gris2) !important;
+}
+
+.triviennois{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    flex-direction: row !important;
+    gap: 20px !important;
+    justify-content: center !important;
+    margin-top: 20px !important;
+}
+
+#styleShadow{
+    height: fit-content;
+    padding: 20px 10px 10px 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--gris1);
+    border-radius: 1em;
+    
+}
+
+
+
+.checkbox-wrapper{
+    background-color: var(--gris1) !important;
+    padding-left: 5px !important;
+    border-radius: 0.4em;
+    border: 1px solid var(--gris1);
+    padding: 5px !important;
+}
+
+.sliders_control{
+    min-width: 150px !important;
+    padding-top: 10px !important;
+}
+
+.form_control_container{
+    color:var(--primaire-visiteur) !important;
+}
+
+input[type="number"]{
+    width: 60px !important;
+}
+
+.input{
+    display: block;
+    margin-top: 20px;
+}
+
+.tri-somie{
+    display: flex;
+    width: 440px;
+    height: 40px;
+    gap: 20px;
+    padding: 10px 12px;
+}
+
+.styletitre::placeholder{
+    color : var(--primaire-visiteur) !important;
+    font-size: 16px;
+}
+
+.heure{
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: 302px !important;
+}
+
+.input{
+    display: none ;
+    justify-content: space-evenly !important;
+    max-width: 0;
+    overflow: hidden;
+    transition: max-width 0.5s ease-in-out;
+    position: fixed; /* Position fixe pour superposer */
+    top: 0; /* Positionnement vertical */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ajoute une ombre pour l'effet */
+    background-color: white;
+    z-index: 1000; /* Assure que l'élément est au-dessus des autres */
+    padding: 10px; /* Pas de padding initial */
+    border: 1px solid var(--gris1);
+    border-radius: 1em;
+}
+
+.input.open{
+    max-width: 1000px !important;
+    z-index: 1000 !important;
+    /* position: relative !important; */
+
+}
+
+#nombreOffres{
+    padding-left: 35px !important;
+}
+
+.toggleBarretrieButton{
+    transition: all 0.5s ease-in !important;
+}
+
+.page-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent grey */
+    z-index: 1000; /* Ensure it's above other content */
+    display: none; /* Hidden by default */
+}
+
+.page-overlay.active {
+    display: block; /* Show when active */
+}
+
+
+.centrer{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+
+.btnfiltres{
+    background-color: var(--primaire-visiteur) !important;
+    border: 1px solid var(--primaire-visiteur) !important;
+    border-radius: 0.5em !important;
+}
+
+.prix, .date{
+    display: flex !important;
+    flex-direction: column;
+    margin: 10px 0;
+    
+}
+
+.heure{
+    margin: 10px 0;
+}

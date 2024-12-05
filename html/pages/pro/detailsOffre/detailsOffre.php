@@ -73,13 +73,13 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <?php Header::render(HeaderType::Pro); ?>
-
+<button class="retour"><a href="../listeOffres/listeOffres.php"><img src="../../../ressources/icone/arrow_left.svg"></a></button>
 <body>
     <div class=titre>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
     </div>
     <div class="container">
-        <div>
+        <div class="container-gauche">
             <div class="carousel">
 
                 <button class="carousel-button prev desactive">❮</button>
@@ -118,6 +118,7 @@ try {
                 Label::render("offre-adresse", "", "", $adresseTotale, "../../../ressources/icone/localisateur.svg");
                 ?>
             </div>
+            <?php Label::render("offre-option", "", "", "" . $offre['numtel'], "../../../ressources/icone/telephone.svg"); ?>
             <?php
             // Affichage du site internet de l'offre
             Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
@@ -193,14 +194,6 @@ try {
                     break;
             }
             */?>
-
-            <!-- Formulaire pour modifier l'offre -->
-            <form action="../modifierOffre/modifierOffre.php" method="POST">
-                <input type="hidden" name="idOffre" value="<?php echo $idOffre; ?>">
-                <div class="modifier-button">
-                    <?php Button::render("btn", "", "Modifier", ButtonType::Pro, "", true); ?>
-                </div>
-            </form>
         </div>
 
 

@@ -104,7 +104,7 @@ function deleteOldImages($dbh, $idOffre, $typeOffre) {
 
 
 // Récupération des données du formulaire
-$idOffre=$_SESSION['idOffre']  ?? null;
+
 $nomOffre = $_POST['nomOffre'] ?? null;
 $ville = $_POST['ville'] ?? null;
 $codePostal = $_POST['codePostal'] ?? null;
@@ -120,7 +120,6 @@ $capacite = $_POST['capacite'] ?? null;
 $guidee = $_POST['guidee'] ?? null;
 $nombreAttractions = $_POST['nombreAttractions'] ?? null;
     
-$idCompte=$_SESSION['idCompte'] ?? null;
 $prix1 = $_POST['prix1'] ?? null;
 $prix2 = $_POST['prix2'] ?? null;
 $prix3 = $_POST['prix3'] ?? null;
@@ -135,25 +134,21 @@ $ageMinimum2 = $_POST['ageMinimum2'] ?? null;
     
 $prestation = $_POST['prestation'] ?? null; 
 $gammeRestaurant = $_POST['gammeRestaurant'] ?? null;
-$enLigne=true;
 $tag=$_POST['tag'] ?? null;
 $carteRestaurant = $_POST['carteRestaurant'] ?? null;
 $planParc = $_POST['planParc'] ?? null;
 $langue = $_POST['langue'] ?? null;
-
-
-
-
-if ($adressePostale) {
-    preg_match('/^(\d+)\s*(.*)$/', $adressePostale, $matches);
-    $numRue = $matches[1]; 
-    $nomRue  = $matches[2];  
+$enLigne = $_POST['estEnLigne'] ?? null;
+$options = $_POST['options'] ?? null;
+if($options==="true"){
+    $typePromotion = "Aucune";
 }
 
 
 
+$idOffre = $_POST['idOffre'];
+echo $idOffre;
 // Insertion dans la BDD
-
 $sql = "SELECT idadresse FROM pact._offre WHERE idOffre = :idOffre";
 $stmt = $dbh->prepare($sql);
 $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
@@ -163,30 +158,28 @@ $idAdresse = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Creation adresse
 $stmt = $dbh->prepare(
-    "UPDATE pact._adresse SET codePostal = :codePostal, ville = :ville, nomRue = :nomRue, numRue = :numRue, numTel = :numTel 
+    "UPDATE pact._adresse SET codePostal = :codePostal, ville = :ville, rue = :rue, numTel = :numTel 
     WHERE idAdresse = :idAdresse"
 );
 $stmt->bindValue(':codePostal', $codePostal, $codePostal !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':ville', $ville, $ville !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
-$stmt->bindValue(':nomRue', $nomRue, $nomRue !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
-$stmt->bindValue(':numRue', $numRue, $numRue !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
+$stmt->bindValue(':rue', $adressePostale, $adressePostale !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':numTel', $numeroTelephone, $numeroTelephone !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':idAdresse', $idAdresse["idadresse"], PDO::PARAM_INT);
 $stmt->execute();
 
 // Creation offre
+echo $enLigne;
 $stmt = $dbh->prepare(
-    "UPDATE pact._offre SET idCompte = :idCompte, titre = :titre, description = :description, descriptionDetaillee = :descriptionDetaillee, 
-    siteInternet = :siteInternet, nomOption = :nomOption, nomForfait = :nomForfait, estEnLigne = :estEnLigne 
+    "UPDATE pact._offre SET titre = :titre, description = :description, descriptionDetaillee = :descriptionDetaillee, 
+    siteInternet = :siteInternet, nomOption = :nomOption, estEnLigne = :estEnLigne 
     WHERE idOffre = :idOffre" // Assuming you have an idOffre
 );
-$stmt->bindValue(':idCompte', $idCompte, $idCompte !== null ? PDO::PARAM_INT : PDO::PARAM_NULL);
 $stmt->bindValue(':titre', $nomOffre, $nomOffre !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':description', $descriptionOffre, $descriptionOffre !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':descriptionDetaillee', $descriptionDetaillee, $descriptionDetaillee !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':siteInternet', $siteWeb, $siteWeb !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':nomOption', $typePromotion, $typePromotion !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
-$stmt->bindValue(':nomForfait', $typeForfait, $typeForfait !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
 $stmt->bindValue(':estEnLigne', $enLigne, $enLigne !== null ? PDO::PARAM_BOOL : PDO::PARAM_NULL);
 $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT); // Assuming $idOffre is defined
 $stmt->execute();
@@ -427,6 +420,65 @@ if ($typeOffre === "Restauration") {
         );
         $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
         $stmt->bindValue(':nomTag', $val, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+}
+if ($options == true) {
+    $stmt = $dbh->prepare(
+        "SELECT debutOption FROM pact._annulationOption WHERE idOffre = :idOffre"
+    );
+    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+    $stmt->execute();
+    $debutOption = $stmt->fetch(PDO::FETCH_COLUMN);
+}
+
+
+if ($options == true && $debutOption>= date("Y-m-d")) {
+    $stmt = $dbh->prepare(
+        "UPDATE pact._annulationOption
+        SET estAnnulee = :estAnnulee
+        WHERE idOffre = :idOffre"
+    );
+    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+    $stmt->bindValue(':estAnnulee', true, PDO::PARAM_BOOL);
+    $stmt->execute();
+}
+
+if($enLigne=="false") {
+    $stmt = $dbh->prepare(
+        "UPDATE pact._historiqueenligne
+        SET jourFin = :jourFin
+        WHERE idOffre = :idoffre AND jourDebut = (
+            SELECT MAX(jourDebut) FROM pact._historiqueenligne WHERE idoffre = :idoffre
+        )"
+    );
+    $stmt->bindValue(':idoffre', $idOffre, PDO::PARAM_INT);
+    $stmt->bindValue(':jourFin', date("Y-m-d"), PDO::PARAM_STR);
+    $stmt->execute();
+}else{
+    $stmt = $dbh->prepare("
+    SELECT jourfin FROM pact._historiqueenligne WHERE idoffre = :idoffre ORDER BY jourfin DESC LIMIT 1");
+    $stmt->bindValue(':idoffre', $idOffre, PDO::PARAM_INT);
+    $stmt->execute();
+    $jourFin = $stmt->fetch(PDO::FETCH_COLUMN);
+    echo($jourFin);
+    if($jourFin !== date("Y-m-d")) {
+        $stmt = $dbh->prepare(
+            "INSERT INTO pact._historiqueenligne(idOffre, jourDebut)
+            VALUES(:idOffre, :jourDebut)"
+            );
+        $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+        $stmt->bindValue(':jourDebut', date('Y-m-d'), PDO::PARAM_STR);
+        $stmt->execute();
+    }else{
+        $stmt = $dbh->prepare(
+            "UPDATE pact._historiqueenligne
+            SET jourFin = NULL
+            WHERE idOffre = :idoffre AND jourDebut = (
+                SELECT MAX(jourDebut) FROM pact._historiqueenligne WHERE idoffre = :idoffre
+            )"
+        );
+        $stmt->bindValue(':idoffre', $idOffre, PDO::PARAM_INT);
         $stmt->execute();
     }
 }

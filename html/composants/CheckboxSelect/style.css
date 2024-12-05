@@ -1,0 +1,70 @@
+.checkbox-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin: 0 !important;
+}
+
+.checkbox-select {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.checkbox-select.show {
+    display: block;
+}
+
+.checkbox-select label {
+    display: block;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.checkbox-select label:hover {
+    background-color: #f1f1f1;
+}
+
+.checkbox-select-wrapper::before {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+    color: #333;
+    
+}
+
+.checkbox-select-wrapper button {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: white;
+    cursor: pointer;
+    text-align: left;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.checkbox-select-wrapper button:hover {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 1px #007BFF;
+}

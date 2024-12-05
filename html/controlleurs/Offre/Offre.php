@@ -11,16 +11,18 @@ class Offre
     private ?string $duree;
     private string $nomProprietaire;
     private string $idoffre;
+    private string $option;
 
     /**
-     * @param string      $nom
-     * @param string      $typeO  type de l'offre
-     * @param string      $ville
-     * @param string      $imageO nom du fichier image
-     * @param string      $nomProprietaire
-     * @param string      $idoffre
-     * @param string|null $duree  durée de l'offre en minute
-     * @param string|null $note
+     * @param string $nom
+     * @param string $typeO type de l'offre
+     * @param string $ville
+     * @param string $imageO nom du fichier image
+     * @param string $nomProprietaire
+     * @param string $idoffre
+     * @param string|null $duree durée de l'offre en minute
+     * @param string $note
+     * @param string $option
      */
     public function __construct(string  $nom,
                                 string  $typeO,
@@ -29,15 +31,17 @@ class Offre
                                 string  $nomProprietaire,
                                 string  $idoffre,
                                 ?string $duree,
-                                ?string $note = null) {
+                                string  $note,
+                                string  $option) {
         $this->nom = $nom;
         $this->typeO = str_replace([" ", "'"], '_', strtolower($typeO));
         $this->ville = $ville;
         $this->imageO = $imageO;
-        $this->note = floatval($note);
+        $this->note = round(floatval($note), 2);
         $this->nomProprietaire = $nomProprietaire;
         $this->idoffre = $idoffre;
         $this->duree = is_null($duree) ? null : intval($duree);
+        $this->option = $option;
     }
 
     public function __toString(): string {
@@ -66,6 +70,12 @@ STRING;
         $image = file_exists($_SERVER['DOCUMENT_ROOT'] . $image) ? $image : "https://placehold.co/512/png?text=image\\nmanquante";
 
         $nom = strlen($this->nom) >= 32 ? substr($this->nom, 0, 29) . "..." : $this->nom;
+        $class = "";
+        if ($this->option == "A la une") {
+            $class = "une";
+        } else if ($this->option == "En relief") {
+            $class = "relief";
+        }
 
         return <<<STRING
 <div class="offre"><a href="../detailsOffre/detailsOffre.php?id=$this->idoffre">
