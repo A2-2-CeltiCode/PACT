@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
+    header("Location: /pages/membre/accueil/accueil.php");
+} elseif (!isset($_SESSION['idCompte'])) {
+    header("Location: /pages/visiteur/accueil/accueil.php");
+}
 /*
 if (!array_key_exists('idComtpe', $_SESSION) || is_null($_SESSION['idCompte'])) {
     header("Location: /pages/pro/connexionComptePro/connexionComptePro.php");

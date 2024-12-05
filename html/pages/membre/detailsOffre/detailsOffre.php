@@ -1,5 +1,11 @@
 <?php
 // Inclusion des fichiers nécessaires pour les composants de l'interface
+session_start();
+if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
+    header("Location: /pages/pro/listeOffres/listeOffres.php");
+} elseif (!isset($_SESSION['idCompte'])) {
+    header("Location: /pages/visiteur/accueil/accueil.php");
+}
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use composants\Input\Input;
@@ -30,6 +36,9 @@ try {
         }
         $imagesAvis[$avi['idavis']] = $img;
     }
+    $peutEcrireAvis = $dbh->query("SELECT count(*) FROM pact.vue_avis WHERE idCompte = 1 AND idOffre = 3")->fetchAll(PDO::FETCH_ASSOC)[0]['count'] == 0;
+
+
     // Requête pour obtenir le type d'offre
     $stmt = $dbh->prepare('SELECT nomcategorie FROM (SELECT nomcategorie FROM pact.vue_spectacle WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_restaurant WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_parc_attractions WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_activite WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_visite WHERE idoffre = :idOffre) AS categories');
     $stmt->execute([':idOffre' => $idOffre]);
@@ -84,7 +93,7 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <body>
-<?php Header::render(HeaderType::Guest); ?>
+<?php Header::render(HeaderType::Member); ?>
 <main>
     <div class=titre>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
@@ -212,11 +221,57 @@ try {
 
         </div>
 
+        <div class="popup-overlay" id="popupOverlay">
+
+            <div class="popup" id="popup">
+
+                <span class="close" id="closePopup">&times;</span>
+
+                <div class="popup-content">
+                    <?php
+                    if ($peutEcrireAvis) {
+                    ?>
+                    <p>Mettez un avis!</p>
+                    <form method="post" enctype="multipart/form-data" action="/pages/membre/avis/creerAvis.php" onsubmit='return submitForm()'>
+                        <div>
+                            <?php  Input::render(id: "titre", name: "titre", required: true, maxLength: 50, placeholder: "Titre") ?>
+                            <div>
+                                <?php Select::render(id: "contexte", name: "contexte", required: true, options: ["Contexte de la visite", "Affaires", "Couple", "Famille", "Amis", "Solo"], selected: "Contexte de la visite") ?>
+                            </div>
+                            <input name="note" required="required" id="note" type="number" min="0" max="5" step="0.5" placeholder="Note" pattern="\d((\.|,)\d)?">
+
+                        </div>
+                        <label for="datevisite">date de la visite :
+                            <?php Input::render(id: "datevisite", type: "date", name: "datevisite", required: true, placeholder: "date de la visite") ?>
+                        </label>
+                        <input type="hidden" name="idoffre" value="<?=$idOffre?>" />
+                        <textarea name="contenu" id="contenu" maxlength="255" required="required" spellcheck="true" placeholder="Explication de votre note et précision suplémentaire" rows="4" cols="75"></textarea>
+                        <div>
+                        <?php InsererImage::render(id: "dropzone[]", message: "Déposez une image ou cliquez ici (facultatif)", acceptedExtensions: ['png', 'jpg', 'jpeg', 'HEIC']); ?>
+                        <?php Button::render(class: "bg-membre", text: "Valider", submit: true) ?>
+                        </div>
+                    </form>
+                    <?php
+                    } else {
+                        ?>
+                        <div style="display: flex; flex-direction: column; justify-content: center; height: 100%">
+                            <p>Vous ne pouvez mettre qu'un seul avis par offre, veuillez supprimmer votre avis pour en
+                                mettre un autre</p>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+                </div>
+
+            </div>
+
+        </div>
     </div>
     <div class="liste-avis">
         <div>
             <h1>Avis:</h1>
-            <?php Button::render(text: "Écrire un avis", type: ButtonType::Guest, onClick: "window.location.href = '/pages/membre/connexionCompteMembre/connexionCompteMembre.php?context=detailsOffre/detailsOffre.php%3Fid=$idOffre'") ?>
+            <?php Button::render(text: "Écrire un avis", type: ButtonType::Member, onClick: "popupavis()") ?>
         </div>
         <div>
             <?php
@@ -277,7 +332,7 @@ try {
     </div>
     <script src="detailsOffre.js"></script>
 </main>
-<?php Footer::render(FooterType::Guest); ?>
+<?php Footer::render(FooterType::Member); ?>
 </body>
 
 </html>

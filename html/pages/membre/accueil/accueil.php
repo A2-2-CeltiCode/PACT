@@ -1,11 +1,4 @@
-<?php
-session_start();
-if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
-    header("location: /pages/membre/accueil/accueil.php");
-} elseif (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
-    header("Location: /pages/pro/listeOffres/listeOffres.php");
-}
-?>
+<?php session_start() ?>
 <!doctype html>
 <html lang="fr-FR">
 <head>

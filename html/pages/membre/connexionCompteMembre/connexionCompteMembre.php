@@ -1,7 +1,11 @@
 <?php
 // Démarre la session pour gérer l'authentification
 session_start();
-
+if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
+    header("location: /pages/membre/accueil/accueil.php");
+} elseif (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
+    header("Location: /pages/pro/listeOffres/listeOffres.php");
+}
 use \composants\Input\Input;
 use \composants\Button\Button;
 
@@ -45,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['typeUtilisateur'] = "membre";
             
             // Redirige vers le tableau de bord
-            header("Location: ../listeOffres/listeOffres.php");
+            header("Location: ../" . ($_GET["context"] ?? "accueil/accueil.php"));
             exit();
         } else {
             // Mot de passe incorrect
