@@ -78,15 +78,25 @@ if ($offre1 != null) {
     $ageMinimum1 = $vueOffre["agemin"];
     $prestation = $vueOffre["prestation"];
     $typeOffre = $offre1;
+
+    $sql = "SELECT nomtag FROM pact.vue_tags_activite WHERE idOffre = $idOffre";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $tagActivite = $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 if ($offre2 != null) {
     $sql = "SELECT * FROM pact.vue_spectacle WHERE idOffre = $idOffre";
     $stmt = $dbh->query($sql);
     $vueOffre = $stmt->fetch();
-    $prix2 = $vueOffre["valprix"];
+    $prix2  = $vueOffre["valprix"];
     $duree2 = $vueOffre["tempsenminutes"];
     $capacite = $vueOffre["capacite"];
     $typeOffre = $offre2;
+
+    $sql = "SELECT nomtag FROM pact.vue_tags_spectacle WHERE idOffre = $idOffre";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $tagSpectacle = $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 if ($offre3 != null) {
     $sql = "SELECT * FROM pact.vue_parc_attractions WHERE idOffre = $idOffre";
@@ -97,7 +107,12 @@ if ($offre3 != null) {
     $prix3 = $vueOffre["valprix"];
     $ageMinimum2 = $vueOffre["agemin"];
     $nombreAttractions = $vueOffre["nbattractions"];
-    $typeOffre = "parc";
+    $typeOffre['nomcategorie'] = "parc";
+
+    $sql = "SELECT nomtag FROM pact.vue_tags_parc_attractions WHERE idOffre = $idOffre";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $tagParc = $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 if ($offre4 != null) {
     $sql = "SELECT * FROM pact.vue_visite WHERE idOffre = $idOffre";
@@ -109,6 +124,11 @@ if ($offre4 != null) {
     $guidee = $vueOffre["estguidee"];
     $duree4 = $vueOffre["tempsenminutes"];
     $typeOffre = $offre4;
+
+    $sql = "SELECT nomtag FROM pact.vue_tags_visite WHERE idOffre = $idOffre";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $tagVisite = $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 if ($offre5 != null) {
     $sql = "SELECT * FROM pact.vue_restaurant WHERE idOffre = $idOffre";
@@ -120,8 +140,11 @@ if ($offre5 != null) {
     $gammeRestaurant = $vueOffre["nomgamme"];
     $prix5 = $vueOffre["valprix"];
     $typeOffre = $offre5;
+    $sql = "SELECT nomtag FROM pact.vue_tags_restaurant WHERE idOffre = $idOffre";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $tagRestaurant = $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
-
 
 $nomOffre = $vueOffre["titre"];
 $ville = $vueOffre["ville"];
@@ -135,6 +158,7 @@ $typeForfait = $vueOffre["nomforfait"];
 $typePromotion = $vueOffre["nomoption"];
 $estEnLigne = $vueOffre["estenligne"];
 $options = $vueOffre["nomoption"];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -172,25 +196,28 @@ $options = $vueOffre["nomoption"];
 
         document.addEventListener('DOMContentLoaded', (event) => {
             const cancelOptionRadios = document.querySelectorAll('input[name="options"]');
+            const debutOption = "<?php echo $debutOption; ?>";
+            const currentDate = "<?php echo $currentDate; ?>";
             cancelOptionRadios.forEach(radio => {
                 radio.addEventListener('change', (event) => {
                     if (event.target.value === 'true') {
-                        <?php if ($debutOption >= $currentDate) { ?>
+                        if (debutOption >= currentDate) {
                             if (!confirmCancelOption("Êtes-vous sûr de vouloir annuler l'option ? Vous ne paierez pas l'option.")) {
                                 event.target.checked = false;
                                 document.getElementById('non').checked = true;
-                            }else
-                        <?php } else { ?>
+                            }
+                        } else {
                             if (!confirmCancelOption("Êtes-vous sûr de vouloir annuler l'option ? Vous paierez quand même l'option.")) {
                                 event.target.checked = false;
                                 document.getElementById('non').checked = true;
-                            }else{
+                            } else {
                                 document.getElementById('non').checked = false;
                             }
-                        <?php } ?>
+                        }
                     }
                 });
             });
+            displaySelectedValues(); // Afficher les valeurs sélectionnées au chargement de la page
         });
     </script>
 </head>
@@ -198,7 +225,8 @@ $options = $vueOffre["nomoption"];
 
 <body>
     <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data">
-
+        
+        <input type="hidden" name="typeOffre" value="<?php echo $typeOffre['nomcategorie']; ?>">
         <input type="hidden" name="typePromotion" value="<?php echo $options; ?>">
         <?php
         
@@ -249,6 +277,7 @@ $options = $vueOffre["nomoption"];
                 </div>
 
                 <div>
+                    <input type="hidden" name="ancienLigne" value="<?php echo $estEnLigne; ?>">
                     <label>Est en ligne*</label>
                     <br>
                     <input type="radio" id="vrai" name="estEnLigne" value="true" <?php if ($estEnLigne == "1") echo "checked"; ?>>
@@ -312,16 +341,21 @@ $options = $vueOffre["nomoption"];
                                             "tag[]",
                                             false,
                                             $tag,
+                                            $tagActivite,
+                                            
 
                                         );
                                     ?>
-                                <div class="selected-values"></div>
+                                <div class="selected-values">
+                                    
+                                </div>
                                 
                             </div>
                             <br><br>
                             <label>Prix*</label>
                             <?php Input::render(name: "prix1", type: "number", value: $prix1) ?>
                             <label>Âge minimum</label>
+                            <?php Input::render(name: "ageMinimum1", type: "number", value: $ageMinimum1) ?>
                         </div>
                     </div>
                 <?php } ?>
@@ -351,6 +385,7 @@ $options = $vueOffre["nomoption"];
                                 "tag[]",
                                 false,
                                 $tag,
+                                $tagVisite
                             );
                         ?>
                         <div class="selected-values"></div>
@@ -361,9 +396,9 @@ $options = $vueOffre["nomoption"];
                             <label>Durée de la visite</label>
                             <?php Input::render(name: "duree4", type: "number", value: $duree4) ?>
                             <label>Visite guidée</label>
-                            <input type="radio" id="oui" name="guidee" value="true" onclick="toggleLangue(true)">
+                            <input type="radio" id="oui" name="guidee" value="true" <?php if ($guidee == "1") echo "checked"; ?> onclick="toggleLangue(true)">
                             <label for="oui">Oui</label>
-                            <input type="radio" id="non" name="guidee" value="false" onclick="toggleLangue(false)">
+                            <input type="radio" id="non" name="guidee" value="false" <?php if ($guidee == "0") echo "checked"; ?> onclick="toggleLangue(false)">
                             <label for="non">Non</label>
                             <div id="langue" style="display: none;">
                             <?php
@@ -411,6 +446,8 @@ $options = $vueOffre["nomoption"];
                                     "tag[]",
                                     false,
                                     $tag,
+                                    $tagSpectacle
+                                    
                                 );
                             ?>
                             <div class="selected-values"></div>
@@ -446,6 +483,7 @@ $options = $vueOffre["nomoption"];
                                     "tag[]",
                                     false,
                                     $tag,
+                                    $tagParc
                                 );
                             ?>
                             <div class="selected-values"></div>
@@ -485,6 +523,7 @@ $options = $vueOffre["nomoption"];
                                     "tag[]",
                                     false,
                                     $tag,
+                                    $tagRestaurant
                                 );
                                 
                             ?>

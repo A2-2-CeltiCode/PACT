@@ -1,50 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const selectElement = document.querySelector('select[name="typeOffre"]');
-    const sections = document.querySelectorAll('.section');
-
-    // Fonction pour masquer toutes les sections
-    function hideAllSections() {
-        sections.forEach(section => {
-            section.style.display = 'none';
-        });
-    }
-
-    // Fonction pour afficher la section correspondante
-    function showSection(typeOffre) {
-        hideAllSections(); // On masque toutes les sections d'abord
-        const section = document.getElementById(typeOffre);
-        if (section) {
-            section.style.display = 'block';
-        }
-    }
-
-    // Événement déclenché lorsque le type d'offre est modifié
-    selectElement.addEventListener('change', function () {
-        const selectedValue = this.value;
-        showSection(selectedValue);
-    });
-
-    // On cache toutes les sections au début
-    hideAllSections();
-});
-
-
-
-// Afficher le bouton de suppression pour le premier champ de repas
-const initialRemoveButton = document.querySelector('.remove-btn');
-initialRemoveButton.style.display = 'inline-block';
-
-// Gérer la logique de suppression pour le champ de repas initial
-initialRemoveButton.onclick = function() {
-    const repasInputs = document.querySelectorAll('.repas-input');
-    if (repasInputs.length > 1) {
-        initialRemoveButton.parentElement.remove();  // Supprimer le premier champ
-    } else {
-        alert('Vous devez avoir au moins un champ de repas.');
-    }
-};
-
-
 function toggleLangue(show) {
     var langueDiv = document.getElementById("langue");
     if (show) {
@@ -62,3 +15,46 @@ function toggleDropdown(id) {
         element.style.display = "none";
     }
 }
+
+function getSelectedCheckboxes() {
+    const checkboxes = document.querySelectorAll('.checkbox-select input[type="checkbox"]:checked');
+    const selectedValues = [];
+    checkboxes.forEach(checkbox => {
+        selectedValues.push(checkbox.value);
+    });
+    return selectedValues;
+}
+
+function displaySelectedValues() {
+    const selectedValues = getSelectedCheckboxes();
+    const displayDivs = document.querySelectorAll('.selected-values');
+    displayDivs.forEach(displayDiv => {
+        displayDiv.innerHTML = ''; // Clear previous values
+        selectedValues.forEach(value => {
+            const valueDiv = document.createElement('div');
+            valueDiv.textContent = value;
+            displayDiv.appendChild(valueDiv);
+        });
+    });
+}
+
+function resetCheckboxes() {
+    const checkboxes = document.querySelectorAll('.checkbox-select input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    displaySelectedValues(); // Mettre à jour l'affichage après réinitialisation
+}
+
+// Mettre à jour les valeurs affichées lorsque les cases à cocher sont modifiées
+document.querySelectorAll('.checkbox-select input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', displaySelectedValues);
+});
+
+// Afficher les valeurs sélectionnées au chargement de la page
+document.addEventListener('DOMContentLoaded', (event) => {
+    displaySelectedValues();
+});
+
+
+

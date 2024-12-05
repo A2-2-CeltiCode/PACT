@@ -18,6 +18,8 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
             return ":category_$index";
         }, array_keys($nomcategories)));
         $sql .= " AND nomcategorie IN ($categoriesPlaceholders)";
+    } else {
+        $sql .= " AND nomcategorie IN ('Spectacle', 'Activite', 'Restaurant', 'Parc d''attractions', 'Visite')";
     }
     if ($ouverture !== null && $ouverture !== '') {
         $sql .= " AND (
