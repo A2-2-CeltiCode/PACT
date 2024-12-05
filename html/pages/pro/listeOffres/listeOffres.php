@@ -1,4 +1,12 @@
 <?php
+session_start();
+if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
+    header("Location: /pages/membre/accueil/accueil.php");
+} elseif (!isset($_SESSION['idCompte'])) {
+    header("Location: /pages/visiteur/accueil/accueil.php");
+}
+
+// Importation des composants
 error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
 use \composants\Select\Select;
 use \composants\CheckboxSelect\CheckboxSelect;
@@ -56,19 +64,19 @@ $resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, 
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     header('Content-Type: application/json');
-    
+
     $offreHandler = new OffreHandler($pdo, $resultats, $offresMessage);
     $offres = [];
     foreach ($resultats as $item) {
         $offres[] = (string)$offreHandler->getOffreHtml($item);
     }
-    
-    
+
+
     error_log("Nombre d'offres trouvées : " . count($resultats));
     $nombreOffres = count($resultats);
 
     echo json_encode(['offres' => $offres, 'nombreOffres' => $nombreOffres]);
-    
+
     exit; // Stoppe l'exécution pour AJAX
 }
 
@@ -87,7 +95,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 <?php Header::render(HeaderType::Pro); ?>
 
 <body>
-    
+
 
 
     <div class="titre-page">
@@ -95,7 +103,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "", "Créer une Offre", ButtonType::Pro, "", true); ?></a>
     </div>
     <div class="onglets">
-        
+
     <a href="javascript:void(0);" class="onglet <?php echo ($status === 'enligne') ? 'actif' : ''; ?>" onclick="changerStatus('enligne')">En ligne</a>
     <a href="javascript:void(0);" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>" onclick="changerStatus('horsligne')">Hors ligne</a>
 </div>
@@ -107,10 +115,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     </div>
     <div <div class="rangement">
     <br>
-    
-   
-    
-    
+
+
+
+
     <p id="nombreOffres">
        Nombre d'offres affichées : <?php echo count($resultats); ?>
     </p>
@@ -124,7 +132,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     </div>
     </section>
     <?php Footer::render(FooterType::Pro); ?>
-    
+
 </body>
 
 </html>

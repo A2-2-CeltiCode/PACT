@@ -78,7 +78,7 @@ STRING;
         }
 
         return <<<STRING
-<div class="offre $class"><a href="/pages/visiteur/detailsOffre/detailsOffre.php?id=$this->idoffre">
+<div class="offre"><a href="../detailsOffre/detailsOffre.php?id=$this->idoffre">
     <img alt="" height="300px" width="300px" src="$image">
     <div>
         <div>

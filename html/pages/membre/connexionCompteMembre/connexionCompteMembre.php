@@ -1,7 +1,11 @@
 <?php
 // Démarre la session pour gérer l'authentification
 session_start();
-
+if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
+    header("location: /pages/membre/accueil/accueil.php");
+} elseif (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
+    header("Location: /pages/pro/listeOffres/listeOffres.php");
+}
 use \composants\Input\Input;
 use \composants\Button\Button;
 
@@ -27,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mot_de_passe_utilisateur = hash("sha256",$_POST['password']);
 
     // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
-    $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
+    $requete_sql = 'SELECT * FROM pact.vue_compte_membre WHERE email = :identifiant';
 
     $requete_preparee = $dbh->prepare($requete_sql);
     $requete_preparee->bindParam(':identifiant', $identifiant_utilisateur);
@@ -35,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
-        // Comparaison simple des mots de passe (sans hachage)
+        // Comparaison simple des mots de passe (avec hachage)
         if ($mot_de_passe_utilisateur === $compte['mdp']) {
             // Si les informations sont correctes, démarrer la session
             $_SESSION['utilisateur_connecte'] = true;
@@ -43,9 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Sauvegarder l'ID du compte dans la session
             $_SESSION['idCompte'] = $compte['idcompte'];
             $_SESSION['typeUtilisateur'] = "membre";
-            
+
             // Redirige vers le tableau de bord
-            header("Location: ../../visiteur/accueil/accueil.php");
+            header("Location: ../" . ($_GET["context"] ?? "accueil/accueil.php"));
             exit();
         } else {
             // Mot de passe incorrect
