@@ -1,4 +1,5 @@
-SET SCHEMA 'pact';
+set schema 'pact'
+;
 
 --
 -- VUES COMPTES
@@ -29,7 +30,6 @@ WHERE denominationSociale IS NOT NULL;
 --
 -- VUE AVIS
 --
-
 CREATE OR REPLACE VIEW vue_avis AS
 SELECT idAvis, idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis
 FROM _avis;
@@ -93,7 +93,6 @@ LEFT JOIN _forfait f ON o.nomForfait = f.nomForfait
 LEFT JOIN _prix p ON v.valPrix = p.valPrix
 LEFT JOIN _duree d ON v.tempsEnMinutes = d.tempsEnMinutes
 WHERE v.estGuidee IS NOT NULL;
-
 
 
 CREATE OR REPLACE VIEW vue_visite_guidee AS
@@ -178,14 +177,15 @@ CREATE OR REPLACE VIEW vue_image_offre (idOffre, idImage) AS
 SELECT idOffre, idImage
 FROM _image;
 
-CREATE OR REPLACE VIEW vue_image_avis (idAvis, idImage) AS
+CREATE OR REPLACE VIEW vue_image_avis (idAvis, nomImage) AS
 SELECT idAvis, nomImage
 FROM _imageAvis ;
 
 --
 -- VUES FACTURE
 --
-
 /*CREATE OR REPLACE VIEW vue_facture AS
 SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance
 FROM _facture;*/
+
+
