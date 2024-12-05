@@ -2,7 +2,10 @@ SET SCHEMA 'pact';
 
 -- Peupler la table _prix
 INSERT INTO _prix (valPrix) VALUES
+(0),
+(10),
 (20),
+(30),
 (40),
 (60),
 (80),
@@ -11,8 +14,11 @@ INSERT INTO _prix (valPrix) VALUES
 -- Peupler la table _duree
 INSERT INTO _duree (tempsEnMinutes) VALUES
 (30),
+(45),
 (60),
+(75),
 (90),
+(105),
 (120);
 
 -- Peupler la table _adresse
@@ -41,7 +47,16 @@ INSERT INTO _adresse (codePostal, ville, rue, numTel) VALUES
 (67000, 'Strasbourg', '3 Rue de la Mésange', '03 88 12 34 56'),
 (21000, 'Dijon', '8 Rue de la Libération', '03 80 25 67 89'),
 (49000, 'Angers', '21 Rue du Cormier', '02 41 23 45 67'),
-(90000, 'Belfort', '5 Rue de l''Industrie', '03 84 58 69 01');
+(90000, 'Belfort', '5 Rue de l''Industrie', '03 84 58 69 01'),
+(29200, 'Brest', 'Place De Lattre de Tassigny', '01 24 28 67 95'),
+(56170, 'Quiberon', 'Rue des Alizés', '01 48 97 24 95'),
+(22700, 'Perros-Guirec', 'Rue Antoine Laurent de Lavoisier', '04 98 78 97 75'),
+(35400, 'Saint-Malo', 'Rue Jules Saffray', '07 34 61 72 12'),
+(29100, 'Douarnenez', 'Rue Jeanne d''Arc', '02 78 98 34 56'),
+(22500, 'Paimpol', 'Chemin de Kerano', '02 78 04 21 78'),
+(35000, 'Rennes', 'Rue Gurvand', '02 95 21 46 91'),
+(56000, 'Vannes', 'Rue des Luscanen', '09 24 78 24 36'),
+(35000, 'Rennes', 'Rue Hippolyte Lucas', '01 75 62 38 04');
 
 -- Peupler la table _compte
 INSERT INTO _compte (mdp, email, idAdresse) VALUES
@@ -100,12 +115,21 @@ INSERT INTO _compteProPublic (idCompte) VALUES
 
 -- Peupler la table _offre
 INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
-(2,'En relief', 'Standard', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 7,'2024-09-13','06:00','17:00'),
-(2,'A la une', 'Premium', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 2,'2024-10-01','07:00','16:00'),
-(2,'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 3,'2024-03-20','08:00','15:00'),
-(2,'Aucune', 'Gratuit', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 4,'2024-09-15','17:00','01:00'),
-(3,'A la une', 'Standard', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 5,'2024-07-08','02:00','14:00'),
-(3,'En relief', 'Premium', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 6,'2023-11-14','00:00','10:00');
+(2, 'En relief', 'Standard', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 2,'2024-09-13','06:00','17:00'),
+(2, 'A la une', 'Premium', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 3,'2024-10-01','07:00','16:00'),
+(2, 'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 4,'2024-12-02','08:00','15:00'),
+(2, 'Aucune', 'Standard', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 5,'2024-09-15','17:00','01:00'),
+(3, 'Aucune', 'Gratuit', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 6,'2024-07-08','02:00','14:00'),
+(3, 'Aucune', 'Gratuit', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 7,'2023-11-14','00:00','10:00'),
+(3, 'Aucune', 'Gratuit', 'Visite guidée de Brest', 'Explorez la ville portuaire de Brest', 'Visite de la rade, du château et du musée de la Marine', 'http://example.com/brest', TRUE, 26, '2024-04-05', '09:00', '17:00'),
+(3, 'Aucune', 'Gratuit', 'Spectacle à Quiberon', 'Incroyable spectacle de marionnettes à Quiberon', '', '', FALSE, 27, '2024-06-15', '10:00', '18:00'),
+(3, 'Aucune', 'Gratuit', 'Montagnes Russes à Perros-Guirec', 'Explorez les côtes bretonnes en kayak', 'Balade guidée le long des côtes rocheuses', 'http://example.com/perrosguirec', TRUE, 28, '2024-07-10', '08:00', '20:00'),
+(4, 'Aucune', 'Gratuit', 'Randonnée sur le GR34 à Saint-Malo', 'Partez sur les sentiers côtiers', 'Randonnée le long de la côte avec vues magnifiques', 'http://example.com/saintmalo', FALSE, 29, '2024-08-01', '07:00', '21:00'),
+(4, 'Aucune', 'Gratuit', 'Balade en bateau à Douarnenez', 'Découvrez le port de Douarnenez et ses alentours', 'Excursion en bateau dans la baie', 'http://example.com/douarnenez', TRUE, 30, '2024-09-15', '10:00', '18:00'),
+(4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire maritime', 'Exposition de l''histoire de la pêche et de la mer', 'http://example.com/paimpol', TRUE, 31, '2024-10-20', '09:00', '19:00'),
+(4, 'Aucune', 'Gratuit', 'Restaurant à Rennes', 'Goûtez aux spécialités bretonnes à Rennes', 'Dégustation de crêpes, galettes et cidre local', 'http://example.com/rennes', FALSE, 32, '2024-11-10', '11:00', '16:00'),
+(4, 'Aucune', 'Gratuit', 'Visite de Vannes', 'Explorez la beauté de Vannes', '', 'http://example.com/cotesarmor', TRUE, 33, '2024-12-01', '08:00', '18:00'),
+(4, 'Aucune', 'Gratuit', 'Restaurant exotique de Rennes', 'Goutez aux spécialités tropicales', '', 'http://example.com/delices', TRUE, 34, '2024-12-02', '05:00', '23:00');
 
 -- Peupler la table _image
 INSERT INTO _image (idOffre, nomImage) VALUES
@@ -116,45 +140,87 @@ INSERT INTO _image (idOffre, nomImage) VALUES
 (4, 'saintmalo.jpg'),
 (5, 'Lorient.jpg'),
 (5, 'fonds-marin.jpg'),
-(6, 'quimper.jpg');
+(6, 'quimper.jpg'),
+(7, 'brest.jpg'),
+(8, 'quiberon.jpg'),
+(9, 'port-perros.jpg'),
+(10, 'saint malo.jpg'),
+(11, 'Douarnenez.jpg'),
+(12, 'Paimpol.jpg'),
+(13, 'rennes.jpg'),
+(14, 'vannes.jpg'),
+(15, 'restau.jpg');
 
 -- Peupler la table _spectacle
 INSERT INTO _spectacle (idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite, dateEvenement) VALUES
-(2, 'Spectacle', 120, 40, 20, now());
+(2, 'Spectacle', 120, 40, 20, '2025-06-21'),
+(8, 'Spectacle', 60, 10, 50, '2024-12-15');
 
 -- Peupler la table _parcAttractions
 INSERT INTO _parcAttractions (idOffre, nomCategorie, valPrix, carteParc, nbAttractions, ageMin) VALUES
-(3, 'Parc d''attractions', 60, NULL , 10, 6);
+(3, 'Parc d''attractions', 60, NULL , 10, 6),
+(9, 'Parc d''attractions', 30, NULL, 15, 4);
 
 -- Peupler la table _visite
-INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee,dateEvenement) VALUES
-(1, 20, 60, 'Visite', TRUE, now()),
-(6, 80, 90, 'Visite', FALSE, now());
+INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee, dateEvenement) VALUES
+(1, 20, 60, 'Visite', TRUE, '2025-05-21'),
+(6, 10, 90, 'Visite', FALSE, '2025-03-04'),
+(7, 0, 120, 'Visite', TRUE, '2025-02-18'),
+(12, 30, 45, 'Visite', FALSE, '2025-07-02'),
+(14, 40, 75, 'Visite', FALSE, '2025-09-08');
 
 -- Peupler la table _activite
 INSERT INTO _activite (idOffre, nomCategorie, tempsEnMinutes, valPrix, ageMin, prestation) VALUES
-(5, 'Activite', 120, 40, 8, 'kit de plongée');
+(5, 'Activite', 120, 40, 8, 'kit de plongée'),
+(10, 'Activite', 90, 20, 5, ''),
+(11, 'Activite', 45, 30, 2, 'kit de sauvetage, repas');
 
 -- Peupler la table _restaurant
 INSERT INTO _restaurant (idOffre, nomCategorie, nomGamme, menuRestaurant) VALUES
-(4, 'Restaurant', '€€ (25-40€)', 5);
+(4, 'Restaurant', '€€ (25-40€)', NULL),
+(13, 'Restaurant', '€€€ (+40€)', NULL),
+(15, 'Restaurant', '€ (-25€)', NULL);
 
 INSERT INTO _guideeVisite (IdOffre,nomLangage) VALUES
 (1,'Français'),
-(1,'Espagnol');
+(1,'Espagnol'),
+(7,'Français'),
+(7,'Anglais');
 
 -- Peupler la table _possedeSpectacle
 INSERT INTO _possedeSpectacle (idOffre, nomTag) VALUES
 (2, 'Nature'),
-(2, 'Urbain');
+(2, 'Urbain'),
+(8, 'Humour');
 
 -- Peupler la table _possedeParcAttractions
 INSERT INTO _possedeParcAttractions (idOffre, nomTag) VALUES
-(3, 'Urbain');
+(3, 'Urbain'),
+(9, 'Plein air'),
+(9, 'Famille');
 
 -- Peupler la table _possedeVisite
 INSERT INTO _possedeVisite (idOffre, nomTag) VALUES
-(1, 'Famille');
+(1, 'Famille'),
+(7, 'Patrimoine'),
+(12, 'Musée'),
+(12, 'Culturel'),
+(12, 'Histoire'),
+(14, 'Plein air'),
+(14, 'Urbain'); 
+
+-- Peupler la table _possedeRestaurant
+INSERT INTO _possedeRestaurant (idOffre, nomTag) VALUES
+(4, 'Gastronomique'),
+(4, 'Française'),
+(13, 'Restauration rapide');
+
+INSERT INTO _proposeRestaurant (idOffre, nomRepas) VALUES
+(4, 'Brunch'),
+(4, 'Dejeuner'),
+(4, 'Diner'),
+(13, 'Dejeuner'),
+(15, 'Diner');
 
 -- Peupler la table _avis
 INSERT INTO _avis (idOffre,idCompte, commentaire, note, titre, contexteVisite, dateVisite) VALUES
@@ -181,24 +247,35 @@ INSERT INTO _avis (idOffre,idCompte, commentaire, note, titre, contexteVisite, d
 (1, 16,'Visite enrichissante, le guide était très professionnel et a su répondre à toutes nos questions. À faire absolument!', 4.5, 'Visite très informative', 'Famille', '2024-11-12'),
 (1, 17,'Superbe expérience. Les paysages étaient époustouflants et l''accueil très chaleureux. On reviendra!', 5.0, 'Une expérience mémorable', 'Couple', '2024-11-13'),
 (1, 18,'Belle découverte de la ville, mais un peu trop de monde ce jour-là. Le groupe était un peu trop grand.', 4.0, 'Bien mais trop fréquenté', 'Amis', '2024-11-14'),
-(6, 5,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 0.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 6,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 0.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 7,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 1.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 8,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 1.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 9,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 2.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 10,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 2.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 11,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 3.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 12,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 3.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 13,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 4.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 14,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 4.5, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
-(6, 15,'Le tour était intéressant mais j''aurais préféré plus de détails sur l''histoire de la ville. Cependant, la vue était magnifique.', 5.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17');
+(6, 5, 'Temps pluvieux, c''est dommage', 1.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17'),
+(6, 6, 'Je suis déçu. La ville est belle, mais la visite était mal organisée et les arrêts étaient trop courts pour vraiment profiter des lieux.', 2.0, 'Visite mal organisée', 'Famille', '2024-10-02'),
+(6, 7, 'Je ne recommande pas cette visite. Le guide était ennuyeux et ne savait pas répondre aux questions. L''ambiance était terne.', 1.5, 'Guide ennuyeux', 'Solo', '2024-12-03'),
+(6, 8, 'Pas assez d''informations intéressantes. La visite manquait d''animation et le guide semblait pressé. Nous avons à peine eu le temps de poser des questions.', 2.5, 'Visite trop rapide et fade', 'Amis', '2024-12-04'),
+(6, 9, 'Très déçu de cette visite. Le groupe était trop grand et le guide avait du mal à s''adapter. Beaucoup de bruit et de distractions.', 2.0, 'Trop de monde et peu d''attention', 'Couple', '2024-12-05'),
+(6, 10, 'La visite était longue et monotone. Il n''y avait pas beaucoup de dynamisme et cela ne m''a pas du tout captivé. Je m''attendais à mieux.', 2.0, 'Visite trop monotone', 'Famille', '2024-12-06'),
+(6, 11, 'Une expérience fantastique. Le guide était passionné et a rendu chaque moment intéressant. Nous avons découvert des coins cachés de Quimper que nous n’aurions jamais trouvés seuls.', 5.0, 'À faire absolument', 'Famille', '2024-12-06'),
+(6, 12, 'Une visite fascinante avec un guide incroyablement compétent. Quimper est une ville magnifique et cette visite en a révélé tous les secrets. Très bien organisé, je recommande à 100%.', 5.0, 'Expérience mémorable', 'Solo', '2024-12-07'),
+(6, 13, 'Visite très intéressante, mais les informations étaient parfois un peu superficielles. Le guide pourrait approfondir certains points.', 3.5, 'Bonne visite, mais manque de détails', 'Famille', '2024-11-28'),
+(6, 14, 'L’ambiance était agréable, mais j’aurais aimé plus de temps pour explorer la ville à mon rythme.', 4.0, 'Sympathique mais trop court', 'Solo', '2024-11-29'),
+(7, 5, 'Une visite guidée très enrichissante ! La rade de Brest, le château et le musée de la Marine étaient impressionnants. Très bien organisé, je recommande.', 5.0, 'Visite incontournable', 'Famille', '2024-04-10'),
+(8, 6, 'Le spectacle était bien, mais je m’attendais à plus de finesse dans les marionnettes. Un peu déçu par l’ensemble.', 2.5, 'Dommage', 'Amis', '2024-06-16'),
+(9, 8, 'Les montagnes russes à Perros-Guirec étaient fantastiques, mais la balade en kayak le long des côtes rocheuses était encore plus incroyable. À refaire !', 5.0, 'Superbes paysages', 'Famille', '2024-07-12'),
+(10, 13, 'Très belle randonnée sur le GR34 à Saint-Malo. La vue sur l’océan était magnifique, mais l’itinéraire était un peu trop long et fatigant pour les enfants.', 3.5, 'Belle expérience, mais fatigante', 'Famille', '2024-08-05'),
+(11, 12, 'Une excursion en bateau à Douarnenez très agréable. Le paysage était superbe, mais le bateau était un peu vieux et il manquait un peu d’animations pendant la traversée.', 3.5, 'Bateau agréable, mais vieillissant', 'Couple', '2024-09-18'),
+(12, 7, 'Le musée de la mer à Paimpol est une excellente visite pour les passionnés d’histoire maritime. Les expositions étaient très intéressantes et bien présentées.', 5.0, 'Visite fascinante', 'Solo', '2024-10-21'),
+(13, 6, 'Le restaurant à Rennes offre une très bonne expérience gastronomique bretonne. Les crêpes et le cidre étaient délicieux, mais le service était un peu lent.', 4.0, 'Bonne expérience mais service lent', 'Couple', '2024-11-11'),
+(14, 18, 'Une belle visite de Vannes, mais il y avait trop de monde ce jour-là. Le guide était sympathique, mais nous avons eu du mal à entendre les explications.', 3.0, 'Sympa mais trop fréquenté', 'Amis', '2024-12-02'),
+(15, 15, 'Le restaurant exotique à Rennes est une expérience culinaire unique. Les plats étaient délicieux et originaux, mais l’ambiance était un peu trop bruyante pour profiter pleinement.', 4.0, 'Bonne expérience mais bruyant', 'Famille', '2024-12-03');
 
-INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES
+INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES -- septembre octobre rien septembre
 (1, '2024-09-01','2024-10-20'),
 (1, '2024-10-01','2024-11-20'),
 (1, '2024-11-01','2024-12-20'),
 (2, '2024-10-01','2024-11-20'),
-(2, '2024-11-01','2024-12-20');
+(2, '2024-11-01','2024-12-20'),
+(4, '2024-09-01','2024-10-20'),
+(4, '2024-10-01','2024-11-20'),
+(4, '2024-11-01','2024-12-20');
 
 /*INSERT INTO _souscription (nbSemaines, debutOption) VALUES
 (1, '2024-09-09'),
@@ -207,17 +284,29 @@ INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES
 (2, '2024-11-11');*/
 
 INSERT INTO _historiqueEnLigne(idOffre, jourDebut, jourFin) VALUES
-(1,'2024-09-02','2024-09-22'),
+(1,'2024-09-13','2024-09-22'),
 (1,'2024-10-15','2024-10-27'),
 (1,'2024-10-29','2024-11-13'),
 (1,'2024-11-19', null),
-(2,'2024-10-29','2024-11-03');
+(2,'2024-10-13','2024-10-22'),
+(2,'2024-11-15','2024-11-27'),
+(3,'2024-12-03', null),
+(4,'2024-09-29','2024-11-13'),
+(4,'2024-11-19', null);
 
 INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee) VALUES
-(1, '2024-09-09',1,'En relief',False),
-(4, '2024-09-23',1,'En relief',True),
-(3, '2024-10-14',1,'A la une',False),
-(2, '2024-11-11',1,'En relief',True);
+(1, '2024-09-09',1, 'En relief',False),
+(2, '2024-10-04',1, 'A la une' ,false),
+(4, '2024-09-23',1, 'En relief',True),
+(3, '2024-10-14',1, 'A la une',False),
+(2, '2024-11-11',1, 'En relief',false),
+(4, '2024-10-01',2, 'En relief',False),
+(2, '2024-11-10',2, 'A la une' ,false),
+(4, '2024-12-01',2, 'A la une' ,false),
+(4, '2024-12-02',3, 'En relief',true),
+(4, '2024-12-04',3, 'A la une' ,false),
+(4, '2024-09-23',4, 'En relief',True),
+(3, '2024-10-14',4, 'A la une',False);
 
 INSERT INTO _imageavis VALUES
 (9, 'test.png'),
