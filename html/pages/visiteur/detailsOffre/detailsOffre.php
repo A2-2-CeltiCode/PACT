@@ -99,7 +99,7 @@ STRING
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
     </div><main>
     <div class="container">
-        <divclass="container-gauche">
+        <div class="container-gauche">
             <div class="carousel">
 
                 <button class="carousel-button prev desactive">❮</button>
@@ -212,6 +212,8 @@ STRING
                 Button::render("btn-mail", "", " Envoyer un mail", ButtonType::Guest, "", false, "mailto:" . $entreprise['email']);
             ?>
         </aside>
+</main>
+<div>
     <div class="liste-avis">
         <div>
             <h1>Avis:</h1>
@@ -273,9 +275,8 @@ STRING
             <span class="close">&times;</span>
             <img src="" id="modal-image" />
         </div>
-    </div>
+    </div></div>
     <script src="detailsOffre.js"></script>
-</main>
     <?php Footer::render(FooterType::Guest); ?>
 
 </html>
