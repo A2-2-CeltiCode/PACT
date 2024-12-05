@@ -17,7 +17,16 @@ function calculerJoursEnLigne(PDO $pdo, int $idOffre, string $mois): int {
     foreach ($rows as $row) {
         
         $jourDebut = new DateTime($row['jourdebut']);
-        $jourFin = new DateTime($row['jourfin']);
+        if ($row['jourfin'] === null) {
+            $jourFin = DateTime::createFromFormat('m-Y-d', $mois . '-01');
+            if (!$jourFin) {
+                // Gérer l'erreur de formatage ici
+                throw new Exception("Format de date invalide : " . $mois . '-01');
+            }
+            $jourFin->modify('last day of this month');
+        } else {
+            $jourFin = new DateTime($row['jourfin']);
+        }
         
         // Calculer la différence en jours
         $interval = $jourDebut->diff($jourFin);

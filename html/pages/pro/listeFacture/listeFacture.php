@@ -40,7 +40,7 @@ $factures = $sth->fetchAll();
     </style>
 </head>
 <body>
-    <?php Header::render(HeaderType::Member); ?>
+    <?php Header::render(HeaderType::Pro); ?>
     <main>
         <h1>Liste des Factures</h1>
         <table>
@@ -69,7 +69,7 @@ $factures = $sth->fetchAll();
             </tbody>
         </table>
     </main>
-    <?php Footer::render(FooterType::Member); ?>
+    <?php Footer::render(FooterType::Pro); ?>
 </body>
 </html>
 

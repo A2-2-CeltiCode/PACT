@@ -21,7 +21,9 @@ class Facture
 
     private $nbJours;
 
-    public function __construct($idOffre, $idAdresse, $idCompte, $idFacture,$nbJours,$dbh)
+    private $nbjoursOption;
+
+    public function __construct($idOffre, $idAdresse, $idCompte, $idFacture,$nbJours,$nbjoursOption,$dbh)
     {
         $this->idOffre = $idOffre;
         $this->idAdresse = $idAdresse;
@@ -30,6 +32,7 @@ class Facture
         $this->dbh = $dbh;
         $this->dateDuJour = date("d-m-Y");
         $this->nbJours = $nbJours;
+        $this->nbjoursOption = $nbjoursOption;
         $this->loadData();
     }
 
@@ -64,15 +67,15 @@ class Facture
     private function getMoisPrestation($mois)
     {
         $moisMapping = [
-            "1" => "Janvier",
-            "2" => "Février",
-            "3" => "Mars",
-            "4" => "Avril",
-            "5" => "Mai",
-            "6" => "Juin",
-            "7" => "Juillet",
-            "8" => "Août",
-            "9" => "Septembre",
+            "01" => "Janvier",
+            "02" => "Février",
+            "03" => "Mars",
+            "04" => "Avril",
+            "05" => "Mai",
+            "06" => "Juin",
+            "07" => "Juillet",
+            "08" => "Août",
+            "09" => "Septembre",
             "10" => "Octobre",
             "11" => "Novembre",
             "12" => "Décembre"
@@ -85,47 +88,40 @@ class Facture
         return array_filter($this->semainesActifs, function ($option) {
             $moisPrestationNum = date('m', strtotime($this->facture['dateprestaservices']));
             $anneePrestation = date('Y', strtotime($this->facture['dateprestaservices']));
-            $moisOption = date('m', strtotime($option['debutoption']));
-            $anneeOption = date('Y', strtotime($option['debutoption']));
-            return $moisOption == $moisPrestationNum && $anneeOption == $anneePrestation && !$option['estannulee'];
+            $moisOptionDebut = date('m', strtotime($option['debutoption']));
+            $anneeOptionDebut = date('Y', strtotime($option['debutoption']));
+            $moisOptionFin = date('m', strtotime($option['finoption']));
+            $anneeOptionFin = date('Y', strtotime($option['finoption']));
+
+            $estDansMoisPrestation = ($moisOptionDebut == $moisPrestationNum && $anneeOptionDebut == $anneePrestation) ||
+                                     ($moisOptionFin == $moisPrestationNum && $anneeOptionFin == $anneePrestation) ||
+                                     ($moisOptionDebut < $moisPrestationNum && $moisOptionFin > $moisPrestationNum);
+
+            return $estDansMoisPrestation && !$option['estannulee'];
         });
     }
 
-    private function calculerJoursRestants($jourDebut, $nbjours)
+    private function calculerJoursRestants($jourDebut, $jourFin)
     {
         $dateDebut = new DateTime($jourDebut);
-        $jourCourant = (int) $dateDebut->format('d');
-        $mois = (int) $dateDebut->format('m');
-        $annee = (int) $dateDebut->format('Y');
+        $dateFin = new DateTime($jourFin);
+        $moisPrestationNum = date('m', strtotime($this->facture['dateprestaservices']));
+        $anneePrestation = date('Y', strtotime($this->facture['dateprestaservices']));
+        $dateDebutMois = new DateTime("$anneePrestation-$moisPrestationNum-01");
+        $dateFinMois = new DateTime($dateDebutMois->format('Y-m-t'));
 
-        $joursDansMois = 0;
-
-        switch ($mois) {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
-                $joursDansMois = 31;
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                $joursDansMois = 30;
-                break;
-            case 2:
-                $joursDansMois = ($annee % 4 === 0 && ($annee % 100 !== 0 || $annee % 400 === 0)) ? 29 : 28;
-                break;
-            default:
-                throw new Exception("Mois invalide : $mois");
+        if ($dateDebut < $dateDebutMois) {
+            $dateDebut = $dateDebutMois;
+        }
+        if ($dateFin > $dateFinMois) {
+            $dateFin = $dateFinMois;
         }
 
-        $joursRestantMois = $joursDansMois - $jourCourant + 1;
-        return min($nbjours, $joursRestantMois);
+        $interval = $dateDebut->diff($dateFin);
+        return $interval->days + 1;
     }
+
+
 
     public function render()
     {
@@ -193,30 +189,36 @@ class Facture
                         <th>Total HT</th>
                         <th>Total TTC</th>
                     </tr>
-                    <?php foreach ($this->optionsFiltrees as $option): ?>
-                        <?php
+                    <?php 
+                    $totalHT = 0;
+                    $totalTTC = 0;
+                    foreach ($this->optionsFiltrees as $option): 
+                        $joursRestants = $this->calculerJoursRestants($option['debutoption'], $option['finoption']);
                         $prixOptionHT = $this->fetchData('SELECT prixht FROM pact._option WHERE nomoption = :nomOption', ['nomOption' => $option['nomoption']]);
                         $prixOptionTTC = $this->fetchData('SELECT prixttc FROM pact._option WHERE nomoption = :nomOption', ['nomOption' => $option['nomoption']]);
 
-                        $prixOptionTotalHT = (float)$prixOptionHT['prixht'] * $option['nbsemaines'];
-                        $prixOptionTotalTTC = $prixOptionTTC['prixttc'] * $option['nbsemaines'];
-                        ?>
+                        $prixOptionTotalHT = (float)$prixOptionHT['prixht'] * $this->nbjoursOption;
+                        $prixOptionTotalTTC = $prixOptionTTC['prixttc'] * $this->nbjoursOption;
+
+                        $totalHT += $prixOptionTotalHT;
+                        $totalTTC += $prixOptionTotalTTC;
+                    ?>
                         <tr>
                             <td><?php echo "<strong>Option: </strong>" . $option['nomoption']; ?></td>
-                            <td><?php echo "{$option['nbsemaines']} semaines"; ?></td>
+                            <td><?php echo "{$this->nbjoursOption} jours"; ?></td>
                             <td><?php echo "{$prixOptionHT['prixht']}€" ?></td>
                             <td><?php echo "{$prixOptionTTC['prixttc']}€" ?></td>
                             <td><strong><?php echo "{$prixOptionTotalHT}€" ?></strong></td>
                             <td><strong><?php echo "{$prixOptionTotalTTC}€" ?></strong></td>
                         </tr>
-                    <?php endforeach;
-                    $queryHistorique = $this->fetchData('SELECT * FROM pact._historiqueenligne WHERE idoffre = :idOffre', ['idOffre' => $this->idOffre]);
-
-                    $joursRestants = $this->calculerJoursRestants($queryHistorique['jourdebutnbjours'], $queryHistorique['nbjours']);
+                    <?php endforeach; 
                     $prixForfaitHT = $this->forfait[0]['prixht'];
                     $prixForfaitTTC = $this->forfait[0]['prixttc'];
-                    $prixForfaitTotalHT = $this->nbJours * $this->forfait[0]['prixht'];
-                    $prixForfaitTotalTTC = $this->nbJours * $this->forfait[0]['prixttc'];
+                    $prixForfaitTotalHT = $this->nbJours * $prixForfaitHT;
+                    $prixForfaitTotalTTC = $this->nbJours * $prixForfaitTTC;
+
+                    $totalHT += $prixForfaitTotalHT;
+                    $totalTTC += $prixForfaitTotalTTC;
                     ?>
 
                     <tr>
@@ -229,18 +231,14 @@ class Facture
                     </tr>
                 </table>
 
-                <?php
-                $TotalHT = $prixForfaitTotalHT + $prixOptionTotalHT;
-                $TotalTTC = $prixForfaitTotalTTC + $prixOptionTotalTTC;
-                ?>
                 <table class="total">
                     <tr>
                         <th>Total HT</th>
-                        <td><?php echo "{$TotalHT}€" ?></td>
+                        <td><?php echo "{$totalHT}€" ?></td>
                     </tr>
                     <tr>
                         <th>Total TTC</th>
-                        <td><?php echo "{$TotalTTC}€" ?></td>
+                        <td><?php echo "{$totalTTC}€" ?></td>
                     </tr>
                 </table>
             </main>
