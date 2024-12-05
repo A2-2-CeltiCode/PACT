@@ -3,6 +3,12 @@ const images = document.querySelectorAll('.carousel-image');
 const totalImages = images.length;
 let compteur = 1;
 
+if (totalImages==1) {
+    document.querySelector('.next').classList.add('desactive');
+    document.querySelector('.prev').classList.add('desactive');
+}
+
+
 function updateCarousel() {
     const offset = -currentIndex * 100;
     document.querySelector('.carousel-images').style.transform = `translateX(${offset}%)`;
