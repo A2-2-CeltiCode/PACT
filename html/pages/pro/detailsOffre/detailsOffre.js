@@ -32,3 +32,28 @@ document.querySelector('.prev').addEventListener('click', () => {
         document.querySelector('.next').classList.remove('desactive');
     }
 });
+
+const modal = document.getElementById("myModal");
+
+const span = document.getElementsByClassName("close")[0];
+
+const modalImage = document.getElementById("modal-image");
+
+function openUp(e) {
+    const src = e.srcElement.src;
+    modal.style.display = "block";
+    modalImage.src = src;
+    document.body.classList.add("noscroll")
+}
+
+span.onclick = function () {
+    modal.style.display = "none";
+    document.body.classList.remove("noscroll")
+};
+
+window.onclick = function (event) {
+    if (event.target === modal) {
+        modal.style.display = "none";
+        document.body.classList.remove("noscroll")
+    }
+};

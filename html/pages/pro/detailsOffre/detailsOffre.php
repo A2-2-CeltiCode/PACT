@@ -17,6 +17,15 @@ $idOffre = $_POST['idOffre'] ?? '1';
 try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $avis = $dbh->query("select titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis  from pact.vue_avis join pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte where idOffre = $idOffre")->fetchAll(PDO::FETCH_ASSOC);
+    $imagesAvis = [];
+    foreach ($avis as $avi) {
+        $img = [];
+        foreach ($dbh->query("select nomimage from pact.vue_image_avis WHERE idavis = {$avi['idavis']}")->fetchAll(PDO::FETCH_ASSOC) as $item) {
+            $img[] = $item["nomimage"];
+        }
+        $imagesAvis[$avi['idavis']] = $img;
+    }
 
     // Requête pour obtenir le type d'offre
     $stmt = $dbh->prepare('SELECT nomcategorie FROM (SELECT nomcategorie FROM pact.vue_spectacle WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_restaurant WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_parc_attractions WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_activite WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_visite WHERE idoffre = :idOffre) AS categories');
@@ -198,9 +207,72 @@ try {
 
 
     </div>
+    <div>
+        <div class="liste-avis">
+            <div>
+                <h1>Avis:</h1>
+            </div>
+            <div>
+                <?php
+                foreach ($avis as $avi) {
+                    ?>
+                    <div class="avi">
+                        <div>
+                            <p class="avi-title">
+                                <?= $avi["titre"] ?>
+                            </p>
+                            <div class="note">
+                                <?php
+                                for ($i = 0; $i < floor($avi["note"]); $i++) {
+                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
+                                }
+                                if (fmod($avi["note"], 1) != 0) {
+                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
+                                }
+                                for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
+                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <p class="avi-content">
+                            <?= $avi["commentaire"] ?>
+                        </p>
+                        <div>
+                            <?php
+                            foreach ($imagesAvis[$avi["idavis"]] as $image) {
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                            }
+                            ?>
+                        </div>
+                        <div>
+                            <p>
+                                <?= $avi["pseudo"] ?>
+                            </p>
+                            <p>
+                                le <?= $avi["datevisite"] ?>
+                            </p>
+                            <p>
+                                en <?= $avi["contextevisite"] ?>
+                            </p>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img src="" id="modal-image"/>
+            </div>
+        </div>
+    </div>
 
     <script src="detailsOffre.js"></script>
-</body>
 <?php Footer::render(FooterType::Pro); ?>
+</body>
 
 </html>
