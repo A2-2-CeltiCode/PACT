@@ -21,6 +21,7 @@ class CheckboxSelect
      * @param bool $required Indique si le champ est requis.
      * @param array $options Tableau associatif des options (clé => valeur).
      * @param array $selected Valeurs sélectionnées par défaut.
+     * @param string $buttonText Texte affiché sur le bouton.
      */
     public static function render(
         $class = "",
@@ -28,11 +29,13 @@ class CheckboxSelect
         $name = "",
         $required = false,
         $options = [],
-        $selected = []
+        $selected = [],
+        $buttonText = "Sélectionner"
     ) {
         // Inclure le CSS une seule fois
         if (!self::$cssIncluded) {
-            echo '<link rel="stylesheet" type="text/css" href="/composants/CheckboxSelect/style.css">';
+            echo '<link rel="stylesheet" href="/composants/CheckboxSelect/style.css">';
+            
             self::$cssIncluded = true;
         }
 
@@ -46,7 +49,8 @@ class CheckboxSelect
 
         // Générer le bouton pour afficher la liste déroulante
         echo '<div class="checkbox-select-wrapper">';
-        echo '<button type="button" onclick="toggleCheckboxSelect(\'' . $id . '\')">Sélectionner</button>';
+        
+        echo '<button type="button" onclick="toggleCheckboxSelect(\'' . $id . '\')">' . htmlspecialchars($buttonText) . '</button>';
         echo '<div id="' . $id . '" class="checkbox-select">';
 
         // Générer les options avec cases à cocher
@@ -84,4 +88,3 @@ class CheckboxSelect
         </script>';
     }
 }
-
