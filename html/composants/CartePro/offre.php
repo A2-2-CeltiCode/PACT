@@ -90,6 +90,12 @@ class OffreHandler {
         echo '<div class="prix-offre">';
         Label::render('prix', '', '', htmlspecialchars($offre['nomforfait']));
         Label::render('', '', '', 'Option : ' . htmlspecialchars($offre['nomoption']));
+        Label::render('', '', '', 'Note : ' . number_format((float)$offre['moynotes'], 1));
+        if($offre["nomcategorie"] == "Restaurant") {
+            Label::render('', '', '', 'Prix : ' . htmlspecialchars($offre['nomgamme']));
+        } else {
+            Label::render('', '', '', 'Prix : ' . htmlspecialchars($offre['valprix'] . ' €'));
+        }
         echo '</div>';
         echo '</div>';
         echo '<div class="button-container">';
