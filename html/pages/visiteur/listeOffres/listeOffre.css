@@ -139,6 +139,12 @@ input[type="number"]{
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent grey */
     z-index: 1000; /* Ensure it's above other content */
     display: none; /* Hidden by default */
+    
+}
+
+.agencement {
+    max-height: 90vh; /* Ajustez la hauteur maximale selon vos besoins */
+    overflow-y: auto; /* Ajoute une barre de défilement verticale */
 }
 
 .page-overlay.active {

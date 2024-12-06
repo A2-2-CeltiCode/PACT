@@ -173,3 +173,8 @@ input[type="number"]{
 .heure{
     margin: 10px 0;
 }
+
+.agencement {
+    max-height: 90vh; /* Ajustez la hauteur maximale selon vos besoins */
+    overflow-y: auto; /* Ajoute une barre de défilement verticale */
+}

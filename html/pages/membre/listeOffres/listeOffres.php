@@ -45,6 +45,7 @@ $query = "SELECT * FROM offres WHERE 1=1";
 $params = [];
 
 $nomcategories = isset($_GET['nomcategorie']) ? explode(',', $_GET['nomcategorie']) : ['Tout'];
+$gamme = isset($_GET['option']) ? explode(',', $_GET['option']) : null;
 
 if (!empty($_GET['nomcategorie'])) {
     $categoriesPlaceholders = implode(',', array_fill(0, count($nomcategories), '?'));
@@ -52,7 +53,7 @@ if (!empty($_GET['nomcategorie'])) {
     $params = array_merge($params, $nomcategories);
 }
 // Récupération des résultats
-$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat);
+$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat,$status,$idCompte,$note,$gamme);
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     header('Content-Type: application/json');
