@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";

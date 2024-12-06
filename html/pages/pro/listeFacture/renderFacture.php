@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 require_once $_SERVER["DOCUMENT_ROOT"] . "/pages/pro/facture/creationFacture.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/pages/pro/listeFacture/calculJoursEnLigne.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/pages/pro/listeFacture/calculJoursOption.php";
