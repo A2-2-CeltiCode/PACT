@@ -92,7 +92,7 @@ try {
             <div class="carousel">
 
                 <button class="carousel-button prev desactive">❮</button>
-                <button class="carousel-button next">❯</button>
+                <button class="carousel-button next desactive">❯</button>
                 <div class="carousel-images">
                     <?php
                     // Affichage des images de l'offre
@@ -100,17 +100,17 @@ try {
                         $path_img = "../../../ressources/" . $idOffre . "/images/" . $imageArray['nomimage'];
                         if (!file_exists($path_img)): ?>
                             <div class="carousel-image pas-images"><svg xmlns="http://www.w3.org/2000/svg" height="10em"
-                                    viewBox="0 -960 960 960" width="10em" fill="#000000">
-                                    <path
-                                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z" />
-                                </svg></div>
-
+                            viewBox="0 -960 960 960" width="10em" fill="#000000">
+                            <path
+                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z" />
+                        </svg></div>
+                        
                         <?php else: ?>
                             
                             <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>"
                             class="carousel-image">
-                        <?php endif ?>
-                    <?php endforeach; ?>
+                            <?php endif ?>
+                            <?php endforeach; ?>
                 </div>
             </div>
             <?php if ($typeOffre !== 'restaurant'): ?>
@@ -157,8 +157,6 @@ try {
                 switch ($typeOffre) {
                     case 'restaurant':
                         $string = $gammeRestaurant['nomgamme'];
-
-                        // Trouver la position des parenthèses
                         $start = strpos($string, '(') + 1;
                         $end = strpos($string, ')');
 

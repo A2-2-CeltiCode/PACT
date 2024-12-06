@@ -35,7 +35,7 @@ try {
         }
         $imagesAvis[$avi['idavis']] = $img;
     }
-    $peutEcrireAvis = $dbh->query("SELECT count(*) FROM pact.vue_avis WHERE idCompte = {$_SESSION['idCompte']} AND idOffre = $idOffre")->fetchAll(PDO::FETCH_ASSOC)[0]['count'] == 0;
+    $peutEcrireAvis = $dbh->query("SELECT count(*) FROM pact.vue_avis WHERE idCompte = 1 AND idOffre = 3")->fetchAll(PDO::FETCH_ASSOC)[0]['count'] == 0;
 
     $offresSql = $dbh->query(<<<STRING
 select distinct titre                                                                       AS nom,
@@ -173,7 +173,12 @@ STRING
                 // Affichage des informations spécifiques en fonction du type d'offre
                 switch ($typeOffre) {
                     case 'restaurant':
-                        Label::render("", "", "", "Gamme Restaurant: " . $offre['nomgamme'], "../../../ressources/icone/gamme.svg");
+                        $string = $gammeRestaurant['nomgamme'];
+                        $start = strpos($string, '(') + 1;
+                        $end = strpos($string, ')');
+
+                        $gamme = substr($string, $start, $end - $start);
+                        Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg");
                         break;
                     case 'spectacle':
                         Label::render("", "", "", "Durée: " . $offre['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");

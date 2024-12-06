@@ -168,7 +168,13 @@ STRING
                     // Affichage des informations spécifiques en fonction du type d'offre
                     switch ($typeOffre) {
                         case 'restaurant':
-                            Label::render("", "", "", "Gamme Restaurant: " . $offre['nomgamme'], "../../../ressources/icone/gamme.svg");
+                            $string = $gammeRestaurant['nomgamme'];
+    
+                            $start = strpos($string, '(') + 1;
+                            $end = strpos($string, ')');
+    
+                            $gamme = substr($string, $start, $end - $start);
+                            Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg");
                             break;
                         case 'spectacle':
                             Label::render("", "", "", "Durée: " . $offre['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
