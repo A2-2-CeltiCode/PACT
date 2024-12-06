@@ -35,7 +35,7 @@ try {
         }
         $imagesAvis[$avi['idavis']] = $img;
     }
-    $peutEcrireAvis = $dbh->query("SELECT count(*) FROM pact.vue_avis WHERE idCompte = 1 AND idOffre = 3")->fetchAll(PDO::FETCH_ASSOC)[0]['count'] == 0;
+    $peutEcrireAvis = $dbh->query("SELECT count(*) FROM pact.vue_avis WHERE idCompte = {$_SESSION['idCompte']} AND idOffre = $idOffre")->fetchAll(PDO::FETCH_ASSOC)[0]['count'] == 0;
 
     $offresSql = $dbh->query(<<<STRING
 select distinct titre                                                                       AS nom,
