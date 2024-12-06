@@ -10,7 +10,7 @@ function updateAnnulationOption($pdo) {
         $debutoption->modify('+' . $option['nbsemaines'] . ' weeks');
 
         if ($today >= $debutoption) {
-            $updateSql = "UPDATE pact._annulationoption SET nomoption = 'Aucune' WHERE idoffre = :idoffre";
+            $updateSql = "UPDATE pact._offre SET nomoption = 'Aucune' WHERE idoffre = :idoffre";
             $updateStmt = $pdo->prepare($updateSql);
             $updateStmt->execute(['idoffre' => $option['idoffre']]);
         }
