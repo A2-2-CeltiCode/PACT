@@ -130,6 +130,7 @@ class Trie {
             $to = 100
         );
 
+        ?><p>Notes :</p><?php
         InputRange::render(
             $class = "monoslider",
             $id = "rangeSlider",
