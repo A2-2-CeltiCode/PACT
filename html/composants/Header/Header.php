@@ -103,10 +103,10 @@ class Header
         echo '<nav>';
         if ($type == HeaderType::Guest) {
             echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            //echo '<a href="offre.php">Offres</a>';
+            echo '<a href="/pages/visiteur/listeOffres/listeOffres.php">Rechercher</a>';
         } elseif ($type == HeaderType::Member) {
-            echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            //echo '<a href="offre.php">Offres</a>';
+            echo '<a href="/pages/membre/accueil/accueil.php">Accueil</a>';
+            echo '<a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a>';
             //echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
             echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
