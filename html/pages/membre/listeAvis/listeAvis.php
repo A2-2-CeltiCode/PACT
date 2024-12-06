@@ -23,11 +23,14 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Select/Select.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/InsererImage/InsererImage.php";
 
 // Récupération de l'identifiant de l'offre
-$idOffre = $_GET['id'] ?? '1';
 $idCompteCourant = $_SESSION['idCompte'];
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-    $avis = $dbh->query("select titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis  from pact.vue_avis join pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte where pact.vue_compte_membre.idCompte = $idCompteCourant")->fetchAll(PDO::FETCH_ASSOC);
+    $avis = $dbh->query("select pact.vue_avis.idOffre, pact._offre.idCompte, pact.vue_compte_pro.denominationsociale,pact._offre.titre, pact.vue_avis.titre as nomavis, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis
+                         from pact.vue_avis join pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte
+                                            join pact._offre ON pact._offre.idOffre = pact.vue_avis.idOffre 
+                                            join pact.vue_compte_pro ON pact.vue_compte_pro.idCompte = pact._offre.idCompte
+                         where pact.vue_compte_membre.idCompte = $idCompteCourant")->fetchAll(PDO::FETCH_ASSOC);
     $imagesAvis = [];
     foreach ($avis as $avi) {
         $img = [];
@@ -36,52 +39,7 @@ try {
         }
         $imagesAvis[$avi['idavis']] = $img;
     }
-    $peutEcrireAvis = $dbh->query("SELECT count(*) FROM pact.vue_avis WHERE idCompte = {$_SESSION['idCompte']} AND idOffre = $idOffre")->fetchAll(PDO::FETCH_ASSOC)[0]['count'] == 0;
-
-    $offresSql = $dbh->query(<<<STRING
-select distinct titre                                                                       AS nom,
-       nomcategorie                                                                AS type,
-       vue_offres.ville,
-       nomimage as idimage,
-       idoffre,
-       COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
-       tempsenminutes                                                              AS duree
-from pact.vue_offres
-LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
-         LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-STRING
-    );
-
-    $offresSql = $dbh->query(<<<STRING
-select distinct titre                                                                       AS nom,
-       nomcategorie                                                                AS type,
-       vue_offres.ville,
-       nomimage as idimage,
-       idoffre,
-       COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
-       tempsenminutes                                                              AS duree
-from pact.vue_offres
-LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
-         LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-STRING
-    );
-
-    $offre = $dbh->query('SELECT * FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $typeOffre = $dbh->query('SELECT type_offre FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-
-    $typeOffre = str_replace(' ', '_', strtolower(str_replace("'", '', $typeOffre['type_offre'])));
-    if ($typeOffre === 'parc_dattractions') {
-        $typeOffre = 'parc_attractions';
-    }
-
-    $tags = $dbh->query('SELECT * FROM pact.vue_tags_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
-
-    $images = $dbh->query('SELECT _image.idImage,_image.nomImage FROM pact._image JOIN pact._offre ON _image.idOffre = _offre.idOffre WHERE _offre.idOffre = ' . $idOffre . ' AND _image.idImage NOT IN (SELECT  _parcAttractions.carteParc FROM pact._parcAttractions WHERE idOffre = _offre.idOffre AND _parcAttractions.carteParc IS NOT NULL)AND _image.idImage NOT IN (SELECT _restaurant.menuRestaurant FROM pact._restaurant WHERE idOffre = _offre.idOffre AND _restaurant.menuRestaurant IS NOT NULL)', PDO::FETCH_ASSOC)->fetchAll();
-
-    $entreprise = $dbh->query(
-        'SELECT DISTINCT pact.vue_compte_pro.denominationsociale, pact.vue_compte_pro.raisonsocialepro, pact.vue_compte_pro.email, pact.vue_compte_pro.numtel FROM pact.vue_offres join pact.vue_compte_pro ON pact.vue_compte_pro.idcompte = pact.vue_offres.idcompte WHERE idoffre = ' . $idOffre,
-        PDO::FETCH_ASSOC
-    )->fetch();
+    
     $dbh = null;
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
@@ -102,19 +60,19 @@ STRING
 </head>
 <?php Header::render(HeaderType::Member); ?>
 <main>
-<div>
     <div class="liste-avis">
         <div>
             <h1>Avis que vous avez posté :</h1>
         </div>
         <div>
-            <?php
-            foreach ($avis as $avi) {
-                ?>
+            <?php foreach ($avis as $avi) { ?>
                 <div class="avi">
-                    <div>
                         <p class="avi-title">
-                            <?= $avi["titre"] ?>
+                            <?php echo $avi["titre"] . " de " . $avi["denominationsociale"] ?>
+                        </p>
+                    <div>    
+                        <p class="avi-title">
+                            <?= $avi["nomavis"] ?>
                         </p>
                         <div class="note">
                             <?php
@@ -164,7 +122,6 @@ STRING
             <img src="" id="modal-image" />
         </div>
     </div>
-</div>  
 </main>
 
     <script src="listeAvis.js"></script>

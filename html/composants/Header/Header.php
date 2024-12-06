@@ -140,16 +140,19 @@ class Header
         } else if ($profileClass == "profil-pro"){
             $chemin ="/pages/pro/consulterComptePro/consulterComptePro.php";
         }
-        echo '
+        $profile = '
         <div class="entete-profil">
             <label for="selecteur-profil"></label>
             <select class="selecteur-profil ' . $profileClass . '" id="selecteur-profil" onchange="window.location.href =this.value;" onclick="toggleArrow()">
                 <option value="default" hidden id="profile-option">Mon compte ▼</option>
-                <option value="' . $chemin . '">Accéder à mon Espace</option>
-                <option value="' . "/pages/membre/listeAvis/listeAvis.php" . '">Voir mes Avis</option>
-                <option value="/deconnexion.php">Déconnexion</option>
+                <option value="' . $chemin . '">Accéder à mon Espace</option>';
+        if($profileClass == "profil-member"){
+            $profile = $profile . '<option value="' . "/pages/membre/listeAvis/listeAvis.php" . '">Voir mes Avis</option>';
+        } 
+        $profile = $profile . '<option value="/deconnexion.php">Déconnexion</option>
             </select>
         </div>';
+        echo $profile;
 
     }
     
