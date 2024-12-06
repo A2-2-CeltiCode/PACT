@@ -58,10 +58,18 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     header('Content-Type: application/json');
     $offres = [];
     foreach ($resultats as $item) {
-        if ($item['moynotes'] == null) {
-            $item['moynotes'] = 0;
-        }
-        $offre = new Offre($item['titre'], $item['nomcategorie'], "o", $item['nomimage'], "o", $item['idoffre'], $item['tempsenminutes'],$item['moynotes'],$item['nomoption']);
+        $sql = 'SELECT denominationsociale FROM pact._comptepro WHERE idcompte = :idcompte';
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(':idcompte', $item['idcompte'], PDO::PARAM_INT);
+            $stmt->execute();
+            $proDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($item['moynotes'] == null) {
+                $item['moynotes'] = 0;
+            }
+            $item['nomgamme'] = $item['nomgamme'] ?? 'test';
+            $item['valprix'] = $item['valprix'] ?? 'test';
+            $offre = new Offre($item['titre'], $item['nomcategorie'], "o", $item['nomimage'], "o", $item['idoffre'], $item['tempsenminutes'],$item['moynotes'],$item['nomoption'],$item['heureouverture'],$item['heurefermeture'],$item['valprix'],$item['nomgamme']);
         $offres[] = (string)$offre;
     }
     $nombreOffres = count($offres);
@@ -108,10 +116,18 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <!-- Affichage des résultats -->
         <?php
         foreach ($resultats as $item) {
+            $sql = 'SELECT denominationsociale FROM pact._comptepro WHERE idcompte = :idcompte';
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(':idcompte', $item['idcompte'], PDO::PARAM_INT);
+            $stmt->execute();
+            $proDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+
             if ($item['moynotes'] == null) {
                 $item['moynotes'] = 0;
             }
-            $offre = new Offre($item['titre'], $item['nomcategorie'], "o", $item['nomimage'], "o", $item['idoffre'], $item['tempsenminutes'],$item['moynotes'],$item['nomoption']);
+            $item['nomgamme'] = $item['nomgamme'] ?? 'test';
+            $item['valprix'] = $item['valprix'] ?? 'test';
+            $offre = new Offre($item['titre'], $item['nomcategorie'], $item['ville'], $item['nomimage'], $proDetails['denominationsociale'], $item['idoffre'], $item['tempsenminutes'],$item['moynotes'],$item['nomoption'],$item['heureouverture'],$item['heurefermeture'],$item['valprix'],$item['nomgamme']);
             echo $offre;
         }
         ?>

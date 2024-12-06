@@ -147,6 +147,17 @@ main {
     }
 }
 
+#ouvert{
+    color: #008000;
+
+}
+#ferme{
+    color: #ff0000;
+}
+#bientot{
+    color: #ff8000;
+}
+
 .mixed {
     .relief, .une {
         border: 2px #fb3b00 solid;
