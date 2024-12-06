@@ -1,6 +1,6 @@
 <?php
 
-function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix = null, $titre = null, $nomcategories = [], $ouverture = null, $fermeture = null, $localisation = null, $etat = null, $estenligne = null, $idcompte = null,$note=null) {
+function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix = null, $titre = null, $nomcategories = [], $ouverture = null, $fermeture = null, $localisation = null, $etat = null, $estenligne = null, $idcompte = null,$note=null,$option=[]) {
     $sql = "SELECT * FROM pact.vue_offres WHERE 1=1";
 
     // Ajout des filtres
@@ -21,6 +21,37 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     } else {
         $sql .= " AND nomcategorie IN ('Spectacle', 'Activite', 'Restaurant', 'Parc d''attractions', 'Visite')";
     }
+   
+    if (!empty($option)) {
+        $sql .= " AND (";
+        $first = true;
+        foreach ($option as $opt) {
+            if ($opt == '1') {
+                if (!$first) {
+                    $sql .= " OR";
+                }
+                $sql .= " nomgamme = '€ (-25€)'";
+                $first = false;
+            }
+            if ($opt == "2") {
+                if (!$first) {
+                    $sql .= " OR";
+                }
+                $sql .= " nomgamme = '€€ (25-40€)'";
+                $first = false;
+            }
+            if ($opt == "3") {
+                if (!$first) {
+                    $sql .= " OR";
+                }
+                $sql .= " nomgamme = '€€€ (+40€)'";
+                $first = false;
+            }
+        }
+        $sql .= ")";
+    }
+    
+
     if ($ouverture !== null && $ouverture !== '') {
         $sql .= " AND (
             (heureouverture < heurefermeture AND :ouverture BETWEEN heureouverture AND heurefermeture) OR
@@ -103,6 +134,8 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
             $stmt->bindValue(":category_$index", $category, PDO::PARAM_STR);
         }
     }
+
+    
 
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

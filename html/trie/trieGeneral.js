@@ -21,6 +21,7 @@ function rechercher() {
     const inputNote = document.querySelector('input[name="inputnoteValue"]').value; 
 
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
+    const optionInputs = Array.from(document.querySelectorAll('input[name="option[]"]:checked')).map(input => input.value);
 
     const params = new URLSearchParams();
     if (searchInput) params.append('titre', searchInput);
@@ -35,6 +36,7 @@ function rechercher() {
     if (noteInput) params.append('note', noteInput); 
     if (inputNote) params.append('inputnote', inputNote);
     if (categoryInputs.length > 0) params.append('nomcategorie', categoryInputs.join(','));
+    if (optionInputs.length > 0) params.append('option', optionInputs.join(','));
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `listeOffres.php?${params.toString()}`, true);
@@ -98,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const trieInput = document.querySelector('select[name="trie"]');
     const statusInput = document.querySelector('input[name="status"]');
     const categoryInputs = document.querySelectorAll('input[name="nomcategorie[]"]');
+    const optionInputs = document.querySelectorAll('input[name="option[]"]');
     const noteInput = document.querySelector('input[name="note"]'); // Ajout de l'input note
     const inputNote = document.querySelector('input[name="inputnoteValue"]');
 
@@ -143,9 +146,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    optionInputs.forEach(input => {
+        input.addEventListener('change', function () {
+            rechercher();
+        });
+    });
+
     noteInput.addEventListener('input', function () { // Ajout de l'écouteur d'événement pour l'input note
         rechercher();
     });
+
 
     inputNote.addEventListener('input', function () {
         rechercher();

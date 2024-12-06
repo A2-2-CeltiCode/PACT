@@ -55,10 +55,10 @@ $note = isset($_GET['note']) ? $_GET['note'] : null;
 $query = "SELECT * FROM offres WHERE 1=1";
 
 $nomcategories = isset($_GET['nomcategorie']) ? explode(',', $_GET['nomcategorie']) : ['Tout'];
-
+$gamme = isset($_GET['option']) ? explode(',', $_GET['option']) : null;
 
 // Récupération des résultats
-$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat,$status,$idCompte,$note);
+$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat,$status,$idCompte,$note,$gamme);
 
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
@@ -101,14 +101,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <h1>Mes Offres</h1>
         <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "", "Créer une Offre", ButtonType::Pro, "", true); ?></a>
     </div>
-    <div class="onglets">
-
-    <a href="javascript:void(0);" class="onglet <?php echo ($status === 'enligne') ? 'actif' : ''; ?>" onclick="changerStatus('enligne')">En ligne</a>
-    <a href="javascript:void(0);" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>" onclick="changerStatus('horsligne')">Hors ligne</a>
-</div>
     <section>
-    <div class="barre trie-visible" id="styleShadow">
-    <?php
+        <div class="barre trie-visible" id="styleShadow">
+            <?php
     Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories,$status,$note);
     ?>
     </div>
@@ -119,6 +114,18 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 
     <p id="nombreOffres">
+    <div <div class="rangement">
+        <br>
+        
+        
+        
+        <div class="onglets">
+    
+        <a href="javascript:void(0);" class="onglet <?php echo ($status === 'enligne') ? 'actif' : ''; ?>" onclick="changerStatus('enligne')">En ligne</a>
+        <a href="javascript:void(0);" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>" onclick="changerStatus('horsligne')">Hors ligne</a>
+        </div>
+        
+        <p id="nombreOffres">
        Nombre d'offres affichées : <?php echo count($resultats); ?>
     </p>
     <div id="resultats" class="offres-container">

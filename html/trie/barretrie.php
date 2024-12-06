@@ -46,6 +46,12 @@ class Trie {
             "moynotes DESC" => "Tri par note décroissante",
             "moynotes ASC" => "Tri par note croissante"
         ];
+
+        $optionGamme = [
+            "1" => "€ (-25€)",
+            "2"=> "€€ (25-40€)",
+            "3"=> "€€€ (+40€)"
+        ];
         
 
         echo '<form id="searchForm" method="GET" action="">';
@@ -90,8 +96,23 @@ class Trie {
             $checked = in_array($value, $nomcategories)
             );
         }
+        
         echo'</div>';
+        echo'<br>';
+        echo'<div id="styleShadow">';
 
+        foreach ($optionGamme as $value => $label) {
+            Checkbox::render(
+            $class = 'custom-class',
+            $id = 'checkbox-' . htmlspecialchars($value),
+            $name = 'option[]',
+            $value = htmlspecialchars($value),
+            $text = $label,
+            $required = false,
+            $checked = in_array($value, $optionGamme)
+            );
+        }
+        echo'</div>';
         ?>
         <hr>
         <p>Prix :</p>
