@@ -90,8 +90,8 @@ class Facture
             $anneePrestation = date('Y', strtotime($this->facture['dateprestaservices']));
             $moisOptionDebut = date('m', strtotime($option['debutoption']));
             $anneeOptionDebut = date('Y', strtotime($option['debutoption']));
-            $moisOptionFin = isset($option['finoption']) ? date('m', strtotime($option['finoption'])) : null;
-            $anneeOptionFin = isset($option['finoption']) ? date('Y', strtotime($option['finoption'])) : null;            
+            $moisOptionFin = date('m', strtotime($option['finoption']));
+            $anneeOptionFin = date('Y', strtotime($option['finoption']));
 
             $estDansMoisPrestation = ($moisOptionDebut == $moisPrestationNum && $anneeOptionDebut == $anneePrestation) ||
                                      ($moisOptionFin == $moisPrestationNum && $anneeOptionFin == $anneePrestation) ||
