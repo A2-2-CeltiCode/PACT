@@ -82,24 +82,24 @@ INSERT INTO _compte (mdp, email, idAdresse) VALUES
 ('822b343fb9eecc852f4fe6b4ebd27b35f6dcca6e1a19cc7453c2626d98641389', 'user15@gmail.com', 24);
 
 -- Peupler la table _compteMembre
-INSERT INTO _compteMembre (idCompte,pseudo, prenom, nom) VALUES
-(1, 'user1', 'Jean','Dupont'),
-(5, 'user5', 'Martin', 'Sophie'),
-(6, 'user6', 'Lemoine', 'Julien'),
-(7, 'user7', 'Leblanc', 'Claire'),
-(8, 'user8', 'Lemoins', 'Antoine'),
-(9, 'user9', 'Boucher', 'Élise'),
-(10, 'user10', 'Moreau', 'Lucie'),
-(11, 'user11', 'Girard', 'Michel'),
-(12, 'user12', 'Petit', 'Isabelle'),
-(13, 'user13', 'Rousseau', 'Jean'),
-(14, 'user14', 'Garnier', 'Marie'),
-(15, 'user15', 'Dufresne', 'Hélène'),
-(16, 'user16', 'Lefevre', 'François'),
-(17, 'user17', 'Leclerc', 'Nicolas'),
-(18, 'user18', 'Hervé', 'Sandrine'),
-(19, 'user19', 'Fournier', 'Chantal'),
-(20, 'user20', 'Caron', 'Nathalie');
+INSERT INTO _compteMembre (idCompte, pseudo, prenom, nom) VALUES
+(1, 'JeanDarkMaster', 'Jean', 'Dupont'),
+(5, 'Sophie_MartinX', 'Martin', 'Sophie'),
+(6, 'Julien_Lemoine7', 'Julien', 'Lemoine'),
+(7, 'Claire_LeBlanc', 'Claire', 'Leblanc'),
+(8, 'Antoine_Lm_89', 'Antoine', 'Lemoins'),
+(9, 'EliseB_09', 'Élise', 'Boucher'),
+(10, 'Lucie_Thunder', 'Lucie', 'Moreau'),
+(11, 'M1chel_Girard', 'Michel', 'Girard'),
+(12, 'Izzabelle.Petit', 'Isabelle', 'Petit'),
+(13, 'Jean_R0usseau', 'Jean', 'Rousseau'),
+(14, 'Marie_GarnierX', 'Marie', 'Garnier'),
+(15, 'H3l3ne.Dufresne', 'Hélène', 'Dufresne'),
+(16, 'Francois_L3fevre', 'François', 'Lefevre'),
+(17, 'Nico_LeclercXx', 'Nicolas', 'Leclerc'),
+(18, 'Sandrine_H3rv3', 'Sandrine', 'Hervé'),
+(19, 'Ch4ntal_Fournier', 'Chantal', 'Fournier'),
+(20, 'Nathalie_Car0n', 'Nathalie', 'Caron');
 
 -- Peupler la table _comptePro
 INSERT INTO _comptePro (idCompte, denominationSociale, raisonSocialePro, banqueRib) VALUES
@@ -305,10 +305,11 @@ INSERT INTO _historiqueEnLigne(idOffre, jourDebut, jourFin) VALUES
 
 INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee) VALUES
 (1, '2024-09-09',1, 'En relief',False),
+(2, '2024-10-07',1, 'A la une' ,false),
 (4, '2024-09-23',1, 'En relief',True),
 (3, '2024-10-14',1, 'A la une',False),
 (2, '2024-12-02',1, 'A la une',false),
-(3, '2024-10-14',2, 'En relief',False),
+(4, '2024-10-14',2, 'En relief',False),
 (2, '2024-11-11',2, 'A la une' ,false),
 (4, '2024-12-02',2, 'A la une' ,false),
 (4, '2024-12-02',3, 'En relief',true),
@@ -317,6 +318,6 @@ INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAn
 (3, '2024-10-14',4, 'A la une',False);
 
 INSERT INTO _imageavis VALUES
-(9, 'test.png'),
-(11, 'baldachi.png'),
-(11, 'pearto.png');
+(9, 'parc.jpg'),
+(11, 'bat saint brieuc.jpg'),
+(11, 'gare-de-saint-brieuc.jpg');
