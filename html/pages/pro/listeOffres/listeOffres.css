@@ -241,3 +241,6 @@ input[type="range"] {
 .button-facture {
     border-radius: 0em 0em 5px 5px !important;
 }
+label.note .label-icon .svg-inline svg {
+    fill: black;
+}
