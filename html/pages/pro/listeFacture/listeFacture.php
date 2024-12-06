@@ -39,27 +39,40 @@ $factures = $sth->fetchAll();
                 </tr>
             </thead>
             <tbody>
-                <?php
-                
-
-                foreach ($factures as $facture) {
-                    $timestamp = strtotime($facture['dateprestaservices']);
-                    $date = date('F Y', $timestamp); // Format as "Month Year" in English
-                    setlocale(LC_TIME, 'fr_FR.UTF-8'); // Still needed if you want French month names
-                    $moisAnnee = date('m-Y', $timestamp);
-                    
-                    echo "<tr>";
-                    echo "<td>{$date}</td>";
-                    echo "<td><a href='renderFacture.php?idfacture={$facture['idfacture']}&idoffre={$idOffre}&mois={$moisAnnee}' target='_blank'>Télécharger ({$moisAnnee})</a></td>";
-                    echo "</tr>";
-                }
-                
-
-                ?>
+            <?php
+        foreach ($factures as $facture) {
+            $timestamp = strtotime($facture['dateprestaservices']);
+            $date = strftime('%B %Y', $timestamp); // Format as "Month Year" in French
+            setlocale(LC_TIME, 'fr_FR.UTF-8'); // Set locale to French
+            $moisAnnee = date('m-Y', $timestamp);
+            
+            echo "<tr>";
+            echo "<td>{$date}</td>";
+            echo "<td><a href='#' onclick='imprimerFacture({$facture['idfacture']}, {$idOffre}, \"{$moisAnnee}\")'>Télécharger ({$moisAnnee})</a></td>";
+            echo "</tr>";
+        }
+        ?>
             </tbody>
         </table>
+        <div id="factureContent" style="display: none;"></div>
     </main>
     <?php Footer::render(FooterType::Pro); ?>
+
+    <script>
+function imprimerFacture(idfacture, idoffre, mois) {
+    const url = `renderFacture.php?idfacture=${idfacture}&idoffre=${idoffre}&mois=${mois}`;
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('factureContent').innerHTML = html;
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(html);
+            printWindow.document.close();
+            printWindow.print();
+        });
+}
+</script>
 </body>
+
 </html>
 

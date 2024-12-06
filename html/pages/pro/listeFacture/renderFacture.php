@@ -20,3 +20,4 @@ if ($idFacture && $idOffre) {
     echo "Facture non trouvée.";
 }
 ?>
+
