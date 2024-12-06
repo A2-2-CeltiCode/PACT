@@ -19,6 +19,7 @@ class OffreHandler {
     private $offres;
     private $offresMessage;
 
+
     public function __construct($dbh, $offres, $offresMessage) {
         $this->dbh = $dbh;
         $this->offres = $offres;
