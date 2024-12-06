@@ -174,8 +174,6 @@ STRING
                 switch ($typeOffre) {
                     case 'restaurant':
                         $string = $gammeRestaurant['nomgamme'];
-
-                        // Trouver la position des parenthèses
                         $start = strpos($string, '(') + 1;
                         $end = strpos($string, ')');
 

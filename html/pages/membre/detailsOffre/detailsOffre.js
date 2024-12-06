@@ -13,6 +13,12 @@ function updateCarousel() {
     
 }
 
+
+if (images.length > 1) {
+    document.querySelector('.next').classList.remove('desactive');
+}
+
+
 document.querySelector('.next').addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % totalImages;
     updateCarousel();
