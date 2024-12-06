@@ -1,6 +1,8 @@
 <?php
 
 namespace controlleurs\Offre;
+use DateTime;
+
 class Offre
 {
     private string $nom;
@@ -12,6 +14,12 @@ class Offre
     private string $nomProprietaire;
     private string $idoffre;
     private string $option;
+    private string $ouverture;
+    private string $fermeture;
+
+    private string $prix;
+    private string $gamme;
+
 
     /**
      * @param string $nom
@@ -23,6 +31,10 @@ class Offre
      * @param string|null $duree durée de l'offre en minute
      * @param string $note
      * @param string $option
+     * @param string $ouverture
+     * @param string $fermeture
+     * @param string $prix
+     * @param string $gamme
      */
     public function __construct(string  $nom,
                                 string  $typeO,
@@ -32,7 +44,11 @@ class Offre
                                 string  $idoffre,
                                 ?string $duree,
                                 string  $note,
-                                string  $option) {
+                                string  $option,
+                                string  $ouverture,
+                                string  $fermeture,
+                                string  $prix,
+                                string  $gamme) {
         $this->nom = $nom;
         $this->typeO = str_replace([" ", "'"], '_', strtolower($typeO));
         $this->ville = $ville;
@@ -42,15 +58,45 @@ class Offre
         $this->idoffre = $idoffre;
         $this->duree = is_null($duree) ? null : intval($duree);
         $this->option = $option;
+        $this->ouverture = date("H:i", strtotime($ouverture));
+        $this->fermeture = date("H:i", strtotime($fermeture));
+        $this->prix = $prix;
+        $this->gamme = $gamme;
+
     }
 
     public function __toString(): string {
+        $texte=null;
+        $argent=null;
+        $currentTime = new DateTime();
+        $closingTime = new DateTime($this->fermeture);
+        $interval = $currentTime->diff($closingTime);
         $svgIcon = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/$this->typeO.svg");
         $svgNote = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/note.svg");
         $svgProprio = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/user.svg");
         $svgClock = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/clock.svg");
         $svgPin = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/mapPin.svg");
         $d = '';
+        
+        if ($interval->invert == 1) {
+            $texte = "Fermé";
+            $id = "ferme";
+        }else {
+            if ($interval->h < 1 && $interval->invert == 0) {
+                $id = "bientot";
+                $texte="Bientôt fermé";
+            } else{
+                $id = "ouvert";
+                $texte = "Ouvert";
+            }
+        }
+        
+        if($this->typeO != "restaurant"){
+            $argent = "$this->prix €";
+        }else{
+            $argent = $this->gamme;
+        }
+
         if (!is_null($this->duree)) {
             if ($this->duree < 60) {
                 $dureeText = "$this->duree minutes";
@@ -100,6 +146,25 @@ STRING;
             <p>$this->nomProprietaire</p>
         </div>
         $d
+        
+    </div>
+    <div>
+        
+            <div>
+            $svgClock
+                <p>$this->ouverture-</p>  
+                <p>$this->fermeture</p>              
+            </div>
+            <div>
+               <p id=$id>$texte</p>
+            </div>
+            <p>$argent</p>
+            <div>
+            </div>
+            
+        
+        
+        
     </div></a>
 </div>
 STRING;

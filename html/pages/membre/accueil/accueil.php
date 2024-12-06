@@ -43,19 +43,23 @@ try {
 
 //    $offresProchesSql = $dbh->query("select distinct vue_offres.titre AS nom, nomcategorie AS type, vue_offres.ville, nomimage as idimage, idoffre, COALESCE(ppv.denominationsociale, ppu.denominationsociale) AS nomProprio, tempsenminutes AS duree, avg(note) AS note from pact.vue_offres LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte JOIN pact.vue_avis USING (idOffre) GROUP BY nom, type, vue_offres.ville, idimage, idOffre, nomProprio, duree, nomoption");
 
-    $offresUnesSql = $dbh->query(<<<STRING
+$offresUnesSql = $dbh->query(<<<STRING
 select distinct vue_offres.titre                                                                       AS nom,
-       nomcategorie                                    AS type,
-       vue_offres.ville,
-       nomimage as idimage,
-       idoffre,
-       COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
-       tempsenminutes                                                              AS duree,
-       nomoption,
-       AVG(note) AS note
+    nomcategorie                                    AS type,
+    vue_offres.ville,
+    nomimage as idimage,
+    idoffre,
+    COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
+    tempsenminutes                                                              AS duree,
+    nomoption,
+    AVG(note) AS note,
+    heureouverture AS ouverture,
+    heurefermeture AS fermeture,
+    nomgamme,
+    valprix
 from pact.vue_offres
 LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
-         LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
+      LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
 JOIN pact.vue_avis USING (idOffre)
 WHERE nomoption = 'A la une'
 GROUP BY nom,
@@ -65,7 +69,11 @@ GROUP BY nom,
    idOffre,
    nomProprio,
    duree,
-   nomoption
+   nomoption,
+   ouverture,
+   fermeture,
+   nomgamme,
+   valprix
 STRING
     );
 
@@ -79,7 +87,11 @@ select
    COALESCE(ppv.denominationsociale,ppu.denominationsociale) AS nomProprio,
    tempsenminutes AS duree,
    nomoption,
-   AVG(note) AS note
+   AVG(note) AS note,
+   heureouverture AS ouverture,
+   heurefermeture AS fermeture,
+   nomgamme,
+   valprix
 from pact.vue_offres
    LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
    LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
@@ -91,7 +103,11 @@ GROUP BY nom,
    idOffre,
    nomProprio,
    duree,
-   nomoption
+   nomoption,
+   ouverture,
+   fermeture,
+   nomgamme,
+   valprix
 ORDER BY 9 DESC
 STRING
     );
@@ -106,15 +122,20 @@ foreach ($offresProchesSql as $item) {
     $offreProches[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
         $item['idoffre'], $item['duree'], $item['note'], $item['nomoption']);
 }*/
+
 $offreUnes = [];
 foreach ($offresUnesSql as $item) {
+    $item['nomgamme'] = $item['nomgamme'] ?? 'test';
+    $item['valprix'] = $item['valprix'] ?? 'test';
     $offreUnes[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
-        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption']);
+        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
 }
 $offresNote = [];
 foreach ($offresNoteSql as $item) {
+    $item['nomgamme'] = $item['nomgamme'] ?? 'test';
+    $item['valprix'] = $item['valprix'] ?? 'test';
     $offresNote[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
-        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption']);
+        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
 }
 ?>
 
