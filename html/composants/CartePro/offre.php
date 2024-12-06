@@ -14,24 +14,28 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Select/Select.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/CheckboxSelect/CheckboxSelect.php";
-class OffreHandler {
+class OffreHandler
+{
     private $dbh;
     private $offres;
     private $offresMessage;
 
-    public function __construct($dbh, $offres, $offresMessage) {
+    public function __construct($dbh, $offres, $offresMessage)
+    {
         $this->dbh = $dbh;
         $this->offres = $offres;
         $this->offresMessage = $offresMessage;
     }
 
-    public function getOffreHtml($offre) {
+    public function getOffreHtml($offre)
+    {
         ob_start();
         $this->displayOffre($offre);
         return ob_get_clean();
     }
 
-    public function displayOffres() {
+    public function displayOffres()
+    {
         echo '<div class="liste-offres">';
         if (!empty($this->offresMessage)) {
             echo '<p>' . $this->offresMessage . '</p>';
@@ -43,13 +47,14 @@ class OffreHandler {
         echo '</div>';
     }
 
-    private function displayOffre($offre) {
+    private function displayOffre($offre)
+    {
         $idoffre = $offre['idoffre'];
         $typeOffre = $offre['nomcategorie'];
         $typeOffre = str_replace(' ', '_', strtolower(str_replace("'", '', $typeOffre)));
-    if ($typeOffre === 'parc_dattractions') {
-        $typeOffre = 'parc_attractions';
-    }
+        if ($typeOffre === 'parc_dattractions') {
+            $typeOffre = 'parc_attractions';
+        }
         $raisonSociete = $this->getRaisonSociete($idoffre);
         $adresseTotale = $offre['ville'] . ', ' . $offre['codepostal'];
         $images = $offre['nomimage'];
@@ -82,18 +87,33 @@ class OffreHandler {
         echo '<div class="donnees-offre">';
         echo '<div class="titre">';
         if ($typeOffre === 'parc_d_attractions') {
-            Label::render('details-offre', '', '', 'Parc d\'attraction',
-                "../../../ressources/icone/parc_d_attraction.svg");
+            Label::render(
+                'details-offre',
+                '',
+                '',
+                'Parc d\'attraction',
+                "../../../ressources/icone/parc_d_attraction.svg"
+            );
         } else {
-            Label::render('details-offre', '', '', ucfirst(htmlspecialchars($typeOffre)),
-                "../../../ressources/icone/$typeOffre.svg");
+            Label::render(
+                'details-offre',
+                '',
+                '',
+                ucfirst(htmlspecialchars($typeOffre)),
+                "../../../ressources/icone/$typeOffre.svg"
+            );
         }
         echo '</div>';
         Label::render('details-offre .titre', '', '', htmlspecialchars($offre['titre']));
         echo '<div class="infos-offre">';
         Label::render('', '', '', $raisonSociete['raisonsocialepro']);
-        Label::render('', '', '', $adresseTotale,
-        "../../../ressources/icone/localisateur.svg");
+        Label::render(
+            '',
+            '',
+            '',
+            $adresseTotale,
+            "../../../ressources/icone/localisateur.svg"
+        );
         if ($interval->h < 1 && $interval->invert == 0) {
             Label::render('', '', '', 'Bientôt fermé ');
         }
@@ -102,9 +122,13 @@ class OffreHandler {
         echo '<div class="prix-offre">';
         Label::render('prix', '', '', htmlspecialchars($offre['nomforfait']));
         Label::render('', '', '', 'Option : ' . htmlspecialchars($offre['nomoption']));
-        Label::render('', '', '', 'Note : ' . number_format((float)$offre['moynotes'], 1));
-        if($offre["nomcategorie"] == "Restaurant") {
-            Label::render('', '', '', 'Prix : ' . htmlspecialchars($offre['nomgamme']));
+        Label::render('', '', '', 'Note : ' . number_format((float) $offre['moynotes'], 1));
+        if ($offre["nomcategorie"] == "Restaurant") {
+            $string = $offre['nomgamme'];
+            $start = strpos($string, '(') + 1;
+            $end = strpos($string, ')');
+            $gamme = substr($string, $start, $end - $start);
+            Label::render("", "", "", "Gamme : " . $gamme, "../../../ressources/icone/gamme.svg");
         } else {
             Label::render('', '', '', 'Prix : ' . htmlspecialchars($offre['valprix'] . ' €'));
         }
@@ -123,16 +147,17 @@ class OffreHandler {
         echo '</div>';
     }
 
-    
 
-    private function getRaisonSociete($idoffre) {
+
+    private function getRaisonSociete($idoffre)
+    {
         return $this->dbh->query('SELECT cp.raisonsocialepro FROM pact._offre o JOIN pact._comptePro cp ON o.idCompte = cp.idCompte WHERE o.idoffre = ' . $idoffre)
             ->fetch();
     }
 
 
 
-    
+
 }
 
 

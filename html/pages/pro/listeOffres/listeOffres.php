@@ -117,7 +117,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <a href="javascript:void(0);" class="onglet <?php echo ($status === 'horsligne') ? 'actif' : ''; ?>" onclick="changerStatus('horsligne')">Hors ligne</a>
     </div>
     <p id="nombreOffres">
-    <div <div class="rangement">
+    <div class="rangement">
         <br>
         
         
