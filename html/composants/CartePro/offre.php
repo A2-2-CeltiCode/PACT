@@ -46,6 +46,10 @@ class OffreHandler {
     private function displayOffre($offre) {
         $idoffre = $offre['idoffre'];
         $typeOffre = $offre['nomcategorie'];
+        $typeOffre = str_replace(' ', '_', strtolower(str_replace("'", '', $typeOffre)));
+    if ($typeOffre === 'parc_dattractions') {
+        $typeOffre = 'parc_attractions';
+    }
         $raisonSociete = $this->getRaisonSociete($idoffre);
         $adresseTotale = $offre['ville'] . ', ' . $offre['codepostal'];
         $images = $offre['nomimage'];
