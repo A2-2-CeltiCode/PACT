@@ -51,10 +51,10 @@ function getParsed(currentFrom, currentTo) {
 
   // Vérifiez si from ou to est nul et définissez une valeur par défaut
   if (isNaN(from) || from === 0) {
-    from = 1; // Valeur par défaut
+    from = 0; // Valeur par défaut
   }
   if (isNaN(to) || to === 0) {
-    to = 1; // Valeur par défaut
+    to = 0; // Valeur par défaut
   }
 
   return [from, to];
