@@ -33,7 +33,6 @@ require_once "./verifFindemois.php";
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
-session_start();
 $idCompte = $_SESSION['idCompte'];
 $status = $_GET['status'] ?? 'enligne';
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
@@ -113,7 +112,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories,$status,$note);
     ?>
     </div>
-    <div <div class="rangement">
+    <div class="rangement">
     <br>
 
 
