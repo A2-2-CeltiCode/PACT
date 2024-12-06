@@ -25,6 +25,9 @@ $factures = $sth->fetchAll();
     <meta charset="UTF-8">
     <title>Liste des Factures</title>
     <style>
+        body {
+            margin: 0 ;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
