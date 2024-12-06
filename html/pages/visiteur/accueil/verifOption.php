@@ -1,7 +1,7 @@
 <?php
 function updateAnnulationOption($pdo) {
     $today = new DateTime();
-    $sql = "SELECT idoffre, debutoption, nbsemaines FROM _annulationoption";
+    $sql = "SELECT idoffre, debutoption, nbsemaines FROM pact._annulationoption";
     $stmt = $pdo->query($sql);
     $options = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -10,7 +10,7 @@ function updateAnnulationOption($pdo) {
         $debutoption->modify('+' . $option['nbsemaines'] . ' weeks');
 
         if ($today >= $debutoption) {
-            $updateSql = "UPDATE _annulationoption SET nomoption = 'Aucune' WHERE idoffre = :idoffre";
+            $updateSql = "UPDATE pact._annulationoption SET nomoption = 'Aucune' WHERE idoffre = :idoffre";
             $updateStmt = $pdo->prepare($updateSql);
             $updateStmt->execute(['idoffre' => $option['idoffre']]);
         }

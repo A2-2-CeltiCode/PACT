@@ -1,12 +1,3 @@
-function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-}
-
-
 function rechercher() {
     const searchInput = document.querySelector('input[name="titre"]').value;
     const localisationInput = document.querySelector('input[name="localisation"]').value;
@@ -17,8 +8,8 @@ function rechercher() {
     const etatInput = document.querySelector('select[name="etat"]').value;
     const trieInput = document.querySelector('select[name="trie"]').value;
     const statusInput = document.querySelector('input[name="status"]').value;
-    const noteInput = document.querySelector('input[name="note"]').value; // Ajout de la sélection de l'input note
-    const inputNote = document.querySelector('input[name="inputnoteValue"]').value; 
+    const noteInput = document.querySelector('input[name="note"]').value; 
+    const inputNote = document.querySelector('input[name="inputnoteValue"]').value;
 
     const categoryInputs = Array.from(document.querySelectorAll('input[name="nomcategorie[]"]:checked')).map(input => input.value);
     const optionInputs = Array.from(document.querySelectorAll('input[name="option[]"]:checked')).map(input => input.value);
@@ -48,7 +39,6 @@ function rechercher() {
                 const resultatsContainer = document.getElementById('resultats');
                 resultatsContainer.innerHTML = response.offres.join('');
                 document.getElementById('nombreOffres').innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
-                // Réappliquer les styles CSS si nécessaire
                 applyStyles();
             } catch (e) {
                 console.error('Erreur lors du traitement de la réponse JSON:', e);
@@ -68,23 +58,18 @@ function applyStyles() {
 }
 
 function changerStatus(nouveauStatus) {
-    // Mettre à jour la classe des onglets
     document.querySelectorAll('.onglet').forEach(onglet => {
         onglet.classList.remove('actif');
     });
 
-    // Ajouter la classe actif à l'onglet cliqué
     event.target.classList.add('actif');
 
-    // Mettre à jour le statut dans l'URL sans recharger la page
     const url = new URL(window.location);
     url.searchParams.set('status', nouveauStatus);
     window.history.pushState({}, '', url);
 
-    // Mettre à jour le champ caché status
     document.querySelector('input[name="status"]').value = nouveauStatus;
 
-    // Appeler la fonction rechercher
     rechercher();
 }
 
@@ -101,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const statusInput = document.querySelector('input[name="status"]');
     const categoryInputs = document.querySelectorAll('input[name="nomcategorie[]"]');
     const optionInputs = document.querySelectorAll('input[name="option[]"]');
-    const noteInput = document.querySelector('input[name="note"]'); // Ajout de l'input note
+    const noteInput = document.querySelector('input[name="note"]');
     const inputNote = document.querySelector('input[name="inputnoteValue"]');
 
     searchInput.addEventListener('input', function () {
@@ -112,13 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
         rechercher();
     });
 
-    minPrixInput.addEventListener('input', debounce(function () {
+    minPrixInput.addEventListener('mouseout', function () {
         rechercher();
-    }, 10));
+    });
 
-    maxPrixInput.addEventListener('input', debounce(function () {
+    maxPrixInput.addEventListener('mouseout', function () {
         rechercher();
-    }, 10));
+    });
 
     ouvertureInput.addEventListener('input', function () {
         rechercher();
@@ -152,17 +137,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    noteInput.addEventListener('input', function () { // Ajout de l'écouteur d'événement pour l'input note
+    noteInput.addEventListener('mouseout', function () {
         rechercher();
     });
 
-
-    inputNote.addEventListener('input', function () {
+    inputNote.addEventListener('mouseout', function () {
         rechercher();
     });
 
     form.addEventListener('submit', function (event) {
-        event.preventDefault(); // Empêche le rechargement de la page
+        event.preventDefault();
         rechercher();
     });
 });
