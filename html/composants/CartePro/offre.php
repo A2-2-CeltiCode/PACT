@@ -19,7 +19,6 @@ class OffreHandler {
     private $offres;
     private $offresMessage;
 
-
     public function __construct($dbh, $offres, $offresMessage) {
         $this->dbh = $dbh;
         $this->offres = $offres;
@@ -47,6 +46,10 @@ class OffreHandler {
     private function displayOffre($offre) {
         $idoffre = $offre['idoffre'];
         $typeOffre = $offre['nomcategorie'];
+        $typeOffre = str_replace(' ', '_', strtolower(str_replace("'", '', $typeOffre)));
+    if ($typeOffre === 'parc_dattractions') {
+        $typeOffre = 'parc_attractions';
+    }
         $raisonSociete = $this->getRaisonSociete($idoffre);
         $adresseTotale = $offre['ville'] . ', ' . $offre['codepostal'];
         $images = $offre['nomimage'];
@@ -91,22 +94,16 @@ class OffreHandler {
         echo '<div class="prix-offre">';
         Label::render('prix', '', '', htmlspecialchars($offre['nomforfait']));
         Label::render('', '', '', 'Option : ' . htmlspecialchars($offre['nomoption']));
-        Label::render('note', '', '', number_format((float)$offre['moynotes'], 1), "../../../ressources/icone/etoile_pleine.svg");
-        if($offre["nomcategorie"] == "Restaurant") {
-            Label::render('', '', '', 'Prix : ' . htmlspecialchars($offre['nomgamme']));
-        } else {
-            Label::render('', '', '', 'Prix : ' . htmlspecialchars($offre['valprix'] . ' €'));
-        }
         echo '</div>';
         echo '</div>';
         echo '<div class="button-container">';
-        echo '<form action="../listeFacture/listeFacture.php" method="POST class="buttonCarte">';
-        echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
-        Button::render("button-facture", "", "Facture", ButtonType::Pro, "", true);
-        echo '</form>';
-        echo '<form action="../modifierOffre/modifierOffre.php" method="POST" class="buttonCarte">';
+        echo '<form action="../modifierOffre/modifierOffre.php" method="POST">';
         echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
         Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true);
+        echo '</form>';
+        echo '<form action="../listeFacture/listeFacture.php" method="POST">';
+        echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
+        Button::render("button-facture", "", "Facture", ButtonType::Pro, "", true);
         echo '</form>';
         echo '</div>';
         echo '</div>';
