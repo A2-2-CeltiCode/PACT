@@ -13,7 +13,7 @@ body {
 }
 
 .offre {
-    border: 2px solid var(--gris3);
+    border: 2px solid var(--gris2);
     border-radius: 5px;
     display: inline-block;
 
