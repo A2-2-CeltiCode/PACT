@@ -93,13 +93,13 @@ class OffreHandler {
         echo '</div>';
         echo '</div>';
         echo '<div class="button-container">';
-        echo '<form action="../modifierOffre/modifierOffre.php" method="POST">';
-        echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
-        Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true);
-        echo '</form>';
-        echo '<form action="../listeFacture/listeFacture.php" method="POST">';
+        echo '<form action="../listeFacture/listeFacture.php" method="POST class="buttonCarte">';
         echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
         Button::render("button-facture", "", "Facture", ButtonType::Pro, "", true);
+        echo '</form>';
+        echo '<form action="../modifierOffre/modifierOffre.php" method="POST" class="buttonCarte">';
+        echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
+        Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true);
         echo '</form>';
         echo '</div>';
         echo '</div>';

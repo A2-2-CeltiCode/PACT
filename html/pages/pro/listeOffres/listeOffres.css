@@ -137,6 +137,7 @@ body {
 }
 
 .button-container {
+    display: flex;
     position: absolute;
     top: 0em;
     right: 0em;
@@ -232,4 +233,12 @@ input[type="range"] {
 
 .sliders_control{
     min-height: 20px !important;
+}
+
+.buttonCarte{
+    margin:  0 0 0 10px !important;
+}
+
+.button-facture {
+    border-radius: 0em 0em 5px 5px !important;
 }
