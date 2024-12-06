@@ -6,23 +6,23 @@ body {
 }
 
 .container {
-    width: fit-content;
-    font-size: 14px;
-    padding: 20px;
-    max-width: 70em;
     margin: 0 auto;
-    margin-bottom: 5em;
+    width: 22vw;
+    font-size: 14px;
+    padding: 20px 20px 5px 20px;
+    width: 60vw;
     display: flex;
-    gap: 20px;
-    background: var(--white);
+    gap: 10px;
+    background: var(--blanc);
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+
 .carousel {
     background-color: var(--gris1);
-    width: 25em;
-    height: 25em;
+    width: 22em;
+    height: 22em;
     position: relative;
     border-radius: 10px;
     overflow: hidden;
@@ -34,17 +34,15 @@ body {
 .carousel-images {
     display: flex;
     transition: transform 0.3s ease;
-    width: 25em;
-    height: 25em;
+    width: 22em;
+    height: 22em;
 }
 
 .carousel-image {
-    min-width: 25em;
-    min-height: 25em;
     display: grid;
     place-items: center;
-    width: 25em;
-    height: 25em;
+    width: 22em;
+    height: 22em;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -64,14 +62,14 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 3vw;
+    height: 3vw;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 20px;
-    color: white;
+    color: var(--blanc);
     opacity: 0;
     transition: opacity 0.3s ease, background-color 0.3s ease;
 }
@@ -93,7 +91,8 @@ body {
 }
 
 .offre-infos {
-    width: 45%;
+    display: flex;
+    flex-direction: column;
 }
 
 .offre-info>label {
@@ -105,7 +104,15 @@ body {
     font-size: var(--p-large-font-size);
 }
 
+.container-gauche {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .offre-detail {
+    padding: 0 0 0 10px;
     align-items: baseline;
     height: fit-content;
     color: var(--gris3);
@@ -119,6 +126,7 @@ body {
 }
 
 .titre {
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -154,14 +162,13 @@ header a:hover {
 }
 
 ul {
-    padding: 0;
+    padding: 0 0 0 4px;
     margin: 0;
 }
 
 li {
     list-style: none;
 }
-
 .offre-package-modification {
     display: flex;
     flex-direction: column;

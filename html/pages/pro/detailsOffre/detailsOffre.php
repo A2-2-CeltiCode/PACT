@@ -27,13 +27,10 @@ try {
         $imagesAvis[$avi['idavis']] = $img;
     }
 
-    // Requête pour obtenir le type d'offre
-    $stmt = $dbh->prepare('SELECT nomcategorie FROM (SELECT nomcategorie FROM pact.vue_spectacle WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_restaurant WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_parc_attractions WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_activite WHERE idoffre = :idOffre UNION ALL SELECT nomcategorie FROM pact.vue_visite WHERE idoffre = :idOffre) AS categories');
-    $stmt->execute([':idOffre' => $idOffre]);
-    $typeOffre = $stmt->fetchColumn();
+    $offre = $dbh->query('SELECT * FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
+    $typeOffre = $dbh->query('SELECT type_offre FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
 
-    // Normalisation du type d'offre
-    $typeOffre = str_replace(' ', '_', strtolower(str_replace("'", '', $typeOffre)));
+    $typeOffre = str_replace(' ', '_', strtolower(str_replace("'", '', $typeOffre['type_offre'])));
     if ($typeOffre === 'parc_dattractions') {
         $typeOffre = 'parc_attractions';
     }
@@ -52,12 +49,12 @@ try {
     $nbAttraction = $dbh->query('SELECT nbattractions FROM pact.vue_parc_attractions WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $gammeRestaurant = $dbh->query('SELECT nomgamme FROM pact.vue_restaurant WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $minutesSpectacle = $dbh->query('SELECT tempsenminutes FROM pact.vue_spectacle WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $offre = $dbh->query('SELECT * FROM pact.vue_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $adresse = $dbh->query('SELECT codepostal, ville, rue FROM pact._offre NATURAL JOIN pact._adresse WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $tags = $dbh->query('SELECT * FROM pact.vue_tags_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
-    $images = $dbh->query('SELECT _image.idImage, _image.nomImage FROM pact._image JOIN pact._offre ON _image.idOffre = _offre.idOffre WHERE _offre.idOffre = ' . $idOffre . ' AND _image.idImage NOT IN (SELECT _parcAttractions.carteParc FROM pact._parcAttractions WHERE idOffre = _offre.idOffre) AND _image.idImage NOT IN (SELECT _restaurant.menuRestaurant FROM pact._restaurant WHERE idOffre = _offre.idOffre)', PDO::FETCH_ASSOC)->fetchAll();
+    $images = $dbh->query('SELECT idImage, nomImage FROM pact._image WHERE idOffre = ' . "'$idOffre'", PDO::FETCH_ASSOC)->fetchAll();
     $carte = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._parcAttractions JOIN pact._image ON pact._parcAttractions.carteParc = pact._image.idImage WHERE pact._parcAttractions.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $menu = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._restaurant JOIN pact._image ON pact._restaurant.menuRestaurant = pact._image.idImage WHERE pact._restaurant.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
+    $horaires = substr($offre['heureouverture'], 0, 5) . " - " . substr($offre['heurefermeture'], 0, 5);
     // Vérification de l'existence de l'offre
     if (!$offre) {
         throw new Exception("Aucune offre trouvée");
@@ -71,6 +68,7 @@ try {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -82,7 +80,9 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <?php Header::render(HeaderType::Pro); ?>
-<button class="retour"><a href="../listeOffres/listeOffres.php"><img src="../../../ressources/icone/arrow_left.svg"></a></button>
+<button class="retour"><a href="../listeOffres/listeOffres.php"><img
+            src="../../../ressources/icone/arrow_left.svg"></a></button>
+
 <body>
     <div class=titre>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
@@ -99,12 +99,16 @@ try {
                     foreach ($images as $imageArray):
                         $path_img = "../../../ressources/" . $idOffre . "/images/" . $imageArray['nomimage'];
                         if (!file_exists($path_img)): ?>
-                            <div class="carousel-image pas-images"><svg xmlns="http://www.w3.org/2000/svg" height="10em" viewBox="0 -960 960 960" width="10em" fill="#000000">
-                                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z" />
+                            <div class="carousel-image pas-images"><svg xmlns="http://www.w3.org/2000/svg" height="10em"
+                                    viewBox="0 -960 960 960" width="10em" fill="#000000">
+                                    <path
+                                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z" />
                                 </svg></div>
 
                         <?php else: ?>
-                            <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>" class="carousel-image">
+                            
+                            <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>"
+                            class="carousel-image">
                         <?php endif ?>
                     <?php endforeach; ?>
                 </div>
@@ -129,6 +133,8 @@ try {
             </div>
             <?php Label::render("offre-option", "", "", "" . $offre['numtel'], "../../../ressources/icone/telephone.svg"); ?>
             <?php
+
+            Label::render("", "", "", $horaires, "../../../ressources/icone/horloge.svg");
             // Affichage du site internet de l'offre
             Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
 
@@ -139,18 +145,25 @@ try {
             }
             $tagsString = rtrim($tagsString, ', ');
             if (!empty($tagsString)) {
-            ?><br><?php
-                    Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
-                    ?><br><?php
-                        }
-                        Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
-                            ?>
+                ?><br><?php
+                Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
+                ?><br><?php
+            }
+            Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
+            ?>
             <ul>
                 <?php
                 // Affichage des informations spécifiques en fonction du type d'offre
                 switch ($typeOffre) {
                     case 'restaurant':
-                        Label::render("", "", "", "Gamme Restaurant: " . $gammeRestaurant['nomgamme'], "../../../ressources/icone/gamme.svg");
+                        $string = $gammeRestaurant['nomgamme'];
+
+                        // Trouver la position des parenthèses
+                        $start = strpos($string, '(') + 1;
+                        $end = strpos($string, ')');
+
+                        $gamme = substr($string, $start, $end - $start);
+                        Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg");
                         break;
                     case 'spectacle':
                         Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
@@ -202,7 +215,7 @@ try {
                 case 'default':
                     break;
             }
-            */?>
+            */ ?>
         </div>
 
 
@@ -266,13 +279,13 @@ try {
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <img src="" id="modal-image"/>
+                <img src="" id="modal-image" />
             </div>
         </div>
     </div>
 
     <script src="detailsOffre.js"></script>
-<?php Footer::render(FooterType::Pro); ?>
+    <?php Footer::render(FooterType::Pro); ?>
 </body>
 
 </html>
