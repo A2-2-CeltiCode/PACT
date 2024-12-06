@@ -146,6 +146,7 @@ class Header
             <select class="selecteur-profil ' . $profileClass . '" id="selecteur-profil" onchange="window.location.href =this.value;" onclick="toggleArrow()">
                 <option value="default" hidden id="profile-option">Mon compte ▼</option>
                 <option value="' . $chemin . '">Accéder à mon Espace</option>
+                <option value="' . "/pages/membre/listeAvis/listeAvis.php" . '">Voir mes Avis</option>
                 <option value="/deconnexion.php">Déconnexion</option>
             </select>
         </div>';
