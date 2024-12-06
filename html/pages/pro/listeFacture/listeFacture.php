@@ -23,24 +23,9 @@ $factures = $sth->fetchAll();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/pages/pro/listeFacture/listeFacture.css">
+    <link rel="stylesheet" href="../../../ui.css">
     <title>Liste des Factures</title>
-    <style>
-        body {
-            margin: 0 ;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
     <?php Header::render(HeaderType::Pro); ?>
@@ -58,16 +43,18 @@ $factures = $sth->fetchAll();
                 
 
                 foreach ($factures as $facture) {
-                    
-                    setlocale(LC_TIME, 'fr_FR.UTF-8');
-                    $date = strftime('%B %Y', strtotime($facture['dateprestaservices']));
-                    $moisAnnee = date('m-Y', strtotime($facture['dateprestaservices']));
+                    $timestamp = strtotime($facture['dateprestaservices']);
+                    $date = date('F Y', $timestamp); // Format as "Month Year" in English
+                    setlocale(LC_TIME, 'fr_FR.UTF-8'); // Still needed if you want French month names
+                    $moisAnnee = date('m-Y', $timestamp);
                     
                     echo "<tr>";
                     echo "<td>{$date}</td>";
                     echo "<td><a href='renderFacture.php?idfacture={$facture['idfacture']}&idoffre={$idOffre}&mois={$moisAnnee}' target='_blank'>Télécharger ({$moisAnnee})</a></td>";
                     echo "</tr>";
                 }
+                
+
                 ?>
             </tbody>
         </table>
