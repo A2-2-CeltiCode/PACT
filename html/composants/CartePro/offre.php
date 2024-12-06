@@ -53,6 +53,11 @@ class OffreHandler {
         $raisonSociete = $this->getRaisonSociete($idoffre);
         $adresseTotale = $offre['ville'] . ', ' . $offre['codepostal'];
         $images = $offre['nomimage'];
+        $fermeture = $offre['heurefermeture'];
+        $currentTime = new DateTime();
+        $closingTime = new DateTime($fermeture);
+        $interval = $currentTime->diff($closingTime);
+
         echo '<div class="carte-offre" onclick="document.getElementById(\'form-' . $idoffre . '\').submit();">';
         echo '<form id="form-' . $idoffre . '" action="../detailsOffre/detailsOffre.php" method="POST">';
         echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
@@ -88,7 +93,10 @@ class OffreHandler {
         echo '<div class="infos-offre">';
         Label::render('', '', '', $raisonSociete['raisonsocialepro']);
         Label::render('', '', '', $adresseTotale,
-            "../../../ressources/icone/localisateur.svg");
+        "../../../ressources/icone/localisateur.svg");
+        if ($interval->h < 1 && $interval->invert == 0) {
+            Label::render('', '', '', 'Bientôt fermé ');
+        }
         echo '</div>';
         echo '</div>';
         echo '<div class="prix-offre">';
