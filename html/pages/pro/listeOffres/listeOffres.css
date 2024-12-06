@@ -204,6 +204,7 @@ section {
 
 
 .form_control{
+    font-family: 'Inter', sans-serif;
     justify-content: space-evenly !important;
     color: var(--secondaire-pro) !important;
 }
