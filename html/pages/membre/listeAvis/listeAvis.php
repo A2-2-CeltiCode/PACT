@@ -69,7 +69,7 @@ try {
                 <div class="avi">
                         <p class="avi-title">
                             <?php echo $avi["titre"] . " de " . $avi["denominationsociale"] ?>
-                        </p>
+                        </p>    
                     <div>    
                         <p class="avi-title">
                             <?= $avi["nomavis"] ?>
