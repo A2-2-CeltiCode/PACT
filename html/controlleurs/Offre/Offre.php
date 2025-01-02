@@ -68,7 +68,7 @@ class Offre
     public function __toString(): string {
         $texte=null;
         $argent=null;
-        $currentTime = new DateTime();
+        $currentTime = new DateTime('now', new \DateTimeZone('Europe/Paris'));
         $closingTime = new DateTime($this->fermeture);
         $interval = $currentTime->diff($closingTime);
         $svgIcon = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/$this->typeO.svg");
@@ -78,7 +78,7 @@ class Offre
         $svgPin = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/mapPin.svg");
         $d = '';
         
-        if ($interval->invert == 1) {
+        if ($interval->invert == 1 || ($interval->h == 0 && $interval->i > 0)) {
             $texte = "Fermé";
             $id = "ferme";
         }else {
