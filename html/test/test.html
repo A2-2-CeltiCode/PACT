@@ -7,10 +7,20 @@
     <link rel="stylesheet" href="test.css">
 </head>
 <body>
-    <input type="text" id="ville" placeholder="Entrez une ville" onkeyup="suggestVilles()">
-    <div id="suggestions"></div>
-    <div id="coordinates"></div>
-    <button onclick="validateVille()">Valider</button>
+    <form id="villeForm" action="/submit" method="POST">
+        <div>
+        <input type="text" id="ville" name="ville" placeholder="Entrez une ville" onkeyup="suggestVilles()">
+        <div id="suggestions"></div>
+        </div>
+        <input type="text" id="postcode" name="postcode" placeholder="Code postal">
+        <div>
+        <input type="text" id="adresse" name="adresse" placeholder="Entrez une adresse" onkeyup="suggestAdresses()">
+        <div id="adresseSuggestions"></div>
+        </div>
+        <input type="hidden" id="longitude" name="longitude">
+        <input type="hidden" id="latitude" name="latitude">
+        <button type="button" onclick="validateVille()">Valider</button>
+    </form>
 
     <script src="test.js"></script>
 </body>

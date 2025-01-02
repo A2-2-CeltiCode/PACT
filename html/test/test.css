@@ -1,4 +1,4 @@
-#suggestions {
+#suggestions, #adresseSuggestions {
     border: 1px solid #ccc;
     max-height: 150px;
     overflow-y: auto;
@@ -7,11 +7,11 @@
     z-index: 1000;
 }
 
-#suggestions div {
+#suggestions div, #adresseSuggestions div {
     padding: 10px;
     cursor: pointer;
 }
 
-#suggestions div:hover {
+#suggestions div:hover, #adresseSuggestions div:hover {
     background-color: #f0f0f0;
 }

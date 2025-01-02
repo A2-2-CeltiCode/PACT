@@ -21,7 +21,7 @@ form{
 }
 
 div{
-    margin: 5px
+    margin: 5px 0px
 }   
 
 
@@ -119,10 +119,29 @@ article{
 .btns{padding: 1em;}    
 
 .input-wrapper {
-    width: 90% !important;
+    width: 100% !important;
 }
 
 #selected-values{
     display: flex;
     flex-direction: column;
+}
+
+#suggestions, #adresseSuggestions {
+    
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    position: absolute;
+    z-index: 1000;
+}
+
+#suggestions div, #adresseSuggestions div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+#suggestions div:hover, #adresseSuggestions div:hover {
+    background-color: #f0f0f0;
 }
