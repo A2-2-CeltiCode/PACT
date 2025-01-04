@@ -114,22 +114,22 @@ INSERT INTO _compteProPublic (idCompte) VALUES
 (3),(4);
 
 -- Peupler la table _offre
-INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
-(2, 'En relief', 'Standard', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 2,'2024-09-13','06:00','17:00'),
-(2, 'A la une', 'Premium', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 3,'2024-10-01','07:00','16:00'),
-(2, 'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 4,'2024-12-02','08:00','15:00'),
-(2, 'Aucune', 'Standard', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 5,'2024-09-15','17:00','01:00'),
-(3, 'Aucune', 'Gratuit', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 6,'2024-07-08','02:00','14:00'),
-(3, 'Aucune', 'Gratuit', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 7,'2023-11-14','00:00','10:00'),
-(3, 'Aucune', 'Gratuit', 'Visite guidée de Brest', 'Explorez la ville portuaire de Brest', 'Visite de la rade, du château et du musée de la Marine', 'http://example.com/brest', TRUE, 27, '2024-04-05', '09:00', '17:00'),
-(3, 'Aucune', 'Gratuit', 'Spectacle à Quiberon', 'Incroyable spectacle de marionnettes à Quiberon', '', '', FALSE, 28, '2024-06-15', '10:00', '18:00'),
-(3, 'Aucune', 'Gratuit', 'Montagnes Russes à Perros-Guirec', 'Explorez les côtes bretonnes en kayak', 'Balade guidée le long des côtes rocheuses', 'http://example.com/perrosguirec', TRUE, 29, '2024-07-10', '08:00', '20:00'),
-(4, 'Aucune', 'Gratuit', 'Randonnée sur le GR34 à Saint-Malo', 'Partez sur les sentiers côtiers', 'Randonnée le long de la côte avec vues magnifiques', 'http://example.com/saintmalo', FALSE, 30, '2024-08-01', '07:00', '21:00'),
-(4, 'Aucune', 'Gratuit', 'Balade en bateau à Douarnenez', 'Découvrez le port de Douarnenez et ses alentours', 'Excursion en bateau dans la baie', 'http://example.com/douarnenez', TRUE, 31, '2024-09-15', '10:00', '18:00'),
-(4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire maritime', 'Exposition de l''histoire de la pêche et de la mer', 'http://example.com/paimpol', TRUE, 32, '2024-10-20', '09:00', '19:00'),
-(4, 'Aucune', 'Gratuit', 'Restaurant à Rennes', 'Goûtez aux spécialités bretonnes à Rennes', 'Dégustation de crêpes, galettes et cidre local', 'http://example.com/rennes', FALSE, 33, '2024-11-10', '11:00', '16:00'),
-(4, 'Aucune', 'Gratuit', 'Visite de Vannes', 'Explorez la beauté de Vannes', '', 'http://example.com/cotesarmor', TRUE, 34, '2024-12-01', '08:00', '18:00'),
-(4, 'Aucune', 'Gratuit', 'Restaurant exotique de Rennes', 'Goutez aux spécialités tropicales', '', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00');
+INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture, longitude, latitude) VALUES
+(2, 'En relief', 'Standard', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 2,'2024-09-13','06:00','17:00', -2.760847, 48.514370),
+(2, 'A la une', 'Premium', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 3,'2024-10-01','07:00','16:00', -3.833333, 48.583333),
+(2, 'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 4,'2024-12-02','08:00','15:00', -4.486076, 48.390394),
+(2, 'Aucune', 'Standard', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 5,'2024-09-15','17:00','01:00', -2.025674, 48.649337),
+(3, 'Aucune', 'Gratuit', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 6,'2024-07-08','02:00','14:00', -3.366667, 47.75),
+(3, 'Aucune', 'Gratuit', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 7,'2023-11-14','00:00','10:00', -4.096944, 47.996111),
+(3, 'Aucune', 'Gratuit', 'Visite guidée de Brest', 'Explorez la ville portuaire de Brest', 'Visite de la rade, du château et du musée de la Marine', 'http://example.com/brest', TRUE, 27, '2024-04-05', '09:00', '17:00', -4.486076, 48.390394),
+(3, 'Aucune', 'Gratuit', 'Spectacle à Quiberon', 'Incroyable spectacle de marionnettes à Quiberon', '', '', FALSE, 28, '2024-06-15', '10:00', '18:00', -3.121944, 47.482778),
+(3, 'Aucune', 'Gratuit', 'Montagnes Russes à Perros-Guirec', 'Explorez les côtes bretonnes en kayak', 'Balade guidée le long des côtes rocheuses', 'http://example.com/perrosguirec', TRUE, 29, '2024-07-10', '08:00', '20:00', -3.445833, 48.815833),
+(4, 'Aucune', 'Gratuit', 'Randonnée sur le GR34 à Saint-Malo', 'Partez sur les sentiers côtiers', 'Randonnée le long de la côte avec vues magnifiques', 'http://example.com/saintmalo', FALSE, 30, '2024-08-01', '07:00', '21:00', -2.025674, 48.649337),
+(4, 'Aucune', 'Gratuit', 'Balade en bateau à Douarnenez', 'Découvrez le port de Douarnenez et ses alentours', 'Excursion en bateau dans la baie', 'http://example.com/douarnenez', TRUE, 31, '2024-09-15', '10:00', '18:00', -4.331667, 48.095833),
+(4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire maritime', 'Exposition de l''histoire de la pêche et de la mer', 'http://example.com/paimpol', TRUE, 32, '2024-10-20', '09:00', '19:00', -3.043056, 48.780833),
+(4, 'Aucune', 'Gratuit', 'Restaurant à Rennes', 'Goûtez aux spécialités bretonnes à Rennes', 'Dégustation de crêpes, galettes et cidre local', 'http://example.com/rennes', FALSE, 33, '2024-11-10', '11:00', '16:00', -1.677793, 48.117266),
+(4, 'Aucune', 'Gratuit', 'Visite de Vannes', 'Explorez la beauté de Vannes', '', 'http://example.com/cotesarmor', TRUE, 34, '2024-12-01', '08:00', '18:00', -2.760847, 48.514370),
+(4, 'Aucune', 'Gratuit', 'Restaurant exotique de Rennes', 'Goutez aux spécialités tropicales', '', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00', -1.677793, 48.117266);
 
 -- Peupler la table _image
 INSERT INTO _image (idOffre, nomImage) VALUES

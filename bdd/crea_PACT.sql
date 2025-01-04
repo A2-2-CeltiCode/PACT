@@ -159,6 +159,8 @@ CREATE TABLE _offre(
     creaDate                DATE DEFAULT CURRENT_TIMESTAMP,
     heureOuverture          TIME NOT NULL,
     heureFermeture          TIME NOT NULL,
+    longitude               NUMERIC(9,6),
+    latitude                NUMERIC(9,6),
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
@@ -465,4 +467,39 @@ CREATE TABLE _possedeRestaurant (
     CONSTRAINT possedeRestaurant_fk_tagRestaurant FOREIGN KEY (nomTag)
         REFERENCES _tagRestaurant(nomTag)
 );
+
+-- ...existing code...
+
+CREATE OR REPLACE VIEW vue_offres AS
+SELECT 
+    o.idOffre,
+    o.titre,
+    o.description,
+    o.descriptionDetaillee,
+    o.siteInternet,
+    o.estEnLigne,
+    o.creaDate,
+    o.heureOuverture,
+    o.heureFermeture,
+    o.longitude,
+    o.latitude,
+    a.codePostal,
+    a.ville,
+    a.rue,
+    a.numTel,
+    c.email,
+    c.mdp,
+    cp.denominationSociale,
+    cp.raisonSocialePro,
+    cp.banqueRib
+FROM 
+    _offre o
+JOIN 
+    _adresse a ON o.idAdresse = a.idAdresse
+JOIN 
+    _compte c ON o.idCompte = c.idCompte
+JOIN 
+    _comptePro cp ON c.idCompte = cp.idCompte;
+
+-- ...existing code...
 
