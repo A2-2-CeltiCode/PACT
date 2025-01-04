@@ -106,9 +106,13 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch(`https://api-adresse.data.gouv.fr/search/?q=${input}&type=municipality`)
+        fetch(`https://api-adresse.data.gouv.fr/search/?q=${input}&type=municipality&limit=10`)
             .then(response => response.json())
             .then(data => {
+                if (data.features.length === 0) {
+                    document.getElementById('suggestions').innerHTML = '<div>Aucune ville trouvée</div>';
+                    return;
+                }
                 validCities = data.features.map(feature => feature.properties.city.toLowerCase());
                 cityCoordinates = data.features.reduce((acc, feature) => {
                     acc[feature.properties.city.toLowerCase()] = feature.geometry.coordinates;
@@ -134,23 +138,33 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('longitude').value = lon;
         document.getElementById('latitude').value = lat;
         document.getElementById('postcode').value = postcode;
-        selectedCity = city;
+        selectedCity = city.toLowerCase();
     }
 
     function suggestAdresses() {
         const input = document.getElementById('adresse').value.toLowerCase();
-        if (input.length < 3 || !selectedCity) {
+        const ville = document.getElementById('ville').value.toLowerCase();
+        const postcode = document.getElementById('postcode').value;
+        if (input.length < 3 || !selectedCity || ville !== selectedCity || !postcode) {
             document.getElementById('adresseSuggestions').innerHTML = '';
             return;
         }
 
-        fetch(`https://api-adresse.data.gouv.fr/search/?q=${input}&city=${selectedCity}`)
+        fetch(`https://api-adresse.data.gouv.fr/search/?q=${input}&postcode=${postcode}&limit=100`)
             .then(response => response.json())
             .then(data => {
-                const suggestions = data.features.map(feature => {
-                    const address = feature.properties.name;
-                    return `<div onclick="selectAdresse('${address}')">${address}</div>`;
-                }).join('');
+                if (data.features.length === 0) {
+                    document.getElementById('adresseSuggestions').innerHTML = '<div>Aucune adresse trouvée</div>';
+                    return;
+                }
+                const suggestions = data.features
+                    .filter(feature => feature.properties.city.toLowerCase() === selectedCity)
+                    .map(feature => {
+                        const address = feature.properties.name;
+                        const street = feature.properties.street || '';
+                        const housenumber = feature.properties.housenumber || '';
+                        return `<div onclick="selectAdresse('${housenumber} ${street} ${address}')">${housenumber} ${street} ${address}</div>`;
+                    }).join('');
                 document.getElementById('adresseSuggestions').innerHTML = suggestions;
             })
             .catch(error => console.error('Erreur:', error));
@@ -159,6 +173,18 @@ document.addEventListener("DOMContentLoaded", function () {
     function selectAdresse(address) {
         document.getElementById('adresse').value = address;
         document.getElementById('adresseSuggestions').innerHTML = '';
+
+        // Récupérer les coordonnées de l'adresse exacte
+        fetch(`https://api-adresse.data.gouv.fr/search/?q=${address}&limit=1`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.features.length > 0) {
+                    const coordinates = data.features[0].geometry.coordinates;
+                    document.getElementById('longitude').value = coordinates[0];
+                    document.getElementById('latitude').value = coordinates[1];
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
     }
 
     function validateVille() {
@@ -199,3 +225,4 @@ document.addEventListener("DOMContentLoaded", function () {
     window.toggleDropdown = toggleDropdown;
     window.validateForm = validateForm;
 });
+
