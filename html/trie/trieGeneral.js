@@ -150,3 +150,33 @@ document.addEventListener('DOMContentLoaded', function () {
         rechercher();
     });
 });
+
+
+document.getElementById('rechercherProximite').addEventListener('click', function() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        fetch(window.location.href, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ latitude, longitude })
+        }).then(response => {
+            if (response.headers.get('content-type').includes('application/json')) {
+                return response.json();
+            } else {
+                throw new Error('La réponse du serveur n\'est pas au format JSON');
+            }
+        })
+        .then(data => {
+            // Handle the data received from the server
+            const resultatsContainer = document.getElementById('resultats');
+            resultatsContainer.innerHTML = data.offres.join('');
+            document.getElementById('nombreOffres').innerHTML = `Nombre d'offres affichées : ${data.nombreOffres}`;
+            applyStyles();
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});

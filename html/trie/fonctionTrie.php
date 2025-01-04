@@ -1,13 +1,13 @@
 <?php
 
-function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix = null, $titre = null, $nomcategories = [], $ouverture = null, $fermeture = null, $localisation = null, $etat = null, $estenligne = null, $idcompte = null,$note=null,$option=[]) {
-    $sql = "SELECT * FROM pact.vue_offres WHERE 1=1";
+function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix = null, $titre = null, $nomcategories = [], $ouverture = null, $fermeture = null, $localisation = null, $etat = null, $estenligne = null, $idcompte = null, $note = null, $option = [], $latitude = null, $longitude = null) {
+    $sql = "SELECT *, (6371 * acos(cos(radians(:latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(latitude)))) AS distance FROM pact.vue_offres WHERE 1=1";
 
     // Ajout des filtres
-    if ($minPrix !== null && $minPrix !== ''&& $minPrix != 0) {
+    if ($minPrix !== null && $minPrix !== '' && $minPrix != 0) {
         $sql .= " AND valprix >= :minPrix";
     }
-    if ($maxPrix !== null && $maxPrix !== ''&& $maxPrix != 100) {
+    if ($maxPrix !== null && $maxPrix !== '' && $maxPrix != 100) {
         $sql .= " AND valprix <= :maxPrix";
     }
     if ($titre !== null && $titre !== '') {
@@ -89,6 +89,9 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     if ($idcompte !== null && $idcompte !== '') {
         $sql .= " AND idcompte = :idcompte";
     }
+    if ($latitude !== null && $longitude !== null) {
+        $sql .= " HAVING distance < 100"; // Filtrer les offres dans un rayon de 100 km
+    }
 
     // Ajout du tri
     $sql .= " ORDER BY " . $sort;
@@ -96,10 +99,10 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
     $stmt = $pdo->prepare($sql);
 
     // Liaison des paramètres
-    if ($minPrix !== null && $minPrix !== ''&& $minPrix != 0) {
+    if ($minPrix !== null && $minPrix !== '' && $minPrix != 0) {
         $stmt->bindValue(':minPrix', $minPrix, PDO::PARAM_INT);
     }
-    if ($maxPrix !== null && $maxPrix !== ''&& $maxPrix != 100) {
+    if ($maxPrix !== null && $maxPrix !== '' && $maxPrix != 100) {
         $stmt->bindValue(':maxPrix', $maxPrix, PDO::PARAM_INT);
     }
     if ($titre !== null && $titre !== '') {
@@ -125,6 +128,10 @@ function getOffres(PDO $pdo, $sort = 'idoffre DESC', $minPrix = null, $maxPrix =
         $stmt->bindValue(':idcompte', $idcompte, PDO::PARAM_INT);
     }
 
+    if ($latitude !== null && $longitude !== null) {
+        $stmt->bindValue(':latitude', $latitude, PDO::PARAM_STR);
+        $stmt->bindValue(':longitude', $longitude, PDO::PARAM_STR);
+    }
     
     // Liaison des catégories
     if (!empty($nomcategories) && !in_array('Tout', $nomcategories)) {

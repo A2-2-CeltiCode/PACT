@@ -65,7 +65,7 @@ class Trie {
         Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
         
         echo '</div>';
-
+        
         echo '<input type="hidden" id="sortInput" name="sort" value="' . htmlspecialchars($sort) . '">';
         echo '<div class="input">';
         echo '<div style="display: grid; gap: 1px;">';

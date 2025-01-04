@@ -80,6 +80,18 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     exit; // Stoppe l'exécution pour AJAX
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    $latitude = $input['latitude'] ?? null;
+    $longitude = $input['longitude'] ?? null;
+
+    $resultats = getOffres($pdo, $sort, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation, $etat, $estenligne, $idcompte, $note, $option, $latitude, $longitude);
+
+    header('Content-Type: application/json');
+    echo json_encode(['offres' => $resultats, 'nombreOffres' => count($resultats)]);
+    exit;
+}
+
 // Si ce n'est pas une requête AJAX, inclure le HTML complet
 ?>
 <?php Header::render(HeaderType::Guest); ?>
@@ -93,7 +105,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="listeOffre.css">
     <link rel="stylesheet" href="listeOffre.js">
-    <script src="../../../trie/trieGeneral.js"></script>
+    
     
 </head>
 <body>
@@ -138,6 +150,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
    
     <script src="listeOffre.js"></script>
+    <script src="../../../trie/trieGeneral.js"></script>
 </body>
 <?php Footer::render(FooterType::Guest); ?>
 </html>

@@ -63,8 +63,10 @@ class Trie {
         Input::render(name:"titre",class:'styletitre', type:"text", placeholder:'Titre*', value: htmlspecialchars($titre));
 
         Input::render(name:"localisation",class:'styletitre', type:"text", placeholder:'localisation', value: htmlspecialchars($localisation));
-        echo '</div>';
         Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
+        Button::render(class: 'rechercherProximite', id: 'rechercherProximite', text: 'Rechercher à proximité');
+
+        echo '</div>';
         
         echo '</div>';
 
