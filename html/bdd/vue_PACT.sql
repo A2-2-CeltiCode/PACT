@@ -41,7 +41,7 @@ CREATE OR REPLACE VIEW vue_offres AS
 SELECT DISTINCT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _offre.nomforfait,
        _offre.titre, _offre.description, _offre.descriptiondetaillee, _offre.siteinternet, _offre.heureOuverture, _offre.heureFermeture,_adresse.codepostal, _adresse.ville,
        COALESCE(_spectacle.nomcategorie, _activite.nomcategorie, _visite.nomcategorie, _parcattractions.nomcategorie, _restaurant.nomcategorie) AS nomcategorie,
-       _adresse.rue, _adresse.numtel,
+       _adresse.rue, _adresse.numtel, _offre.latitude, _offre.longitude,
        COALESCE(_spectacle.dateEvenement,_visite.dateEvenement) AS dateEvenement,
        COALESCE(_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix, NULL::numeric) AS valprix,
        COALESCE(_spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes, NULL::integer) AS tempsenminutes,
@@ -72,7 +72,7 @@ FROM _offre LEFT JOIN _spectacle ON _offre.idoffre = _spectacle.idoffre
             LEFT JOIN vue_avis ON vue_avis.idOffre = _offre.idoffre
 GROUP BY _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _offre.nomforfait,
        _offre.titre, _offre.description, _offre.descriptiondetaillee, _offre.siteinternet, _offre.heureOuverture, _offre.heureFermeture,_adresse.codepostal, _adresse.ville,
-       _adresse.rue, _adresse.numtel, _spectacle.dateEvenement,_visite.dateEvenement,_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix,
+       _adresse.rue, _adresse.numtel, _offre.latitude, _offre.longitude, _spectacle.dateEvenement,_visite.dateEvenement,_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix,
        _spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes,_spectacle.capacite,_activite.agemin,_parcattractions.agemin, _activite.prestation,
        _spectacle.nomcategorie, _activite.nomcategorie, _visite.nomcategorie, _parcattractions.nomcategorie, _restaurant.nomcategorie,
        _visite.estguidee, _restaurant.nomgamme, _parcattractions.nbattractions,_offre.estenligne, type_offre, nomimage;

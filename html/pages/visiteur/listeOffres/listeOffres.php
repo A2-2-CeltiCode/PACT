@@ -85,10 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $latitude = $input['latitude'] ?? null;
     $longitude = $input['longitude'] ?? null;
 
-    $resultats = getOffres($pdo, $sort, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation, $etat, $estenligne, $idcompte, $note, $option, $latitude, $longitude);
+    try {
+        $resultats = getOffres($pdo, $sort, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation, $etat, $estenligne, $idcompte, $note, $option, $latitude, $longitude);
 
-    header('Content-Type: application/json');
-    echo json_encode(['offres' => $resultats, 'nombreOffres' => count($resultats)]);
+        header('Content-Type: application/json');
+        echo json_encode(['offres' => $resultats, 'nombreOffres' => count($resultats)]);
+    } catch (Exception $e) {
+        error_log('Erreur lors de la récupération des offres: ' . $e->getMessage());
+        header('Content-Type: application/json', true, 500);
+        echo json_encode(['error' => $e->getMessage()]);
+    }
     exit;
 }
 
