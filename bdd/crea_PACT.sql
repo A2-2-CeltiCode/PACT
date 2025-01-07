@@ -375,6 +375,7 @@ CREATE TABLE _avis(
     contexteVisite  VARCHAR(10),
     dateVisite      DATE,
     dateAvis        DATE DEFAULT CURRENT_TIMESTAMP,
+    estVu           BOOLEAN DEFAULT FALSE,
     CONSTRAINT avis_pk PRIMARY KEY(idAvis),
     CONSTRAINT avis_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
@@ -390,6 +391,23 @@ CREATE TABLE _imageAvis(
     nomImage    VARCHAR(50),
     CONSTRAINT imageAvis_fk_avis FOREIGN KEY (idAvis)
         REFERENCES _avis(idAvis)
+);
+
+--
+-- TABLE REPONSE AVIS
+--
+
+CREATE TABLE _reponseAvis(
+    idReponse     SERIAL,
+    idAvis        INTEGER NOT NULL,
+    idCompte      INTEGER NOT NULL,
+    commentaire   VARCHAR(255) NOT NULL,
+    dateReponse   DATE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT reponseAvis_pk PRIMARY KEY(idReponse),
+    CONSTRAINT reponseAvis_fk_avis FOREIGN KEY (idAvis)
+        REFERENCES _avis(idAvis),
+    CONSTRAINT reponseAvis_fk_compte FOREIGN KEY (idCompte)
+        REFERENCES _compte(idCompte)
 );
 
 --
