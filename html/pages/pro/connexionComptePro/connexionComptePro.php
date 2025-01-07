@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mot_de_passe_utilisateur = hash("SHA256",$_POST['password']);
 
     // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
-    $requete_sql = 'SELECT * FROM pact._compte WHERE email = :identifiant';
+    $requete_sql = 'select idCompte,mdp,email from pact.vue_compte_pro_prive WHERE email = :identifiant union select idCompte,mdp,email from pact.vue_compte_pro_public WHERE email = :identifiant';
 
     $requete_preparee = $dbh->prepare($requete_sql);
     $requete_preparee->bindParam(':identifiant', $identifiant_utilisateur);
@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['identifiant_utilisateur'] = $compte['email'];
             // Sauvegarder l'ID du compte dans la session
             $_SESSION['idCompte'] = $compte['idcompte'];
+            $_SESSION['typeUtilisateur'] = "pro";
             
             // Redirige vers le tableau de bord
             header("Location: ../listeOffres/listeOffres.php");

@@ -1,108 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const selectElement = document.querySelector('select[name="typeOffre"]');
-    const sections = document.querySelectorAll('.section');
-
-    // Fonction pour masquer toutes les sections
-    function hideAllSections() {
-        sections.forEach(section => {
-            section.style.display = 'none';
-        });
-    }
-
-    // Fonction pour afficher la section correspondante
-    function showSection(typeOffre) {
-        hideAllSections(); // On masque toutes les sections d'abord
-        const section = document.getElementById(typeOffre);
-        if (section) {
-            section.style.display = 'block';
-        }
-    }
-
-    // Événement déclenché lorsque le type d'offre est modifié
-    selectElement.addEventListener('change', function () {
-        const selectedValue = this.value;
-        showSection(selectedValue);
-    });
-
-    // On cache toutes les sections au début
-    hideAllSections();
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('myForm').addEventListener('submit', function(event) {
-        const input = document.getElementById('adressePostale').value;
-        const regex = /^[0-9]+/; // Regex pour une adresse postale simple
-
-        if (!regex.test(input)) {
-            event.preventDefault(); // Empêche l'envoi du formulaire
-                alert("Veuillez entrer une adresse postale valide."); // Affiche un message d'erreur
-        }
-    });
-});
-
-function addRepas() {
-    // Trouver le conteneur de repas
-    const repasContainer = document.getElementById('repasContainer');
-
-    // Créer un nouvel élément pour le repas
-    const newRepasDiv = document.createElement('div');
-    newRepasDiv.className = 'repas-input';
-
-    // Créer un champ de saisie
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.name = 'repas[]';
-    input.placeholder = 'Nom du repas';
-
-    // Créer le bouton de suppression
-    const removeButton = document.createElement('button');
-    removeButton.type = 'button';
-    removeButton.textContent = 'Supprimer';
-    removeButton.onclick = function() {
-        newRepasDiv.remove();  // Supprimer le div contenant le repas
-    };
-
-    // Ajouter le champ de saisie et le bouton de suppression au nouvel élément
-    newRepasDiv.appendChild(input);
-    newRepasDiv.appendChild(removeButton);
-
-    // Ajouter le nouvel élément au conteneur
-    repasContainer.appendChild(newRepasDiv);
-}
-
-// Afficher le bouton de suppression pour le premier champ de repas
-const initialRemoveButton = document.querySelector('.remove-btn');
-initialRemoveButton.style.display = 'inline-block';
-
-// Gérer la logique de suppression pour le champ de repas initial
-initialRemoveButton.onclick = function() {
-    const repasInputs = document.querySelectorAll('.repas-input');
-    if (repasInputs.length > 1) {
-        initialRemoveButton.parentElement.remove();  // Supprimer le premier champ
-    } else {
-        alert('Vous devez avoir au moins un champ de repas.');
-    }
-};
-
-// Gérer le champ de repas initial pour ne pas être supprimé pendant l'écriture
-document.querySelector('input[name="repas[]"]').addEventListener('focus', function() {
-    initialRemoveButton.style.display = 'none';  // Cacher le bouton de suppression
-});
-
-// Afficher le bouton de suppression uniquement si le champ n'est pas en cours d'écriture
-document.querySelectorAll('.repas-input input').forEach(input => {
-    input.addEventListener('focus', function() {
-        const removeButtons = document.querySelectorAll('.remove-btn');
-        removeButtons.forEach(button => button.style.display = 'none');  // Cacher tous les boutons
-    });
-
-    input.addEventListener('blur', function() {
-        const removeButtons = document.querySelectorAll('.remove-btn');
-        removeButtons.forEach(button => button.style.display = 'inline-block');  // Afficher tous les boutons
-        initialRemoveButton.style.display = 'inline-block'; // Toujours afficher le bouton de suppression du premier champ
-    });
-});
-
 function toggleLangue(show) {
     var langueDiv = document.getElementById("langue");
     if (show) {
@@ -120,3 +15,46 @@ function toggleDropdown(id) {
         element.style.display = "none";
     }
 }
+
+function getSelectedCheckboxes() {
+    const checkboxes = document.querySelectorAll('.checkbox-select input[type="checkbox"]:checked');
+    const selectedValues = [];
+    checkboxes.forEach(checkbox => {
+        selectedValues.push(checkbox.value);
+    });
+    return selectedValues;
+}
+
+function displaySelectedValues() {
+    const selectedValues = getSelectedCheckboxes();
+    const displayDivs = document.querySelectorAll('.selected-values');
+    displayDivs.forEach(displayDiv => {
+        displayDiv.innerHTML = ''; // Clear previous values
+        selectedValues.forEach(value => {
+            const valueDiv = document.createElement('div');
+            valueDiv.textContent = value;
+            displayDiv.appendChild(valueDiv);
+        });
+    });
+}
+
+function resetCheckboxes() {
+    const checkboxes = document.querySelectorAll('.checkbox-select input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    displaySelectedValues(); // Mettre à jour l'affichage après réinitialisation
+}
+
+// Mettre à jour les valeurs affichées lorsque les cases à cocher sont modifiées
+document.querySelectorAll('.checkbox-select input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', displaySelectedValues);
+});
+
+// Afficher les valeurs sélectionnées au chargement de la page
+document.addEventListener('DOMContentLoaded', (event) => {
+    displaySelectedValues();
+});
+
+
+

@@ -14,25 +14,9 @@ CREATE TABLE _adresse(
     idAdresse     SERIAL,
     codePostal    INTEGER NOT NULL,
     ville         VARCHAR(50) NOT NULL,
-    nomRue        VARCHAR(50) NOT NULL,
-    numRue        VARCHAR(5),
+    rue           VARCHAR(50) NOT NULL,
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
     CONSTRAINT adresse_pk PRIMARY KEY(idAdresse)
-);
-
-CREATE TABLE _gamme(
-    nomGamme    VARCHAR(20),
-    CONSTRAINT gamme_pk PRIMARY KEY(nomGamme)
-);
-
-CREATE TABLE _option(
-    nomOption  VARCHAR(50),
-    CONSTRAINT option_pk PRIMARY KEY(nomOption)
-);
-
-CREATE TABLE _forfait( -- a modif peut être
-    nomForfait  VARCHAR(50),
-    CONSTRAINT forfait_pk PRIMARY KEY(nomForfait)
 );
 
 --
@@ -45,6 +29,55 @@ CREATE TABLE _prix(
 );
 
 --
+-- TABLE GAMME
+--
+
+CREATE TABLE _gamme(
+    nomGamme    VARCHAR(20),
+    CONSTRAINT gamme_pk PRIMARY KEY(nomGamme)
+);
+
+--
+-- TABLE OPTION
+--
+
+CREATE TABLE _option(
+    nomOption   VARCHAR(50),
+    prixHT      NUMERIC(5,2) NOT NULL,
+    prixTTC     NUMERIC(5,2) NOT NULL,
+    CONSTRAINT option_pk PRIMARY KEY(nomOption)
+);
+
+--
+-- TABLE FORFAIT
+--
+
+CREATE TABLE _forfait(
+    nomForfait  VARCHAR(50),
+    prixHT      NUMERIC(5,2) NOT NULL,
+    prixTTC     NUMERIC(5,2) NOT NULL,
+    CONSTRAINT forfait_pk PRIMARY KEY(nomForfait)
+);
+
+CREATE TABLE _forfaitPublic( -- a modif peut être
+    nomForfait  VARCHAR(50),
+    prixHT      NUMERIC(5,2) NOT NULL,
+    prixTTC     NUMERIC(5,2) NOT NULL,
+    CONSTRAINT forfaitPublic_fk_forfait FOREIGN KEY (nomForfait) 
+        REFERENCES _forfait(nomForfait),
+    CONSTRAINT forfaitPublic_pk PRIMARY KEY(nomForfait)
+);
+
+CREATE TABLE _forfaitPro( -- a modif peut être
+    nomForfait  VARCHAR(50),
+    prixHT      NUMERIC(5,2) NOT NULL,
+    prixTTC     NUMERIC(5,2) NOT NULL,
+    CONSTRAINT forfaitPro_fk_forfait FOREIGN KEY (nomForfait) 
+        REFERENCES _forfait(nomForfait),
+    CONSTRAINT forfaitPro_pk PRIMARY KEY(nomForfait)
+);
+
+--
 -- TABLE DUREE
 --
 
@@ -54,7 +87,16 @@ CREATE TABLE _duree(
 );
 
 --
--- TABLES COMPTE,COMPTE MEMBER, COMPTE PRO, COMPTE PRO PUBLIC, COMPTE PRO PRIVATE
+-- TABLE CONTEXTE
+--
+
+CREATE TABLE _contexte(
+    nomContexte   VARCHAR(10),
+    CONSTRAINT contexte_pk PRIMARY KEY(nomContexte)
+);
+
+--
+-- TABLES COMPTES
 --
 
 CREATE TABLE _compte (
@@ -63,15 +105,15 @@ CREATE TABLE _compte (
     mdp         VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NOT NULL,
     CONSTRAINT compte_pk PRIMARY KEY(idCompte),
-    CONSTRAINT compte_fk_adresse FOREIGN KEY (idAdresse) 
+    CONSTRAINT compte_fk_adresse FOREIGN KEY (idAdresse)
         REFERENCES _adresse(idAdresse)
 );
 
 CREATE TABLE _compteMembre(
     idCompte  SERIAL,
-    login     VARCHAR(255) NOT NULL UNIQUE,
     prenom    VARCHAR(50) NOT NULL,
     nom       VARCHAR(50) NOT NULL,
+    pseudo     VARCHAR(255) NOT NULL UNIQUE,
     CONSTRAINT compteMembre_fk_compte FOREIGN KEY (idCompte) 
         REFERENCES _compte(idCompte)
 );
@@ -107,30 +149,81 @@ CREATE TABLE _offre(
     idOffre                 SERIAL,
     idCompte                SERIAL,
     titre                   VARCHAR(50) NOT NULL,
-    description             VARCHAR(50) NOT NULL,
-    descriptionDetaillee    VARCHAR(50),
+    description             VARCHAR(100) NOT NULL,
+    descriptionDetaillee    VARCHAR(255),
     siteInternet            VARCHAR(50),
     nomOption               VARCHAR(50) NOT NULL,
     nomForfait              VARCHAR(50) NOT NULL,
     estEnLigne              BOOLEAN NOT NULL,
     idAdresse               SERIAL NOT NULL,
+    creaDate                DATE DEFAULT CURRENT_TIMESTAMP,
+    heureOuverture          TIME NOT NULL,
+    heureFermeture          TIME NOT NULL,
+    longitude               NUMERIC(9,6),
+    latitude                NUMERIC(9,6),
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
     CONSTRAINT offre_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption),
     CONSTRAINT offre_fk_forfait FOREIGN KEY (nomForfait)
-        REFERENCES _forfait(nomForfait),
-    CONSTRAINT offre_fk_adresse FOREIGN KEY (idAdresse)
-        REFERENCES _adresse(idAdresse)
+        REFERENCES _forfait(nomForfait)
 );
+
+--
+-- TABLE IMAGE
+--
 
 CREATE TABLE _image(
     idOffre   SERIAL,
     idImage   SERIAL,
-    nomImage      VARCHAR(50) NOT NULL,
+    nomImage  VARCHAR(50) NOT NULL,
     CONSTRAINT image_pk PRIMARY KEY(idImage),
     CONSTRAINT image_fk_offre FOREIGN KEY (idOffre)
+        REFERENCES _offre(idOffre)
+);
+
+--
+-- TABLE FACTURE
+--
+
+CREATE TABLE _facture(
+    idFacture             SERIAL,
+    idOffre               INTEGER NOT NULL,
+    datePrestaServices    DATE NOT NULL,
+    dateEcheance          DATE NOT NULL,
+    CONSTRAINT facture_pk PRIMARY KEY(idFacture),
+    CONSTRAINT facture_fk_offre FOREIGN KEY (idOffre) 
+        REFERENCES _offre(idOffre)
+);
+
+/*CREATE TABLE _souscription(
+    nbSemaines     INTEGER NOT NULL CHECK (nbSemaines >= 1 AND nbSemaines <= 4),
+    debutOption		 DATE NOT NULL,
+  --finOption			 DATE NOT NULL,
+    CONSTRAINT souscription_pk PRIMARY KEY(nbSemaines,debutOption)
+);*/
+
+CREATE TABLE _annulationOption(
+    nbSemaines    INTEGER NOT NULL,
+    debutOption		DATE NOT NULL,
+    idOffre       INTEGER NOT NULL,
+    nomOption     VARCHAR(50) NOT NULL,
+    estAnnulee    BOOLEAN DEFAULT FALSE,
+    CONSTRAINT annulationOption_fk_offre FOREIGN KEY (idOffre) 
+        REFERENCES _offre(idOffre),
+    CONSTRAINT annulationOption_fk_option FOREIGN KEY (nomOption)
+        REFERENCES _option(nomOption)/*,
+    CONSTRAINT annulationOption_fk_souscription FOREIGN KEY (nbSemaines,debutOption)
+        REFERENCES _souscription(nbSemaines,debutOption)*/
+);
+
+CREATE TABLE _historiqueEnLigne(
+    idOffre       INTEGER,
+    jourDebut     DATE,
+    jourFin       DATE,
+    CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idOffre,jourDebut),
+    CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre)
 );
 
@@ -149,6 +242,7 @@ CREATE TABLE _spectacle(
     tempsEnMinutes  INTEGER,
     valPrix         NUMERIC(5,2) NOT NULL,
     capacite        INTEGER NOT NULL,
+    dateEvenement   DATE NOT NULL,
     CONSTRAINT spectacle_pk PRIMARY KEY (idOffre),
     CONSTRAINT spectacle_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
@@ -182,7 +276,7 @@ CREATE TABLE _parcAttractions(
     idOffre         SERIAL,
     nomCategorie    VARCHAR(50) NOT NULL,
     valPrix         NUMERIC(5,2) NOT NULL,
-    idImage         INTEGER,
+    carteParc       INTEGER,
     nbAttractions   INTEGER NOT NULL,
     ageMin          INTEGER NOT NULL,
     CONSTRAINT parcAttractions_pk PRIMARY KEY (idOffre),
@@ -192,7 +286,7 @@ CREATE TABLE _parcAttractions(
         REFERENCES _categorie(nomCategorie),
     CONSTRAINT parcAttractions_fk_prix FOREIGN KEY (valPrix)
         REFERENCES _prix(valPrix),
-    CONSTRAINT parcAttractions_fk_image FOREIGN KEY(idImage)
+    CONSTRAINT parcAttractions_fk_image FOREIGN KEY(carteParc)
         REFERENCES _image(idImage)
 );
 
@@ -202,6 +296,7 @@ CREATE TABLE _visite(
     estGuidee       BOOLEAN NOT NULL,
     tempsEnMinutes  INTEGER,
     nomCategorie    VARCHAR(50) NOT NULL,
+    dateEvenement   DATE NOT NULL,
     CONSTRAINT visite_pk PRIMARY KEY (idOffre),
     CONSTRAINT visite_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
@@ -217,7 +312,7 @@ CREATE TABLE _restaurant(
     idOffre           SERIAL,
     nomCategorie      VARCHAR(50) NOT NULL,
     nomGamme          VARCHAR(20) NOT NULL,
-    idImage           SERIAL NOT NULL,
+    menuRestaurant    INTEGER,
     CONSTRAINT restaurant_pk PRIMARY KEY (idOffre),
     CONSTRAINT restaurant_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
@@ -225,7 +320,7 @@ CREATE TABLE _restaurant(
         REFERENCES _categorie(nomCategorie),
     CONSTRAINT restaurant_fk_gamme FOREIGN KEY (nomGamme)
         REFERENCES _gamme(nomGamme),
-    CONSTRAINT restaurant_fk_image FOREIGN KEY (idImage)
+    CONSTRAINT restaurant_fk_image FOREIGN KEY (menuRestaurant)
         REFERENCES _image(idImage)
 );
 
@@ -264,6 +359,55 @@ CREATE TABLE _tagRestaurant(
     CONSTRAINT tagRestaurant_pk PRIMARY KEY(nomTag),
     CONSTRAINT tagRestaurant_fk_tag FOREIGN KEY (nomTag)
         REFERENCES _tag(nomTag)
+);
+
+--
+-- TABLE AVIS
+--
+
+CREATE TABLE _avis(
+    idAvis          SERIAL,
+    idOffre         INTEGER,
+    idCompte        INTEGER,
+    commentaire     VARCHAR(255),
+    note            NUMERIC(2,1),
+    titre           VARCHAR(50),
+    contexteVisite  VARCHAR(10),
+    dateVisite      DATE,
+    dateAvis        DATE DEFAULT CURRENT_TIMESTAMP,
+    estVu           BOOLEAN DEFAULT FALSE,
+    CONSTRAINT avis_pk PRIMARY KEY(idAvis),
+    CONSTRAINT avis_fk_offre FOREIGN KEY (idOffre)
+        REFERENCES _offre(idOffre),
+    CONSTRAINT avis_fk_contexte FOREIGN KEY(contexteVisite)
+        REFERENCES _contexte(nomContexte),
+    CONSTRAINT avis_fk_compte FOREIGN KEY(idCompte)
+        REFERENCES _compte(idCompte)
+);
+
+CREATE TABLE _imageAvis(
+    idAvis      INTEGER,
+    --idImage     INTEGER,
+    nomImage    VARCHAR(50),
+    CONSTRAINT imageAvis_fk_avis FOREIGN KEY (idAvis)
+        REFERENCES _avis(idAvis)
+);
+
+--
+-- TABLE REPONSE AVIS
+--
+
+CREATE TABLE _reponseAvis(
+    idReponse     SERIAL,
+    idAvis        INTEGER NOT NULL,
+    idCompte      INTEGER NOT NULL,
+    commentaire   VARCHAR(255) NOT NULL,
+    dateReponse   DATE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT reponseAvis_pk PRIMARY KEY(idReponse),
+    CONSTRAINT reponseAvis_fk_avis FOREIGN KEY (idAvis)
+        REFERENCES _avis(idAvis),
+    CONSTRAINT reponseAvis_fk_compte FOREIGN KEY (idCompte)
+        REFERENCES _compte(idCompte)
 );
 
 --

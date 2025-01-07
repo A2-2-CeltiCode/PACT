@@ -8,6 +8,41 @@ body {
     margin: 1em auto;
 }
 
+
+.conteneur-filtres-offres{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tris{
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gris1);
+    border-radius: 1em;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: white;
+    position: relative !important;
+    right: 150px;
+    margin-top: 10px !important;
+    height: fit-content !important;
+}
+
+.select-wrapper select {
+    width: 300px !important;
+    color: var(--secondaire-pro);
+}
+
+.checkbox-wrapper {
+    background-color: var(--gris1) !important;
+    padding-left: 5px !important;
+    border-radius: 1em;
+    border: 1px solid var(--gris1);
+}
+
 .carte-offre {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -65,7 +100,6 @@ body {
 }
 
 .prix-offre {
-    padding: 0em 5em;
     display: flex;
     justify-content: space-between;
 }
@@ -96,9 +130,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 70%;
+    max-width: 50em;
+    margin: 1em auto;
 }
 
 .button-container {
+    display: flex;
     position: absolute;
     top: 0em;
     right: 0em;
@@ -117,4 +155,93 @@ footer {
     height: 20px;
     stroke: var(--primaire-pro);
     fill: rgba(0, 0, 0, 0);
+}
+
+section {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1em 0;
+}
+
+.bouton {
+    display: flex;
+    flex-direction: column;
+}
+
+.nombreOffres{
+    font-family: 'Inter', sans-serif !important;
+    font-size: var(--p-medium-font-size) !important;
+    color: var(--noir) !important;
+    margin: 5px 0 !important;
+    font-weight: var(--font-weight-normal) !important;
+}
+
+.sliders_control {
+    padding-top: 10px;
+}
+
+.barre{
+    margin-top: 40px;
+    margin-right: 40px;
+}
+
+#styleShadow{
+    height: fit-content;
+    padding: 20px 10px 10px 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--gris1);
+    border-radius: 1em;
+}
+
+.test{
+    width: 285px !important;
+}
+
+.stretch{
+    display: grid !important;
+    gap: 10px !important;
+}
+
+
+.form_control{
+    font-family: 'Inter', sans-serif;
+    justify-content: space-evenly !important;
+    color: var(--secondaire-pro) !important;
+}
+
+p{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.rangement{
+    width: 722px;
+}
+
+#searchForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="range"] {
+
+    background-color: var(--secondaire-pro) !important; 
+
+    
+}
+
+.sliders_control{
+    min-height: 20px !important;
+}
+
+.buttonCarte{
+    margin:  0 0 0 10px !important;
+}
+
+.button-facture {
+    border-radius: 0em 0em 5px 5px !important;
+}
+label.note .label-icon .svg-inline svg {
+    fill: black;
 }
