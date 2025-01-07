@@ -13,6 +13,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 // Récupération de l'identifiant de l'offre
 $idOffre = $_POST['idOffre'] ?? '1';
+$idOffre = $_GET['idOffre'] ?? $idOffre;
 
 try {
     // Connexion à la base de données
@@ -267,6 +268,11 @@ try {
                                 en <?= $avi["contextevisite"] ?>
                             </p>
                         </div>
+                        <div>
+                            <?php Button::render("btn", "", "Signaler", ButtonType::Pro, "", false); ?>
+                            <?php Button::render("btn-repondre", "btn-repondre", "Repondre", ButtonType::Pro, "", false); ?>
+
+                        </div>
                     </div>
                     <?php
                 }
@@ -280,6 +286,21 @@ try {
                 <img src="" id="modal-image" />
             </div>
         </div>
+
+        <div id="repondreModal" class="modal">
+            <div class="modal-content">
+                <span class="close-repondre">&times;</span>
+                <h2>Répondre à l'avis</h2>
+                <form id="reponseForm" method="POST" action="envoyerReponse.php">
+                    <textarea id="reponse" name="reponse" rows="4" cols="50" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <input type="hidden" id="idAvis" name="idAvis">
+                    <input type="hidden" id="idOffre" name="idOffre" value="<?= $idOffre ?>">
+                    <br>
+                    <button type="submit" class="btn">Envoyer</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 
     <script src="detailsOffre.js"></script>

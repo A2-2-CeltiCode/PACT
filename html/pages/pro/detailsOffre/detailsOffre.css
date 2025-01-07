@@ -310,3 +310,41 @@ li {
 body > div:last-of-type {
     margin-bottom: 20px;
 }
+
+#repondreModal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#repondreModal .modal-content {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#repondreModal .close-repondre {
+    color: #000;
+    display: block;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#repondreModal .close-repondre:hover,
+#repondreModal .close-repondre:focus {
+    text-decoration: none;
+}
