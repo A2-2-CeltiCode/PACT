@@ -1,25 +1,27 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $idAvis = $_POST['idAvis'];
-    $reponse = $_POST['reponse'];
+    $idCompte = $_SESSION['idCompte'];
+    $commentaire = $_POST['reponse'];
+    $idOffre = $_POST['idOffre']; // Ajout de l'identifiant de l'offre
 
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-        $stmt = $dbh->prepare("INSERT INTO pact.reponses (idAvis, reponse) VALUES (:idAvis, :reponse)");
+        $stmt = $dbh->prepare("INSERT INTO pact._reponseavis (idAvis, idCompte, commentaire) VALUES (:idAvis, :idCompte, :commentaire)");
         $stmt->bindParam(':idAvis', $idAvis);
-        $stmt->bindParam(':reponse', $reponse);
+        $stmt->bindParam(':idCompte', $idCompte);
+        $stmt->bindParam(':commentaire', $commentaire);
         $stmt->execute();
-        header("Location: detailsOffre.php?idOffre=" . $_POST['idOffre']);
+        header("Location: detailsOffre.php?idOffre=" . $idOffre); // Utilisation de l'identifiant de l'offre
     } catch (PDOException $e) {
         echo "Erreur !: " . $e->getMessage();
     } finally {
         $dbh = null;
     }
-} else {
-    header("Location: detailsOffre.php");
 }
 
-header("Location: detailsOffre.php?idOffre=" . $_POST['idOffre']);
+//header("Location: detailsOffre.php?idOffre=" . $_POST['idOffre']);
 ?>

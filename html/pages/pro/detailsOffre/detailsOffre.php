@@ -19,6 +19,15 @@ try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $avis = $dbh->query("select titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis  from pact.vue_avis join pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte where idOffre = $idOffre")->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Calcul de la moyenne des notes
+    $totalNotes = 0;
+    $nombreAvis = count($avis);
+    foreach ($avis as $avi) {
+        $totalNotes += $avi['note'];
+    }
+    $moyenneNotes = $nombreAvis > 0 ? $totalNotes / $nombreAvis : 0;
+
     $imagesAvis = [];
     foreach ($avis as $avi) {
         $img = [];
@@ -63,10 +72,9 @@ try {
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();
-} finally {
-    // Déconnexion de la base de données
-    $dbh = null;
 }
+
+// Déconnexion de la base de données
 ?>
 
 
@@ -122,8 +130,8 @@ try {
         <div class="offre-infos">
             <?php
             // Affichage des détails de l'offre
-            Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/$typeOffre.svg");
-            Label::render("offre-detail", "", "", $offre['descriptiondetaillee']);
+            Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/".$typeOffre.".svg");
+            Label::render("offre-detail", "offre-detail", "", $offre['descriptiondetaillee']);
             ?>
             <div class="address">
                 <?php
@@ -186,12 +194,12 @@ try {
                 }
                 ?>
             </ul>
+            <div class="moyenne-notes">
+                <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5"); ?>
+            </div>
         </div>
         <div class="offre-package-modification">
-            <div class="forfait-info">
-                <?php Label::render("offre-forfait", "", "", "Forfait: " . $offre['nomforfait'], "../../../ressources/icone/argent.svg"); ?>
-                <?php Label::render("offre-option", "", "", "Option: " . $offre['nomoption'], "../../../ressources/icone/oeil.svg"); ?>
-            </div>
+            
 
             <?php
             /*
@@ -227,8 +235,15 @@ try {
             <div>
                 <?php
                 foreach ($avis as $avi) {
+                    if (!isset($avi["idavis"])) {
+                        continue;
+                    }
+                    
+                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
+                    $stmt->execute([':idAvis' => $avi['idavis']]);
+                    $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
-                    <div class="avi">
+                    <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
                         <div>
                             <p class="avi-title">
                                 <?= $avi["titre"] ?>
@@ -271,8 +286,26 @@ try {
                         <div>
                             <?php Button::render("btn", "", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php Button::render("btn-repondre", "btn-repondre", "Repondre", ButtonType::Pro, "", false); ?>
-
                         </div>
+                        <?php if (!empty($reponses)): ?>
+                            <div class="reponses">
+                                <?php foreach ($reponses as $reponse): ?>
+                                    <div class="reponse">
+                                        <p class="reponse-content">
+                                            <?= $reponse["commentaire"] ?>
+                                        </p>
+                                        <div>
+                                            <p>
+                                                <?= $reponse["pseudo"] ?>
+                                            </p>
+                                            <p>
+                                                le <?= $reponse["datereponse"] ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <?php
                 }
@@ -280,31 +313,14 @@ try {
             </div>
         </div>
 
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <img src="" id="modal-image" />
-            </div>
-        </div>
-
-        <div id="repondreModal" class="modal">
-            <div class="modal-content">
-                <span class="close-repondre">&times;</span>
-                <h2>Répondre à l'avis</h2>
-                <form id="reponseForm" method="POST" action="envoyerReponse.php">
-                    <textarea id="reponse" name="reponse" rows="4" cols="50" placeholder="Écrivez votre réponse ici..."></textarea>
-                    <input type="hidden" id="idAvis" name="idAvis">
-                    <input type="hidden" id="idOffre" name="idOffre" value="<?= $idOffre ?>">
-                    <br>
-                    <button type="submit" class="btn">Envoyer</button>
-                </form>
-            </div>
-        </div>
+        
 
     </div>
 
     <script src="detailsOffre.js"></script>
-    <?php Footer::render(FooterType::Pro); ?>
+    <?php Footer::render(FooterType::Pro); 
+    $dbh = null;
+    ?>
 </body>
 
 </html>

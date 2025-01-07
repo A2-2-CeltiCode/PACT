@@ -1,87 +1,65 @@
-let currentIndex = 0;
-const images = document.querySelectorAll(".carousel-image");
-const totalImages = images.length;
-let compteur = 1;
+document.addEventListener("DOMContentLoaded", function () {
+  const prevButton = document.querySelector(".carousel-button.prev");
+  const nextButton = document.querySelector(".carousel-button.next");
+  const images = document.querySelectorAll(".carousel-image");
+  let currentIndex = 0;
 
-function updateCarousel() {
-  const offset = -currentIndex * 100;
-  document.querySelector(
-    ".carousel-images"
-  ).style.transform = `translateX(${offset}%)`;
-}
+  function updateCarousel() {
+    images.forEach((img, index) => {
+      img.style.display = index === currentIndex ? "block" : "none";
+    });
+    prevButton.style.display = currentIndex === 0 ? "none" : "flex";
+    nextButton.style.display =
+      currentIndex === images.length - 1 ? "none" : "flex";
+  }
 
-if (images.length > 1) {
-  document.querySelector(".next").classList.remove("desactive");
-}
+  prevButton.addEventListener("click", function () {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  });
 
-document.querySelector(".next").addEventListener("click", () => {
-  currentIndex = (currentIndex + 1) % totalImages;
+  nextButton.addEventListener("click", function () {
+    if (currentIndex < images.length - 1) {
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+
   updateCarousel();
-  if (compteur < totalImages) {
-    compteur++;
-  }
-  if (compteur == totalImages) {
-    document.querySelector(".next").classList.add("desactive");
-    document.querySelector(".prev").classList.remove("desactive");
-  }
 });
 
-document.querySelector(".prev").addEventListener("click", () => {
-  currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-  updateCarousel();
-  if (compteur > 1) {
-    compteur--;
+document.addEventListener("DOMContentLoaded", function () {
+  const detailElement = document.querySelector(".offre-detail");
+  if (!detailElement) return;
+
+  // Créer le bouton "voir plus"
+  const voirPlusButton = document.createElement("span");
+  voirPlusButton.classList.add("voir-plus");
+  voirPlusButton.textContent = "Voir plus";
+
+  // Ajouter la classe collapsed initialement si le contenu dépasse un certain nombre de caractères
+  const maxCharacters = 100; // Définir le nombre maximum de caractères avant d'afficher "Voir plus"
+  if (detailElement.textContent.length > maxCharacters) {
+    detailElement.classList.add("collapsed");
+    // Insérer le bouton après l'élément de détail
+    detailElement.parentNode.insertBefore(
+      voirPlusButton,
+      detailElement.nextSibling
+    );
   }
-  if (compteur == 1) {
-    document.querySelector(".prev").classList.add("desactive");
-    document.querySelector(".next").classList.remove("desactive");
-  }
-});
 
-const modal = document.getElementById("myModal");
-
-const span = document.getElementsByClassName("close")[0];
-
-const modalImage = document.getElementById("modal-image");
-
-function openUp(e) {
-  const src = e.srcElement.src;
-  modal.style.display = "block";
-  modalImage.src = src;
-  document.body.classList.add("noscroll");
-}
-
-span.onclick = function () {
-  modal.style.display = "none";
-  document.body.classList.remove("noscroll");
-};
-
-window.onclick = function (event) {
-  if (event.target === modal) {
-    modal.style.display = "none";
-    document.body.classList.remove("noscroll");
-  }
-};
-
-document.querySelectorAll(".btn-repondre").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    const repondreModal = document.getElementById("repondreModal");
-    const idAvis = event.target.closest(".avi").dataset.idavis;
-    document.getElementById("idAvis").value = idAvis;
-    repondreModal.style.display = "block";
-    document.body.classList.add("noscroll");
+  // Gérer le clic sur le bouton
+  voirPlusButton.addEventListener("click", function () {
+    if (detailElement.classList.contains("collapsed")) {
+      detailElement.style.maxHeight = detailElement.scrollHeight + "px";
+      detailElement.classList.remove("collapsed");
+      voirPlusButton.textContent = "Voir moins";
+    } else {
+      detailElement.style.maxHeight = "4.5em";
+      detailElement.classList.add("collapsed");
+      voirPlusButton.textContent = "Voir plus";
+    }
   });
 });
-
-document.querySelector(".close-repondre").onclick = function () {
-  document.getElementById("repondreModal").style.display = "none";
-  document.body.classList.remove("noscroll");
-};
-
-window.onclick = function (event) {
-  const repondreModal = document.getElementById("repondreModal");
-  if (event.target === repondreModal) {
-    repondreModal.style.display = "none";
-    document.body.classList.remove("noscroll");
-  }
-};
