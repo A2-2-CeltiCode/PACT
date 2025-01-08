@@ -103,7 +103,10 @@ function sendReply(idAvis, reponse) {
       .then(data => {
           if (data.success) {
               closeReplyPopup();
-              document.querySelector(`.review[data-id="${idAvis}"]`).remove();
+              const reviewElement = document.querySelector(`.review[data-id="${idAvis}"]`);
+              if (reviewElement) {
+                  reviewElement.remove();
+              }
               const notificationCount = document.querySelector('.notification-count');
               if (notificationCount) {
                   let count = parseInt(notificationCount.textContent);
@@ -112,6 +115,30 @@ function sendReply(idAvis, reponse) {
                       notificationCount.textContent = count;
                   } else {
                       notificationCount.remove();
+                  }
+              }
+              // Ajouter la réponse au DOM
+              const reponseHTML = `
+                <div class="reponse">
+                    <p class="reponse-content">${reponse}</p>
+                    <div>
+                        <p>Vous</p>
+                        <p>le ${new Date().toLocaleDateString('fr-FR')}</p>
+                    </div>
+                </div>`;
+              const avisElement = document.querySelector(`.avi[data-idavis="${idAvis}"]`);
+              if (avisElement) {
+                  let reponsesContainer = avisElement.querySelector('.reponses');
+                  if (!reponsesContainer) {
+                      reponsesContainer = document.createElement('div');
+                      reponsesContainer.classList.add('reponses');
+                      avisElement.appendChild(reponsesContainer);
+                  }
+                  reponsesContainer.innerHTML += reponseHTML;
+                  // Masquer le bouton "Répondre"
+                  const repondreButton = avisElement.querySelector('.btn-repondre');
+                  if (repondreButton) {
+                      repondreButton.style.display = 'none';
                   }
               }
           } else {
