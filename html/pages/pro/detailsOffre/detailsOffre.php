@@ -21,7 +21,30 @@ $idOffre = $_GET['idOffre'] ?? $idOffre;
 try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-    $avis = $dbh->query("select titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis  from pact.vue_avis join pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte where idOffre = $idOffre")->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Ajout des filtres pour trier les avis
+    $sortBy = $_GET['sortBy'] ?? 'date_desc';
+    $filterBy = $_GET['filterBy'] ?? 'all';
+
+    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis FROM pact.vue_avis JOIN pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+
+    if ($filterBy === 'viewed') {
+        $query .= " AND estvu = true";
+    } elseif ($filterBy === 'not_viewed') {
+        $query .= " AND estvu = false";
+    }
+
+    if ($sortBy === 'date_asc') {
+        $query .= " ORDER BY datevisite ASC";
+    } elseif ($sortBy === 'date_desc') {
+        $query .= " ORDER BY datevisite DESC";
+    } elseif ($sortBy === 'note_asc') {
+        $query .= " ORDER BY note ASC";
+    } elseif ($sortBy === 'note_desc') {
+        $query .= " ORDER BY note DESC";
+    }
+
+    $avis = $dbh->query($query)->fetchAll(PDO::FETCH_ASSOC);
     
     // Calcul de la moyenne des notes
     $totalNotes = 0;
@@ -238,6 +261,22 @@ try {
 
     </div>
     <div>
+        <div class="filters">
+            <label for="sortBy">Trier par:</label>
+            <select id="sortBy">
+                <option value="date_desc" selected>Date décroissante</option>
+                <option value="date_asc">Date croissante</option>
+                <option value="note_desc">Note décroissante</option>
+                <option value="note_asc">Note croissante</option>
+            </select>
+
+            <label for="filterBy">Filtrer par:</label>
+            <select id="filterBy">
+                <option value="all">Tous</option>
+                <option value="viewed">Vus</option>
+                <option value="not_viewed">Non vus</option>
+            </select>
+        </div>
         <div class="liste-avis">
             <div>
                 <h1>Avis:</h1>
@@ -344,6 +383,9 @@ try {
 
     </div>
 
+    <script>
+        const idOffre = <?= json_encode($idOffre) ?>;
+    </script>
     <script src="detailsOffre.js"></script>
     <?php Footer::render(FooterType::Pro); 
     $dbh = null;

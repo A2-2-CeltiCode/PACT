@@ -490,6 +490,27 @@ body {
   background-color: var(--primary-hover);
 }
 
+/* Filtres */
+.filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.filters label {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.filters select {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--white);
+  color: var(--text-dark);
+  font-size: 14px;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .titre {

@@ -87,4 +87,24 @@ document.addEventListener("DOMContentLoaded", function () {
       popup.style.display = "none";
     }
   });
+
+  const sortBySelect = document.getElementById("sortBy");
+  const filterBySelect = document.getElementById("filterBy");
+
+  function fetchAvis() {
+    const sortBy = sortBySelect.value;
+    const filterBy = filterBySelect.value;
+
+    fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}&filterBy=${filterBy}`)
+      .then(response => response.text())
+      .then(data => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, "text/html");
+        const avisList = doc.querySelector(".liste-avis");
+        document.querySelector(".liste-avis").innerHTML = avisList.innerHTML;
+      });
+  }
+
+  sortBySelect.addEventListener("change", fetchAvis);
+  filterBySelect.addEventListener("change", fetchAvis);
 });
