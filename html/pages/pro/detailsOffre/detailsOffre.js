@@ -63,3 +63,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const repondreButtons = document.querySelectorAll(".btn-repondre");
+  const popup = document.getElementById("popup-repondre");
+  const closeBtn = popup.querySelector(".close");
+  const idAvisInput = document.getElementById("popup-idAvis");
+
+  repondreButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const idAvis = this.closest(".avi").dataset.idavis;
+      idAvisInput.value = idAvis;
+      popup.style.display = "block";
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
+    popup.style.display = "none";
+  });
+
+  window.addEventListener("click", function (event) {
+    if (event.target === popup) {
+      popup.style.display = "none";
+    }
+  });
+});

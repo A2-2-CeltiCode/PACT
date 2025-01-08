@@ -11,6 +11,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
+session_start();
+$idCompte = $_SESSION['idCompte'];
+
 // Récupération de l'identifiant de l'offre
 $idOffre = $_POST['idOffre'] ?? '1';
 $idOffre = $_GET['idOffre'] ?? $idOffre;
@@ -69,6 +72,13 @@ try {
     if (!$offre) {
         throw new Exception("Aucune offre trouvée");
     }
+
+    // Vérification du nombre de réponses de l'utilisateur pour cette offre
+    $stmt = $dbh->prepare("SELECT COUNT(*) as totalReponses FROM pact._reponseavis WHERE idCompte = :idCompte AND idAvis IN (SELECT idAvis FROM pact.vue_avis WHERE idOffre = :idOffre)");
+    $stmt->execute([':idCompte' => $idCompte, ':idOffre' => $idOffre]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $totalReponses = $result ? $result['totalReponses'] : 5;
+    
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();
@@ -285,7 +295,9 @@ try {
                         </div>
                         <div>
                             <?php Button::render("btn", "", "Signaler", ButtonType::Pro, "", false); ?>
-                            <?php Button::render("btn-repondre", "btn-repondre", "Repondre", ButtonType::Pro, "", false); ?>
+                            <?php if (empty($reponses) && $totalReponses < 3): ?>
+                                <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
+                            <?php endif; ?>
                         </div>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
@@ -302,6 +314,11 @@ try {
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
                                         </div>
+                                        <form action="supprimerReponse.php" method="POST">
+                                            <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
+                                            <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+                                            <?php Button::render("btn-supprimer", "", "Supprimer", ButtonType::Pro, "", true); ?>
+                                        </form>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -313,7 +330,17 @@ try {
             </div>
         </div>
 
-        
+        <div class="popup" id="popup-repondre">
+            <div class="popup-content">
+                <span class="close">&times;</span>
+                <form action="envoyerReponse.php" method="POST">
+                    <input type="hidden" name="idAvis" id="popup-idAvis">
+                    <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+                    <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </div>
+        </div>
 
     </div>
 
