@@ -1,9 +1,13 @@
 <?php
 session_start();
 error_reporting(E_ALL ^ E_WARNING);
+// Configuration de la base de données
+$host = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$password = '13phenix';
 
-require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
-$dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+$dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
 
 $idOffre = $_POST['idOffre'] ?? 1;
 $crampte = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';

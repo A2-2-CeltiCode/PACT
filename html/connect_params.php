@@ -2,6 +2,6 @@
 <?php
 $server = 'localhost';
 $driver = 'pgsql';
-$dbname = 'pact';
+$dbname = 'localhost';
 $dbuser = 'postgres';
-$dbpass = 'derfDERF29';
+$dbpass = '13phenix';
