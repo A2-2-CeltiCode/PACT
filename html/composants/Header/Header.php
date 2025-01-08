@@ -86,6 +86,17 @@ class Header
         self::renderAccountSection($type);
         self::renderBurger($type);
 
+        echo '<div class="popup" id="popup-repondre">
+                <div class="popup-content">
+                    <span class="close">&times;</span>
+                    <form action="/pages/pro/detailsOffre/envoyerReponse.php" method="POST">
+                        <input type="hidden" name="idAvis" id="popup-idAvis">
+                        <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
+                        <button type="submit">Envoyer</button>
+                    </form>
+                </div>
+              </div>';
+
         if (!self::$jsIncluded) {
             echo '<script src="/composants/Header/Header.js"></script>';
             self::$jsIncluded = true;
@@ -170,9 +181,45 @@ class Header
                 $onClick = "window.location.href='/pages/membre/connexionCompteMembre/connexionCompteMembre.php'");
         } elseif ($type == HeaderType::Member) {
             self::renderProfileOptionSelector('profil-member');
+            self::renderNotificationIcon();
         } elseif ($type == HeaderType::Pro) {
             self::renderProfileOptionSelector('profil-pro');
+            self::renderNotificationIcon();
         }
+        echo '</div>';
+    }
+
+    private static function renderNotificationIcon(): void {
+        $server = 'localhost';
+        $driver = 'pgsql';
+        $dbname = 'pact';
+        $dbuser = 'postgres';
+        $dbpass = 'derfDERF29';
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+        $idCompte = $_SESSION['idCompte'];
+        $query = "SELECT a.*, o.* FROM pact._avis a
+              JOIN pact._offre o ON a.idOffre = o.idOffre
+              WHERE o.idCompte = :idCompte AND a.estvu = false";
+        $stmt = $dbh->prepare($query);
+        $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
+        $stmt->execute();
+        $unreadReviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $unreadCount = count($unreadReviews);
+        echo '<div class="notification-icon">';
+        echo '<img src="/ressources/icone/notification.svg" alt="Notifications" onclick="toggleDropdown()">';
+        if ($unreadCount > 0) {
+            echo '<span class="notification-count">' . $unreadCount . '</span>';
+        }
+        echo '<div class="dropdown-content" id="notification-dropdown">';
+        foreach ($unreadReviews as $review) {
+            echo '<div class="review" data-id="' . $review['idavis'] . '">';
+            echo '<strong>' . $review['titre'] . '</strong>';
+            echo '<p>' . $review['commentaire'] . '</p>';
+            echo '<button class="btn-repondre" onclick="openReplyPopup(' . $review['idavis'] . ')">Répondre</button>';
+            echo '<button class="btn-mark-seen" data-id="' . $review['idavis'] . '">Marqué comme vu</button>';
+            echo '</div>';
+        }
+        echo '</div>';
         echo '</div>';
     }
 
@@ -201,6 +248,7 @@ class Header
         self::renderAccountSection($type);
         echo <<<EOF
  </div>
+
  <button class="hamburger">
     <!-- material icons https://material.io/resources/icons/ -->
     <span class="menuIcon material-symbols-outlined">menu</span>
@@ -211,3 +259,4 @@ EOF;
 
     }
 }
+?>

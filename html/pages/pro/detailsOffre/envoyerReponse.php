@@ -10,18 +10,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+
         $stmt = $dbh->prepare("INSERT INTO pact._reponseavis (idAvis, idCompte, commentaire) VALUES (:idAvis, :idCompte, :commentaire)");
         $stmt->bindParam(':idAvis', $idAvis);
         $stmt->bindParam(':idCompte', $idCompte);
         $stmt->bindParam(':commentaire', $commentaire);
         $stmt->execute();
-        header("Location: detailsOffre.php?idOffre=" . $idOffre); // Utilisation de l'identifiant de l'offre
+
+        $stmt = $dbh->prepare("UPDATE pact._avis SET estvu = true WHERE idavis = :idAvis");
+        $stmt->bindParam(':idAvis', $idAvis);
+        $stmt->execute();
+
+        echo json_encode(['success' => true]);
     } catch (PDOException $e) {
-        echo "Erreur !: " . $e->getMessage();
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     } finally {
         $dbh = null;
     }
 }
-
-//header("Location: detailsOffre.php?idOffre=" . $_POST['idOffre']);
 ?>
