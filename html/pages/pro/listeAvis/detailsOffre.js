@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeBtn = popup.querySelector(".close");
   const idAvisInput = document.getElementById("popup-idAvis");
 
-  repondreButtons.forEach(button => {
+  repondreButtons.forEach((button) => {
     button.addEventListener("click", function () {
       const idAvis = this.closest(".avi").dataset.idavis;
       idAvisInput.value = idAvis;
@@ -95,9 +95,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const sortBy = sortBySelect.value;
     const filterBy = filterBySelect.value;
 
-    fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}&filterBy=${filterBy}`)
-      .then(response => response.text())
-      .then(data => {
+    fetch(
+      `detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}&filterBy=${filterBy}`
+    )
+      .then((response) => response.text())
+      .then((data) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, "text/html");
         const avisList = doc.querySelector(".liste-avis");

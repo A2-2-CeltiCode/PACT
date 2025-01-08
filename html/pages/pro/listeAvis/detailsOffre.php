@@ -14,9 +14,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 session_start();
 $idCompte = $_SESSION['idCompte'];
 
-// Récupération de l'identifiant de l'offre
-$idOffre = $_POST['idOffre'] ?? '1';
-$idOffre = $_GET['idOffre'] ?? $idOffre;
+
 
 try {
     // Connexion à la base de données
@@ -26,7 +24,7 @@ try {
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis, estvu FROM pact.vue_avis JOIN pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis FROM pact.vue_avis JOIN pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte";
 
     if ($filterBy === 'viewed') {
         $query .= " AND estvu = true";
@@ -42,6 +40,8 @@ try {
         $query .= " ORDER BY note ASC";
     } elseif ($sortBy === 'note_desc') {
         $query .= " ORDER BY note DESC";
+    } elseif ($sortBy === 'non_vu') {
+        $query .= " ORDER BY estvu ASC, datevisite DESC";
     }
 
     $avis = $dbh->query($query)->fetchAll(PDO::FETCH_ASSOC);
@@ -63,38 +63,7 @@ try {
         $imagesAvis[$avi['idavis']] = $img;
     }
 
-    $offre = $dbh->query('SELECT * FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $typeOffre = $dbh->query('SELECT type_offre FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-
-    $typeOffre = str_replace(' ', '_', strtolower(str_replace("'", '', $typeOffre['type_offre'])));
-    if ($typeOffre === 'parc_dattractions') {
-        $typeOffre = 'parc_attractions';
-    }
-
-    // Requêtes pour obtenir les informations spécifiques à l'offre
-    $stmt = $dbh->query('SELECT estguidee FROM pact.vue_visite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
-    $guidee = $stmt->fetch();
-
-    // Récupération des autres informations pertinentes
-    $minutesVisite = $dbh->query('SELECT tempsenminutes FROM pact.vue_visite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $prestation = $dbh->query('SELECT prestation FROM pact.vue_activite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $capacite = $dbh->query('SELECT capacite FROM pact.vue_spectacle WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $minutesActivite = $dbh->query('SELECT tempsenminutes FROM pact.vue_activite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $ageMinimumActivite = $dbh->query('SELECT agemin FROM pact.vue_activite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $ageMinimumParc = $dbh->query('SELECT agemin FROM pact.vue_parc_attractions WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $nbAttraction = $dbh->query('SELECT nbattractions FROM pact.vue_parc_attractions WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $gammeRestaurant = $dbh->query('SELECT nomgamme FROM pact.vue_restaurant WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $minutesSpectacle = $dbh->query('SELECT tempsenminutes FROM pact.vue_spectacle WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $adresse = $dbh->query('SELECT codepostal, ville, rue FROM pact._offre NATURAL JOIN pact._adresse WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $tags = $dbh->query('SELECT * FROM pact.vue_tags_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
-    $images = $dbh->query('SELECT idImage, nomImage FROM pact._image WHERE idOffre = ' . "'$idOffre'", PDO::FETCH_ASSOC)->fetchAll();
-    $carte = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._parcAttractions JOIN pact._image ON pact._parcAttractions.carteParc = pact._image.idImage WHERE pact._parcAttractions.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $menu = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._restaurant JOIN pact._image ON pact._restaurant.menuRestaurant = pact._image.idImage WHERE pact._restaurant.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
-    $horaires = substr($offre['heureouverture'], 0, 5) . " - " . substr($offre['heurefermeture'], 0, 5);
-    // Vérification de l'existence de l'offre
-    if (!$offre) {
-        throw new Exception("Aucune offre trouvée");
-    }
+ 
 
     // Vérification du nombre de réponses de l'utilisateur pour cette offre
     $stmt = $dbh->prepare("SELECT COUNT(*) as totalReponses FROM pact._reponseavis WHERE idCompte = :idCompte AND idAvis IN (SELECT idAvis FROM pact.vue_avis WHERE idOffre = :idOffre)");
@@ -135,6 +104,7 @@ try {
                 <option value="date_asc">Date croissante</option>
                 <option value="note_desc">Note décroissante</option>
                 <option value="note_asc">Note croissante</option>
+                <option value="non_vu">Non vus</option>
             </select>
 
             <label for="filterBy">Filtrer par:</label>
