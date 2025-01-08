@@ -31,13 +31,8 @@ WHERE denominationSociale IS NOT NULL;
 --
 
 CREATE OR REPLACE VIEW vue_avis AS
-SELECT idAvis, idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis, estVu
+SELECT idAvis, idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis
 FROM _avis;
-
--- VUE REPONSE AVIS
-CREATE OR REPLACE VIEW vue_reponse_avis AS
-SELECT idReponse, idAvis, idCompte, commentaire, dateReponse
-FROM _reponseAvis;
 
 --
 -- VUES OFFRES
