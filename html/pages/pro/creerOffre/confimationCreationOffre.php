@@ -5,38 +5,6 @@
 
     require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-    
-    function insererPrix($dbh, $prix) {
-        $sql = "SELECT valprix FROM pact._prix WHERE valprix = :valprix";
-        $stmt = $dbh->prepare($sql);  
-        $stmt->bindValue(':valprix', $prix, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        $prix2 = $stmt->fetchAll();
-    
-        if (empty($prix2)) {
-            $stmt = $dbh->prepare("INSERT INTO pact._prix(valprix) VALUES(:valprix)");
-            $stmt->bindValue(':valprix', $prix, PDO::PARAM_STR);
-            $stmt->execute();
-        }
-    }
-    
-    function insererDuree($dbh, $tempsEnMinutes) {
-        $sql = "SELECT tempsEnMinutes FROM pact._duree WHERE tempsEnMinutes = :tempsEnMinutes";
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(':tempsEnMinutes', $tempsEnMinutes, PDO::PARAM_INT);
-        $stmt->execute();
-        $dureeExistante = $stmt->fetchColumn();
-    
-        if (empty($dureeExistante)) {
-            $stmt = $dbh->prepare(
-                "INSERT INTO pact._duree(tempsEnMinutes) 
-                VALUES(:tempsEnMinutes)"
-            );
-            $stmt->bindValue(':tempsEnMinutes', $tempsEnMinutes, PDO::PARAM_INT);
-            $stmt->execute();
-        }
-    }
 
     function getMondayFromWeek($weekInput) {
         
@@ -175,8 +143,6 @@
 
     // Type d'offre : Activité
     if ($typeOffre === "Activite") {
-        insererPrix($dbh, $prix1);
-        insererDuree($dbh, $duree1);
 
 
         $stmt = $dbh->prepare(
@@ -207,8 +173,6 @@
 
     // Type d'offre : Spectacle
     if ($typeOffre === "Spectacle") {
-        insererPrix($dbh, $prix3);
-        insererDuree($dbh, $duree3);
 
         $stmt = $dbh->prepare(
             "INSERT INTO pact._spectacle(idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite,dateevenement)
@@ -240,7 +204,6 @@
     
     // Type d'offre : Parc d'Attraction
     if ($typeOffre === "parc") {
-        insererPrix($dbh, $prix4);
 
         foreach ($_FILES['planParc']['name'] as $key => $val) {
             $nomImage = $_FILES['planParc']['name'][$key];
@@ -298,8 +261,6 @@
 
     // Type d'offre : Visite
     if ($typeOffre === "Visite") {
-        insererPrix($dbh, $prix2);
-        insererDuree($dbh, $duree2);
         $stmt = $dbh->prepare(
             "INSERT INTO pact._visite(idOffre, nomCategorie, tempsEnMinutes, valPrix, estGuidee, dateevenement)
             VALUES(:idOffre, :nomCategorie, :tempsEnMinutes, :valPrix, :estGuidee, :datevisite)"

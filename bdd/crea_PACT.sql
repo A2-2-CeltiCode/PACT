@@ -81,17 +81,6 @@ CREATE TABLE _forfaitPro(
     CONSTRAINT forfaitPro_pk PRIMARY KEY(nomForfait)
 );
 
-CREATE TABLE _appliqueForfait(
-    nomForfait        VARCHAR(50),
-    dateApplication   DATE,
-    prixHT            NUMERIC(5,2) NOT NULL,
-    prixTTC           NUMERIC(5,2) NOT NULL,
-    CONSTRAINT appliqueForfait_fk_forfait FOREIGN KEY (nomForfait)
-        REFERENCES _forfait(nomForfait),
-    CONSTRAINT appliqueForfait_fk_applicationPrix FOREIGN KEY (dateApplication)
-        REFERENCES _applicationPrix(dateApplication)
-);
-
 --
 -- TABLE CONTEXTE
 --
@@ -191,6 +180,17 @@ CREATE TABLE _representeOffre(
         REFERENCES _offre(idOffre),
     CONSTRAINT representeOffre_fk_image FOREIGN KEY (idImage)
         REFERENCES _image(idImage)
+    nomImage  VARCHAR(100) NOT NULL,
+    CONSTRAINT image_pk PRIMARY KEY(idImage)
+);
+
+CREATE TABLE _representeOffre(
+    idOffre INTEGER,
+    idImage INTEGER,
+    CONSTRAINT representeOffre_fk_offre FOREIGN KEY (idOffre)
+        REFERENCES _offre(idOffre),
+    CONSTRAINT representeOffre_fk_image FOREIGN KEY (idImage)
+        REFERENCES _image(idImage)
 );
 
 --
@@ -217,6 +217,7 @@ CREATE TABLE _annulationOption(
         REFERENCES _offre(idOffre),
     CONSTRAINT annulationOption_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption)
+        REFERENCES _option(nomOption)
 );
 
 CREATE TABLE _historiqueEnLigne(
@@ -241,6 +242,7 @@ CREATE TABLE _spectacle(
     idOffre         SERIAL,
     nomCategorie    VARCHAR(50) NOT NULL,
     tempsEnMinutes  INTEGER NOT NULL,
+    tempsEnMinutes  INTEGER NOT NULL,
     valPrix         NUMERIC(5,2) NOT NULL,
     capacite        INTEGER NOT NULL,
     dateEvenement   DATE NOT NULL,
@@ -248,6 +250,7 @@ CREATE TABLE _spectacle(
     CONSTRAINT spectacle_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
     CONSTRAINT spectacle_fk_categorie FOREIGN KEY (nomCategorie)
+        REFERENCES _categorie(nomCategorie)
         REFERENCES _categorie(nomCategorie)
 );
 
@@ -262,6 +265,7 @@ CREATE TABLE _activite(
     CONSTRAINT activite_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
     CONSTRAINT activite_fk_categorie FOREIGN KEY (nomCategorie)
+        REFERENCES _categorie(nomCategorie)
         REFERENCES _categorie(nomCategorie)
 );
 
@@ -292,6 +296,7 @@ CREATE TABLE _visite(
     CONSTRAINT visite_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
     CONSTRAINT visite_fk_categorie FOREIGN KEY (nomCategorie)
+        REFERENCES _categorie(nomCategorie)
         REFERENCES _categorie(nomCategorie)
 );
 
@@ -375,21 +380,13 @@ CREATE TABLE _avis(
 );
 
 CREATE TABLE _representeAvis(
+CREATE TABLE _representeAvis(
     idAvis      INTEGER,
     idImage     INTEGER,
     CONSTRAINT representeAvis_fk_avis FOREIGN KEY (idAvis)
         REFERENCES _avis(idAvis),
     CONSTRAINT representeAvis_fk_image FOREIGN KEY (idImage)
         REFERENCES _image(idImage)
-);
-
-CREATE TABLE _avis_votes (
-    idAvis INTEGER,
-    idCompte INTEGER,
-    type VARCHAR(10),
-    CONSTRAINT avis_votes_pk PRIMARY KEY (idAvis, idCompte),
-    CONSTRAINT avis_votes_fk_avis FOREIGN KEY (idAvis) REFERENCES _avis(idAvis),
-    CONSTRAINT avis_votes_fk_compte FOREIGN KEY (idCompte) REFERENCES _compte(idCompte)
 );
 
 --
