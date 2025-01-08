@@ -8,6 +8,11 @@ label {
     font-weight: var(--font-weight-normal);
 }
 
+
+div{
+    margin: 5px
+}   
+
 body {
     margin: 0;
     flex-direction: column;
@@ -20,6 +25,7 @@ section {
     display: flex;
 
 }
+
 form{
     width: 70% !important;
     display: flex;
@@ -55,6 +61,7 @@ article{
     position: relative;
     display: inline-block;
 }
+
 
 /* Style pour la liste déroulante cachée */
 .dropdown-content {
