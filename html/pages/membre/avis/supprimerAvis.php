@@ -18,7 +18,7 @@ if (file_exists($avis_dir)) {
     rmdir($avis_dir);
 }
 
-$stmt = $dbh->prepare("DELETE FROM pact._imageavis WHERE idavis = ?");
+$stmt = $dbh->prepare("DELETE FROM pact._representeAvis WHERE idavis = ?");
 $stmt->execute([$idavis]);
 $stmt = $dbh->prepare("DELETE FROM pact._avis WHERE idavis = ?");
 $stmt->execute([$idavis]);

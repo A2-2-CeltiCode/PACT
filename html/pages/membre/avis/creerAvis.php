@@ -9,7 +9,6 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
 $contextes = ["Contexte de la visite", "Affaires", "Couple", "Famille", "Amis", "Solo"];
 
-
 $stmt = $dbh->prepare("INSERT INTO pact._avis VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, DEFAULT)");
 
 $stmt->execute([
@@ -24,6 +23,8 @@ $stmt->execute([
 
 $idavis = $dbh->lastInsertId();
 
+
+
 $avis_dir = $_SERVER['DOCUMENT_ROOT'] . "/ressources/avis/$idavis";
 if (!file_exists($avis_dir)) {
     mkdir($avis_dir);
@@ -34,8 +35,11 @@ foreach ($_FILES["dropzone"]["error"] as $key => $error) {
         $tmp_name = $_FILES["dropzone"]["tmp_name"][$key];
         $name = basename($_FILES["dropzone"]["name"][$key]);
         move_uploaded_file($tmp_name, "$avis_dir/$name");
-        $stmt = $dbh->prepare("INSERT INTO pact._imageavis VALUES (?, ?)");
-        $stmt->execute([$idavis, $name]);
+        $stmt = $dbh->prepare("INSERT INTO pact._image (nomimage) VALUES (?)");
+        $stmt->execute([$name]);
+        $idImage = $dbh->lastInsertId();
+        $stmt = $dbh->prepare("INSERT INTO pact._representeavis VALUES (?, ?)");
+        $stmt->execute([$idavis, $idImage]);
     }
 }
 

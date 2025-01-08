@@ -1,26 +1,5 @@
 SET SCHEMA 'pact';
 
--- Peupler la table _prix
-INSERT INTO _prix (valPrix) VALUES
-(0),
-(10),
-(20),
-(30),
-(40),
-(60),
-(80),
-(100);
-
--- Peupler la table _duree
-INSERT INTO _duree (tempsEnMinutes) VALUES
-(30),
-(45),
-(60),
-(75),
-(90),
-(105),
-(120);
-
 -- Peupler la table _adresse
 INSERT INTO _adresse (codePostal, ville, rue, numTel) VALUES
 (22000, 'Saint-Brieuc', '2 Rue nominoë','01 23 45 67 89'),
@@ -114,42 +93,64 @@ INSERT INTO _compteProPublic (idCompte) VALUES
 (3),(4);
 
 -- Peupler la table _offre
-INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture, longitude, latitude) VALUES
-(2, 'En relief', 'Standard', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 2,'2024-09-13','06:00','17:00', -2.760847, 48.514370),
-(2, 'A la une', 'Premium', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 3,'2024-10-01','07:00','16:00', -3.833333, 48.583333),
-(2, 'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 4,'2024-12-02','08:00','15:00', -4.486076, 48.390394),
-(2, 'Aucune', 'Standard', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 5,'2024-09-15','17:00','01:00', -2.025674, 48.649337),
-(3, 'Aucune', 'Gratuit', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 6,'2024-07-08','02:00','14:00', -3.366667, 47.75),
-(3, 'Aucune', 'Gratuit', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 7,'2023-11-14','00:00','10:00', -4.096944, 47.996111),
-(3, 'Aucune', 'Gratuit', 'Visite guidée de Brest', 'Explorez la ville portuaire de Brest', 'Visite de la rade, du château et du musée de la Marine', 'http://example.com/brest', TRUE, 27, '2024-04-05', '09:00', '17:00', -4.486076, 48.390394),
-(3, 'Aucune', 'Gratuit', 'Spectacle à Quiberon', 'Incroyable spectacle de marionnettes à Quiberon', '', '', FALSE, 28, '2024-06-15', '10:00', '18:00', -3.121944, 47.482778),
-(3, 'Aucune', 'Gratuit', 'Montagnes Russes à Perros-Guirec', 'Explorez les côtes bretonnes en kayak', 'Balade guidée le long des côtes rocheuses', 'http://example.com/perrosguirec', TRUE, 29, '2024-07-10', '08:00', '20:00', -3.445833, 48.815833),
-(4, 'Aucune', 'Gratuit', 'Randonnée sur le GR34 à Saint-Malo', 'Partez sur les sentiers côtiers', 'Randonnée le long de la côte avec vues magnifiques', 'http://example.com/saintmalo', FALSE, 30, '2024-08-01', '07:00', '21:00', -2.025674, 48.649337),
-(4, 'Aucune', 'Gratuit', 'Balade en bateau à Douarnenez', 'Découvrez le port de Douarnenez et ses alentours', 'Excursion en bateau dans la baie', 'http://example.com/douarnenez', TRUE, 31, '2024-09-15', '10:00', '18:00', -4.331667, 48.095833),
-(4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire maritime', 'Exposition de l''histoire de la pêche et de la mer', 'http://example.com/paimpol', TRUE, 32, '2024-10-20', '09:00', '19:00', -3.043056, 48.780833),
-(4, 'Aucune', 'Gratuit', 'Restaurant à Rennes', 'Goûtez aux spécialités bretonnes à Rennes', 'Dégustation de crêpes, galettes et cidre local', 'http://example.com/rennes', FALSE, 33, '2024-11-10', '11:00', '16:00', -1.677793, 48.117266),
-(4, 'Aucune', 'Gratuit', 'Visite de Vannes', 'Explorez la beauté de Vannes', '', 'http://example.com/cotesarmor', TRUE, 34, '2024-12-01', '08:00', '18:00', -2.760847, 48.514370),
-(4, 'Aucune', 'Gratuit', 'Restaurant exotique de Rennes', 'Goutez aux spécialités tropicales', '', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00', -1.677793, 48.117266);
+INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
+(2, 'En relief', 'Standard', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 2,'2024-09-13','06:00','17:00'),
+(2, 'A la une', 'Premium', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 3,'2024-10-01','07:00','16:00'),
+(2, 'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 4,'2024-12-02','08:00','15:00'),
+(2, 'Aucune', 'Standard', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 5,'2024-09-15','17:00','01:00'),
+(3, 'Aucune', 'Gratuit', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 6,'2024-07-08','02:00','14:00'),
+(3, 'Aucune', 'Gratuit', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 7,'2023-11-14','00:00','10:00'),
+(3, 'Aucune', 'Gratuit', 'Visite guidée de Brest', 'Explorez la ville portuaire de Brest', 'Visite de la rade, du château et du musée de la Marine', 'http://example.com/brest', TRUE, 27, '2024-04-05', '09:00', '17:00'),
+(3, 'Aucune', 'Gratuit', 'Spectacle à Quiberon', 'Incroyable spectacle de marionnettes à Quiberon', '', '', FALSE, 28, '2024-06-15', '10:00', '18:00'),
+(3, 'Aucune', 'Gratuit', 'Montagnes Russes à Perros-Guirec', 'Explorez les côtes bretonnes en kayak', 'Balade guidée le long des côtes rocheuses', 'http://example.com/perrosguirec', TRUE, 29, '2024-07-10', '08:00', '20:00'),
+(4, 'Aucune', 'Gratuit', 'Randonnée sur le GR34 à Saint-Malo', 'Partez sur les sentiers côtiers', 'Randonnée le long de la côte avec vues magnifiques', 'http://example.com/saintmalo', FALSE, 30, '2024-08-01', '07:00', '21:00'),
+(4, 'Aucune', 'Gratuit', 'Balade en bateau à Douarnenez', 'Découvrez le port de Douarnenez et ses alentours', 'Excursion en bateau dans la baie', 'http://example.com/douarnenez', TRUE, 31, '2024-09-15', '10:00', '18:00'),
+(4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire maritime', 'Exposition de l''histoire de la pêche et de la mer', 'http://example.com/paimpol', TRUE, 32, '2024-10-20', '09:00', '19:00'),
+(4, 'Aucune', 'Gratuit', 'Restaurant à Rennes', 'Goûtez aux spécialités bretonnes à Rennes', 'Dégustation de crêpes, galettes et cidre local', 'http://example.com/rennes', FALSE, 33, '2024-11-10', '11:00', '16:00'),
+(4, 'Aucune', 'Gratuit', 'Visite de Vannes', 'Explorez la beauté de Vannes', '', 'http://example.com/cotesarmor', TRUE, 34, '2024-12-01', '08:00', '18:00'),
+(4, 'Aucune', 'Gratuit', 'Restaurant exotique de Rennes', 'Goutez aux spécialités tropicales', '', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00');
 
 -- Peupler la table _image
-INSERT INTO _image (idOffre, nomImage) VALUES
-(1, 'saintbrieuc1.jpg'),
-(1, 'visitesaintbrieuc.jpg'),
-(2, 'morlaix.jpg'),
-(3, 'parcBrest.jpg'),
-(4, 'saintmalo.jpg'),
-(5, 'Lorient.jpg'),
-(5, 'fonds-marin.jpg'),
-(6, 'quimper.jpg'),
-(7, 'brest.jpg'),
-(8, 'quiberon.jpg'),
-(9, 'port-perros.jpg'),
-(10, 'saint malo.jpg'),
-(11, 'Douarnenez.jpg'),
-(12, 'Paimpol.jpg'),
-(13, 'rennes.jpg'),
-(14, 'vannes.jpg'),
-(15, 'restau.jpg');
+INSERT INTO _image (nomImage) VALUES
+('saintbrieuc1.jpg'),
+('visitesaintbrieuc.jpg'),
+('morlaix.jpg'),
+('parcBrest.jpg'),
+('saintmalo.jpg'),
+('Lorient.jpg'),
+('fonds-marin.jpg'),
+('quimper.jpg'),
+('brest.jpg'),
+('quiberon.jpg'),
+('port-perros.jpg'),
+('saint malo.jpg'),
+('Douarnenez.jpg'),
+('Paimpol.jpg'),
+('rennes.jpg'),
+('vannes.jpg'),
+('restau.jpg'),
+('parc.jpg'),
+('bat saint brieuc.jpg'),
+('gare-de-saint-brieuc.jpg');
+
+INSERT INTO _representeOffre (idOffre, idImage) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(3, 4),
+(4, 5),
+(5, 6),
+(5, 7),
+(6, 8),
+(7, 9),
+(8, 10),
+(9, 11),
+(10, 12),
+(11, 13),
+(12, 14),
+(13, 15),
+(14, 16),
+(15, 17);
 
 -- Peupler la table _spectacle
 INSERT INTO _spectacle (idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite, dateEvenement) VALUES
@@ -288,12 +289,6 @@ INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES -- septe
 (4, '2024-11-01','2024-12-20'),
 (4, '2024-12-01','2025-01-20');
 
-/*INSERT INTO _souscription (nbSemaines, debutOption) VALUES
-(1, '2024-09-09'),
-(4, '2024-09-23'),
-(3, '2024-10-14'),
-(2, '2024-11-11');*/
-
 INSERT INTO _historiqueEnLigne(idOffre, jourDebut, jourFin) VALUES
 (1,'2024-09-13','2024-09-22'),
 (1,'2024-10-15','2024-10-27'),
@@ -324,7 +319,7 @@ INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAn
 (4, '2024-09-23',4, 'En relief',True),
 (3, '2024-10-14',4, 'A la une',False);
 
-INSERT INTO _imageavis VALUES
-(9, 'parc.jpg'),
-(11, 'bat saint brieuc.jpg'),
-(11, 'gare-de-saint-brieuc.jpg');
+INSERT INTO _representeAvis(idAvis, idImage) VALUES
+(9, 18),
+(11, 19),
+(11, 20);

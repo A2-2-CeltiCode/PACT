@@ -34,7 +34,10 @@ CREATE OR REPLACE VIEW vue_avis AS
 SELECT idAvis, idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis, estVu
 FROM _avis;
 
+--
 -- VUE REPONSE AVIS
+--
+
 CREATE OR REPLACE VIEW vue_reponse_avis AS
 SELECT idReponse, idAvis, idCompte, commentaire, dateReponse
 FROM _reponseAvis;
@@ -42,6 +45,7 @@ FROM _reponseAvis;
 --
 -- VUES OFFRES
 --
+
 CREATE OR REPLACE VIEW vue_offres AS
 SELECT DISTINCT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _offre.nomforfait,
        _offre.titre, _offre.description, _offre.descriptiondetaillee, _offre.siteinternet, _offre.heureOuverture, _offre.heureFermeture,_adresse.codepostal, _adresse.ville,
@@ -60,9 +64,10 @@ SELECT DISTINCT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomopt
             WHEN _visite.idoffre IS NOT NULL THEN 'Visite'::text
             ELSE 'Inconnu'::text
         END AS type_offre,
-    (SELECT nomimage as idimage
-        FROM _image
-        WHERE _image.idoffre = _offre.idoffre FETCH FIRST 1 ROW ONLY) as nomimage
+      (SELECT nomImage 
+        FROM _representeOffre JOIN _image ON _representeOffre.idImage = _image.idImage 
+        WHERE _representeOffre.idOffre = _offre.idoffre 
+        FETCH FIRST 1 ROW ONLY) AS nomimage
 FROM _offre LEFT JOIN _spectacle ON _offre.idoffre = _spectacle.idoffre
             LEFT JOIN _activite ON _offre.idoffre = _activite.idoffre
             LEFT JOIN _parcattractions ON _offre.idoffre = _parcattractions.idoffre
@@ -71,9 +76,7 @@ FROM _offre LEFT JOIN _spectacle ON _offre.idoffre = _spectacle.idoffre
             LEFT JOIN _adresse ON _offre.idadresse = _adresse.idadresse
             LEFT JOIN _option ON _offre.nomoption::text = _option.nomoption::text
             LEFT JOIN _forfait ON _offre.nomforfait::text = _forfait.nomforfait::text
-            LEFT JOIN _prix ON COALESCE(_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix) = _prix.valprix
-            LEFT JOIN _duree ON COALESCE(_spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes) = _duree.tempsenminutes
-            LEFT JOIN _image ON _offre.idoffre = _image.idoffre
+            LEFT JOIN _representeOffre ON _offre.idoffre = _representeOffre.idoffre
             LEFT JOIN vue_avis ON vue_avis.idOffre = _offre.idoffre
 GROUP BY _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _offre.nomforfait,
        _offre.titre, _offre.description, _offre.descriptiondetaillee, _offre.siteinternet, _offre.heureOuverture, _offre.heureFermeture,_adresse.codepostal, _adresse.ville,
@@ -86,14 +89,12 @@ GROUP BY _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _o
 CREATE OR REPLACE VIEW vue_visite AS
 SELECT o.idCompte, o.idOffre, a.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, 
        o.descriptionDetaillee, o.siteInternet, c.nomCategorie, a.codePostal, a.ville, a.rue, 
-       a.numTel, p.valPrix, d.tempsEnMinutes, v.estGuidee, o.estEnLigne, v.dateEvenement
+       a.numTel, valPrix, tempsEnMinutes, v.estGuidee, o.estEnLigne, v.dateEvenement
 FROM _offre o LEFT JOIN _visite v ON o.idOffre = v.idOffre
               LEFT JOIN _categorie c ON v.nomCategorie = c.nomCategorie
               LEFT JOIN _adresse a ON o.idAdresse = a.idAdresse
               LEFT JOIN _option op ON o.nomOption = op.nomOption
               LEFT JOIN _forfait f ON o.nomForfait = f.nomForfait
-              LEFT JOIN _prix p ON v.valPrix = p.valPrix
-              LEFT JOIN _duree d ON v.tempsEnMinutes = d.tempsEnMinutes
 WHERE v.estGuidee IS NOT NULL;
 
 
@@ -109,14 +110,12 @@ FROM _possedeVisite;
 -- SPECTACLE
 CREATE OR REPLACE VIEW vue_spectacle AS
 SELECT o.idCompte, o.idOffre, o.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, o.descriptionDetaillee, o.siteInternet,
-       c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, p.valPrix, d.tempsEnMinutes, s.capacite, o.estEnLigne, s.dateEvenement
+       c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, valPrix, tempsEnMinutes, s.capacite, o.estEnLigne, s.dateEvenement
 FROM _offre o INNER JOIN _option op ON o.nomOption = op.nomOption
               INNER JOIN _forfait f ON o.nomForfait = f.nomForfait
               INNER JOIN _spectacle s ON o.idOffre = s.idOffre
               INNER JOIN _adresse a ON o.idAdresse = a.idAdresse
-              INNER JOIN _categorie c ON s.nomCategorie = c.nomCategorie
-              INNER JOIN _prix p ON s.valPrix = p.valPrix
-              INNER JOIN _duree d ON s.tempsEnMinutes = d.tempsEnMinutes;
+              INNER JOIN _categorie c ON s.nomCategorie = c.nomCategorie;
 
 CREATE OR REPLACE VIEW vue_tags_spectacle (idOffre, nomTag) AS
 SELECT idOffre, nomTag
@@ -125,15 +124,13 @@ FROM _possedeSpectacle;
 -- ACTIVITE
 CREATE OR REPLACE VIEW vue_activite AS
 SELECT o.idCompte, o.idOffre, o.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, o.descriptionDetaillee, 
-       o.siteInternet, o.creaDate, c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, p.valPrix, d.tempsEnMinutes, 
+       o.siteInternet, o.creaDate, c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, valPrix, tempsEnMinutes, 
        ac.ageMin, ac.prestation, o.estEnLigne, o.heureOuverture, o.heureFermeture, f.prixHT, f.prixTTC
 FROM _offre o INNER JOIN _option op ON o.nomOption = op.nomOption
               INNER JOIN _forfait f ON o.nomForfait = f.nomForfait
               INNER JOIN _activite ac ON o.idOffre = ac.idOffre
               INNER JOIN _adresse a ON o.idAdresse = a.idAdresse
-              INNER JOIN _categorie c ON ac.nomCategorie = c.nomCategorie
-              INNER JOIN _prix p ON ac.valPrix = p.valPrix
-              INNER JOIN _duree d ON ac.tempsEnMinutes = d.tempsEnMinutes;
+              INNER JOIN _categorie c ON ac.nomCategorie = c.nomCategorie;
 
 CREATE OR REPLACE VIEW vue_tags_activite (idOffre, nomTag) AS
 SELECT idOffre, nomTag
@@ -143,14 +140,14 @@ FROM _possedeActivite;
 CREATE OR REPLACE VIEW vue_parc_attractions AS
 SELECT o.idCompte, o.idOffre, a.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, 
        o.descriptionDetaillee, o.siteInternet, c.nomCategorie, a.codePostal, a.ville, a.rue, 
-       a.numTel, p.valPrix, pa.ageMin, pa.nbAttractions, i.idImage, i.nomImage, o.estEnLigne
+       a.numTel, valPrix, pa.ageMin, pa.nbAttractions, i.idImage, i.nomImage, o.estEnLigne
 FROM _offre o LEFT JOIN _parcAttractions pa ON o.idOffre = pa.idOffre
               LEFT JOIN _categorie c ON pa.nomCategorie = c.nomCategorie
               LEFT JOIN _adresse a ON o.idAdresse = a.idAdresse
               LEFT JOIN _option op ON o.nomOption = op.nomOption
               LEFT JOIN _forfait f ON o.nomForfait = f.nomForfait
-              LEFT JOIN _prix p ON pa.valPrix = p.valPrix
-              LEFT JOIN _image i ON o.idOffre = i.idOffre
+              LEFT JOIN _representeOffre ro ON o.idOffre = ro.idOffre
+              LEFT JOIN _image i ON ro.idImage = i.idImage
 WHERE nbAttractions IS NOT NULL;
 
 CREATE OR REPLACE VIEW vue_tags_parc_attractions (idOffre, nomTag) AS
@@ -166,7 +163,8 @@ FROM _offre o LEFT JOIN _restaurant r ON r.idOffre = o.idOffre
               LEFT JOIN _adresse a ON a.idAdresse = o.idAdresse
               LEFT JOIN _option o2 ON o2.nomOption = o.nomOption
               LEFT JOIN _forfait f ON f.nomForfait = o.nomForfait
-              LEFT JOIN _image i ON i.idOffre = o.idOffre
+              LEFT JOIN _representeOffre ro ON o.idOffre = ro.idOffre
+              LEFT JOIN _image i ON ro.idImage = i.idImage
               LEFT JOIN _gamme g ON g.nomGamme = r.nomGamme
 WHERE c.nomCategorie = 'Restaurant';
 
@@ -179,13 +177,13 @@ CREATE OR REPLACE VIEW vue_tags_restaurant (idOffre, nomTag) AS
 SELECT idOffre, nomTag
 FROM _possedeRestaurant;
 
-CREATE OR REPLACE VIEW vue_image_offre (idOffre, idImage) AS
-SELECT idOffre, idImage
-FROM _image;
+CREATE OR REPLACE VIEW vue_image_offre (idOffre, idImage, nomImage) AS
+SELECT idOffre, idImage, nomImage
+FROM _representeOffre NATURAL JOIN _image;
 
-CREATE OR REPLACE VIEW vue_image_avis (idAvis, nomImage) AS
-SELECT idAvis, nomImage
-FROM _imageAvis ;
+CREATE OR REPLACE VIEW vue_image_avis (idAvis, idImage, nomImage) AS
+SELECT idAvis, idImage, nomImage
+FROM _representeAvis NATURAL JOIN _image;
 
 --
 -- VUES FACTURE
