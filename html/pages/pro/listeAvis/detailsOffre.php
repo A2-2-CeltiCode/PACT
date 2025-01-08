@@ -24,28 +24,44 @@ try {
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis FROM pact.vue_avis JOIN pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte";
+    // Récupérer tous les idOffre du compte
+    $queryOffres = "SELECT idOffre FROM pact._offre WHERE idCompte = :idCompte";
+    $stmtOffres = $dbh->prepare($queryOffres);
+    $stmtOffres->execute([':idCompte' => $idCompte]);
+    $offres = $stmtOffres->fetchAll(PDO::FETCH_COLUMN);
 
-    if ($filterBy === 'viewed') {
-        $query .= " AND estvu = true";
-    } elseif ($filterBy === 'not_viewed') {
-        $query .= " AND estvu = false";
+    if (empty($offres)) {
+        $avis = [];
+    } else {
+        $offresPlaceholders = implode(',', array_fill(0, count($offres), '?'));
+
+        $query = "SELECT a.*, o.* FROM pact._avis a
+                  JOIN pact._offre o ON a.idOffre = o.idOffre
+                  WHERE o.idOffre IN ($offresPlaceholders)";
+
+        if ($filterBy === 'viewed') {
+            $query .= " AND estvu = true";
+        } elseif ($filterBy === 'not_viewed') {
+            $query .= " AND estvu = false";
+        }
+
+        if ($sortBy === 'date_asc') {
+            $query .= " ORDER BY datevisite ASC";
+        } elseif ($sortBy === 'date_desc') {
+            $query .= " ORDER BY datevisite DESC";
+        } elseif ($sortBy === 'note_asc') {
+            $query .= " ORDER BY note ASC";
+        } elseif ($sortBy === 'note_desc') {
+            $query .= " ORDER BY note DESC";
+        } elseif ($sortBy === 'non_vu') {
+            $query .= " ORDER BY estvu ASC, datevisite DESC";
+        }
+
+        $stmt = $dbh->prepare($query);
+        $stmt->execute($offres);
+        $avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    if ($sortBy === 'date_asc') {
-        $query .= " ORDER BY datevisite ASC";
-    } elseif ($sortBy === 'date_desc') {
-        $query .= " ORDER BY datevisite DESC";
-    } elseif ($sortBy === 'note_asc') {
-        $query .= " ORDER BY note ASC";
-    } elseif ($sortBy === 'note_desc') {
-        $query .= " ORDER BY note DESC";
-    } elseif ($sortBy === 'non_vu') {
-        $query .= " ORDER BY estvu ASC, datevisite DESC";
-    }
-
-    $avis = $dbh->query($query)->fetchAll(PDO::FETCH_ASSOC);
-    
     // Calcul de la moyenne des notes
     $totalNotes = 0;
     $nombreAvis = count($avis);

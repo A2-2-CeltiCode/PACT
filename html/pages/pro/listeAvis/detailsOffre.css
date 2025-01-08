@@ -319,10 +319,7 @@ body {
   border-left: 4px solid var(--primary-color);
 }
 
-/* Avis sans réponse */
-.avi.sans-reponse {
-  background-color: rgba(255, 0, 0, 0.1);
-}
+
 
 .avi-title {
   font-size: 20px;

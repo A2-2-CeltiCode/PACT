@@ -190,6 +190,7 @@ class Header
     }
 
     private static function renderNotificationIcon(): void {
+        session_start();
         $server = 'localhost';
         $driver = 'pgsql';
         $dbname = 'pact';
@@ -197,6 +198,7 @@ class Header
         $dbpass = 'derfDERF29';
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
         $idCompte = $_SESSION['idCompte'];
+        echo($idCompte);
         $query = "SELECT a.*, o.* FROM pact._avis a
               JOIN pact._offre o ON a.idOffre = o.idOffre
               WHERE o.idCompte = :idCompte AND a.estvu = false";
