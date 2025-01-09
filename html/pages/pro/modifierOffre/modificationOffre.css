@@ -9,7 +9,7 @@ label {
 }
 
 div{
-    margin: 5px
+    margin: 5px;
 }   
 
 body {
@@ -20,6 +20,7 @@ body {
 
 section {
     display: flex;
+    margin-bottom: 2em;
 
 }
 
@@ -61,4 +62,32 @@ article{
     display: block;
 }
 
-.btns{padding: 1em;}
+.btns{
+    padding: 1em;
+    text-align: center;
+}
+
+.reunion {
+    display: flex;
+    text-align: center;
+    align-items: end;
+    margin: 0;
+    padding: 0;
+}
+
+
+.divDescription{
+    width: 18em !important;
+}
+
+.basDePage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    width: 30em;
+}
+
+.choix{
+    margin: 1em;
+}
