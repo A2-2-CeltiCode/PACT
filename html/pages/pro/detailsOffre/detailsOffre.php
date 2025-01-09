@@ -125,6 +125,7 @@ try {
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
+    <div id="toast" class="toast">Avis bien signalé</div>
     <div class=titre>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
     </div>
@@ -332,7 +333,7 @@ try {
                             </p>
                         </div>
                         <div>
-                            <?php Button::render("btn", "", "Signaler", ButtonType::Pro, "", false); ?>
+                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
                                 <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
                             <?php endif; ?>

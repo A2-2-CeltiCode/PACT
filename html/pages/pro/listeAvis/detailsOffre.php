@@ -35,8 +35,9 @@ try {
     } else {
         $offresPlaceholders = implode(',', array_fill(0, count($offres), '?'));
 
-        $query = "SELECT a.*, o.* FROM pact._avis a
+        $query = "SELECT a.*, o.*, c.pseudo, a.titre as avis_titre, o.titre as offre_titre FROM pact._avis a
                   JOIN pact._offre o ON a.idOffre = o.idOffre
+                  JOIN pact._comptemembre c ON a.idCompte = c.idCompte
                   WHERE o.idOffre IN ($offresPlaceholders)";
 
         if ($filterBy === 'viewed') {
@@ -60,7 +61,7 @@ try {
         $stmt = $dbh->prepare($query);
         $stmt->execute($offres);
         $avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+        }
 
     // Calcul de la moyenne des notes
     $totalNotes = 0;
@@ -111,7 +112,8 @@ try {
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
-    
+    <!-- Toast de confirmation -->
+    <div id="toast" class="toast">Avis bien signalé</div>
     <div>
         <div class="filters">
             <label for="sortBy">Trier par:</label>
@@ -126,7 +128,6 @@ try {
             <label for="filterBy">Filtrer par:</label>
             <select id="filterBy">
                 <option value="all">Tous</option>
-                <option value="viewed">Vus</option>
                 <option value="not_viewed">Non vus</option>
             </select>
         </div>
@@ -144,11 +145,15 @@ try {
                     $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
                     $stmt->execute([':idAvis' => $avi['idavis']]);
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
                     ?>
                     <div class="avi <?= !$avi['estvu'] ? 'non-vu' : '' ?> <?= empty($reponses) ? 'sans-reponse' : '' ?>" data-idavis="<?= $avi["idavis"] ?>">
                         <div>
                             <p class="avi-title">
-                                <?= $avi["titre"] ?>
+                                <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi["idoffre"]; ?>">Offre: <?= $avi["titre"] ?></a>
+                            </p>
+                            <p class="offre-title">
+                                <?= $avi["avis_titre"] ?>
                             </p>
                             <div class="note">
                                 <?php
@@ -186,7 +191,7 @@ try {
                             </p>
                         </div>
                         <div>
-                            <?php Button::render("btn", "", "Signaler", ButtonType::Pro, "", false); ?>
+                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
                                 <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
                             <?php endif; ?>

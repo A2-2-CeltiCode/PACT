@@ -108,3 +108,16 @@ document.addEventListener("DOMContentLoaded", function () {
   sortBySelect.addEventListener("change", fetchAvis);
   filterBySelect.addEventListener("change", fetchAvis);
 });
+
+
+const signalerButtons = document.querySelectorAll(".btn-signaler");
+const toast = document.getElementById("toast");
+
+signalerButtons.forEach((button) => {
+  button.addEventListener("click", function () {
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  });
+});

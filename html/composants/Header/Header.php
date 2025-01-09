@@ -181,7 +181,6 @@ class Header
                 $onClick = "window.location.href='/pages/membre/connexionCompteMembre/connexionCompteMembre.php'");
         } elseif ($type == HeaderType::Member) {
             self::renderProfileOptionSelector('profil-member');
-            self::renderNotificationIcon();
         } elseif ($type == HeaderType::Pro) {
             self::renderProfileOptionSelector('profil-pro');
             self::renderNotificationIcon();
@@ -198,7 +197,6 @@ class Header
         $dbpass = 'derfDERF29';
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
         $idCompte = $_SESSION['idCompte'];
-        echo($idCompte);
         $query = "SELECT a.*, o.* FROM pact._avis a
               JOIN pact._offre o ON a.idOffre = o.idOffre
               WHERE o.idCompte = :idCompte AND a.estvu = false";

@@ -1,145 +1,120 @@
-addEventListener("DOMContentLoaded", (event) => {
-    document.querySelector("#contexte > option:first-child").disabled = true;
-});
-
-let currentIndex = 0;
-const images = document.querySelectorAll('.carousel-image');
-const totalImages = images.length;
-let compteur = 1;
-
-function updateCarousel() {
-    const offset = -currentIndex * 100;
-    document.querySelector('.carousel-images').style.transform = `translateX(${offset}%)`;
-    
-}
-
-
-if (images.length > 1) {
-    document.querySelector('.next').classList.remove('desactive');
-}
-
-
-document.querySelector('.next').addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % totalImages;
-    updateCarousel();
-    if (compteur < totalImages) {
-        compteur++;
+document.addEventListener("DOMContentLoaded", function () {
+    const prevButton = document.querySelector(".carousel-button.prev");
+    const nextButton = document.querySelector(".carousel-button.next");
+    const images = document.querySelectorAll(".carousel-image");
+    let currentIndex = 0;
+  
+    function updateCarousel() {
+      images.forEach((img, index) => {
+        img.style.display = index === currentIndex ? "block" : "none";
+      });
+      prevButton.style.display = currentIndex === 0 ? "none" : "flex";
+      nextButton.style.display =
+        currentIndex === images.length - 1 ? "none" : "flex";
     }
-    if (compteur == totalImages) {
-        document.querySelector('.next').classList.add('desactive');
-        document.querySelector('.prev').classList.remove('desactive');
-    }
-});
-
-document.querySelector('.prev').addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-    updateCarousel();
-    if (compteur > 1) {
-        compteur--;
-    }
-    if (compteur == 1) {
-        document.querySelector('.prev').classList.add('desactive');
-        document.querySelector('.next').classList.remove('desactive');
-    }
-});
-
-
-function popupavis() {
-
-    const popupOverlay = document.getElementById('popupOverlay');
-
-    const popup = document.getElementById('popup');
-
-    const closePopup = document.getElementById('closePopup');
-
-    const emailInput = document.getElementById('emailInput');
-
-// Function to open the popup
-
-    function openPopup() {
-
-        document.body.classList.add("noscroll")
-        popupOverlay.style.display = 'block';
-
-    }
-
-// Function to close the popup
-
-    function closePopupFunc() {
-
-        document.body.classList.remove("noscroll")
-        popupOverlay.style.display = 'none';
-
-    }
-
-// Function to submit the signup form
-
-    function submitForm() {
-
-        const email = emailInput.value;
-
-// Add your form submission logic here
-
-        console.log(`Email submitted: ${email}`);
-
-        closePopupFunc(); // Close the popup after form submission
-
-    }
-
-// Event listeners
-
-// Trigger the popup to open (you can call this function on a button click or any other event)
-
-    openPopup();
-
-// Close the popup when the close button is clicked
-
-    closePopup.addEventListener('click', closePopupFunc);
-
-// Close the popup when clicking outside the popup content
-
-    popupOverlay.addEventListener('click', function (event) {
-
-        if (event.target === popupOverlay) {
-
-            closePopupFunc();
-
-        }
-
+  
+    prevButton.addEventListener("click", function () {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
     });
-}
-
-const modal = document.getElementById("myModal");
-
-const span = document.getElementsByClassName("close")[1];
-
-const modalImage = document.getElementById("modal-image");
-
-function openUp(e) {
-    const src = e.srcElement.src;
-    modal.style.display = "block";
-    modalImage.src = src;
-    document.body.classList.add("noscroll")
-}
-
-span.onclick = function () {
-    modal.style.display = "none";
-    document.body.classList.remove("noscroll")
-};
-
-window.onclick = function (event) {
-    if (event.target === modal) {
-        modal.style.display = "none";
-        document.body.classList.remove("noscroll")
+  
+    nextButton.addEventListener("click", function () {
+      if (currentIndex < images.length - 1) {
+        currentIndex++;
+        updateCarousel();
+      }
+    });
+  
+    updateCarousel();
+  });
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    const detailElement = document.querySelector(".offre-detail");
+    if (!detailElement) return;
+  
+    // Créer le bouton "voir plus"
+    const voirPlusButton = document.createElement("span");
+    voirPlusButton.classList.add("voir-plus");
+    voirPlusButton.textContent = "Voir plus";
+  
+    // Ajouter la classe collapsed initialement si le contenu dépasse un certain nombre de caractères
+    const maxCharacters = 100; // Définir le nombre maximum de caractères avant d'afficher "Voir plus"
+    if (detailElement.textContent.length > maxCharacters) {
+      detailElement.classList.add("collapsed");
+      // Insérer le bouton après l'élément de détail
+      detailElement.parentNode.insertBefore(
+        voirPlusButton,
+        detailElement.nextSibling
+      );
     }
-};
-
-function submitForm() {
-    let valid = true;
-    if (new Date() < new Date(document.getElementById("datevisite").value)) {
-        valid = false;
-    } else if (document.getElementById("contexte").selectedIndex === 0) {
-        valid = false;
+  
+    // Gérer le clic sur le bouton
+    voirPlusButton.addEventListener("click", function () {
+      if (detailElement.classList.contains("collapsed")) {
+        detailElement.style.maxHeight = detailElement.scrollHeight + "px";
+        detailElement.classList.remove("collapsed");
+        voirPlusButton.textContent = "Voir moins";
+      } else {
+        detailElement.style.maxHeight = "4.5em";
+        detailElement.classList.add("collapsed");
+        voirPlusButton.textContent = "Voir plus";
+      }
+    });
+  });
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    const repondreButtons = document.querySelectorAll(".btn-repondre");
+    const popup = document.getElementById("popup-repondre");
+    const closeBtn = popup.querySelector(".close");
+    const idAvisInput = document.getElementById("popup-idAvis");
+  
+    repondreButtons.forEach(button => {
+      button.addEventListener("click", function () {
+        const idAvis = this.closest(".avi").dataset.idavis;
+        idAvisInput.value = idAvis;
+        popup.style.display = "block";
+      });
+    });
+  
+    closeBtn.addEventListener("click", function () {
+      popup.style.display = "none";
+    });
+  
+    window.addEventListener("click", function (event) {
+      if (event.target === popup) {
+        popup.style.display = "none";
+      }
+    });
+  
+    const sortBySelect = document.getElementById("sortBy");
+  
+    function fetchAvis() {
+      const sortBy = sortBySelect.value;
+  
+      fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}`)
+        .then(response => response.text())
+        .then(data => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(data, "text/html");
+          const avisList = doc.querySelector(".liste-avis");
+          document.querySelector(".liste-avis").innerHTML = avisList.innerHTML;
+        });
     }
-    return valid;
-}
+  
+    sortBySelect.addEventListener("change", fetchAvis);
+  });
+  
+  
+  const signalerButtons = document.querySelectorAll(".btn-signaler");
+  const toast = document.getElementById("toast");
+  
+  signalerButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    });
+  });

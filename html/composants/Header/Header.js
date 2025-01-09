@@ -186,9 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("JavaScript chargé.");
 });
 
-// Empêcher la propagation de l'événement de clic sur l'icône de notification
-document.querySelector(".notification-icon img").addEventListener('click', function(event) {
-    event.stopPropagation();
-});
+
 
 hamburger.addEventListener("click", toggleMenu);
