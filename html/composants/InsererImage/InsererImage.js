@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const fileInput = document.getElementById(`fileInput-${dropZoneId}`); // Input associé à la zone
         const successMessage = document.getElementById(`successMessage-${dropZoneId}`); // Message de succès associé
+        const imagePreview = document.getElementById(`imagePreview-${dropZoneId}`); // Conteneur de prévisualisation des images
+        const imagePreviewModal = document.getElementById(`imagePreviewModal-${dropZoneId}`);
+        const imagePreviewModalImg = document.getElementById(`imagePreviewModalImg-${dropZoneId}`);
 
         // Événement pour le clic sur la zone de dépôt
         dropZone.addEventListener('click', () => {
@@ -49,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             fileInput.files = files;
-            displayFileNames(files);
+            displayImages(files);
             successMessage.style.display = 'block';
         });
 
@@ -62,19 +65,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            displayFileNames(fileInput.files);
+            displayImages(fileInput.files);
             successMessage.style.display = 'block';
         });
 
-        // Fonction pour afficher les noms des fichiers
-        function displayFileNames(files) {
-            successMessage.innerHTML = '';
+        // Fonction pour afficher les images
+        function displayImages(files) {
+            imagePreview.innerHTML = '';
             Array.from(files).forEach(file => {
-                const p = document.createElement('p');
-                p.textContent = truncateFileName(file.name, maxFileNameLength);
-                successMessage.appendChild(p);
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = file.name;
+                    img.addEventListener('click', () => {
+                        imagePreviewModalImg.src = e.target.result;
+                        imagePreviewModal.classList.add('show');
+                    });
+                    imagePreview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
             });
         }
+
+        // Fermer la prévisualisation en plein écran en cliquant dessus
+        imagePreviewModal.addEventListener('click', () => {
+            imagePreviewModal.classList.remove('show');
+        });
 
         // Fonction pour tronquer les noms de fichiers
         function truncateFileName(fileName, maxLength) {
