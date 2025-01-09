@@ -369,6 +369,23 @@ CREATE TABLE _avis_votes (
 );
 
 --
+-- TABLE REPONSE AVIS
+--
+
+CREATE TABLE _reponseAvis(
+    idReponse     SERIAL,
+    idAvis        INTEGER NOT NULL,
+    idCompte      INTEGER NOT NULL,
+    commentaire   VARCHAR(255) NOT NULL,
+    dateReponse   DATE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT reponseAvis_pk PRIMARY KEY(idReponse),
+    CONSTRAINT reponseAvis_fk_avis FOREIGN KEY (idAvis)
+        REFERENCES _avis(idAvis),
+    CONSTRAINT reponseAvis_fk_compte FOREIGN KEY (idCompte)
+        REFERENCES _compte(idCompte)
+);
+
+--
 -- TABLE ASSOCIATION GUIDEE
 --
 
