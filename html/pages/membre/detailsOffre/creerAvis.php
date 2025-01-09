@@ -6,8 +6,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/connect_params.php';
 
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-$contextes = ["Contexte de la visite", "Affaires", "Couple", "Famille", "Amis", "Solo"];
-
 $stmt = $dbh->prepare("INSERT INTO pact._avis (idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis, estVu) VALUES (:idoffre, :idcompte, :commentaire, :note, :titre, :contextevisite, :datevisite, CURRENT_DATE, FALSE)");
 
 $stmt->bindParam(':idoffre', $_POST['idOffre'], PDO::PARAM_INT);
@@ -15,8 +13,9 @@ $stmt->bindParam(':idcompte', $_SESSION['idCompte'], PDO::PARAM_INT);
 $stmt->bindParam(':commentaire', $_POST['commentaire'], PDO::PARAM_STR);
 $stmt->bindParam(':note', $_POST['note'], PDO::PARAM_STR);
 $stmt->bindParam(':titre', $_POST['titre'], PDO::PARAM_STR);
-$stmt->bindParam(':contextevisite', $contextes[$_POST['contexteVisite']], PDO::PARAM_STR);
-$stmt->bindParam(':datevisite', $_POST['datevisite'], PDO::PARAM_STR);
+$stmt->bindParam(':contextevisite', $_POST['contexteVisite'], PDO::PARAM_STR);
+$dateVisite = date('Y-m-d');
+$stmt->bindParam(':datevisite', $dateVisite, PDO::PARAM_STR);
 
 $stmt->execute();
 

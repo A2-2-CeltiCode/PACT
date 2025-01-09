@@ -22,7 +22,7 @@ session_start();
 $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
-$idOffre = $_POST['idOffre'] ?? '1';
+$idOffre = $_GET['idOffre'];
 $idOffre = $_GET['id'] ?? $idOffre;
 
 try {
@@ -391,7 +391,6 @@ try {
             ];
             Select::render('contexteVisite', 'Contexte de la visite', 'contexteVisite', false, $optionsContexte);
             ?>
-            <?php Input::render("datevisite", "Date de la visite", "date", "datevisite", true, "date"); ?>
             <?php InsererImage::render("drop-zone","Déposez une image ou cliquez ici",1,true,false) ?>
             <?php Button::render("btn-envoyer", "", "Envoyer", ButtonType::Pro, "", true); ?>
             </form>
@@ -402,6 +401,7 @@ try {
 
     <script>
         const idOffre = <?= json_encode($idOffre) ?>;
+
     </script>
     <script src="detailsOffre.js"></script>
     <?php Footer::render(FooterType::Member); 

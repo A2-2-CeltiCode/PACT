@@ -92,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
   
     function fetchAvis() {
       const sortBy = sortBySelect.value;
-  
       fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}`)
         .then(response => response.text())
         .then(data => {
