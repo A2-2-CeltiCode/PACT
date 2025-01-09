@@ -33,7 +33,7 @@ try {
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis FROM pact.vue_avis JOIN pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
 
     if ($sortBy === 'date_asc') {
@@ -97,11 +97,20 @@ try {
     }
 
     // Vérification du nombre de réponses de l'utilisateur pour cette offre
-    $stmt = $dbh->prepare("SELECT COUNT(*) as totalReponses FROM pact._reponseavis WHERE idCompte = :idCompte AND idAvis IN (SELECT idAvis FROM pact.vue_avis WHERE idOffre = :idOffre)");
+    $stmt = $dbh->prepare("SELECT COUNT(*) as totalReponses FROM pact._reponseavis WHERE idCompte = :idCompte AND idAvis IN (SELECT idAvis FROM pact._avis WHERE idOffre = :idOffre)");
     $stmt->execute([':idCompte' => $idCompte, ':idOffre' => $idOffre]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $totalReponses = $result ? $result['totalReponses'] : 5;
     
+    // Ajout des compteurs de pouces
+    $thumbsUpMap = [];
+    $thumbsDownMap = [];
+    
+    foreach ($avis as $avi) {
+        $thumbsUpMap[$avi['idavis']] = $avi['poucehaut'];
+        $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
+    }
+
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();
@@ -121,7 +130,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php Header::render(HeaderType::Member); ?>
+<?php Header::render(HeaderType::Member);?>
 <button class="retour"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
@@ -328,6 +337,10 @@ try {
                             <p>
                                 en <?= $avi["contextevisite"] ?>
                             </p>
+                        </div>
+                        <div class="thumbs">
+                            <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
 
                         <?php if (!empty($reponses)): ?>

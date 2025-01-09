@@ -103,6 +103,39 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   
     sortBySelect.addEventListener("change", fetchAvis);
+
+    const thumbsUpButtons = document.querySelectorAll(".thumbs-up");
+    const thumbsDownButtons = document.querySelectorAll(".thumbs-down");
+
+    thumbsUpButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const idAvis = this.dataset.idavis;
+            fetch(`thumbs.php?idAvis=${idAvis}&type=up`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.textContent = `👍 ${data.thumbs_up}`;
+                        const thumbsDownButton = this.nextElementSibling;
+                        thumbsDownButton.textContent = `👎 ${data.thumbs_down}`;
+                    }
+                });
+        });
+    });
+
+    thumbsDownButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const idAvis = this.dataset.idavis;
+            fetch(`thumbs.php?idAvis=${idAvis}&type=down`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.textContent = `👎 ${data.thumbs_down}`;
+                        const thumbsUpButton = this.previousElementSibling;
+                        thumbsUpButton.textContent = `👍 ${data.thumbs_up}`;
+                    }
+                });
+        });
+    });
   });
   
   document.addEventListener("DOMContentLoaded", function () {
