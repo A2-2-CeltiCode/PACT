@@ -2,21 +2,28 @@
 // Inclusion des fichiers nécessaires pour les composants de l'interface
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
+use \composants\Input\Input;
+use \composants\InsererImage\InsererImage;
 use \composants\Label\Label;
-
+use \composants\Select\Select;
+use \composants\Textarea\Textarea;
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Select/Select.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/InsererImage/InsererImage.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Textarea/Textarea.php";
 
 session_start();
 $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
 $idOffre = $_POST['idOffre'] ?? '1';
-$idOffre = $_GET['idOffre'] ?? $idOffre;
+$idOffre = $_GET['id'] ?? $idOffre;
 
 try {
     // Connexion à la base de données
@@ -57,7 +64,6 @@ try {
         }
         $imagesAvis[$avi['idavis']] = $img;
     }
-
     $offre = $dbh->query('SELECT * FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $typeOffre = $dbh->query('SELECT type_offre FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
 
@@ -225,6 +231,7 @@ try {
             <div class="moyenne-notes">
                 <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5"); ?>
             </div>
+           
         </div>
         <div class="offre-package-modification">
             
@@ -268,6 +275,7 @@ try {
         <div class="liste-avis">
             <div>
                 <h1>Avis:</h1>
+                <button class="btn-creer-avis">Créer un avis</button>
             </div>
             <div>
                 <?php
@@ -306,6 +314,7 @@ try {
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
                                 echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                
                             }
                             ?>
                         </div>
@@ -357,6 +366,35 @@ try {
                     <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
                     <button type="submit">Envoyer</button>
                 </form>
+            </div>
+        </div>
+
+        <div class="popup" id="popup-creer-avis">
+            <div class="popup-content">
+            <span class="close">&times;</span>
+            <form action="  creerAvis.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+            <?php Input::render("titre", "Titre de l'avis", "", "titre", true); ?>
+            <?php Textarea::render(class: "commentaire", id: "commentaire", name:"commentaire"); ?>
+            <div class="rating">
+            <?php for ($i = 5; $i >= 1; $i--): ?>
+                <input type="radio" name="note" id="star<?= $i ?>" value="<?= $i ?>"><label for="star<?= $i ?>" title="<?= $i ?> étoiles">☆</label>
+            <?php endfor; ?>
+            </div>
+            <?php
+            $optionsContexte = [
+                'Affaires' => 'Affaires',
+                'Couple' => 'Couple',
+                'Famille' => 'Famille',
+                'Amis' => 'Amis',
+                'Solo' => 'Solo'
+            ];
+            Select::render('contexteVisite', 'Contexte de la visite', 'contexteVisite', false, $optionsContexte);
+            ?>
+            <?php Input::render("datevisite", "Date de la visite", "date", "datevisite", true, "date"); ?>
+            <?php InsererImage::render("drop-zone","Déposez une image ou cliquez ici",1,true,false) ?>
+            <?php Button::render("btn-envoyer", "", "Envoyer", ButtonType::Pro, "", true); ?>
+            </form>
             </div>
         </div>
 

@@ -106,6 +106,25 @@ document.addEventListener("DOMContentLoaded", function () {
     sortBySelect.addEventListener("change", fetchAvis);
   });
   
+  document.addEventListener("DOMContentLoaded", function () {
+    const creerAvisButton = document.querySelector(".btn-creer-avis");
+    const popupCreerAvis = document.getElementById("popup-creer-avis");
+    const closeCreerAvisBtn = popupCreerAvis.querySelector(".close");
+
+    creerAvisButton.addEventListener("click", function () {
+        popupCreerAvis.style.display = "block";
+    });
+
+    closeCreerAvisBtn.addEventListener("click", function () {
+        popupCreerAvis.style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+        if (event.target === popupCreerAvis) {
+            popupCreerAvis.style.display = "none";
+        }
+    });
+  });
   
   const signalerButtons = document.querySelectorAll(".btn-signaler");
   const toast = document.getElementById("toast");
