@@ -357,6 +357,8 @@ try {
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
+                                            
+                                        <?php Button::render("btn-signaler", "", "Signaler", ButtonType::Member, "", true); ?>
                                         </div>
 
                                     </div>

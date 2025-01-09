@@ -142,7 +142,7 @@ foreach ($offresNoteSql as $item) {
 <body>
 <?php isset($_SESSION["idCompte"])?Header::render(type: HeaderType::Member):Header::render(); ?>
 <div>
-    <form action="/pages/visiteur/listeOffres/listeOffres.php" method="get">
+    <form action="/pages/membre/listeOffres/listeOffres.php" method="get">
         <?php Input::render(name:"titre", class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
             icon: "/ressources/icone/recherche.svg") ?>
     </form>
