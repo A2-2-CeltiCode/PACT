@@ -365,6 +365,8 @@ CREATE TABLE _avis(
     nbPoucesVert    INTEGER DEFAULT 0,
     nbPoucesRouge   INTEGER DEFAULT 0,
     estVu           BOOLEAN DEFAULT FALSE,
+    pouceHaut       INTEGER DEFAULT 0,
+    pouceBas        INTEGER DEFAULT 0,
     CONSTRAINT avis_pk PRIMARY KEY(idAvis),
     CONSTRAINT avis_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
@@ -381,6 +383,15 @@ CREATE TABLE _representeAvis(
         REFERENCES _avis(idAvis),
     CONSTRAINT representeAvis_fk_image FOREIGN KEY (idImage)
         REFERENCES _image(idImage)
+);
+
+CREATE TABLE _avis_votes (
+    idAvis INTEGER,
+    idCompte INTEGER,
+    type VARCHAR(10),
+    CONSTRAINT avis_votes_pk PRIMARY KEY (idAvis, idCompte),
+    CONSTRAINT avis_votes_fk_avis FOREIGN KEY (idAvis) REFERENCES _avis(idAvis),
+    CONSTRAINT avis_votes_fk_compte FOREIGN KEY (idCompte) REFERENCES _compte(idCompte)
 );
 
 --
