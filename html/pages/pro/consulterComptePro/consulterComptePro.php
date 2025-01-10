@@ -186,6 +186,8 @@ try {
                 <div>
                     <label for="confirmerMdp">Confirmer le mot de passe :</label>
                     <input type="password" class="champsMdp" id="confirmerMdp" name="confirmerMdp" required>
+                    <p>Le mot de passe doit comporter au moins :<br>- 8 caractères<br>- 1 majuscule<br>- 1 minuscule<br>- 1 chiffre<br>- 1 caractère spécial (@$!%*?&).</p>
+                    <br>
                 </div>
                                 <!-- Affichage des messages d'erreur ou de succès -->
                 <div id="erreurPopup" style="color: red; text-align: center; margin-bottom: 20px;">
