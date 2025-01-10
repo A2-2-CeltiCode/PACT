@@ -81,6 +81,17 @@ CREATE TABLE _forfaitPro(
     CONSTRAINT forfaitPro_pk PRIMARY KEY(nomForfait)
 );
 
+CREATE TABLE _appliqueForfait(
+    nomForfait        VARCHAR(50),
+    dateApplication   DATE,
+    prixHT            NUMERIC(5,2) NOT NULL,
+    prixTTC           NUMERIC(5,2) NOT NULL,
+    CONSTRAINT appliqueForfait_fk_forfait FOREIGN KEY (nomForfait)
+        REFERENCES _forfait(nomForfait),
+    CONSTRAINT appliqueForfait_fk_applicationPrix FOREIGN KEY (dateApplication)
+        REFERENCES _applicationPrix(dateApplication)
+);
+
 --
 -- TABLE CONTEXTE
 --
@@ -367,6 +378,8 @@ CREATE TABLE _avis(
     contexteVisite  VARCHAR(10),
     dateVisite      DATE,
     dateAvis        DATE DEFAULT CURRENT_TIMESTAMP,
+    nbPoucesVert    INTEGER DEFAULT 0,
+    nbPoucesRouge   INTEGER DEFAULT 0,
     estVu           BOOLEAN DEFAULT FALSE,
     pouceHaut       INTEGER DEFAULT 0,
     pouceBas        INTEGER DEFAULT 0,
