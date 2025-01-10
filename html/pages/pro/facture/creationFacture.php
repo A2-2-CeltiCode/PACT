@@ -136,31 +136,32 @@ class Facture
 
         <body>
             <header>
-                <?php print_r($this->options) ?>
                 <h1>Facture</h1>
                 <img class="logo" src="/ressources/icone/logo.svg" alt="Logo PACT">
-            </header>
+            </header>   
             <main>
-                <table class="partie">
-                    <tr>
-                        <th>Vendeur</th>
-                        <td>PACT</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><?php echo "{$this->adressePACT['rue']}, {$this->adressePACT['codepostal']} {$this->adressePACT['ville']}"; ?></td>
-                    </tr>
-                </table>
-                <table class="partie">
-                    <tr>
-                        <th>Professionnel</th>
-                        <td><?php echo "{$this->pro['denominationsociale']} - {$this->pro['raisonsocialepro']}"; ?></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><?php echo "{$this->pro['rue']}, {$this->pro['codepostal']} {$this->pro['ville']}"; ?></td>
-                    </tr>
-                </table>
+                <div>
+                    <table class="partie">
+                        <tr>
+                            <th>Vendeur</th>
+                            <td>PACT</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><?php echo "{$this->adressePACT['rue']}, {$this->adressePACT['codepostal']} {$this->adressePACT['ville']}"; ?></td>
+                        </tr>
+                    </table>
+                    <table class="partie">
+                        <tr>
+                            <th>Professionnel</th>
+                            <td><?php echo $this->pro['denominationsociale'] . " - " . $this->pro['raisonsocialepro'] . " - " . $this->pro['numsiren'] ?></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><?php echo "{$this->pro['rue']}, {$this->pro['codepostal']} {$this->pro['ville']}"; ?></td>
+                        </tr>
+                    </table>
+                </div>
                 <table class="info-facture">
                     <tr>
                         <th>Date d'émission</th>
