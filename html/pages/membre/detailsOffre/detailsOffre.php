@@ -282,7 +282,7 @@ try {
             </select>
         </div>
         <div class="liste-avis">
-            <div>
+            <div class="avis-header">
                 <h1>Avis:</h1>
                 <button class="btn-creer-avis">Créer un avis</button>
             </div>
@@ -302,23 +302,23 @@ try {
                             <p class="avi-title">
                                 <?= $avi["titre"] ?>
                             </p>
-                            <div class="note">
-                                <?php
-                                for ($i = 0; $i < floor($avi["note"]); $i++) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
-                                }
-                                if (fmod($avi["note"], 1) != 0) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
-                                }
-                                for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
-                                }
-                                ?>
-                            </div>
                         </div>
                         <p class="avi-content">
                             <?= $avi["commentaire"] ?>
                         </p>
+                        <div class="note">
+                            <?php
+                            for ($i = 0; $i < floor($avi["note"]); $i++) {
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
+                            }
+                            if (fmod($avi["note"], 1) != 0) {
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
+                            }
+                            for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
+                            }
+                            ?>
+                        </div>
                         <div>
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {

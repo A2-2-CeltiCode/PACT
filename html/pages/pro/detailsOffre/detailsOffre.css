@@ -392,7 +392,7 @@ body {
 .btn-outline {
   background-color: transparent;
   border: 1px solid var(--primary-color);
-  color: var(--primary-color);
+  color: var (--primary-color);
 }
 
 .btn-outline:hover {
@@ -519,17 +519,24 @@ body {
   background-color: #28a745; /* Vert */
   color: #fff;
   text-align: center;
-  border-radius: 2px;
+  border-radius: var(--radius-md);
   position: fixed;
   z-index: 1000; /* Assurer qu'il est au-dessus du contenu */
   right: 30px; /* En haut à droite */
   top: 100px; /* Plus bas */
   font-size: 17px;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: visibility 0.5s, opacity 0.5s ease-in-out;
+  opacity: 0;
 }
 
 .toast.show {
   visibility: visible;
+  opacity: 1;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }

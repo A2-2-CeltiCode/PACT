@@ -212,7 +212,7 @@ class Header
         }
         echo '<div class="dropdown-content" id="notification-dropdown">';
         foreach ($unreadReviews as $review) {
-            echo '<div class="review" data-id="' . $review['idavis'] . '">';
+            echo '<div class="review" data-id="' . $review['idavis'] . '" onclick="redirectToAvis(' . $review['idavis'] . ')">';
             echo '<strong>' . $review['titre'] . '</strong>';
             echo '<p>' . $review['commentaire'] . '</p>';
             echo '<button class="btn-repondre" onclick="openReplyPopup(' . $review['idavis'] . ')">Répondre</button>';
@@ -221,6 +221,20 @@ class Header
         }
         echo '</div>';
         echo '</div>';
+        echo '<script>
+        function redirectToAvis(idAvis) {
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/pages/pro/listeAvis/detailsOffre.php";
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "idAvis";
+            input.value = idAvis;
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+        </script>';
     }
 
     /**

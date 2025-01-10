@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const doc = parser.parseFromString(data, "text/html");
         const avisList = doc.querySelector(".liste-avis");
         document.querySelector(".liste-avis").innerHTML = avisList.innerHTML;
+        initializeEvents(); // Réinitialiser les événements après le tri
       });
   }
 
@@ -109,6 +110,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   thumbsUpButtons.forEach((button) => {
     button.addEventListener("click", function () {
+      if (this.disabled) return;
+      this.disabled = true;
       const idAvis = this.dataset.idavis;
       fetch(`thumbs.php?idAvis=${idAvis}&type=up`)
         .then((response) => response.json())
@@ -118,12 +121,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const thumbsDownButton = this.nextElementSibling;
             thumbsDownButton.textContent = `👎 ${data.thumbs_down}`;
           }
+          this.disabled = false;
         });
     });
   });
 
   thumbsDownButtons.forEach((button) => {
     button.addEventListener("click", function () {
+      if (this.disabled) return;
+      this.disabled = true;
       const idAvis = this.dataset.idavis;
       fetch(`thumbs.php?idAvis=${idAvis}&type=down`)
         .then((response) => response.json())
@@ -133,9 +139,89 @@ document.addEventListener("DOMContentLoaded", function () {
             const thumbsUpButton = this.previousElementSibling;
             thumbsUpButton.textContent = `👍 ${data.thumbs_up}`;
           }
+          this.disabled = false;
         });
     });
   });
+
+  function initializeEvents() {
+    const repondreButtons = document.querySelectorAll(".btn-repondre");
+    const thumbsUpButtons = document.querySelectorAll(".thumbs-up");
+    const thumbsDownButtons = document.querySelectorAll(".thumbs-down");
+    const signalerButtons = document.querySelectorAll(".btn-signaler");
+    const creerAvisButton = document.querySelector(".btn-creer-avis");
+    const popupCreerAvis = document.getElementById("popup-creer-avis");
+    const closeCreerAvisBtn = popupCreerAvis.querySelector(".close");
+
+    repondreButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const idAvis = this.closest(".avi").dataset.idavis;
+        idAvisInput.value = idAvis;
+        popup.style.display = "block";
+      });
+    });
+
+    thumbsUpButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        if (this.disabled) return;
+        this.disabled = true;
+        const idAvis = this.dataset.idavis;
+        fetch(`thumbs.php?idAvis=${idAvis}&type=up`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              this.textContent = `👍 ${data.thumbs_up}`;
+              const thumbsDownButton = this.nextElementSibling;
+              thumbsDownButton.textContent = `👎 ${data.thumbs_down}`;
+            }
+            this.disabled = false;
+          });
+      });
+    });
+
+    thumbsDownButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        if (this.disabled) return;
+        this.disabled = true;
+        const idAvis = this.dataset.idavis;
+        fetch(`thumbs.php?idAvis=${idAvis}&type=down`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              this.textContent = `👎 ${data.thumbs_down}`;
+              const thumbsUpButton = this.previousElementSibling;
+              thumbsUpButton.textContent = `👍 ${data.thumbs_up}`;
+            }
+            this.disabled = false;
+          });
+      });
+    });
+
+    signalerButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+      });
+    });
+
+    creerAvisButton.addEventListener("click", function () {
+      popupCreerAvis.style.display = "block";
+    });
+
+    closeCreerAvisBtn.addEventListener("click", function () {
+      popupCreerAvis.style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+      if (event.target === popupCreerAvis) {
+        popupCreerAvis.style.display = "none";
+      }
+    });
+  }
+
+  initializeEvents(); // Initialiser les événements au chargement de la page
 });
 
 document.addEventListener("DOMContentLoaded", function () {

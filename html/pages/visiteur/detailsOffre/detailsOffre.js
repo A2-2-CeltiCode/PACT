@@ -65,105 +65,100 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   
   document.addEventListener("DOMContentLoaded", function () {
-    const repondreButtons = document.querySelectorAll(".btn-repondre");
-    const popup = document.getElementById("popup-repondre");
-    const closeBtn = popup.querySelector(".close");
-    const idAvisInput = document.getElementById("popup-idAvis");
-  
-    repondreButtons.forEach(button => {
-      button.addEventListener("click", function () {
-        const idAvis = this.closest(".avi").dataset.idavis;
-        idAvisInput.value = idAvis;
-        popup.style.display = "block";
-      });
-    });
-  
-    closeBtn.addEventListener("click", function () {
-      popup.style.display = "none";
-    });
-  
-    window.addEventListener("click", function (event) {
-      if (event.target === popup) {
-        popup.style.display = "none";
-      }
-    });
-  
     const sortBySelect = document.getElementById("sortBy");
-  
-    function fetchAvis() {
-      const sortBy = sortBySelect.value;
-      fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}`)
-        .then(response => response.text())
-        .then(data => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(data, "text/html");
-          const avisList = doc.querySelector(".liste-avis");
-          document.querySelector(".liste-avis").innerHTML = avisList.innerHTML;
+
+    function initializeEvents() {
+        const repondreButtons = document.querySelectorAll(".btn-repondre");
+        const popup = document.getElementById("popup-repondre");
+        const closeBtn = popup.querySelector(".close");
+        const idAvisInput = document.getElementById("popup-idAvis");
+
+        repondreButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const idAvis = this.closest(".avi").dataset.idavis;
+                idAvisInput.value = idAvis;
+                popup.style.display = "block";
+            });
+        });
+
+        closeBtn.addEventListener("click", function () {
+            popup.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === popup) {
+                popup.style.display = "none";
+            }
+        });
+
+        const thumbsUpButtons = document.querySelectorAll(".thumbs-up");
+        const thumbsDownButtons = document.querySelectorAll(".thumbs-down");
+
+        thumbsUpButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const idAvis = this.dataset.idavis;
+                fetch(`thumbs.php?idAvis=${idAvis}&type=up`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            this.textContent = `👍 ${data.thumbs_up}`;
+                            const thumbsDownButton = this.nextElementSibling;
+                            thumbsDownButton.textContent = `👎 ${data.thumbs_down}`;
+                        }
+                    });
+            });
+        });
+
+        thumbsDownButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const idAvis = this.dataset.idavis;
+                fetch(`thumbs.php?idAvis=${idAvis}&type=down`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            this.textContent = `👎 ${data.thumbs_down}`;
+                            const thumbsUpButton = this.previousElementSibling;
+                            thumbsUpButton.textContent = `👍 ${data.thumbs_up}`;
+                        }
+                    });
+            });
+        });
+
+        const creerAvisButton = document.querySelector(".btn-creer-avis");
+        const popupCreerAvis = document.getElementById("popup-creer-avis");
+        const closeCreerAvisBtn = popupCreerAvis.querySelector(".close");
+
+        creerAvisButton.addEventListener("click", function () {
+            popupCreerAvis.style.display = "block";
+        });
+
+        closeCreerAvisBtn.addEventListener("click", function () {
+            popupCreerAvis.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === popupCreerAvis) {
+                popupCreerAvis.style.display = "none";
+            }
         });
     }
-  
+
+    function fetchAvis() {
+        const sortBy = sortBySelect.value;
+        fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}`)
+            .then(response => response.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, "text/html");
+                const avisList = doc.querySelector("#avis-list").innerHTML;
+                document.querySelector("#avis-list").innerHTML = avisList;
+                initializeEvents(); // Réinitialiser les événements après le tri
+            });
+    }
+
     sortBySelect.addEventListener("change", fetchAvis);
 
-    const thumbsUpButtons = document.querySelectorAll(".thumbs-up");
-    const thumbsDownButtons = document.querySelectorAll(".thumbs-down");
-
-    thumbsUpButtons.forEach(button => {
-        button.style.pointerEvents = "none"; // Désactiver le clic
-        button.style.cursor = "default"; // Changer le curseur
-    });
-
-    thumbsDownButtons.forEach(button => {
-        button.style.pointerEvents = "none"; // Désactiver le clic
-        button.style.cursor = "default"; // Changer le curseur
-    });
-
-    thumbsUpButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const idAvis = this.dataset.idavis;
-            fetch(`thumbs.php?idAvis=${idAvis}&type=up`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        this.textContent = `👍 ${data.thumbs_up}`;
-                        const thumbsDownButton = this.nextElementSibling;
-                        thumbsDownButton.textContent = `👎 ${data.thumbs_down}`;
-                    }
-                });
-        });
-    });
-
-    thumbsDownButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const idAvis = this.dataset.idavis;
-            fetch(`thumbs.php?idAvis=${idAvis}&type=down`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        this.textContent = `👎 ${data.thumbs_down}`;
-                        const thumbsUpButton = this.previousElementSibling;
-                        thumbsUpButton.textContent = `👍 ${data.thumbs_up}`;
-                    }
-                });
-        });
-    });
-
-    const creerAvisButton = document.querySelector(".btn-creer-avis");
-    const popupCreerAvis = document.getElementById("popup-creer-avis");
-    const closeCreerAvisBtn = popupCreerAvis.querySelector(".close");
-
-    creerAvisButton.addEventListener("click", function () {
-        popupCreerAvis.style.display = "block";
-    });
-
-    closeCreerAvisBtn.addEventListener("click", function () {
-        popupCreerAvis.style.display = "none";
-    });
-
-    window.addEventListener("click", function (event) {
-        if (event.target === popupCreerAvis) {
-            popupCreerAvis.style.display = "none";
-        }
-    });
+    initializeEvents(); // Initialiser les événements au chargement de la page
   });
   
   const signalerButtons = document.querySelectorAll(".btn-signaler");

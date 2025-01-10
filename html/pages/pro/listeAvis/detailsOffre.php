@@ -14,7 +14,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 session_start();
 $idCompte = $_SESSION['idCompte'];
 
-
+$idAvisPrioritaire = $_POST['idAvis'] ?? null;
 
 try {
     // Connexion à la base de données
@@ -62,6 +62,14 @@ try {
         $stmt->execute($offres);
         $avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
+    if ($idAvisPrioritaire) {
+        usort($avis, function($a, $b) use ($idAvisPrioritaire) {
+            if ($a['idavis'] == $idAvisPrioritaire) return -1;
+            if ($b['idavis'] == $idAvisPrioritaire) return 1;
+            return 0;
+        });
+    }
 
     // Calcul de la moyenne des notes
     $totalNotes = 0;
@@ -147,7 +155,7 @@ try {
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     
                     ?>
-                    <div class="avi <?= !$avi['estvu'] ? 'non-vu' : '' ?> <?= empty($reponses) ? 'sans-reponse' : '' ?>" data-idavis="<?= $avi["idavis"] ?>">
+                    <div class="avi <?= !$avi['estvu'] ? 'non-vu' : '' ?> <?= empty($reponses) ? 'sans-reponse' : '' ?> <?= $avi['idavis'] == $idAvisPrioritaire ? 'prioritaire' : '' ?>" data-idavis="<?= $avi["idavis"] ?>">
                         <div>
                             <p class="avi-title">
                                 <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi["idoffre"]; ?>">Offre: <?= $avi["titre"] ?></a>
@@ -155,23 +163,23 @@ try {
                             <p class="offre-title">
                                 <?= $avi["avis_titre"] ?>
                             </p>
-                            <div class="note">
-                                <?php
-                                for ($i = 0; $i < floor($avi["note"]); $i++) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
-                                }
-                                if (fmod($avi["note"], 1) != 0) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
-                                }
-                                for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
-                                }
-                                ?>
-                            </div>
                         </div>
                         <p class="avi-content">
                             <?= $avi["commentaire"] ?>
                         </p>
+                        <div class="note">
+                            <?php
+                            for ($i = 0; $i < floor($avi["note"]); $i++) {
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
+                            }
+                            if (fmod($avi["note"], 1) != 0) {
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
+                            }
+                            for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
+                            }
+                            ?>
+                        </div>
                         <div>
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {

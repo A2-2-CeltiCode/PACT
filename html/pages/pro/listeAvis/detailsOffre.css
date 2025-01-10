@@ -319,12 +319,15 @@ body {
   border-left: 4px solid var(--primary-color);
 }
 
-
+.avi.prioritaire {
+  border: 2px solid var(--primary-color);
+  background-color: rgba(108, 2, 119, 0.1);
+}
 
 .avi-title {
   font-size: 20px;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var (--text-dark);
   margin-bottom: 12px;
 }
 
