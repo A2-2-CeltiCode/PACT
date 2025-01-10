@@ -121,3 +121,35 @@ signalerButtons.forEach((button) => {
     }, 3000);
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Fonctionnalité pour afficher une image en grand
+  const images = document.querySelectorAll(".avi img");
+  const modal = document.createElement("div");
+  modal.classList.add("image-modal");
+  modal.innerHTML = `
+    <span class="close">&times;</span>
+    <img class="modal-content">
+  `;
+  document.body.appendChild(modal);
+
+  const modalImg = modal.querySelector(".modal-content");
+  const closeModal = modal.querySelector(".close");
+
+  images.forEach(img => {
+    img.addEventListener("click", function () {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+    });
+  });
+
+  closeModal.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+});

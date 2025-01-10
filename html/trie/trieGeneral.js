@@ -59,9 +59,10 @@ function rechercher() {
   if (optionInputs.length > 0) filtreActifCount++;
 
   // Afficher le nombre de filtres actifs
+  const nombreFiltresActifs = filtreActifCount - 3;
   document.getElementById(
     "nombreFiltresActifs"
-  ).innerText = `Nombre de filtres actifs : ${filtreActifCount-3}`;
+  ).innerText = `Nombre de filtres actifs : ${nombreFiltresActifs < 0 ? 0 : nombreFiltresActifs}`;
 
   const xhr = new XMLHttpRequest();
   xhr.open("GET", `listeOffres.php?${params.toString()}`, true);
