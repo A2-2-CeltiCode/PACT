@@ -19,6 +19,10 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("click", function (event) {
     if (event.target === popup) {
       popup.style.display = "none";
+    } else {
+      document.querySelectorAll(".avi.prioritaire").forEach((element) => {
+        element.classList.remove("prioritaire");
+      });
     }
   });
 

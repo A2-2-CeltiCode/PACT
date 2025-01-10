@@ -211,13 +211,17 @@ class Header
             echo '<span class="notification-count">' . $unreadCount . '</span>';
         }
         echo '<div class="dropdown-content" id="notification-dropdown">';
-        foreach ($unreadReviews as $review) {
-            echo '<div class="review" data-id="' . $review['idavis'] . '" onclick="redirectToAvis(' . $review['idavis'] . ')">';
-            echo '<strong>' . $review['titre'] . '</strong>';
-            echo '<p>' . $review['commentaire'] . '</p>';
-            echo '<button class="btn-repondre" onclick="openReplyPopup(' . $review['idavis'] . ')">Répondre</button>';
-            echo '<button class="btn-mark-seen" data-id="' . $review['idavis'] . '">Marqué comme vu</button>';
-            echo '</div>';
+        if ($unreadCount > 0) {
+            foreach ($unreadReviews as $review) {
+                echo '<div class="review" data-id="' . $review['idavis'] . '" onclick="redirectToAvis(' . $review['idavis'] . ')">';
+                echo '<strong>' . $review['titre'] . '</strong>';
+                echo '<p>' . $review['commentaire'] . '</p>';
+                echo '<button class="btn-repondre" onclick="openReplyPopup(' . $review['idavis'] . ')">Répondre</button>';
+                echo '<button class="btn-mark-seen" data-id="' . $review['idavis'] . '">Marqué comme vu</button>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p class="no-notifications">Aucune notification</p>';
         }
         echo '</div>';
         echo '</div>';

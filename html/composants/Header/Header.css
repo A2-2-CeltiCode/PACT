@@ -232,9 +232,16 @@ body > header {
     margin: 0 0 12px 0;
 }
 
+.no-notifications {
+    padding: 16px;
+    text-align: center;
+    color: var(--gris2);
+    font-size: 14px;
+}
+
 .notification-icon:hover .dropdown-content {
-    display: block;
-    animation: fadeInDown 0.2s ease-out;
+    display: none;
+    animation: none;
 }
 
 @keyframes fadeInDown {

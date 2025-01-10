@@ -14,7 +14,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 session_start();
 $idCompte = $_SESSION['idCompte'];
 
-$idAvisPrioritaire = $_POST['idAvis'] ?? null;
+$idAvisPrioritaire = $_POST['idAvis'] ?? $_GET['idOffre'] ?? null;
 
 try {
     // Connexion à la base de données
@@ -144,94 +144,98 @@ try {
                 <h1>Avis:</h1>
             </div>
             <div>
-                <?php
-                foreach ($avis as $avi) {
-                    if (!isset($avi["idavis"])) {
-                        continue;
-                    }
-                    
-                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
-                    $stmt->execute([':idAvis' => $avi['idavis']]);
-                    $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    
-                    ?>
-                    <div class="avi <?= !$avi['estvu'] ? 'non-vu' : '' ?> <?= empty($reponses) ? 'sans-reponse' : '' ?> <?= $avi['idavis'] == $idAvisPrioritaire ? 'prioritaire' : '' ?>" data-idavis="<?= $avi["idavis"] ?>">
-                        <div>
-                            <p class="avi-title">
-                                <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi["idoffre"]; ?>">Offre: <?= $avi["titre"] ?></a>
+                <?php if (empty($avis)): ?>
+                    <p>Aucun avis non vu </p>
+                <?php else: ?>
+                    <?php
+                    foreach ($avis as $avi) {
+                        if (!isset($avi["idavis"])) {
+                            continue;
+                        }
+                        
+                        $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
+                        $stmt->execute([':idAvis' => $avi['idavis']]);
+                        $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        
+                        ?>
+                        <div class="avi <?= !$avi['estvu'] ? 'non-vu' : '' ?> <?= empty($reponses) ? 'sans-reponse' : '' ?> <?= $avi['idavis'] == $idAvisPrioritaire ? 'prioritaire' : '' ?>" data-idavis="<?= $avi["idavis"] ?>">
+                            <div>
+                                <p class="avi-title">
+                                    <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi["idoffre"]; ?>">Offre: <?= $avi["titre"] ?></a>
+                                </p>
+                                <p class="offre-title">
+                                    <?= $avi["avis_titre"] ?>
+                                </p>
+                            </div>
+                            <p class="avi-content">
+                                <?= $avi["commentaire"] ?>
                             </p>
-                            <p class="offre-title">
-                                <?= $avi["avis_titre"] ?>
-                            </p>
-                        </div>
-                        <p class="avi-content">
-                            <?= $avi["commentaire"] ?>
-                        </p>
-                        <div class="note">
-                            <?php
-                            for ($i = 0; $i < floor($avi["note"]); $i++) {
-                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
-                            }
-                            if (fmod($avi["note"], 1) != 0) {
-                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
-                            }
-                            for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
-                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
-                            }
-                            ?>
-                        </div>
-                        <div>
-                            <?php
-                            foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
-                            }
-                            ?>
-                        </div>
-                        <div>
-                            <p>
-                                <?= $avi["pseudo"] ?>
-                            </p>
-                            <p>
-                                le <?= $avi["datevisite"] ?>
-                            </p>
-                            <p>
-                                en <?= $avi["contextevisite"] ?>
-                            </p>
-                        </div>
-                        <div>
-                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
-                            <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
+                            <div class="note">
+                                <?php
+                                for ($i = 0; $i < floor($avi["note"]); $i++) {
+                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
+                                }
+                                if (fmod($avi["note"], 1) != 0) {
+                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
+                                }
+                                for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
+                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
+                                }
+                                ?>
+                            </div>
+                            <div>
+                                <?php
+                                foreach ($imagesAvis[$avi["idavis"]] as $image) {
+                                    echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                }
+                                ?>
+                            </div>
+                            <div>
+                                <p>
+                                    <?= $avi["pseudo"] ?>
+                                </p>
+                                <p>
+                                    le <?= $avi["datevisite"] ?>
+                                </p>
+                                <p>
+                                    en <?= $avi["contextevisite"] ?>
+                                </p>
+                            </div>
+                            <div>
+                                <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
+                                <?php if (empty($reponses) && $totalReponses < 3): ?>
+                                    <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
+                                <?php endif; ?>
+                            </div>
+                            <?php if (!empty($reponses)): ?>
+                                <div class="reponses">
+                                    <?php foreach ($reponses as $reponse): ?>
+                                        <div class="reponse">
+                                            <p class="reponse-content">
+                                                <?= $reponse["commentaire"] ?>
+                                            </p>
+                                            <div>
+                                                <p>
+                                                    <?= $reponse["pseudo"] ?>
+                                                </p>
+                                                <p>
+                                                    le <?= $reponse["datereponse"] ?>
+                                                </p>
+                                            </div>
+                                            <form action="supprimerReponse.php" method="POST">
+                                                <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
+                                                <input type="hidden" name="idOffre" value="<?= $idAvisPrioritaire ?>">
+                                                <?php Button::render("btn-supprimer", "", "Supprimer", ButtonType::Pro, "", true); ?>
+                                            </form>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
                             <?php endif; ?>
                         </div>
-                        <?php if (!empty($reponses)): ?>
-                            <div class="reponses">
-                                <?php foreach ($reponses as $reponse): ?>
-                                    <div class="reponse">
-                                        <p class="reponse-content">
-                                            <?= $reponse["commentaire"] ?>
-                                        </p>
-                                        <div>
-                                            <p>
-                                                <?= $reponse["pseudo"] ?>
-                                            </p>
-                                            <p>
-                                                le <?= $reponse["datereponse"] ?>
-                                            </p>
-                                        </div>
-                                        <form action="supprimerReponse.php" method="POST">
-                                            <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
-                                            <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                                            <?php Button::render("btn-supprimer", "", "Supprimer", ButtonType::Pro, "", true); ?>
-                                        </form>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                    <?php
-                }
-                ?>
+                        <?php
+                    }
+                    ?>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -253,6 +257,28 @@ try {
         const idOffre = <?= json_encode($idOffre) ?>;
     </script>
     <script src="detailsOffre.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const avisElements = document.querySelectorAll(".avi.non-vu");
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const idAvis = entry.target.dataset.idavis;
+                        fetch(`markAsSeen.php?idAvis=${idAvis}`, {
+                            method: 'POST'
+                        }).then(response => {
+
+                        });
+                    }
+                });
+            });
+
+            avisElements.forEach(avi => {
+                observer.observe(avi);
+            });
+        });
+    </script>
     <?php Footer::render(FooterType::Pro); 
     $dbh = null;
     ?>
