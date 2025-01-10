@@ -1,10 +1,10 @@
 <?php session_start();
-$_SESSION['idCompte'] = 1;
-/**if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
+
+if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     header("Location: /pages/membre/accueil/accueil.php");
 } elseif (!isset($_SESSION['idCompte'])) {
     header("Location: /pages/visiteur/accueil/accueil.php");
-}*/
+}
 ?>
 <!DOCTYPE html>
     <html>
@@ -26,15 +26,10 @@ $_SESSION['idCompte'] = 1;
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Header/Header.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Textarea/Textarea.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Footer/Footer.php";
-        //require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+        require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/CheckboxSelect/CheckboxSelect.php";
-        // Configuration de la base de données
-        $host = 'localhost';
-        $dbname = 'postgres';
-        $user = 'postgres';
-        $password = '13phenix';
 
-        $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
         $sql = "SELECT numsiren FROM pact._CompteProPrive WHERE idCompte = :idCompte";
         $stmt = $dbh->prepare($sql);
@@ -42,7 +37,7 @@ $_SESSION['idCompte'] = 1;
         $stmt->execute();
         $numsiren = $stmt->fetchColumn();
 
-        $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
         $sql = "SELECT banquerib FROM pact._ComptePro WHERE idCompte = :idCompte";
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
