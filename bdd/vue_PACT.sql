@@ -97,8 +97,6 @@ FROM _offre o LEFT JOIN _visite v ON o.idOffre = v.idOffre
               LEFT JOIN _forfait f ON o.nomForfait = f.nomForfait
 WHERE v.estGuidee IS NOT NULL;
 
-
-
 CREATE OR REPLACE VIEW vue_visite_guidee AS
 SELECT idOffre, nomLangage
 FROM _guideeVisite;
@@ -125,7 +123,7 @@ FROM _possedeSpectacle;
 CREATE OR REPLACE VIEW vue_activite AS
 SELECT o.idCompte, o.idOffre, o.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, o.descriptionDetaillee, 
        o.siteInternet, o.creaDate, c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, valPrix, tempsEnMinutes, 
-       ac.ageMin, ac.prestation, o.estEnLigne, o.heureOuverture, o.heureFermeture, f.prixHT, f.prixTTC
+       ac.ageMin, ac.prestation, o.estEnLigne, o.heureOuverture, o.heureFermeture
 FROM _offre o INNER JOIN _option op ON o.nomOption = op.nomOption
               INNER JOIN _forfait f ON o.nomForfait = f.nomForfait
               INNER JOIN _activite ac ON o.idOffre = ac.idOffre
@@ -185,10 +183,11 @@ CREATE OR REPLACE VIEW vue_image_avis (idAvis, idImage, nomImage) AS
 SELECT idAvis, idImage, nomImage
 FROM _representeAvis NATURAL JOIN _image;
 
---
--- VUES FACTURE
---
+/*CREATE OR REPLACE VIEW vue_forfait (nomForfait) AS
+SELECT idAvis, idImage, nomImage
+FROM _representeAvis NATURAL JOIN _image;*/
 
-/*CREATE OR REPLACE VIEW vue_facture AS
-SELECT idFacture, idOffre, idAdressePro, idAdressePACT, datePrestaServices, dateEcheance
-FROM _facture;*/
+
+SELECT debutoption, nbsemaines
+FROM pact._annulationoption
+WHERE idoffre = 1 AND estannulee = false AND TO_CHAR(debutoption, 'MM-YYYY') = '10-2024'; 

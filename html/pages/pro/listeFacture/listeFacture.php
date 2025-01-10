@@ -7,17 +7,13 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/pages/pro/facture/creationFacture.php";
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
-$idOffre = isset($_POST['idOffre']) ? $_POST['idOffre'] : '1';
-
+$idOffre = $_GET['idOffre'];    
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 $sql = "SELECT * FROM pact._facture WHERE idoffre = :idoffre";
 $sth = $dbh->prepare($sql);
 $sth->bindValue(':idoffre', $idOffre, PDO::PARAM_INT);
 $sth->execute();
 $factures = $sth->fetchAll();
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -43,8 +39,8 @@ $factures = $sth->fetchAll();
             <?php
         foreach ($factures as $facture) {
             $timestamp = strtotime($facture['dateprestaservices']);
-            $date = strftime('%B %Y', $timestamp); // Format as "Month Year" in French
-            setlocale(LC_TIME, 'fr_FR.UTF-8'); // Set locale to French
+            $date = strftime('%B %Y', $timestamp);
+            setlocale(LC_TIME, 'fr_FR.UTF-8');
             $moisAnnee = date('m-Y', $timestamp);
             
             echo "<tr>";

@@ -309,7 +309,7 @@ INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAn
 (1, '2024-09-09',1, 'En relief',False),
 (2, '2024-10-07',1, 'A la une' ,false),
 (4, '2024-09-23',1, 'En relief',True),
-(3, '2024-10-14',1, 'A la une',False),
+(1, '2024-10-28',1, 'A la une',False),
 (2, '2024-12-02',1, 'A la une',false),
 (4, '2024-10-14',2, 'En relief',False),
 (2, '2024-11-11',2, 'A la une' ,false),

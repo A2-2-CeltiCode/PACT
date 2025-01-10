@@ -29,14 +29,33 @@ CREATE TABLE _gamme(
 );
 
 --
+-- TABLE APPLICATION PRIX
+--
+
+CREATE TABLE _applicationPrix(
+    dateApplication   DATE,
+    dateFin           DATE,
+    CONSTRAINT applicationPrix_pk PRIMARY KEY(dateApplication)
+);
+
+--
 -- TABLE OPTION
 --
 
 CREATE TABLE _option(
     nomOption   VARCHAR(50),
-    prixHT      NUMERIC(5,2) NOT NULL,
-    prixTTC     NUMERIC(5,2) NOT NULL,
     CONSTRAINT option_pk PRIMARY KEY(nomOption)
+);
+
+CREATE TABLE _appliqueOption(
+    nomOption         VARCHAR(50),
+    dateApplication   DATE,
+    prixHT            NUMERIC(5,2) NOT NULL,
+    prixTTC           NUMERIC(5,2) NOT NULL,
+    CONSTRAINT appliqueOption_fk_option FOREIGN KEY (nomOption)
+        REFERENCES _option(nomOption),
+    CONSTRAINT appliqueOption_fk_applicationPrix FOREIGN KEY (dateApplication)
+        REFERENCES _applicationPrix(dateApplication)
 );
 
 --
@@ -45,27 +64,32 @@ CREATE TABLE _option(
 
 CREATE TABLE _forfait(
     nomForfait  VARCHAR(50),
-    prixHT      NUMERIC(5,2) NOT NULL,
-    prixTTC     NUMERIC(5,2) NOT NULL,
     CONSTRAINT forfait_pk PRIMARY KEY(nomForfait)
 );
 
-CREATE TABLE _forfaitPublic( -- a modif peut être
+CREATE TABLE _forfaitPublic(
     nomForfait  VARCHAR(50),
-    prixHT      NUMERIC(5,2) NOT NULL,
-    prixTTC     NUMERIC(5,2) NOT NULL,
     CONSTRAINT forfaitPublic_fk_forfait FOREIGN KEY (nomForfait) 
         REFERENCES _forfait(nomForfait),
     CONSTRAINT forfaitPublic_pk PRIMARY KEY(nomForfait)
 );
 
-CREATE TABLE _forfaitPro( -- a modif peut être
+CREATE TABLE _forfaitPro(
     nomForfait  VARCHAR(50),
-    prixHT      NUMERIC(5,2) NOT NULL,
-    prixTTC     NUMERIC(5,2) NOT NULL,
     CONSTRAINT forfaitPro_fk_forfait FOREIGN KEY (nomForfait) 
         REFERENCES _forfait(nomForfait),
     CONSTRAINT forfaitPro_pk PRIMARY KEY(nomForfait)
+);
+
+CREATE TABLE _appliqueForfait(
+    nomForfait        VARCHAR(50),
+    dateApplication   DATE,
+    prixHT            NUMERIC(5,2) NOT NULL,
+    prixTTC           NUMERIC(5,2) NOT NULL,
+    CONSTRAINT appliqueForfait_fk_forfait FOREIGN KEY (nomForfait)
+        REFERENCES _forfait(nomForfait),
+    CONSTRAINT appliqueForfait_fk_applicationPrix FOREIGN KEY (dateApplication)
+        REFERENCES _applicationPrix(dateApplication)
 );
 
 --
@@ -338,6 +362,8 @@ CREATE TABLE _avis(
     contexteVisite  VARCHAR(10),
     dateVisite      DATE,
     dateAvis        DATE DEFAULT CURRENT_TIMESTAMP,
+    nbPoucesVert    INTEGER DEFAULT 0,
+    nbPoucesRouge   INTEGER DEFAULT 0,
     estVu           BOOLEAN DEFAULT FALSE,
     CONSTRAINT avis_pk PRIMARY KEY(idAvis),
     CONSTRAINT avis_fk_offre FOREIGN KEY (idOffre)

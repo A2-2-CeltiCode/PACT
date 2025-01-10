@@ -16,23 +16,19 @@ class Facture
     private $semainesActifs;
     private $forfait;
     private $optionsFiltrees;
-    private $dateDuJour;
     private $datePrestation;
 
     private $nbJours;
+    private $dateEmission;
 
-    private $nbjoursOption;
-
-    public function __construct($idOffre, $idAdresse, $idCompte, $idFacture,$nbJours,$nbjoursOption,$dbh)
+    public function __construct($idOffre, $idAdresse, $idCompte, $idFacture,$nbJours,$dbh)
     {
         $this->idOffre = $idOffre;
         $this->idAdresse = $idAdresse;
         $this->idCompte = $idCompte;
         $this->idFacture = $idFacture;
         $this->dbh = $dbh;
-        $this->dateDuJour = date("d-m-Y");
         $this->nbJours = $nbJours;
-        $this->nbjoursOption = $nbjoursOption;
         $this->loadData();
     }
 
@@ -43,10 +39,10 @@ class Facture
         $this->adressePACT = $this->fetchData('SELECT * FROM pact._adresse WHERE idadresse = :idAdresse', ['idAdresse' => $this->idAdresse]);
         $this->facture = $this->fetchData('SELECT * FROM pact._facture WHERE idfacture = :idFacture', ['idFacture' => $this->idFacture]);
         $this->semainesActifs = $this->fetchAllData('SELECT * FROM pact._annulationoption WHERE idoffre = :idOffre', ['idOffre' => $this->idOffre]);
-        $this->forfait = $this->fetchAllData('SELECT * FROM pact._offre JOIN pact._forfait USING(nomforfait) WHERE idoffre = :idOffre', ['idOffre' => $this->idOffre]);
 
         $moisPrestation = $this->getMoisPrestation(date('m', strtotime($this->facture['dateprestaservices'])));
         $this->datePrestation = $moisPrestation . ' ' . date('Y', strtotime($this->facture['dateprestaservices']));
+        $this->dateEmission = "01-" . date('m', strtotime($this->facture['dateecheance'])) . '-' . date('Y', strtotime($this->facture['dateecheance']));
         $this->optionsFiltrees = $this->filterOptions();
     }
 
@@ -140,6 +136,7 @@ class Facture
 
         <body>
             <header>
+                <?php print_r($this->options) ?>
                 <h1>Facture</h1>
                 <img class="logo" src="/ressources/icone/logo.svg" alt="Logo PACT">
             </header>
@@ -173,7 +170,7 @@ class Facture
                         <th>Date d'échéance</th>
                     </tr>
                     <tr>
-                        <td><?php echo $this->dateDuJour; ?></td>
+                        <td><?php echo $this->dateEmission; ?></td>
                         <td><?php echo $this->facture['idfacture']; ?></td>
                         <td><?php echo $this->offre['titre']; ?></td>
                         <td><?php echo $this->datePrestation; ?></td>
@@ -183,6 +180,7 @@ class Facture
                 <table class="tarifs-facture">
                     <tr>
                         <th>Nom du service</th>
+                        <th>Date d'effet</th>
                         <th>Quantité</th>
                         <th>Prix HT unitaire</th>
                         <th>Prix TTC unitaire</th>
@@ -192,26 +190,28 @@ class Facture
                     <?php 
                     $totalHT = 0;
                     $totalTTC = 0;
-                    foreach ($this->optionsFiltrees as $option): 
+                    foreach ($this->optionsFiltrees as $option):
                         $joursRestants = $this->calculerJoursRestants($option['debutoption'], $option['finoption']);
-                        $prixOptionHT = $this->fetchData('SELECT prixht FROM pact._option WHERE nomoption = :nomOption', ['nomOption' => $option['nomoption']]);
-                        $prixOptionTTC = $this->fetchData('SELECT prixttc FROM pact._option WHERE nomoption = :nomOption', ['nomOption' => $option['nomoption']]);
+                        $prixOptionHT = $this->fetchData('SELECT prixht FROM pact._appliqueoption WHERE nomoption = :nomOption', ['nomOption' => $option['nomoption']]);
+                        $prixOptionTTC = $this->fetchData('SELECT prixttc FROM pact._appliqueoption WHERE nomoption = :nomOption', ['nomOption' => $option['nomoption']]);
 
-                        $prixOptionTotalHT = (float)$prixOptionHT['prixht'] * $this->nbjoursOption;
-                        $prixOptionTotalTTC = $prixOptionTTC['prixttc'] * $this->nbjoursOption;
+                        $prixOptionTotalHT = (float)$prixOptionHT['prixht'] * $option['nbsemaines'];
+                        $prixOptionTotalTTC = $prixOptionTTC['prixttc'] * $option['nbsemaines'];
 
                         $totalHT += $prixOptionTotalHT;
                         $totalTTC += $prixOptionTotalTTC;
                     ?>
                         <tr>
                             <td><?php echo "<strong>Option: </strong>" . $option['nomoption']; ?></td>
-                            <td><?php echo "{$this->nbjoursOption} jours"; ?></td>
-                            <td><?php echo "{$prixOptionHT['prixht']}€" ?></td>
-                            <td><?php echo "{$prixOptionTTC['prixttc']}€" ?></td>
-                            <td><strong><?php echo "{$prixOptionTotalHT}€" ?></strong></td>
-                            <td><strong><?php echo "{$prixOptionTotalTTC}€" ?></strong></td>
+                            <td><?php echo $option['debutoption'] ?></td>
+                            <td><?php echo $option['nbsemaines'] ." semaines" ?></td>
+                            <td><?php echo number_format($prixOptionHT['prixht'],2) . "€" ?></td>
+                            <td><?php echo number_format($prixOptionTTC['prixttc'],2) . "€" ?></td>
+                            <td><strong><?php echo number_format($prixOptionTotalHT,2) . "€" ?></strong></td>
+                            <td><strong><?php echo number_format($prixOptionTotalTTC,2) . "€" ?></strong></td>
                         </tr>
                     <?php endforeach; 
+                    $this->forfait = $this->fetchAllData('SELECT * FROM pact._appliqueforfait WHERE nomForfait = :nomforfait', ['nomforfait' => $this->offre['nomforfait']]);
                     $prixForfaitHT = $this->forfait[0]['prixht'];
                     $prixForfaitTTC = $this->forfait[0]['prixttc'];
                     $prixForfaitTotalHT = $this->nbJours * $prixForfaitHT;
@@ -223,22 +223,23 @@ class Facture
 
                     <tr>
                         <td><?php echo "<strong>Abonnement: </strong>" . $this->forfait[0]['nomforfait']; ?></td>
+                        <td></td>
                         <td><?php echo $this->nbJours . " jours"; ?></td>
-                        <td><?php echo "{$prixForfaitHT}€" ?></td>
-                        <td><?php echo "{$prixForfaitTTC}€" ?></td>
-                        <td><strong><?php echo "{$prixForfaitTotalHT}€" ?></strong></td>
-                        <td><strong><?php echo "{$prixForfaitTotalTTC}€" ?></strong></td>
+                        <td><?php echo number_format($prixForfaitHT,2) . "€" ?></td>
+                        <td><?php echo number_format($prixForfaitTTC,2) . "€" ?></td>
+                        <td><strong><?php echo number_format($prixForfaitTotalHT,2) . "€" ?></strong></td>
+                        <td><strong><?php echo number_format($prixForfaitTotalTTC,2) . "€" ?></strong></td>
                     </tr>
                 </table>
 
                 <table class="total">
                     <tr>
                         <th>Total HT</th>
-                        <td><?php echo "{$totalHT}€" ?></td>
+                        <td><?php echo number_format($totalHT,2) . "€" ?></td>
                     </tr>
                     <tr>
                         <th>Total TTC</th>
-                        <td><?php echo "{$totalTTC}€" ?></td>
+                        <td><?php echo number_format($totalTTC,2) . "€" ?></td>
                     </tr>
                 </table>
             </main>
