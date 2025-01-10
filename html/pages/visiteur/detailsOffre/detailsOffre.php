@@ -385,7 +385,7 @@ try {
         <div class="popup" id="popup-creer-avis">
             <div class="popup-content">
             <span class="close">&times;</span>
-            <p>Vous devez être connecté pour créer un avis.</p>
+            <p>Vous devez être connecté pour faire cette action.</p>
             <a href="/pages/membre/connexionCompteMembre/connexionCompteMembre.php?context=detailsOffre/detailsOffre.php%3Fid=<?= $idOffre ?>" class="btn">Se connecter</a>
             </div>
         </div>

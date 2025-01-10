@@ -100,10 +100,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 fetch(`thumbs.php?idAvis=${idAvis}&type=up`)
                     .then(response => response.json())
                     .then(data => {
-                        if (data.success) {
-                            this.textContent = `👍 ${data.thumbs_up}`;
-                            const thumbsDownButton = this.nextElementSibling;
-                            thumbsDownButton.textContent = `👎 ${data.thumbs_down}`;
+                        if (!data.success) {
+                            popupCreerAvis.style.display = "block";
                         }
                     });
             });
@@ -115,10 +113,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 fetch(`thumbs.php?idAvis=${idAvis}&type=down`)
                     .then(response => response.json())
                     .then(data => {
-                        if (data.success) {
-                            this.textContent = `👎 ${data.thumbs_down}`;
-                            const thumbsUpButton = this.previousElementSibling;
-                            thumbsUpButton.textContent = `👍 ${data.thumbs_up}`;
+                        if (!data.success) {
+                            popupCreerAvis.style.display = "block";
                         }
                     });
             });

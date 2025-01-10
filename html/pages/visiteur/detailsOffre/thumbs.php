@@ -2,6 +2,11 @@
 session_start();
 $idCompte = $_SESSION['idCompte'];
 
+if (!isset($idCompte)) {
+    echo json_encode(['success' => false, 'message' => 'Vous devez être connecté pour voter.']);
+    exit;
+}
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/connect_params.php';
 
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
