@@ -1,9 +1,10 @@
 <?php session_start();
-if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
+$_SESSION['idCompte'] = 1;
+/**if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     header("Location: /pages/membre/accueil/accueil.php");
 } elseif (!isset($_SESSION['idCompte'])) {
     header("Location: /pages/visiteur/accueil/accueil.php");
-}
+}*/
 ?>
 <!DOCTYPE html>
     <html>
@@ -25,17 +26,23 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Header/Header.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Textarea/Textarea.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Footer/Footer.php";
-        require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
+        //require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
         require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/CheckboxSelect/CheckboxSelect.php";
+        // Configuration de la base de données
+        $host = 'localhost';
+        $dbname = 'postgres';
+        $user = 'postgres';
+        $password = '13phenix';
 
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+        $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
+
         $sql = "SELECT numsiren FROM pact._CompteProPrive WHERE idCompte = :idCompte";
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
         $stmt->execute();
         $numsiren = $stmt->fetchColumn();
 
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+        $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
         $sql = "SELECT banquerib FROM pact._ComptePro WHERE idCompte = :idCompte";
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':idCompte', $_SESSION['idCompte'], PDO::PARAM_INT);
@@ -85,36 +92,46 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
 
                     <div>
                                         
+                    
+
+                   
+                </article>
+
+                <article>
+
                     <div>
                         <label>Description de l'offre*</label>
-                        <?php Textarea::render(name:"descriptionOffre", required:"true", rows:2) ?>
+                        <div class="divDescription">
+                            <?php Textarea::render(name:"descriptionOffre", required:"true", rows:2) ?>
+                        </div>
                     </div>
-
-                    <div>
-                        <label>Heure d'ouverture</label>
-                        <?php Input::render(name:"ouverture", type:"time", placeholder:'',required:"true") ?>
-                        
-                    </div>
-
-                    <div>
-                        <label>Heure de fermeture</label>
-                        <?php Input::render(name:"fermeture", type:"time", placeholder:'',required:"true") ?>
-                        
-                    </div>
-                </article>
-                <article>
                     <div>
                         <label>Description Détaille</label>
-                        <?php Textarea::render(name:"descriptionDetaillee", rows:7) ?>
+                        <div class="divDescription">
+                            <?php Textarea::render(name:"descriptionDetaillee", rows:7) ?>
+                        </div>
                     </div>
 
+                </article>
+                <article>
                     
-                    
-                        
+    
                     </div>
 
+                    <div class="reunion">
+                        <div>
+                            <label>Heure d'ouverture</label>
+                            <?php Input::render(name:"ouverture", type:"time", placeholder:'',required:"true") ?>
+                            
+                        </div>
 
-                    
+                        <div>
+                            <label>Heure de fermeture</label>
+                            <?php Input::render(name:"fermeture", type:"time", placeholder:'',required:"true") ?>
+                            
+                        </div>
+                    </div>
+
                     <div>
                         <?php
                             
@@ -184,6 +201,9 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
                         <label>Photo*</label>   
                         <?php InsererImage::render("monDropZone[]", "Glissez-déposez vos images ici", 5,true,true,['jpg', 'png'],"monDropZone[]");?>
                     </div>
+
+                </article>
+                <article  class="description">
 
 
                     <div>
