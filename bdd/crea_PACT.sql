@@ -362,8 +362,6 @@ CREATE TABLE _avis(
     contexteVisite  VARCHAR(10),
     dateVisite      DATE,
     dateAvis        DATE DEFAULT CURRENT_TIMESTAMP,
-    nbPoucesVert    INTEGER DEFAULT 0,
-    nbPoucesRouge   INTEGER DEFAULT 0,
     estVu           BOOLEAN DEFAULT FALSE,
     pouceHaut       INTEGER DEFAULT 0,
     pouceBas        INTEGER DEFAULT 0,
