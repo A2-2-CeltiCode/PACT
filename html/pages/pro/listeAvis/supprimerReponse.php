@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':idReponse', $idReponse);
         $stmt->execute();
         echo "Reponse supprimée";
-        header("Location: detailsOffre.php?idOffre=" . $idOffre);
+        header("Location: listeAvis.php?idOffre=" . $idOffre);
         exit(); // Ajout de exit() pour s'assurer que le script s'arrête après la redirection
     } catch (PDOException $e) {
         echo "Erreur !: " . $e->getMessage();

@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
 
         echo json_encode(['success' => true]);
-        header("Location: detailsOffre.php?idOffre=" . $idOffre);
+        header("Location: listeAvis.php?idOffre=" . $idOffre);
         exit(); // Ajout de exit() pour s'assurer que le script s'arrête après la redirection
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);

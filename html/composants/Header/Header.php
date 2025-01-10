@@ -121,6 +121,7 @@ class Header
             //echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
             echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
+            echo '<a href="/pages/pro/listeAvis/listeAvis.php">Liste des avis</a>';
             echo '<a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>';
         }
         echo '</nav>';
@@ -182,8 +183,8 @@ class Header
         } elseif ($type == HeaderType::Member) {
             self::renderProfileOptionSelector('profil-member');
         } elseif ($type == HeaderType::Pro) {
-            self::renderProfileOptionSelector('profil-pro');
             self::renderNotificationIcon();
+            self::renderProfileOptionSelector('profil-pro');
         }
         echo '</div>';
     }
@@ -229,7 +230,7 @@ class Header
         function redirectToAvis(idAvis) {
             const form = document.createElement("form");
             form.method = "POST";
-            form.action = "/pages/pro/listeAvis/detailsOffre.php";
+            form.action = "/pages/pro/listeAvis/listeAvis.php";
             const input = document.createElement("input");
             input.type = "hidden";
             input.name = "idAvis";
@@ -260,6 +261,7 @@ class Header
             echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
             echo '<a href="dashboardPro.php">Mes Offres</a>';
+            echo '<a href="dashboardPro.php">Liste des avis</a>';
             echo '<a href="publierOffre.php">Créer une Offre</a>';
         }
         //self::renderLanguageSelector();
