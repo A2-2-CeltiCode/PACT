@@ -495,20 +495,28 @@ body {
   display: flex;
   gap: 16px;
   margin-bottom: 24px;
+  align-items: center;
 }
 
 .filters label {
   font-weight: 500;
   color: var(--text-dark);
+  margin-right: 8px;
 }
 
 .filters select {
   padding: 8px 12px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-full);
   border: 1px solid var(--border-color);
   background: var(--white);
-  color: var(--text-dark);
+  color: var (--text-dark);
   font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.filters select:focus {
+  border-color: var(--primary-color);
+  outline: none;
 }
 
 /* Toast de confirmation */

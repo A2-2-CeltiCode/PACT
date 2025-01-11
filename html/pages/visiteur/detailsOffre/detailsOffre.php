@@ -272,19 +272,19 @@ try {
 
     </div>
     <div>
-        <div class="filters">
-            <label for="sortBy">Trier par:</label>
-            <select id="sortBy">
-                <option value="date_desc" selected>Date décroissante</option>
-                <option value="date_asc">Date croissante</option>
-                <option value="note_desc">Note décroissante</option>
-                <option value="note_asc">Note croissante</option>
-            </select>
-        </div>
         <div id="avis-list" class="liste-avis">
             <div class="avis-header">
                 <h1>Avis:</h1>
                 <button class="btn-creer-avis">Créer un avis</button>
+            </div>
+            <div class="filters">
+                <label for="sortBy">Trier par:</label>
+                <select id="sortBy">
+                    <option value="date_desc" selected>Date décroissante</option>
+                    <option value="date_asc">Date croissante</option>
+                    <option value="note_desc">Note décroissante</option>
+                    <option value="note_asc">Note croissante</option>
+                </select>
             </div>
             <div>
                 <?php

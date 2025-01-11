@@ -97,8 +97,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, "text/html");
-        const avisList = doc.querySelector(".liste-avis");
-        document.querySelector(".liste-avis").innerHTML = avisList.innerHTML;
+        const avisList = doc.querySelector(".liste-avis > div:last-child");
+        document.querySelector(".liste-avis > div:last-child").innerHTML = avisList.innerHTML;
         initializeEvents(); // Réinitialiser les événements après le tri
       });
   }

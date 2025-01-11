@@ -272,19 +272,19 @@ try {
 
     </div>
     <div>
-        <div class="filters">
-            <label for="sortBy">Trier par:</label>
-            <select id="sortBy">
-                <option value="date_desc" selected>Date décroissante</option>
-                <option value="date_asc">Date croissante</option>
-                <option value="note_desc">Note décroissante</option>
-                <option value="note_asc">Note croissante</option>
-            </select>
-        </div>
         <div class="liste-avis">
             <div class="avis-header">
                 <h1>Avis:</h1>
                 <button class="btn-creer-avis">Créer un avis</button>
+            </div>
+            <div class="filters">
+                <label for="sortBy">Trier par:</label>
+                <select id="sortBy">
+                    <option value="date_desc" selected>Date décroissante</option>
+                    <option value="date_asc">Date croissante</option>
+                    <option value="note_desc">Note décroissante</option>
+                    <option value="note_asc">Note croissante</option>
+                </select>
             </div>
             <div>
                 <?php
@@ -385,7 +385,7 @@ try {
         </div>
 
         <div class="popup" id="popup-creer-avis">
-            <div class="popup-content">
+     opt    <div class="popup-content">
             <span class="close">&times;</span>
             <form action="  creerAvis.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
