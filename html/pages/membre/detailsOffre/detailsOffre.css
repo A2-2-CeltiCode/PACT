@@ -25,6 +25,14 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+  }
+  
   
   body {
     font-family: "Trip Sans", Arial, sans-serif;

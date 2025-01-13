@@ -347,6 +347,7 @@ try {
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
                                     <div class="reponse">
+                                        <h2>Réponse:</h2>
                                         <p class="reponse-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
