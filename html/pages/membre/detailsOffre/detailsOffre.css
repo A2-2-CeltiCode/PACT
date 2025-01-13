@@ -433,7 +433,6 @@
 }
 
 .btn-creer-avis:hover {
-    background-color: var(--primary-hover);
     transform: translateY(-1px);
 }
   
@@ -484,6 +483,8 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  
   
   .popup textarea,
   .popup input[type="number"] {
