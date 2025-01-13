@@ -88,7 +88,13 @@ try {
         $imagesAvis[$avi['idavis']] = $img;
     }
 
- 
+    $thumbsUpMap = [];
+    $thumbsDownMap = [];
+
+    foreach ($avis as $avi) {
+        $thumbsUpMap[$avi['idavis']] = $avi['poucehaut'];
+        $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
+    }
 
     // Vérification du nombre de réponses de l'utilisateur pour cette offre
     $stmt = $dbh->prepare("SELECT COUNT(*) as totalReponses FROM pact._reponseavis WHERE idCompte = :idCompte AND idAvis IN (SELECT idAvis FROM pact.vue_avis WHERE idOffre = :idOffre)");
@@ -123,6 +129,7 @@ try {
     <!-- Toast de confirmation -->
     <div id="toast" class="toast">Avis bien signalé</div>
     <div>
+    <div>
         <div class="liste-avis">
             <div>
                 <h1>Avis:</h1>
@@ -134,41 +141,30 @@ try {
                     <option value="date_asc">Date croissante</option>
                     <option value="note_desc">Note décroissante</option>
                     <option value="note_asc">Note croissante</option>
-                    <option value="non_vu">Non vus</option>
                 </select>
 
                 <label for="filterBy">Filtrer par:</label>
                 <select id="filterBy">
                     <option value="all">Tous</option>
+                    <option value="viewed">Vus</option>
                     <option value="not_viewed">Non vus</option>
                 </select>
             </div>
             <div>
-                <?php if (empty($avis)): ?>
-                    <p>Aucun avis non vu </p>
-                <?php else: ?>
-                    <?php
-                    foreach ($avis as $avi) {
-                        if (!isset($avi["idavis"])) {
-                            continue;
-                        }
-                        
-                        $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
-                        $stmt->execute([':idAvis' => $avi['idavis']]);
-                        $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        
-                        ?>
-                        <div class="avi <?= !$avi['estvu'] ? 'non-vu' : '' ?> <?= empty($reponses) ? 'sans-reponse' : '' ?> <?= $avi['idavis'] == $idAvisPrioritaire ? 'prioritaire' : '' ?>" data-idavis="<?= $avi["idavis"] ?>">
-                            <div>
-                                <p class="avi-title">
-                                    <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi["idoffre"]; ?>">Offre: <?= $avi["titre"] ?></a>
-                                </p>
-                                <p class="offre-title">
-                                    <?= $avi["avis_titre"] ?>
-                                </p>
-                            </div>
-                            <p class="avi-content">
-                                <?= $avi["commentaire"] ?>
+                <?php
+                foreach ($avis as $avi) {
+                    if (!isset($avi["idavis"])) {
+                        continue;
+                    }
+                    
+                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
+                    $stmt->execute([':idAvis' => $avi['idavis']]);
+                    $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    ?>
+                    <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
+                        <div>
+                            <p class="avi-title">
+                                <?= $avi["titre"] ?>
                             </p>
                             <div class="note">
                                 <?php
@@ -183,59 +179,66 @@ try {
                                 }
                                 ?>
                             </div>
-                            <div>
-                                <?php
-                                foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                    echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
-                                }
-                                ?>
-                            </div>
-                            <div>
-                                <p>
-                                    <?= $avi["pseudo"] ?>
-                                </p>
-                                <p>
-                                    le <?= $avi["datevisite"] ?>
-                                </p>
-                                <p>
-                                    en <?= $avi["contextevisite"] ?>
-                                </p>
-                            </div>
-                            <div>
-                                <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
-                                <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                    <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
-                                <?php endif; ?>
-                            </div>
-                            <?php if (!empty($reponses)): ?>
-                                <div class="reponses">
-                                    <?php foreach ($reponses as $reponse): ?>
-                                        <div class="reponse">
-                                            <p class="reponse-content">
-                                                <?= $reponse["commentaire"] ?>
-                                            </p>
-                                            <div>
-                                                <p>
-                                                    <?= $reponse["pseudo"] ?>
-                                                </p>
-                                                <p>
-                                                    le <?= $reponse["datereponse"] ?>
-                                                </p>
-                                            </div>
-                                            <form action="supprimerReponse.php" method="POST">
-                                                <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
-                                                <input type="hidden" name="idOffre" value="<?= $idAvisPrioritaire ?>">
-                                                <?php Button::render("btn-supprimer", "", "Supprimer", ButtonType::Pro, "", true); ?>
-                                            </form>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
+                        </div>
+                        <p class="avi-content">
+                            <?= $avi["commentaire"] ?>
+                        </p>
+                        <div>
+                            <?php
+                            foreach ($imagesAvis[$avi["idavis"]] as $image) {
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                            }
+                            ?>
+                        </div>
+                        <div>
+                            <p>
+                                <?= $avi["pseudo"] ?>
+                            </p>
+                            <p>
+                                le <?= $avi["datevisite"] ?>
+                            </p>
+                            <p>
+                                en <?= $avi["contextevisite"] ?>
+                            </p>
+                        </div>
+                        <div class="thumbs">
+                            <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                        </div>
+                        <div>
+                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
+                            <?php if (empty($reponses) && $totalReponses < 3): ?>
+                                <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
                             <?php endif; ?>
                         </div>
-                        <?php
-                    }
-                    ?>
-                <?php endif; ?>
+                        <?php if (!empty($reponses)): ?>
+                            <div class="reponses">
+                                <?php foreach ($reponses as $reponse): ?>
+                                    <div class="reponse">
+                                        <p class="reponse-content">
+                                            <?= $reponse["commentaire"] ?>
+                                        </p>
+                                        <div>
+                                            <p>
+                                                <?= $reponse["pseudo"] ?>
+                                            </p>
+                                            <p>
+                                                le <?= $reponse["datereponse"] ?>
+                                            </p>
+                                        </div>
+                                        <form action="supprimerReponse.php" method="POST">
+                                            <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
+                                            <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+                                            <?php Button::render("btn-supprimer", "", "Supprimer", ButtonType::Pro, "", true); ?>
+                                        </form>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
         </div>
 

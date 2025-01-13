@@ -26,7 +26,7 @@ try {
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis FROM pact.vue_avis JOIN pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
     if ($filterBy === 'viewed') {
         $query .= " AND estvu = true";
@@ -100,6 +100,14 @@ try {
     $stmt->execute([':idCompte' => $idCompte, ':idOffre' => $idOffre]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $totalReponses = $result ? $result['totalReponses'] : 5;
+    
+    $thumbsUpMap = [];
+    $thumbsDownMap = [];
+    
+    foreach ($avis as $avi) {
+        $thumbsUpMap[$avi['idavis']] = $avi['poucehaut'];
+        $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
+    }
     
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
@@ -332,6 +340,10 @@ try {
                                 en <?= $avi["contextevisite"] ?>
                             </p>
                         </div>
+                        <div class="thumbs">
+                            <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                        </div>
                         <div>
                             <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
@@ -387,6 +399,28 @@ try {
         const idOffre = <?= json_encode($idOffre) ?>;
     </script>
     <script src="detailsOffre.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const avisElements = document.querySelectorAll(".avi.non-vu");
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const idAvis = entry.target.dataset.idavis;
+                        fetch(`markAsSeen.php?idAvis=${idAvis}`, {
+                            method: 'POST'
+                        }).then(response => {
+
+                        });
+                    }
+                });
+            });
+
+            avisElements.forEach(avi => {
+                observer.observe(avi);
+            });
+        });
+    </script>
     <?php Footer::render(FooterType::Pro); 
     $dbh = null;
     ?>

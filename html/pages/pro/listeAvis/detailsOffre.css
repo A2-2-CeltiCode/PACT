@@ -314,20 +314,10 @@ body {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Avis non vus */
-.avi.non-vu {
-  border-left: 4px solid var(--primary-color);
-}
-
-.avi.prioritaire {
-  border: 2px solid var(--primary-color);
-  background-color: rgba(108, 2, 119, 0.1);
-}
-
 .avi-title {
   font-size: 20px;
   font-weight: 700;
-  color: var (--text-dark);
+  color: var(--text-dark);
   margin-bottom: 12px;
 }
 
@@ -505,20 +495,28 @@ body {
   display: flex;
   gap: 16px;
   margin-bottom: 24px;
+  align-items: center;
 }
 
 .filters label {
   font-weight: 500;
-  color: var (--text-dark);
+  color: var(--text-dark);
+  margin-right: 8px;
 }
 
 .filters select {
   padding: 8px 12px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-full);
   border: 1px solid var(--border-color);
   background: var(--white);
-  color: var(--text-dark);
+  color: var (--text-dark);
   font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.filters select:focus {
+  border-color: var(--primary-color);
+  outline: none;
 }
 
 /* Toast de confirmation */
@@ -529,17 +527,24 @@ body {
   background-color: #28a745; /* Vert */
   color: #fff;
   text-align: center;
-  border-radius: 2px;
+  border-radius: var(--radius-md);
   position: fixed;
   z-index: 1000; /* Assurer qu'il est au-dessus du contenu */
   right: 30px; /* En haut à droite */
   top: 100px; /* Plus bas */
   font-size: 17px;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: visibility 0.5s, opacity 0.5s ease-in-out;
+  opacity: 0;
 }
 
 .toast.show {
   visibility: visible;
+  opacity: 1;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
@@ -562,6 +567,64 @@ body {
 @keyframes fadeout {
   from {top: 100px; opacity: 1;}
   to {top: 70px; opacity: 0;}
+}
+
+/* Styles pour la modal d'image */
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.image-modal .modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+.image-modal .close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.image-modal .close:hover,
+.image-modal .close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Styles pour les boutons de pouces */
+.thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbs button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.thumbs button:hover {
+  color: var(--primary-color);
 }
 
 /* Responsive */
