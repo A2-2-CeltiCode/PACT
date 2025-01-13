@@ -115,29 +115,67 @@
     $idOffre=$dbh->lastInsertId();
 
     //création et insertion image
+    if (is_array($_FILES['monDropZone']['name'])) {
         foreach ($_FILES['monDropZone']['name'] as $key => $val) {
             $nomImage = $_FILES['monDropZone']['name'][$key];
             $tmp_name = $_FILES['monDropZone']['tmp_name'][$key];
             $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/" . $idOffre . '/images' . '/';
-        
+    
             $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
-        
+    
             $nouveauNomImage = uniqid() . '.' . $extension;
-        
+    
             if (!file_exists($location)) {
                 mkdir($location, 0777, true);
             }
-        
+    
             move_uploaded_file($tmp_name, $location . $nouveauNomImage);
             $stmt = $dbh->prepare(
-                "INSERT INTO pact._image(idOffre, nomImage) 
-                VALUES(:idOffre, :nomImage)"
+                "INSERT INTO pact._image(nomImage) 
+                VALUES(:nomImage)"
             );
-            $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
             $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
             $stmt->execute();
-            
+            $idImage = $dbh->lastInsertId();
+    
+            $stmt = $dbh->prepare(
+                "INSERT INTO pact._representeoffre(idOffre, idImage) 
+                VALUES(:idOffre, :idImage)"
+            );
+            $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+            $stmt->bindValue(':idImage', $idImage, PDO::PARAM_INT);
+            $stmt->execute();
         }
+    } else {
+        $nomImage = $_FILES['monDropZone']['name'];
+        $tmp_name = $_FILES['monDropZone']['tmp_name'];
+        $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/" . $idOffre . '/images' . '/';
+    
+        $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
+    
+        $nouveauNomImage = uniqid() . '.' . $extension;
+    
+        if (!file_exists($location)) {
+            mkdir($location, 0777, true);
+        }
+    
+        move_uploaded_file($tmp_name, $location . $nouveauNomImage);
+        $stmt = $dbh->prepare(
+            "INSERT INTO pact._image(nomImage) 
+            VALUES(:nomImage)"
+        );
+        $stmt->bindValue(':nomImage', $nouveauNomImage, PDO::PARAM_STR);
+        $stmt->execute();
+        $idImage = $dbh->lastInsertId();
+    
+        $stmt = $dbh->prepare(
+            "INSERT INTO pact._representeOffre(idOffre, idImage) 
+            VALUES(:idOffre, :idImage)"
+        );
+        $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+        $stmt->bindValue(':idImage', $idImage, PDO::PARAM_INT);
+        $stmt->execute();
+    }
     
 
 

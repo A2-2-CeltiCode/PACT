@@ -1,5 +1,5 @@
 <?php
-header("Location: ../listeOffres/listeOffres.php");
+//header("Location: ../listeOffres/listeOffres.php");
 session_start();
 error_reporting(E_ALL ^ E_WARNING);
 
@@ -7,35 +7,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
 function insererPrix($dbh, $prix) {
-    $sql = "SELECT valprix FROM pact._prix WHERE valprix = :valprix";
-    $stmt = $dbh->prepare($sql);  
-    $stmt->bindValue(':valprix', $prix, PDO::PARAM_STR);
-    $stmt->execute();
-    
-    $prix2 = $stmt->fetchAll();
 
-    if (empty($prix2)) {
-        $stmt = $dbh->prepare("INSERT INTO pact._prix(valprix) VALUES(:valprix)");
-        $stmt->bindValue(':valprix', $prix, PDO::PARAM_STR);
-        $stmt->execute();
-    }
 }
 
 function insererDuree($dbh, $tempsEnMinutes) {
-    $sql = "SELECT tempsEnMinutes FROM pact._duree WHERE tempsEnMinutes = :tempsEnMinutes";
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindValue(':tempsEnMinutes', $tempsEnMinutes, PDO::PARAM_INT);
-    $stmt->execute();
-    $dureeExistante = $stmt->fetchColumn();
-
-    if (empty($dureeExistante)) {
-        $stmt = $dbh->prepare(
-            "INSERT INTO pact._duree(tempsEnMinutes) 
-            VALUES(:tempsEnMinutes)"
-        );
-        $stmt->bindValue(':tempsEnMinutes', $tempsEnMinutes, PDO::PARAM_INT);
-        $stmt->execute();
-    }
 }
 
 function deleteOldTags($dbh, $idOffre, $typeOffre) {
@@ -96,7 +71,7 @@ function deleteOldImages($dbh, $idOffre, $typeOffre) {
     
     
 
-    $stmt = $dbh->prepare("DELETE FROM pact._image WHERE idOffre = :idOffre AND idimage != :idImage");
+    $stmt = $dbh->prepare("DELETE FROM pact._representeOffre WHERE idOffre = :idOffre AND idimage != :idImage");
     $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
     $stmt->bindValue(':idImage', $idImageTrop, PDO::PARAM_INT);
     $stmt->execute();
