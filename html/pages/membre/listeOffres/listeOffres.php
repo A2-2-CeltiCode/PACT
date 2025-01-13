@@ -29,7 +29,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
-$pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+$pdo = new PDO("$driver:host=$server;port=5432;dbname=$dbname", $dbuser, $dbpass);
 
 // Récupération des paramètres de la requête
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'idoffre DESC';
@@ -113,7 +113,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <div id="nombreOffres">
         <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
     </div>
-    <div id="resultats" class="offres-container">
+    <div id="resultats" class="offres-container carrousel">
         <!-- Affichage des résultats -->
         <?php
         foreach ($resultats as $item) {

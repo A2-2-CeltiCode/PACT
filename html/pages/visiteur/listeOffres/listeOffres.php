@@ -115,7 +115,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <div id="nombreOffres">
         <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
     </div>
-    <div id="resultats" class="offres-container">
+    <div id="resultats" class="offres-container carrousel">
         <!-- Affichage des résultats -->
         <?php
         foreach ($resultats as $item) {
