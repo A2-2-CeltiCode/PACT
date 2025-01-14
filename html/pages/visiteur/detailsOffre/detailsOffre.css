@@ -43,6 +43,24 @@ body {
   line-height: 1.5;
 }
 
+.offre-description svg:first-of-type {
+  width: 20px;
+  height: 20px;
+  stroke: var(--primaire-visiteur);
+  fill: rgba(0, 0, 0, 0);
+}
+
+.svg-inline svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--primaire-visiteur);
+  fill: var(--primaire-visiteur);
+}
+label{
+  align-items: flex-start !important;
+  padding-left: 0 !important;
+}
+
 /* Bouton retour */
 .retour {
   position: fixed;

@@ -45,6 +45,20 @@ label{
   padding-left: 0 !important;
 }
 
+.offre-description svg:first-of-type {
+  width: 20px;
+  height: 20px;
+  stroke: var(--primaire-pro);
+  fill: rgba(0, 0, 0, 0);
+}
+
+.svg-inline svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--primaire-pro);
+  fill: var(--primaire-pro);
+}
+
 /* Bouton retour */
 .retour {
   position: fixed;
@@ -266,23 +280,7 @@ label{
   border-bottom: none;
 }
 
-.svg-inline {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--text-light);
-  margin-bottom: 12px;
-}
 
-.svg-inline svg {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.svg-inline svg path {
-  fill: var(--primary-color);
-}
 
 /* Badges et tags */
 .badges {

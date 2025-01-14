@@ -31,6 +31,13 @@
     stroke: var(--primaire-membre);
     fill: rgba(0, 0, 0, 0);
   }
+  
+  .svg-inline svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primaire-membre);
+    fill: var(--primaire-membre);
+}
 
   label{
     align-items: flex-start !important;
