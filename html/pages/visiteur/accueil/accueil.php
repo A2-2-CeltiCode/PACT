@@ -155,6 +155,8 @@ foreach ($offresNoteSql as $item) {
 </div>
 <main>
     <div>
+
+    <!-- affichage des offres a la une -->
         <h2>À la une!</h2>
         <div class="carrousel">
             <?php
@@ -177,6 +179,7 @@ foreach ($offresNoteSql as $item) {
         </div>
     </div>
     <div>
+        <!-- affichage des offres les mieux notées -->
         <h2>Les mieux notées</h2>
         <div class="carrousel mixed">
             <?php
