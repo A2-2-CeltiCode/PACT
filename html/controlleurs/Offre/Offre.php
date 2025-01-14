@@ -118,12 +118,15 @@ STRING;
         $nom = strlen($this->nom) >= 32 ? substr($this->nom, 0, 29) . "..." : $this->nom;
         $class = "";
         $star = "";
+        $gold = "";
         if ($this->option == "A la une") {
             $class = "une";
             $star = "<img class='star-overlay' alt='relief' src='/ressources/img/relief.png'>";
+            $gold = "class='gold'";
         } elseif ($this->option == "En relief") {
             $class = "relief";
             $star = "<img class='star-overlay' alt='relief' src='/ressources/img/relief.png'>";
+            $gold = "class='gold'";
         }
 
         return <<<STRING
@@ -133,7 +136,7 @@ STRING;
             <img class="offre-image" alt="" src="$image">
             $star
         </div>
-        <div>
+        <div $gold>
             <div>
                 $svgIcon
                 <p>$nom</p>
@@ -143,7 +146,7 @@ STRING;
                 $svgNote
             </div>
         </div>
-        <div>
+        <div $gold>
             <div>
                 $svgPin
                 <p>$this->ville</p>
@@ -154,7 +157,7 @@ STRING;
             </div>
             $d
         </div>
-        <div>
+        <div $gold>
             <div>
                 $svgClock
                 <p>$this->ouverture -</p>
