@@ -40,6 +40,10 @@ body {
         border-radius: 5px 5px 0 0;
     }
 
+    .star {
+        display: none;
+    }
+
     a {
         text-decoration: none;
 
@@ -48,7 +52,7 @@ body {
             background: aqua;*/
             display: flex;
             justify-content: space-between;
-            padding: 0 5px;
+            padding-right: 5px;
 
             > div {
                 display: flex;
@@ -165,6 +169,12 @@ main {
             filter: drop-shadow(15px 15px 15px rgba(255, 208, 0, 0.747));
         }
     }
+    .star-overlay {
+        position: absolute;
+    }
+    .gold {
+        background-color: #fddc5c;
+    }
 }
 
 .image-container {
@@ -181,7 +191,7 @@ main {
 }
 
 .star-overlay {
-    position: absolute;
+    /*position: absolute;*/
     top: 5px; /* Distance par rapport au haut */
     right: 5px; /* Distance par rapport à la droite */
     z-index: 2; /* Assure que l'étoile est au-dessus de l'image */
