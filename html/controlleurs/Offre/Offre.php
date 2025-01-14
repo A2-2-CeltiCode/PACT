@@ -117,57 +117,59 @@ STRING;
 
         $nom = strlen($this->nom) >= 32 ? substr($this->nom, 0, 29) . "..." : $this->nom;
         $class = "";
+        $star = "";
+        $gold = "";
         if ($this->option == "A la une") {
             $class = "une";
-        } else if ($this->option == "En relief") {
+            $star = "<img class='star-overlay' alt='relief' src='/ressources/img/relief.png'>";
+            $gold = "class='gold'";
+        } elseif ($this->option == "En relief") {
             $class = "relief";
+            $star = "<img class='star-overlay' alt='relief' src='/ressources/img/relief.png'>";
+            $gold = "class='gold'";
         }
 
         return <<<STRING
-<div class="offre $class"><a href="../detailsOffre/detailsOffre.php?id=$this->idoffre">
-    <img alt="" height="300px" width="300px" src="$image">
-    <div>
-        <div>
-            $svgIcon
-            <p>$nom</p>
+<div class="offre $class">
+    <a href="../detailsOffre/detailsOffre.php?id=$this->idoffre">
+        <div class="image-container">
+            <img class="offre-image" alt="" src="$image">
+            $star
         </div>
-        <div>
-            <p>$this->note</p>
-            $svgNote
-        </div>
-    </div>
-    <div>
-        <div>
-            $svgPin
-            <p>$this->ville</p>
-        </div>
-        <div>
-            $svgProprio
-            <p>$this->nomProprietaire</p>
-        </div>
-        $d
-        
-    </div>
-    <div>
-        
+        <div $gold>
             <div>
-            $svgClock
-                <p>$this->ouverture-</p>  
-                <p>$this->fermeture</p>              
+                $svgIcon
+                <p>$nom</p>
             </div>
             <div>
-               <p id=$id>$texte</p>
+                <p>$this->note</p>
+                $svgNote
+            </div>
+        </div>
+        <div $gold>
+            <div>
+                $svgPin
+                <p>$this->ville</p>
+            </div>
+            <div>
+                $svgProprio
+                <p>$this->nomProprietaire</p>
+            </div>
+            $d
+        </div>
+        <div $gold>
+            <div>
+                $svgClock
+                <p>$this->ouverture -</p>
+                <p>$this->fermeture</p>
+            </div>
+            <div>
+                <p id=$id>$texte</p>
             </div>
             <p>$argent</p>
-            <div>
-            </div>
-            
-        
-        
-        
-    </div></a>
+        </div>
+    </a>
 </div>
 STRING;
-
     }
 }
