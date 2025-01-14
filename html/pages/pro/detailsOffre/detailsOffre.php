@@ -163,9 +163,11 @@ try {
                             <?php endforeach; ?>
                 </div>
             </div>
-            <?php if ($typeOffre !== 'restaurant'): ?>
-                <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€", "../../../ressources/icone/prix.svg"); ?>
-            <?php endif; ?>
+            <?php if ($typeOffre !== 'restaurant'){ ?>
+                <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
+            <?php }else{; ?>
+            <?php Label::render("offre-prix", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
+            <?php }; ?>
         </div>
 
         <div class="offre-infos">
