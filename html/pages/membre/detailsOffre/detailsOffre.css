@@ -25,6 +25,12 @@
     padding: 0;
     box-sizing: border-box;
   }
+  .offre-description svg:first-of-type {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primaire-membre);
+    fill: rgba(0, 0, 0, 0);
+  }
 
   label{
     align-items: flex-start !important;
