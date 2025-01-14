@@ -15,7 +15,6 @@ session_start();
 $idCompte = $_SESSION['idCompte'];
 
 $idAvisPrioritaire = $_POST['idAvis'] ?? $_GET['idOffre'] ?? null;
-
 try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
@@ -160,11 +159,18 @@ try {
                     $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
                     $stmt->execute([':idAvis' => $avi['idavis']]);
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    // Ajouter la classe 'non-vu' si l'avis n'a pas été vu
+                    $nonVuClass = $avi['estvu'] ? '' : 'non-vu';
                     ?>
-                    <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
+                    <div class="avi <?= $nonVuClass ?>" data-idavis="<?= $avi["idavis"] ?>">
+                        <?php if (!$avi['estvu']): ?>
+                            <div class="non-vu">Non vu</div>
+                        <?php endif; ?>
                         <div>
                             <p class="avi-title">
-                                <?= $avi["titre"] ?>
+                            
+                            <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi['idoffre'] ?>"><?= $avi["titre"] ?></a>
                             </p>
                             <div class="note">
                                 <?php
@@ -255,6 +261,12 @@ try {
             </div>
         </div>
 
+        <!-- Popup pour afficher l'image en grand -->
+        <div class="image-popup" id="image-popup">
+            <span class="close">&times;</span>
+            <img class="image-popup-content" id="image-popup-content">
+        </div>
+
     </div>
 
     <script>
@@ -280,6 +292,28 @@ try {
 
             avisElements.forEach(avi => {
                 observer.observe(avi);
+            });
+
+            // Script pour afficher l'image en grand
+            const imagePopup = document.getElementById("image-popup");
+            const imagePopupContent = document.getElementById("image-popup-content");
+            const closeImagePopup = document.querySelector(".image-popup .close");
+
+            document.querySelectorAll(".avi img").forEach(img => {
+                img.addEventListener("click", function () {
+                    imagePopupContent.src = this.src;
+                    imagePopup.style.display = "block";
+                });
+            });
+
+            closeImagePopup.addEventListener("click", function () {
+                imagePopup.style.display = "none";
+            });
+
+            window.addEventListener("click", function (event) {
+                if (event.target === imagePopup) {
+                    imagePopup.style.display = "none";
+                }
             });
         });
     </script>

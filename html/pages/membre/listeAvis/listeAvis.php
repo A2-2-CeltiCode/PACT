@@ -129,8 +129,6 @@ try {
                     <option value="note_desc">Note décroissante</option>
                     <option value="note_asc">Note croissante</option>
                 </select>
-
-
             </div>
             <div>
                 <?php
@@ -178,15 +176,12 @@ try {
                             </p>
                             <p>
                                 le <?= $avi["datevisite"] ?> en <?= $avi["contextevisite"] ?>
-
                             </p>
-
                         </div>
                         <div class="thumbs">
                             <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
                             <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
-
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
@@ -231,6 +226,12 @@ try {
             </div>
         </div>
 
+        <!-- Popup pour afficher l'image en grand -->
+        <div class="image-popup" id="image-popup">
+            <span class="close">&times;</span>
+            <img class="image-popup-content" id="image-popup-content">
+        </div>
+
     </div>
 
     <script>
@@ -256,6 +257,28 @@ try {
 
             avisElements.forEach(avi => {
                 observer.observe(avi);
+            });
+
+            // Script pour afficher l'image en grand
+            const imagePopup = document.getElementById("image-popup");
+            const imagePopupContent = document.getElementById("image-popup-content");
+            const closeImagePopup = document.querySelector(".image-popup .close");
+
+            document.querySelectorAll(".avi img").forEach(img => {
+                img.addEventListener("click", function () {
+                    imagePopupContent.src = this.src;
+                    imagePopup.style.display = "block";
+                });
+            });
+
+            closeImagePopup.addEventListener("click", function () {
+                imagePopup.style.display = "none";
+            });
+
+            window.addEventListener("click", function (event) {
+                if (event.target === imagePopup) {
+                    imagePopup.style.display = "none";
+                }
             });
         });
     </script>

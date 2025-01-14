@@ -1,10 +1,20 @@
 SET SCHEMA 'pact';
 
 -- Peupler la table _option
-INSERT INTO _option (nomOption, prixHT, prixTTC) VALUES
-('Aucune', 0.0, 0.0),
-('En relief', 8.34, 10.0),
-('A la une', 16.68, 20.0);
+INSERT INTO _option (nomOption) VALUES
+('Aucune'),
+('En relief'),
+('A la une');
+
+INSERT INTO _applicationPrix(dateApplication, dateFin) VALUES
+(now(),null);
+
+-- Peupler la table _appliqueOption
+INSERT INTO _appliqueOption (nomOption, dateApplication, prixHT, prixTTC) VALUES
+('Aucune', now(), 0.0, 0.0),
+('En relief', now(), 8.34, 10.0),
+('A la une', now(), 16.68, 20.0);
+
 
 -- Peupler la table _gamme
 INSERT INTO _gamme (nomGamme) VALUES
@@ -29,19 +39,25 @@ INSERT INTO _categorie (nomCategorie) VALUES
 ('Restaurant');
 
 -- Peupler la table _forfait
-INSERT INTO _forfait (nomForfait,prixHT,prixTTC) VALUES
-('Gratuit', 0.0, 0.0),
-('Standard', 1.67, 2.0),
-('Premium', 3.34, 4.0);
+INSERT INTO _forfait (nomForfait) VALUES
+('Gratuit'),
+('Standard'),
+('Premium');
 
 -- Peupler la table _forfait
-INSERT INTO _forfaitPublic (nomForfait,prixHT,prixTTC) VALUES
-('Gratuit', 0.0, 0.0);
+INSERT INTO _forfaitPublic (nomForfait) VALUES
+('Gratuit');
 
 -- Peupler la table _forfait
-INSERT INTO _forfaitPro (nomForfait,prixHT,prixTTC) VALUES
-('Standard', 1.67, 2.0),
-('Premium', 3.34, 4.0);
+INSERT INTO _forfaitPro (nomForfait) VALUES
+('Standard'),
+('Premium');
+
+-- Peupler la table _appliqueForfait
+INSERT INTO _appliqueForfait (nomForfait, dateApplication, prixHT, prixTTC) VALUES
+('Gratuit', now(), 0.0, 0.0),
+('Standard', now(), 1.67, 2.0),
+('Premium', now(), 3.34, 4.0);
 
 -- Peupler la table _language
 INSERT INTO _langage (nomLangage) VALUES
