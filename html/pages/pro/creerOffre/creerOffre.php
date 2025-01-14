@@ -1,11 +1,11 @@
 <?php session_start();
 
-/*if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
+if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     header("Location: /pages/membre/accueil/accueil.php");
 } elseif (!isset($_SESSION['idCompte'])) {
     header("Location: /pages/visiteur/accueil/accueil.php");
-}*/
-$_SESSION['idCompte'] = 1;
+}
+
 ?>
 <!DOCTYPE html>
     <html>

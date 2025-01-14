@@ -22,7 +22,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Select/Select.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/InsererImage/InsererImage.php";
 
-// Récupération de l'identifiant de l'offre
+// Récupération de l'identifiant de l'offre et connexion a la bdd
 $idCompteCourant = $_SESSION['idCompte'];
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
@@ -65,6 +65,7 @@ try {
             <h1>Avis que vous avez posté :</h1>
         </div>
         <div>
+            <!--affichage des avis du membre -->
             <?php foreach ($avis as $avi) { ?>
                 <div class="avi">
                         <p class="avi-title">
@@ -75,6 +76,7 @@ try {
                             <?= $avi["nomavis"] ?>
                         </p>
                         <div class="note">
+                            <!--affichage des étoile donnée-->
                             <?php
                             for ($i = 0; $i < floor($avi["note"]); $i++) {
                                 echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
@@ -99,6 +101,7 @@ try {
                         ?>
                     </div>
                     <div>
+                        <!--information sur la visite -->
                         <p>
                             <?=$avi["pseudo"]?>
                         </p>
