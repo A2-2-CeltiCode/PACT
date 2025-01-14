@@ -12,8 +12,8 @@ $nom = $prenom = $pseudo = $email = $telephone = $codePostal = $ville = $rue = $
 $pseudoUtilise = false;
 $emailUtilise = false;
 
+ // Récupération des valeurs du formulaire
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupération des valeurs du formulaire
     $nom = $_POST['nom'] ?? '';
     $prenom = $_POST['prenom'] ?? '';
     $pseudo = $_POST['pseudo'] ?? '';
@@ -25,8 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $motDePasse = $_POST['motDePasse'] ?? '';
     $confirmMdp = $_POST['confirmMdp'] ?? '';
 
+    // Connexion à la base de données
     try {
-        // Connexion à la base de données
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
         $dbh->exec("SET search_path TO pact;");
     } catch (PDOException $e) {
@@ -53,8 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!$emailUtilise && !$pseudoUtilise) {
         $motDePasse = hash("sha256", $motDePasse);
 
+        // Insertion des données dans la base
         try {
-            // Insertion des données dans la base
             $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, rue, numTel) VALUES(:codePostal, :ville, :rue, :telephone)");
             $stmt->bindParam(':codePostal', $codePostal);
             $stmt->bindParam(':ville', $ville);

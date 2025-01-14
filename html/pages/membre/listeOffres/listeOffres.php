@@ -1,10 +1,10 @@
 <?php
-// session_start();
-// if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
-//     header("Location: /pages/pro/listeOffres/listeOffres.php");
-// } elseif (!isset($_SESSION['idCompte'])) {
-//     header("Location: /pages/visiteur/accueil/accueil.php");
-// }
+session_start();
+if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
+    header("Location: /pages/pro/listeOffres/listeOffres.php");
+} elseif (!isset($_SESSION['idCompte'])) {
+    header("Location: /pages/visiteur/accueil/accueil.php");
+}
 
 use composants\Button\ButtonType;
 error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
@@ -75,7 +75,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     }
     $nombreOffres = count($offres);
     echo json_encode(['offres' => $offres, 'nombreOffres' => $nombreOffres]);
-    exit; // Stoppe l'exécution pour AJAX
+    exit; 
 }
 
 // Si ce n'est pas une requête AJAX, inclure le HTML complet
