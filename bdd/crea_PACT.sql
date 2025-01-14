@@ -483,4 +483,3 @@ CREATE TABLE _possedeRestaurant (
     CONSTRAINT possedeRestaurant_fk_tagRestaurant FOREIGN KEY (nomTag)
         REFERENCES _tagRestaurant(nomTag)
 );
-

@@ -35,8 +35,6 @@ body > header {
     }
 
     div {
-
-
         &:nth-of-type(1) input {
             width: 300px;
         }
@@ -59,7 +57,6 @@ body > header {
         color: var(--gris3);
         font-weight: bold;
     }
-
 }
 
 .entete-langue {
@@ -84,49 +81,48 @@ body > header {
 }
 
 .selecteur-profil {
-    width: 200px; /* Largeur du sélecteur */
-    padding: 10px; /* Espacement interne */
-    color: white; /* Texte blanc */
-    border: none; /* Pas de bordures */
-    border-radius: 5px; /* Bordures arrondies */
-    font-size: 14px; /* Taille du texte */
-    text-align: center; /* Texte centré */
-    cursor: pointer; /* Curseur pointeur au survol */
-    appearance: none; /* Supprimer le style natif */
-    -webkit-appearance: none; /* Pour compatibilité Safari */
+    width: 200px;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 .selecteur-profil.profil-member {
-    background-color: var(--primaire-membre); /* Fond bleu */
+    background-color: var(--primaire-membre);
 }
 
 .selecteur-profil.profil-pro {
-    background-color: var(--primaire-pro); /* Fond mauve */
+    background-color: var(--primaire-pro);
 }
 
 .selecteur-profil.profil-member:hover {
-    background-color: #044475; /* Changer la couleur au survol */
+    background-color: #044475;
 }
 
 .selecteur-profil.profil-member:focus {
-    outline: none; /* Supprimer les bordures de focus par défaut */
-    box-shadow: 0 0 5px #044475; /* Ajouter une lueur de focus */
+    outline: none;
+    box-shadow: 0 0 5px #044475;
 }
 
 .selecteur-profil.profil-pro:hover {
-    background-color: #4b2b63; /* Changer la couleur au survol */
+    background-color: #4b2b63;
 }
 
-.selecteur-profil.profil-member:focus {
-    outline: none; /* Supprimer les bordures de focus par défaut */
-    box-shadow: 0 0 5px #4b2b63; /* Ajouter une lueur de focus */
+.selecteur-profil.profil-pro:focus {
+    outline: none;
+    box-shadow: 0 0 5px #4b2b63;
 }
 
 .selecteur-profil option {
-    background-color: white; /* Fond blanc pour les options déroulantes */
-    color: black; /* Texte noir dans les options */
+    background-color: white;
+    color: black;
 }
-
 
 .span-pact-guest {
     color: var(--primaire-visiteur);
@@ -150,13 +146,209 @@ body > header {
 
 .noscroll {
     overflow: hidden;
-    /*filter: blur(5px);*/
 }
 
+/* Styles améliorés pour les notifications */
+.notification-icon {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 20px ;
+    cursor: pointer;
+}
 
+.notification-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--blanc);
+    min-width: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 0;
+    z-index: 1000;
+    right: 0;
+    top: 120%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    scrollbar-width: thin;
+}
+
+.dropdown-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.dropdown-content .review {
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-content .review:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.dropdown-content .review:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content .review strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--gris3);
+    font-size: 14px;
+}
+
+.dropdown-content .review p {
+    color: var(--gris2);
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 0 0 12px 0;
+}
+
+.no-notifications {
+    padding: 16px;
+    text-align: center;
+    color: var(--gris2);
+    font-size: 14px;
+}
+
+.notification-icon:hover .dropdown-content {
+    display: none;
+    animation: none;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn-repondre, .btn-mark-seen {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 8px;
+}
+
+.btn-repondre {
+    background-color: var(--primaire-pro);
+    color: white;
+}
+
+.btn-repondre:hover {
+    background-color: #4b2b63;
+}
+
+.btn-mark-seen {
+    background-color: #f0f0f0;
+    color: var(--gris3);
+}
+
+.btn-mark-seen:hover {
+    background-color: #e0e0e0;
+}
+
+/* Styles pour la popup de réponse */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.popup-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+}
+
+.popup textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    resize: vertical;
+}
+
+.popup button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.popup button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Styles pour le menu responsive */
 @media screen and (max-width: 1024px) {
     body > header {
-
         overflow-x: hidden;
         padding: 0 5px;
 
@@ -167,7 +359,6 @@ body > header {
         > div {
             > img {
                 width: 10vw;
-
             }
 
             &:nth-of-type(1) input {
@@ -186,7 +377,6 @@ body > header {
         > nav, > .entete-langue, [class^='span-pact-'] {
             display: none;
         }
-
     }
 
     .hamburger {
@@ -243,9 +433,7 @@ body > header {
         visibility: hidden;
     }
 
-
     .showMenu {
         transform: translateX(0);
     }
-
 }

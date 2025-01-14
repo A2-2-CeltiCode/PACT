@@ -86,6 +86,17 @@ class Header
         self::renderAccountSection($type);
         self::renderBurger($type);
 
+        echo '<div class="popup" id="popup-repondre">
+                <div class="popup-content">
+                    <span class="close">&times;</span>
+                    <form action="/pages/pro/detailsOffre/envoyerReponse.php" method="POST">
+                        <input type="hidden" name="idAvis" id="popup-idAvis">
+                        <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
+                        <button type="submit">Envoyer</button>
+                    </form>
+                </div>
+              </div>';
+
         if (!self::$jsIncluded) {
             echo '<script src="/composants/Header/Header.js"></script>';
             self::$jsIncluded = true;
@@ -110,6 +121,7 @@ class Header
             //echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
             echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
+            echo '<a href="/pages/pro/listeAvis/listeAvis.php">Liste des avis</a>';
             echo '<a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>';
         }
         echo '</nav>';
@@ -171,9 +183,63 @@ class Header
         } elseif ($type == HeaderType::Member) {
             self::renderProfileOptionSelector('profil-member');
         } elseif ($type == HeaderType::Pro) {
+            self::renderNotificationIcon();
             self::renderProfileOptionSelector('profil-pro');
         }
         echo '</div>';
+    }
+
+    private static function renderNotificationIcon(): void {
+        session_start();
+        $server = 'localhost';
+        $driver = 'pgsql';
+        $dbname = 'pact';
+        $dbuser = 'postgres';
+        $dbpass = 'derfDERF29';
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+        $idCompte = $_SESSION['idCompte'];
+        $query = "SELECT a.*, o.* FROM pact._avis a
+              JOIN pact._offre o ON a.idOffre = o.idOffre
+              WHERE o.idCompte = :idCompte AND a.estvu = false";
+        $stmt = $dbh->prepare($query);
+        $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
+        $stmt->execute();
+        $unreadReviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $unreadCount = count($unreadReviews);
+        echo '<div class="notification-icon">';
+        echo '<img src="/ressources/icone/notification.svg" alt="Notifications" onclick="toggleDropdown()">';
+        if ($unreadCount > 0) {
+            echo '<span class="notification-count">' . $unreadCount . '</span>';
+        }
+        echo '<div class="dropdown-content" id="notification-dropdown">';
+        if ($unreadCount > 0) {
+            foreach ($unreadReviews as $review) {
+                echo '<div class="review" data-id="' . $review['idavis'] . '" onclick="redirectToAvis(' . $review['idavis'] . ')">';
+                echo '<strong>' . $review['titre'] . '</strong>';
+                echo '<p>' . $review['commentaire'] . '</p>';
+                echo '<button class="btn-repondre" onclick="openReplyPopup(' . $review['idavis'] . '); event.stopPropagation();">Répondre</button>';
+                echo '<button class="btn-mark-seen" data-id="' . $review['idavis'] . '">Marqué comme vu</button>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p class="no-notifications">Aucune notification</p>';
+        }
+        echo '</div>';
+        echo '</div>';
+        echo '<script>
+        function redirectToAvis(idAvis) {
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/pages/pro/listeAvis/listeAvis.php";
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "idAvis";
+            input.value = idAvis;
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+        </script>';
     }
 
     /**
@@ -195,12 +261,14 @@ class Header
             echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
             echo '<a href="dashboardPro.php">Mes Offres</a>';
+            echo '<a href="dashboardPro.php">Liste des avis</a>';
             echo '<a href="publierOffre.php">Créer une Offre</a>';
         }
         //self::renderLanguageSelector();
         self::renderAccountSection($type);
         echo <<<EOF
  </div>
+
  <button class="hamburger">
     <!-- material icons https://material.io/resources/icons/ -->
     <span class="menuIcon material-symbols-outlined">menu</span>
@@ -211,3 +279,4 @@ EOF;
 
     }
 }
+?>

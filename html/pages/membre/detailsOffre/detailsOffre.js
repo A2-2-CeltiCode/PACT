@@ -1,145 +1,233 @@
-addEventListener("DOMContentLoaded", (event) => {
-    document.querySelector("#contexte > option:first-child").disabled = true;
+document.addEventListener("DOMContentLoaded", function () {
+  // Gestion du carousel
+  const prevButton = document.querySelector(".carousel-button.prev");
+  const nextButton = document.querySelector(".carousel-button.next");
+  const images = document.querySelectorAll(".carousel-image");
+  let currentIndex = 0;
+
+  function updateCarousel() {
+      images.forEach((img, index) => {
+          img.style.display = index === currentIndex ? "block" : "none";
+      });
+      prevButton.style.display = currentIndex === 0 ? "none" : "flex";
+      nextButton.style.display = currentIndex === images.length - 1 ? "none" : "flex";
+  }
+
+  if (prevButton && nextButton) {
+      prevButton.addEventListener("click", function () {
+          if (currentIndex > 0) {
+              currentIndex--;
+              updateCarousel();
+          }
+      });
+
+      nextButton.addEventListener("click", function () {
+          if (currentIndex < images.length - 1) {
+              currentIndex++;
+              updateCarousel();
+          }
+      });
+
+      updateCarousel();
+  }
+
+  // Gestion du "Voir plus"
+  const detailElement = document.querySelector(".offre-detail");
+  if (detailElement) {
+      const voirPlusButton = document.createElement("span");
+      voirPlusButton.classList.add("voir-plus");
+      voirPlusButton.textContent = "Voir plus";
+
+      const maxCharacters = 100;
+      if (detailElement.textContent.length > maxCharacters) {
+          detailElement.classList.add("collapsed");
+          detailElement.parentNode.insertBefore(voirPlusButton, detailElement.nextSibling);
+      }
+
+      voirPlusButton.addEventListener("click", function () {
+          if (detailElement.classList.contains("collapsed")) {
+              detailElement.style.maxHeight = detailElement.scrollHeight + "px";
+              detailElement.classList.remove("collapsed");
+              voirPlusButton.textContent = "Voir moins";
+          } else {
+              detailElement.style.maxHeight = "4.5em";
+              detailElement.classList.add("collapsed");
+              voirPlusButton.textContent = "Voir plus";
+          }
+      });
+  }
+
+  // Gestion des réponses aux avis
+  const popup = document.getElementById("popup-repondre");
+  if (popup) {
+      const closeBtn = popup.querySelector(".close");
+      const idAvisInput = document.getElementById("popup-idAvis");
+
+      function initializeRepondreButtons() {
+          const repondreButtons = document.querySelectorAll(".btn-repondre");
+          repondreButtons.forEach((button) => {
+              button.addEventListener("click", function () {
+                  const idAvis = this.closest(".avi").dataset.idavis;
+                  idAvisInput.value = idAvis;
+                  popup.style.display = "block";
+              });
+          });
+      }
+
+      closeBtn.addEventListener("click", function () {
+          popup.style.display = "none";
+      });
+
+      window.addEventListener("click", function (event) {
+          if (event.target === popup) {
+              popup.style.display = "none";
+          }
+      });
+
+      initializeRepondreButtons();
+  }
+
+  // Gestion du tri des avis
+  const sortBySelect = document.getElementById("sortBy");
+  if (sortBySelect) {
+      function fetchAvis() {
+          const sortBy = sortBySelect.value;
+          fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}`)
+              .then((response) => response.text())
+              .then((data) => {
+                  const parser = new DOMParser();
+                  const doc = parser.parseFromString(data, "text/html");
+                  const avisList = doc.querySelector(".liste-avis > div:last-child");
+                  document.querySelector(".liste-avis > div:last-child").innerHTML = avisList.innerHTML;
+                  initializeEvents();
+              });
+      }
+
+      sortBySelect.addEventListener("change", fetchAvis);
+  }
+
+  // Gestion des pouces (likes/dislikes)
+  function initializeThumbButtons() {
+      const thumbsUpButtons = document.querySelectorAll(".thumbs-up");
+      const thumbsDownButtons = document.querySelectorAll(".thumbs-down");
+
+      thumbsUpButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+              if (this.disabled) return;
+              this.disabled = true;
+              const idAvis = this.dataset.idavis;
+              fetch(`thumbs.php?idAvis=${idAvis}&type=up`)
+                  .then((response) => response.json())
+                  .then((data) => {
+                      if (data.success) {
+                          this.textContent = `👍 ${data.thumbs_up}`;
+                          const thumbsDownButton = this.nextElementSibling;
+                          thumbsDownButton.textContent = `👎 ${data.thumbs_down}`;
+                      }
+                      this.disabled = false;
+                  });
+          });
+      });
+
+      thumbsDownButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+              if (this.disabled) return;
+              this.disabled = true;
+              const idAvis = this.dataset.idavis;
+              fetch(`thumbs.php?idAvis=${idAvis}&type=down`)
+                  .then((response) => response.json())
+                  .then((data) => {
+                      if (data.success) {
+                          this.textContent = `👎 ${data.thumbs_down}`;
+                          const thumbsUpButton = this.previousElementSibling;
+                          thumbsUpButton.textContent = `👍 ${data.thumbs_up}`;
+                      }
+                      this.disabled = false;
+                  });
+          });
+      });
+  }
+
+  // Initialisation des événements de signalement
+  function initializeSignalerButtons() {
+      const signalerButtons = document.querySelectorAll(".btn-signaler");
+      const toast = document.getElementById("toast");
+
+      signalerButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+              const idReponse = this.dataset.idreponse;
+              fetch(`signalerReponse.php?idReponse=${idReponse}`)
+                  .then((response) => response.json())
+                  .then((data) => {
+                      if (data.success) {
+                          toast.classList.add("show");
+                          setTimeout(() => {
+                              toast.classList.remove("show");
+                          }, 3000);
+                      }
+                  });
+          });
+      });
+  }
+
+  // Gestion de la popup de création d'avis
+  function initializeAvisPopup() {
+      const creerAvisButton = document.querySelector(".btn-creer-avis");
+      const popupCreerAvis = document.getElementById("popup-creer-avis");
+      const closeCreerAvisBtn = popupCreerAvis.querySelector(".close");
+      const form = popupCreerAvis.querySelector("form");
+      const imagePreview = document.getElementById("imagePreview");
+      const dropZone = document.querySelector(".drop-zone");
+
+      // Ouverture de la popup
+      creerAvisButton.addEventListener("click", function() {
+          popupCreerAvis.style.display = "block";
+          document.body.style.overflow = "hidden";
+      });
+
+      // Fermeture de la popup
+      function closePopup() {
+          popupCreerAvis.style.display = "none";
+          document.body.style.overflow = "";
+          form.reset();
+          imagePreview.innerHTML = "";
+      }
+
+      closeCreerAvisBtn.addEventListener("click", closePopup);
+
+      // Fermeture en cliquant en dehors
+      window.addEventListener("click", function(event) {
+          if (event.target === popupCreerAvis) {
+              closePopup();
+          }
+      });
+
+      // Système de notation par étoiles
+      const ratingInputs = form.querySelectorAll('.rating input[type="radio"]');
+      const ratingLabels = form.querySelectorAll('.rating label');
+
+      ratingLabels.forEach((label, index) => {
+          label.addEventListener("mouseover", () => {
+              for (let i = ratingLabels.length - 1; i >= index; i--) {
+                  ratingLabels[i].classList.add("hover");
+              }
+          });
+
+          label.addEventListener("mouseout", () => {
+              ratingLabels.forEach(label => label.classList.remove("hover"));
+          });
+      });
+
+  }
+
+  // Fonction d'initialisation globale des événements
+  function initializeEvents() {
+      initializeRepondreButtons();
+      initializeThumbButtons();
+      initializeSignalerButtons();
+      initializeAvisPopup();
+  }
+
+  // Initialisation lors du chargement
+  initializeEvents();
 });
-
-let currentIndex = 0;
-const images = document.querySelectorAll('.carousel-image');
-const totalImages = images.length;
-let compteur = 1;
-
-function updateCarousel() {
-    const offset = -currentIndex * 100;
-    document.querySelector('.carousel-images').style.transform = `translateX(${offset}%)`;
-    
-}
-
-
-if (images.length > 1) {
-    document.querySelector('.next').classList.remove('desactive');
-}
-
-
-document.querySelector('.next').addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % totalImages;
-    updateCarousel();
-    if (compteur < totalImages) {
-        compteur++;
-    }
-    if (compteur == totalImages) {
-        document.querySelector('.next').classList.add('desactive');
-        document.querySelector('.prev').classList.remove('desactive');
-    }
-});
-
-document.querySelector('.prev').addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-    updateCarousel();
-    if (compteur > 1) {
-        compteur--;
-    }
-    if (compteur == 1) {
-        document.querySelector('.prev').classList.add('desactive');
-        document.querySelector('.next').classList.remove('desactive');
-    }
-});
-
-
-function popupavis() {
-
-    const popupOverlay = document.getElementById('popupOverlay');
-
-    const popup = document.getElementById('popup');
-
-    const closePopup = document.getElementById('closePopup');
-
-    const emailInput = document.getElementById('emailInput');
-
-// Function to open the popup
-
-    function openPopup() {
-
-        document.body.classList.add("noscroll")
-        popupOverlay.style.display = 'block';
-
-    }
-
-// Function to close the popup
-
-    function closePopupFunc() {
-
-        document.body.classList.remove("noscroll")
-        popupOverlay.style.display = 'none';
-
-    }
-
-// Function to submit the signup form
-
-    function submitForm() {
-
-        const email = emailInput.value;
-
-// Add your form submission logic here
-
-        console.log(`Email submitted: ${email}`);
-
-        closePopupFunc(); // Close the popup after form submission
-
-    }
-
-// Event listeners
-
-// Trigger the popup to open (you can call this function on a button click or any other event)
-
-    openPopup();
-
-// Close the popup when the close button is clicked
-
-    closePopup.addEventListener('click', closePopupFunc);
-
-// Close the popup when clicking outside the popup content
-
-    popupOverlay.addEventListener('click', function (event) {
-
-        if (event.target === popupOverlay) {
-
-            closePopupFunc();
-
-        }
-
-    });
-}
-
-const modal = document.getElementById("myModal");
-
-const span = document.getElementsByClassName("close")[1];
-
-const modalImage = document.getElementById("modal-image");
-
-function openUp(e) {
-    const src = e.srcElement.src;
-    modal.style.display = "block";
-    modalImage.src = src;
-    document.body.classList.add("noscroll")
-}
-
-span.onclick = function () {
-    modal.style.display = "none";
-    document.body.classList.remove("noscroll")
-};
-
-window.onclick = function (event) {
-    if (event.target === modal) {
-        modal.style.display = "none";
-        document.body.classList.remove("noscroll")
-    }
-};
-
-function submitForm() {
-    let valid = true;
-    if (new Date() < new Date(document.getElementById("datevisite").value)) {
-        valid = false;
-    } else if (document.getElementById("contexte").selectedIndex === 0) {
-        valid = false;
-    }
-    return valid;
-}

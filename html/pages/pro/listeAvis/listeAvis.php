@@ -13,8 +13,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 session_start();
 $idCompte = $_SESSION['idCompte'];
-$idAvisPrioritaire = $_POST['idAvis'] ?? $_GET['idOffre'] ?? null;
 
+$idAvisPrioritaire = $_POST['idAvis'] ?? $_GET['idOffre'] ?? null;
 try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
@@ -24,16 +24,26 @@ try {
     $filterBy = $_GET['filterBy'] ?? 'all';
 
     // Récupérer tous les idOffre du compte
+    $queryOffres = "SELECT idOffre FROM pact._offre WHERE idCompte = :idCompte";
+    $stmtOffres = $dbh->prepare($queryOffres);
+    $stmtOffres->execute([':idCompte' => $idCompte]);
+    $offres = $stmtOffres->fetchAll(PDO::FETCH_COLUMN);
 
-
-
+    if (empty($offres)) {
+        $avis = [];
+    } else {
+        $offresPlaceholders = implode(',', array_fill(0, count($offres), '?'));
 
         $query = "SELECT a.*, o.*, c.pseudo, a.titre as avis_titre, o.titre as offre_titre FROM pact._avis a
                   JOIN pact._offre o ON a.idOffre = o.idOffre
                   JOIN pact._comptemembre c ON a.idCompte = c.idCompte
-                  WHERE :idCompte = a.idCompte";
+                  WHERE o.idOffre IN ($offresPlaceholders)";
 
-
+        if ($filterBy === 'viewed') {
+            $query .= " AND estvu = true";
+        } elseif ($filterBy === 'not_viewed') {
+            $query .= " AND estvu = false";
+        }
 
         if ($sortBy === 'date_asc') {
             $query .= " ORDER BY datevisite ASC";
@@ -43,12 +53,14 @@ try {
             $query .= " ORDER BY note ASC";
         } elseif ($sortBy === 'note_desc') {
             $query .= " ORDER BY note DESC";
+        } elseif ($sortBy === 'non_vu') {
+            $query .= " ORDER BY estvu ASC, datevisite DESC";
         }
 
         $stmt = $dbh->prepare($query);
-        $stmt->execute([':idCompte' => $idCompte]);
+        $stmt->execute($offres);
         $avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        }
 
     if ($idAvisPrioritaire) {
         usort($avis, function($a, $b) use ($idAvisPrioritaire) {
@@ -84,8 +96,8 @@ try {
     }
 
     // Vérification du nombre de réponses de l'utilisateur pour cette offre
-    $stmt = $dbh->prepare("SELECT COUNT(*) as totalReponses FROM pact._reponseavis WHERE idCompte = :idCompte;");
-    $stmt->execute([':idCompte' => $idCompte]);
+    $stmt = $dbh->prepare("SELECT COUNT(*) as totalReponses FROM pact._reponseavis WHERE idCompte = :idCompte AND idAvis IN (SELECT idAvis FROM pact.vue_avis WHERE idOffre = :idOffre)");
+    $stmt->execute([':idCompte' => $idCompte, ':idOffre' => $idOffre]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $totalReponses = $result ? $result['totalReponses'] : 5;
     
@@ -108,7 +120,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php Header::render(HeaderType::Member); ?>
+<?php Header::render(HeaderType::Pro); ?>
 <button class="retour"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
@@ -129,6 +141,13 @@ try {
                     <option value="note_desc">Note décroissante</option>
                     <option value="note_asc">Note croissante</option>
                 </select>
+
+                <label for="filterBy">Filtrer par:</label>
+                <select id="filterBy">
+                    <option value="all">Tous</option>
+                    <option value="viewed">Vus</option>
+                    <option value="not_viewed">Non vus</option>
+                </select>
             </div>
             <div>
                 <?php
@@ -140,11 +159,18 @@ try {
                     $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
                     $stmt->execute([':idAvis' => $avi['idavis']]);
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    // Ajouter la classe 'non-vu' si l'avis n'a pas été vu
+                    $nonVuClass = $avi['estvu'] ? '' : 'non-vu';
                     ?>
-                    <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
+                    <div class="avi <?= $nonVuClass ?>" data-idavis="<?= $avi["idavis"] ?>">
+                        <?php if (!$avi['estvu']): ?>
+                            <div class="non-vu">Non vu</div>
+                        <?php endif; ?>
                         <div>
                             <p class="avi-title">
-                                <?= $avi["titre"] ?>
+                            
+                            <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi['idoffre'] ?>"><?= $avi["titre"] ?></a>
                             </p>
                             <div class="note">
                                 <?php
@@ -175,12 +201,19 @@ try {
                                 <?= $avi["pseudo"] ?>
                             </p>
                             <p>
-                                le <?= $avi["datevisite"] ?> en <?= $avi["contextevisite"] ?>
+                                le <?= $avi["datevisite"] ?>  en <?= $avi["contextevisite"] ?>
                             </p>
+
                         </div>
                         <div class="thumbs">
                             <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
                             <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                        </div>
+                        <div>
+                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
+                            <?php if (empty($reponses) && $totalReponses < 3): ?>
+                                <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
+                            <?php endif; ?>
                         </div>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
@@ -201,7 +234,7 @@ try {
                                         <form action="supprimerReponse.php" method="POST">
                                             <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
                                             <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                                            <?php Button::render("btn-supprimer", "", "Supprimer", ButtonType::Member, "", true); ?>
+                                            <?php Button::render("btn-supprimer", "", "Supprimer", ButtonType::Pro, "", true); ?>
                                         </form>
                                     </div>
                                 <?php endforeach; ?>
@@ -282,7 +315,7 @@ try {
             });
         });
     </script>
-    <?php Footer::render(FooterType::Member); 
+    <?php Footer::render(FooterType::Pro); 
     $dbh = null;
     ?>
 </body>

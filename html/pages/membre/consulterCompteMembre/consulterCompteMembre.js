@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (erreurs.length > 0) {
             afficherMessageErreur(erreurs);
         } else {
-            document.getElementById("formulaireCompteMembre").submit();
+            document.getElementById("formulaireCompteVisiteur").submit();
         }
     }
 

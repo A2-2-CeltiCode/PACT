@@ -50,22 +50,143 @@ function toggleArrow() {
     }
 }
 
+function toggleDropdown() {
+    const dropdown = document.getElementById("notification-dropdown");
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+    }
+}
+
+function openReplyPopup(idAvis) {
+    event.stopPropagation();
+    const popup = document.getElementById('popup-repondre');
+    const idAvisInput = document.getElementById('popup-idAvis');
+    idAvisInput.value = idAvis;
+    popup.style.display = 'block';
+}
+
+function closeReplyPopup() {
+    const popup = document.getElementById('popup-repondre');
+    popup.style.display = 'none';
+}
+
+function markAsSeen(idAvis) {
+    fetch(`/pages/pro/detailsOffre/markAsSeen.php?idAvis=${idAvis}`, {
+        method: 'POST'
+    }).then(response => {
+        if (response.ok) {
+            document.querySelector(`.review[data-id="${idAvis}"]`).remove();
+            const notificationCount = document.querySelector('.notification-count');
+            if (notificationCount) {
+                let count = parseInt(notificationCount.textContent);
+                count--;
+                if (count > 0) {
+                    notificationCount.textContent = count;
+                } else {
+                    notificationCount.remove();
+                }
+            }
+        }
+    }).catch(error => console.error('Erreur:', error));
+}
+
+function sendReply(idAvis, reponse) {
+    const formData = new FormData();
+    formData.append('idAvis', idAvis);
+    formData.append('reponse', reponse);
+
+    fetch('/pages/pro/detailsOffre/envoyerReponse.php', {
+        method: 'POST',
+        body: formData
+    }).then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              closeReplyPopup();
+              const reviewElement = document.querySelector(`.review[data-id="${idAvis}"]`);
+              if (reviewElement) {
+                  reviewElement.remove();
+              }
+              const notificationCount = document.querySelector('.notification-count');
+              if (notificationCount) {
+                  let count = parseInt(notificationCount.textContent);
+                  count--;
+                  if (count > 0) {
+                      notificationCount.textContent = count;
+                  } else {
+                      notificationCount.remove();
+                  }
+              }
+              // Ajouter la réponse au DOM
+              const reponseHTML = `
+                <div class="reponse">
+                    <p class="reponse-content">${reponse}</p>
+                    <div>
+                        <p>Vous</p>
+                        <p>le ${new Date().toLocaleDateString('fr-FR')}</p>
+                    </div>
+                </div>`;
+              const avisElement = document.querySelector(`.avi[data-idavis="${idAvis}"]`);
+              if (avisElement) {
+                  let reponsesContainer = avisElement.querySelector('.reponses');
+                  if (!reponsesContainer) {
+                      reponsesContainer = document.createElement('div');
+                      reponsesContainer.classList.add('reponses');
+                      avisElement.appendChild(reponsesContainer);
+                  }
+                  reponsesContainer.innerHTML += reponseHTML;
+                  // Masquer le bouton "Répondre"
+                  const repondreButton = avisElement.querySelector('.btn-repondre');
+                  if (repondreButton) {
+                      repondreButton.style.display = 'none';
+                  }
+              }
+          } else {
+              console.error('Erreur:', data.message);
+          }
+      }).catch(error => console.error('Erreur:', error));
+}
+
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById("notification-dropdown");
+    const notificationIcon = document.querySelector(".notification-icon img");
+    if (dropdown && !dropdown.contains(event.target) && !notificationIcon.contains(event.target)) {
+        dropdown.style.display = "none";
+    }
+    if (event.target.classList.contains('btn-mark-seen')) {
+        const idAvis = event.target.dataset.id;
+        markAsSeen(idAvis);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     const selectMenu = document.getElementById('selecteur-profil');
 
-
     // Vérifier si le selecteur-profil existe
     if (selectMenu) {
-        selectMenu.addEventListener('click', function() {
+        selectMenu.addEventListener('click', function(event) {
+            event.stopPropagation(); // Empêcher la propagation de l'événement de clic
             toggleArrow();
         });
     } else {
         console.error("L'élément selecteur-profil n'a pas été trouvé.");
     }
 
-    console.log("JavaScript chargé.");
+    const closeBtn = document.querySelector('.popup .close');
+    closeBtn.addEventListener('click', closeReplyPopup);
 
+    const replyForm = document.querySelector('#popup-repondre form');
+    replyForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const idAvis = document.getElementById('popup-idAvis').value;
+        const reponse = replyForm.querySelector('textarea[name="reponse"]').value;
+        sendReply(idAvis, reponse);
+    });
+
+    console.log("JavaScript chargé.");
 });
+
 
 
 hamburger.addEventListener("click", toggleMenu);

@@ -26,6 +26,11 @@
   box-sizing: border-box;
 }
 
+label{
+  align-items: flex-start !important;
+  padding-left: 0 !important;
+}
+
 h2 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -38,25 +43,6 @@ body {
   background-color: var(--background);
   color: var(--text-color);
   line-height: 1.5;
-}
-
-label{
-  align-items: flex-start !important;
-  padding-left: 0 !important;
-}
-
-.offre-description svg:first-of-type {
-  width: 20px;
-  height: 20px;
-  stroke: var(--primaire-pro);
-  fill: rgba(0, 0, 0, 0);
-}
-
-.svg-inline svg {
-  width: 20px;
-  height: 20px;
-  stroke: var(--primaire-pro);
-  fill: var(--primaire-pro);
 }
 
 /* Bouton retour */
@@ -280,7 +266,19 @@ label{
   border-bottom: none;
 }
 
+.svg-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
 
+.svg-inline svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
 
 /* Badges et tags */
 .badges {
@@ -346,7 +344,7 @@ label{
 .avi-title {
   font-size: 20px;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var (--text-dark);
   margin-bottom: 12px;
 }
 
@@ -579,47 +577,23 @@ label{
 }
 
 @-webkit-keyframes fadein {
-  from {
-    top: 70px;
-    opacity: 0;
-  }
-  to {
-    top: 100px;
-    opacity: 1;
-  }
+  from {top: 70px; opacity: 0;} 
+  to {top: 100px; opacity: 1;}
 }
 
 @keyframes fadein {
-  from {
-    top: 70px;
-    opacity: 0;
-  }
-  to {
-    top: 100px;
-    opacity: 1;
-  }
+  from {top: 70px; opacity: 0;}
+  to {top: 100px; opacity: 1;}
 }
 
 @-webkit-keyframes fadeout {
-  from {
-    top: 100px;
-    opacity: 1;
-  }
-  to {
-    top: 70px;
-    opacity: 0;
-  }
+  from {top: 100px; opacity: 1;} 
+  to {top: 70px; opacity: 0;}
 }
 
 @keyframes fadeout {
-  from {
-    top: 100px;
-    opacity: 1;
-  }
-  to {
-    top: 70px;
-    opacity: 0;
-  }
+  from {top: 100px; opacity: 1;}
+  to {top: 70px; opacity: 0;}
 }
 
 /* Styles pour la modal d'image */
@@ -678,6 +652,43 @@ label{
 
 .thumbs button:hover {
   color: var(--primary-color);
+}
+
+/* Styles pour la popup d'image */
+.image-popup {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.image-popup .close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.image-popup .close:hover,
+.image-popup .close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.image-popup-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
 }
 
 /* Responsive */
