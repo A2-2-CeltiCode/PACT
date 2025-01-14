@@ -544,6 +544,7 @@ $options = $vueOffre["nomoption"];
                 <?php } ?>
             </article>
         </section>
+        <section class="adaptable">
         <div class="basDePage">
             <div class="reunion">
                         <div class="choix">
@@ -587,8 +588,19 @@ $options = $vueOffre["nomoption"];
                 <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
                 <?php Button::render(text: "Valider", type:"pro", submit: true , class:"valid"); ?>
             </div>
+            
+            
             <input type="hidden" name="idOffre" value="<?php echo $crampte;?>">
         </div>
+        <div class="droite">
+                <p>*:champ obligatoire</p>
+            </div>
+        
+        
+        </section>
+
+        
+        
 
     </form>
     
