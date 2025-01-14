@@ -60,6 +60,7 @@ function toggleDropdown() {
 }
 
 function openReplyPopup(idAvis) {
+    event.stopPropagation();
     const popup = document.getElementById('popup-repondre');
     const idAvisInput = document.getElementById('popup-idAvis');
     idAvisInput.value = idAvis;

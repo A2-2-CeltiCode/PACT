@@ -217,7 +217,7 @@ class Header
                 echo '<div class="review" data-id="' . $review['idavis'] . '" onclick="redirectToAvis(' . $review['idavis'] . ')">';
                 echo '<strong>' . $review['titre'] . '</strong>';
                 echo '<p>' . $review['commentaire'] . '</p>';
-                echo '<button class="btn-repondre" onclick="openReplyPopup(' . $review['idavis'] . ')">Répondre</button>';
+                echo '<button class="btn-repondre" onclick="openReplyPopup(' . $review['idavis'] . '); event.stopPropagation();">Répondre</button>';
                 echo '<button class="btn-mark-seen" data-id="' . $review['idavis'] . '">Marqué comme vu</button>';
                 echo '</div>';
             }
