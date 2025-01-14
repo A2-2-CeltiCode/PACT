@@ -1,60 +1,63 @@
+// Fonction pour afficher ou masquer un élément spécifique (langueDiv ici)
 function toggleLangue(show) {
-    var langueDiv = document.getElementById("langue");
+    var langueDiv = document.getElementById("langue"); 
     if (show) {
-        langueDiv.style.display = "block";
+        langueDiv.style.display = "block"; 
     } else {
-        langueDiv.style.display = "none";
+        langueDiv.style.display = "none"; 
     }
 }
 
+// Fonction générique pour afficher ou masquer un élément HTML en fonction de son ID
 function toggleDropdown(id) {
-    var element = document.getElementById(id);
+    var element = document.getElementById(id); 
     if (element.style.display === "none" || element.style.display === "") {
-        element.style.display = "block";
+        element.style.display = "block"; 
     } else {
-        element.style.display = "none";
+        element.style.display = "none"; 
     }
 }
 
+// Fonction pour récupérer les valeurs des cases à cocher qui sont actuellement sélectionnées
 function getSelectedCheckboxes() {
+    
     const checkboxes = document.querySelectorAll('.checkbox-select input[type="checkbox"]:checked');
-    const selectedValues = [];
+    const selectedValues = []; 
     checkboxes.forEach(checkbox => {
-        selectedValues.push(checkbox.value);
+        selectedValues.push(checkbox.value); 
     });
-    return selectedValues;
+    return selectedValues; 
 }
 
+// Fonction pour afficher les valeurs sélectionnées dans les divs avec la classe "selected-values"
 function displaySelectedValues() {
-    const selectedValues = getSelectedCheckboxes();
-    const displayDivs = document.querySelectorAll('.selected-values');
+    const selectedValues = getSelectedCheckboxes(); 
+    const displayDivs = document.querySelectorAll('.selected-values'); 
     displayDivs.forEach(displayDiv => {
-        displayDiv.innerHTML = ''; // Clear previous values
+        displayDiv.innerHTML = ''; 
         selectedValues.forEach(value => {
-            const valueDiv = document.createElement('div');
-            valueDiv.textContent = value;
-            displayDiv.appendChild(valueDiv);
+            const valueDiv = document.createElement('div'); 
+            valueDiv.textContent = value; 
+            displayDiv.appendChild(valueDiv); 
         });
     });
 }
 
+// Fonction pour réinitialiser toutes les cases à cocher et mettre à jour l'affichage
 function resetCheckboxes() {
-    const checkboxes = document.querySelectorAll('.checkbox-select input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('.checkbox-select input[type="checkbox"]'); 
     checkboxes.forEach(checkbox => {
-        checkbox.checked = false;
+        checkbox.checked = false; 
     });
-    displaySelectedValues(); // Mettre à jour l'affichage après réinitialisation
+    displaySelectedValues(); 
 }
 
-// Mettre à jour les valeurs affichées lorsque les cases à cocher sont modifiées
+// Ajoute un gestionnaire d'événement "change" sur chaque case à cocher
 document.querySelectorAll('.checkbox-select input[type="checkbox"]').forEach(checkbox => {
-    checkbox.addEventListener('change', displaySelectedValues);
+    checkbox.addEventListener('change', displaySelectedValues); // Met à jour l'affichage en cas de modification
 });
 
-// Afficher les valeurs sélectionnées au chargement de la page
+// Affiche les valeurs sélectionnées dès le chargement de la page
 document.addEventListener('DOMContentLoaded', (event) => {
-    displaySelectedValues();
+    displaySelectedValues(); // Met à jour l'affichage dès que la page est complètement chargée
 });
-
-
-

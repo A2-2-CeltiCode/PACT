@@ -1,10 +1,11 @@
 <?php session_start();
 
-if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
+/*if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     header("Location: /pages/membre/accueil/accueil.php");
 } elseif (!isset($_SESSION['idCompte'])) {
     header("Location: /pages/visiteur/accueil/accueil.php");
-}
+}*/
+$_SESSION['idCompte'] = 1;
 ?>
 <!DOCTYPE html>
     <html>
@@ -55,12 +56,12 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     <body>
         <?php Header::render(HeaderType::Pro); ?>
         
-        
         <form class="info-display" id="myForm" method="post" action="confimationCreationOffre.php" onsubmit="return validateForm()" enctype="multipart/form-data">
             <h1>Créez votre Offre</h1>
             <section>
             
                 <article>
+                <!-- partie gauche du formulaire -->
                     <div>
                         <label>Nom de l'offre*</label>
                         <?php Input::render(name:"nomOffre", type:"text", required:"true") ?>
@@ -93,6 +94,7 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
                 </article>
 
                 <article>
+                <!-- partie champ de texte du formulaire -->    
 
                     <div>
                         <label>Description de l'offre*</label>
@@ -109,6 +111,8 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
 
                 </article>
                 <article>
+
+                <!-- champ horaire type de promotion et photo du formulaire -->
                     
     
                     </div>
@@ -199,6 +203,8 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
 
                 </article>
                 <article  class="description">
+
+                <!-- partie droite du formulaire comprenant le type d'offres et les tags ce qui affiche les éléments correspondant -->
 
 
                     <div>
@@ -479,6 +485,7 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
 
                 </article>
             </section> 
+            <!-- bouton valider et annuler -->
             <div>
                 <br>
                 <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
