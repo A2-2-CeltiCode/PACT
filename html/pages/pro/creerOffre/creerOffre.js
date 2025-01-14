@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Fonction pour afficher la section correspondante
     function showSection(typeOffre) {
-        hideAllSections(); // On masque toutes les sections d'abord
+        hideAllSections(); // On masque toutes les sections d'abords
         const section = document.getElementById(typeOffre);
         if (section) {
             section.style.display = 'block';
@@ -39,6 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+//fonction qui récupèrent les valeurs des checkbox sélectionnés 
 function getSelectedCheckboxes() {
     const checkboxes = document.querySelectorAll('.checkbox-select input[type="checkbox"]:checked');
     const selectedValues = [];
@@ -48,6 +50,7 @@ function getSelectedCheckboxes() {
     return selectedValues;
 }
 
+//fonction affichant les tags selectionnés
 function displaySelectedValues() {
     const selectedValues = getSelectedCheckboxes();
     const displayDivs = document.querySelectorAll('.selected-values');
@@ -61,6 +64,8 @@ function displaySelectedValues() {
     });
 }
 
+
+//fonction qui définit la valeurs des checkboxs comme non sélectionnés 
 function resetCheckboxes() {
     const checkboxes = document.querySelectorAll('.checkbox-select input[type="checkbox"]');
     checkboxes.forEach(checkbox => {
@@ -88,11 +93,15 @@ function toggleLangue(show) {
     }
 }
 
+
+//affiche ou masque le menu déroulant 
 function toggleDropdown(dropdownId) {
     var dropdown = document.getElementById(dropdownId);
     dropdown.classList.toggle("show");
 }
 
+
+//fonction qui valide le formulaire avant de changé les données
 function validateForm() {
     const durepromotion = document.getElementById("durepromotion").value;
     if (durepromotion > 4) {
