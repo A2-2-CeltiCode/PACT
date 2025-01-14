@@ -477,7 +477,14 @@
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
   }
-  
+
+  .popup-content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+  }
+
   .close {
     color: #aaa;
     float: right;
@@ -492,7 +499,9 @@
     cursor: pointer;
   }
 
-  
+  .form-group {
+    margin-bottom: 20px;
+  }
   
   .popup textarea,
   .popup input[type="number"] {
@@ -777,3 +786,324 @@
       height: 80px;
     }
   }
+/* Styles pour la popup de création d'avis */
+#popup-creer-avis .popup-content {
+  background-color: var(--white);
+  margin: 5% auto;
+  padding: 32px;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+#popup-creer-avis .close {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  font-size: 24px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+#popup-creer-avis .close:hover {
+  color: var(--text-dark);
+}
+
+#popup-creer-avis .form-group {
+  margin-bottom: 24px;
+}
+
+#popup-creer-avis textarea,
+#popup-creer-avis select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#popup-creer-avis input[type="text"]:focus,
+#popup-creer-avis textarea:focus,
+#popup-creer-avis select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(108, 2, 119, 0.1);
+}
+
+#popup-creer-avis textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+#popup-creer-avis .rating {
+  margin: 24px 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+#popup-creer-avis .rating label {
+  font-size: 2.5rem;
+  padding: 0 4px;
+  color: #ddd;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+#popup-creer-avis .rating label:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+#popup-creer-avis .rating input:checked ~ label {
+  color: var(--primary-color);
+}
+
+#popup-creer-avis .drop-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  background-color: var(--background);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+#popup-creer-avis .drop-zone:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(108, 2, 119, 0.05);
+}
+
+#popup-creer-avis .btn-envoyer {
+  width: 100%;
+  padding: 14px 24px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#popup-creer-avis .btn-envoyer:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+#popup-creer-avis .btn-envoyer:active {
+  transform: translateY(0);
+}
+
+/* Animation d'entrée de la popup */
+@keyframes slideIn {
+  from {
+      transform: translateY(-10%);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+#popup-creer-avis .popup-content {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Media queries pour la responsivité */
+@media (max-width: 768px) {
+  #popup-creer-avis .popup-content {
+      width: 95%;
+      padding: 24px;
+      margin: 10% auto;
+  }
+
+  #popup-creer-avis .rating label {
+      font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #popup-creer-avis .popup-content {
+      padding: 20px;
+      margin: 15% auto;
+  }
+
+  #popup-creer-avis .rating label {
+      font-size: 1.8rem;
+  }
+
+  #popup-creer-avis .drop-zone {
+      padding: 20px;
+  }
+}
+
+
+/* Styles pour la popup de création d'avis */
+#popup-creer-avis .popup-content {
+  background-color: var(--white);
+  margin: 5% auto;
+  padding: 32px;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+#popup-creer-avis .close {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  font-size: 24px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+#popup-creer-avis .close:hover {
+  color: var(--text-dark);
+}
+
+#popup-creer-avis .form-group {
+  margin-bottom: 24px;
+}
+
+#popup-creer-avis input[type="text"],
+#popup-creer-avis textarea,
+#popup-creer-avis select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#popup-creer-avis input[type="text"]:focus,
+#popup-creer-avis textarea:focus,
+#popup-creer-avis select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(108, 2, 119, 0.1);
+}
+
+#popup-creer-avis textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+#popup-creer-avis .rating {
+  margin: 24px 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+#popup-creer-avis .rating label {
+  font-size: 2.5rem;
+  padding: 0 4px;
+  color: #ddd;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+#popup-creer-avis .rating label:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+#popup-creer-avis .rating input:checked ~ label {
+  color: var(--primary-color);
+}
+
+#popup-creer-avis .drop-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  background-color: var(--background);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+#popup-creer-avis .drop-zone:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(108, 2, 119, 0.05);
+}
+
+#popup-creer-avis .btn-envoyer {
+  width: 100%;
+  padding: 14px 24px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#popup-creer-avis .btn-envoyer:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+#popup-creer-avis .btn-envoyer:active {
+  transform: translateY(0);
+}
+
+/* Animation d'entrée de la popup */
+@keyframes slideIn {
+  from {
+      transform: translateY(-10%);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+#popup-creer-avis .popup-content {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Media queries pour la responsivité */
+@media (max-width: 768px) {
+  #popup-creer-avis .popup-content {
+      width: 95%;
+      padding: 24px;
+      margin: 10% auto;
+  }
+
+  #popup-creer-avis .rating label {
+      font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #popup-creer-avis .popup-content {
+      padding: 20px;
+      margin: 15% auto;
+  }
+
+  #popup-creer-avis .rating label {
+      font-size: 1.8rem;
+  }
+
+  #popup-creer-avis .drop-zone {
+      padding: 20px;
+  }
+}
+
+.input-wrapper{
+  width: 100% !important;
+  border: none !important;
+  padding: 0 !important;
+}
