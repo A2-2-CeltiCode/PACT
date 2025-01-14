@@ -177,22 +177,16 @@ try {
                                 <?= $avi["pseudo"] ?>
                             </p>
                             <p>
-                                le <?= $avi["datevisite"] ?>
+                                le <?= $avi["datevisite"] ?> en <?= $avi["contextevisite"] ?>
+
                             </p>
-                            <p>
-                                en <?= $avi["contextevisite"] ?>
-                            </p>
+
                         </div>
                         <div class="thumbs">
                             <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
                             <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
-                        <div>
-                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Member, "", false); ?>
-                            <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Member, "", false); ?>
-                            <?php endif; ?>
-                        </div>
+
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
