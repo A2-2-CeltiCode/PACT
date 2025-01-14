@@ -175,7 +175,6 @@ try {
         <div class="offre-infos">
 
             <?php
-            print_r($typeOffre);
             // Affichage des détails de l'offre
             Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/".$typeOffre.".svg");
             Label::render("offre-detail", "offre-detail", "", $offre['descriptiondetaillee']);
