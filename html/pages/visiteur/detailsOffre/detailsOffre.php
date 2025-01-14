@@ -88,14 +88,29 @@ try {
     $minutesSpectacle = $dbh->query('SELECT tempsenminutes FROM pact.vue_spectacle WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $adresse = $dbh->query('SELECT codepostal, ville, rue FROM pact._offre NATURAL JOIN pact._adresse WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $tags = $dbh->query('SELECT * FROM pact.vue_tags_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
+    $images = $dbh->query('SELECT pact._representeoffre.idImage, pact._image.nomImage FROM pact._representeoffre JOIN pact._image ON pact._representeoffre.idImage = pact._image.idImage WHERE pact._representeoffre.idOffre = ' . "'$idOffre'", PDO::FETCH_ASSOC)->fetchAll();    $carte = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._parcAttractions JOIN pact._image ON pact._parcAttractions.carteParc = pact._image.idImage WHERE pact._parcAttractions.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
+    $menu = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._restaurant JOIN pact._image ON pact._restaurant.menuRestaurant = pact._image.idImage WHERE pact._restaurant.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
+    $horaires = substr($offre['heureouverture'], 0, 5) . " - " . substr($offre['heurefermeture'], 0, 5);
+    // Vérification de l'existence de l'offre
+    if (!$offre) {
+        throw new Exception("Aucune offre trouvée");
+    }
 
-    $images = $dbh->query('SELECT idImage, nomImage FROM pact._representeOffre NATURAL JOIN pact._image WHERE _representeOffre.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
+    // Vérification du nombre de réponses de l'utilisateur pour cette offre
+    $stmt = $dbh->prepare("SELECT COUNT(*) as totalReponses FROM pact._reponseavis WHERE idCompte = :idCompte AND idAvis IN (SELECT idAvis FROM pact._avis WHERE idOffre = :idOffre)");
+    $stmt->execute([':idCompte' => $idCompte, ':idOffre' => $idOffre]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $totalReponses = $result ? $result['totalReponses'] : 5;
+    
+    // Ajout des compteurs de pouces
+    $thumbsUpMap = [];
+    $thumbsDownMap = [];
+    
+    foreach ($avis as $avi) {
+        $thumbsUpMap[$avi['idavis']] = $avi['poucehaut'];
+        $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
+    }
 
-    $entreprise = $dbh->query(
-        'SELECT DISTINCT pact.vue_compte_pro.denominationsociale, pact.vue_compte_pro.raisonsocialepro, pact.vue_compte_pro.email, pact.vue_compte_pro.numtel FROM pact.vue_offres join pact.vue_compte_pro ON pact.vue_compte_pro.idcompte = pact.vue_offres.idcompte WHERE idoffre = ' . $idOffre,
-        PDO::FETCH_ASSOC
-    )->fetch();
-    $dbh = null;
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
     die();

@@ -167,55 +167,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p class="small"><a href="../connexionComptePro/connexionComptePro.php">Connectez vous</a> avec votre compte PACT Professionel</p>
             <?php exit();?>
         </div>
-
-        <?php 
-            } else {
-                $denomination = $_POST['denomination'];
-                $raisonS = $_POST['raisonS'];
-                $siren = $_POST['siren'];
-                $email = $_POST['email'];           
-                $telephone = $_POST['telephone'];      
-                $codePostal = $_POST['codePostal']; 
-                $ville = $_POST['ville'];
-                $rue = $_POST['rue'];
-                $motDePasse = hash("SHA256",$_POST['motDePasse']);
-                $iban = $_POST['iban'];
-                
-                require_once($_SERVER["DOCUMENT_ROOT"] . '/connect_params.php');
-                try {
-                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-
-                    $stmt = $dbh->prepare("INSERT INTO pact._adresse(codePostal, ville, nomRue, numRue, numTel) VALUES($codePostal, '$ville', '$rue', '$telephone')");
-                    $stmt->execute();
-                    $idAdresse = $dbh->lastInsertId();
-                    
-                    $stmt = $dbh->prepare("INSERT INTO pact._compte(idAdresse, mdp, email) VALUES('$idAdresse','$motDePasse','$email')");
-                    $stmt->execute();
-                    $idCompte = $dbh->lastInsertId();
-
-                    $_SESSION['idCompte'] = $idCompte;
-
-                    $stmt = $dbh->prepare("INSERT INTO pact._comptePro(idCompte,denominationSociale, raisonSocialePro,banqueRib) VALUES('$idCompte','$denomination','$raisonS','$iban')");
-                    $stmt->execute();
-
-                    if(strlen($siren) > 0){
-                        $stmt = $dbh->prepare("INSERT INTO pact._compteProPrive(idCompte,numSiren) VALUES('$idCompte','$siren')");
-                        $stmt->execute();
-                    }
-                    else{
-                        $stmt = $dbh->prepare("INSERT INTO pact._compteProPublic(idCompte) VALUES('$idCompte')");
-                        $stmt->execute();
-                    }
-
-                    $dbh = null;
-                    
-                } catch (PDOException $e) {
-                    print "Erreur !: " . $e->getMessage() . "<br/>";
-                    die();
-                }
-            
-            }
-        ?>
-        <script>window.location.href = '../listeOffres/listeOffres.php';</script>
     </body>
 </html>
