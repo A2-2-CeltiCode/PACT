@@ -1,7 +1,7 @@
 /* Variables globales */
 :root {
-  --primary-color: var(--primaire-pro);
-  --primary-hover: var(--secondaire-pro);
+  --primary-color: var(--primaire-membre);
+  --primary-hover: var(--primaire-membre);
   --secondary-color: var(--gris1);
   --text-color: var(--noir);
   --text-dark: var(--noir);
@@ -10,7 +10,7 @@
   --border-color: var(--gris1);
   --background: var(--blanc);
   --white: var(--blanc);
-  --rating-color: var(--primaire-pro);
+  --rating-color: var(--primaire-membre);
   --price-level: var(--noir);
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
@@ -18,6 +18,7 @@
   --radius-md: 12px;
   --radius-full: 9999px;
 }
+
 
 /* Reset et styles de base */
 * {
@@ -38,11 +39,6 @@ body {
   background-color: var(--background);
   color: var(--text-color);
   line-height: 1.5;
-}
-
-label{
-  align-items: flex-start !important;
-  padding-left: 0 !important;
 }
 
 /* Bouton retour */
@@ -278,10 +274,6 @@ label{
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-}
-
-.svg-inline svg path {
-  fill: var(--primary-color);
 }
 
 /* Badges et tags */
@@ -566,47 +558,23 @@ label{
 }
 
 @-webkit-keyframes fadein {
-  from {
-    top: 70px;
-    opacity: 0;
-  }
-  to {
-    top: 100px;
-    opacity: 1;
-  }
+  from {top: 70px; opacity: 0;} 
+  to {top: 100px; opacity: 1;}
 }
 
 @keyframes fadein {
-  from {
-    top: 70px;
-    opacity: 0;
-  }
-  to {
-    top: 100px;
-    opacity: 1;
-  }
+  from {top: 70px; opacity: 0;}
+  to {top: 100px; opacity: 1;}
 }
 
 @-webkit-keyframes fadeout {
-  from {
-    top: 100px;
-    opacity: 1;
-  }
-  to {
-    top: 70px;
-    opacity: 0;
-  }
+  from {top: 100px; opacity: 1;} 
+  to {top: 70px; opacity: 0;}
 }
 
 @keyframes fadeout {
-  from {
-    top: 100px;
-    opacity: 1;
-  }
-  to {
-    top: 70px;
-    opacity: 0;
-  }
+  from {top: 100px; opacity: 1;}
+  to {top: 70px; opacity: 0;}
 }
 
 /* Styles pour la modal d'image */
