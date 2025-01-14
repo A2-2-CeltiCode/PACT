@@ -449,3 +449,8 @@ CREATE TABLE _possedeRestaurant (
         REFERENCES _tagRestaurant(nomTag)
 );
 
+CREATE TABLE _cleApi (
+    idCompte INT PRIMARY KEY,
+    cleAPI CHAR(64) UNIQUE,
+    FOREIGN KEY (idCompte) REFERENCES _compte(idCompte)
+);

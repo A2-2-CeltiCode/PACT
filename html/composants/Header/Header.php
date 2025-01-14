@@ -60,7 +60,7 @@ class Header
     public static function render(string $type = HeaderType::Guest): void {
         if (!self::$cssIncluded) {
             echo '<link rel="stylesheet"
-                        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back_ios_new,arrow_forward_ios,close,menu" />';
+                        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back_ios_new,arrow_forward_ios,check,close,menu" />';
             echo '<link rel="stylesheet" href="/composants/Header/Header.css">';
             self::$cssIncluded = true;
         }

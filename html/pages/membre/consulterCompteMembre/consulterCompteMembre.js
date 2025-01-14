@@ -201,9 +201,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Boutons de la pop-up
     document
-        .querySelector("#popupMotDePasse button[onclick='validerMotDePasse(event)']")
+        .querySelector("#popupMotDePasse")
         .addEventListener("click", validerMotDePasse);
     document
         .querySelector("#popupMotDePasse button[onclick='fermerPopupMotDePasse()']")
         .addEventListener("click", fermerPopupMotDePasse);
+
+    let copyBtn = document.getElementById("copyButton");
+    if (copyBtn.attributes["onclick"].nodeValue.length < 75) {
+        copyBtn.disabled = true;
+        copyBtn.classList.add("btnDisabled");
+    }
 });
+
+function copyKey(key) {
+    let btn = document.getElementById("copyButton");
+    btn.classList.add("material-symbols-outlined");
+    btn.style.backgroundColor = "var(--valide)";
+    btn.children[0].textContent = "check";
+    navigator.clipboard.writeText(key);
+    setTimeout(() => {
+        btn.classList.remove("material-symbols-outlined");
+        btn.style.backgroundColor = "var(--primaire-membre)";
+        btn.children[0].textContent = "copier";
+    }, 3000);
+}
+
+function generateKey() {
+    let url = window.location.protocol + "//" + window.location.host + "/pages/membre/consulterCompteMembre/genererCle.php";
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false );
+    xmlHttp.send( null )
+    let generateBtn = document.getElementById("generateButton");
+    let copyBtn = document.getElementById("copyButton");
+    copyBtn.disabled = false;
+    copyBtn.classList.remove("btnDisabled");
+    generateBtn.classList.add("material-symbols-outlined");
+    generateBtn.style.backgroundColor = "var(--valide)";
+    generateBtn.children[0].textContent = "check";
+    setTimeout(() => {
+        generateBtn.classList.remove("material-symbols-outlined");
+        generateBtn.style.backgroundColor = "var(--primaire-membre)";
+        generateBtn.children[0].textContent = "Regénérer";
+    }, 3000);
+}
