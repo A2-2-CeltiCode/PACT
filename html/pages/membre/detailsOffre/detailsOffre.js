@@ -54,7 +54,7 @@ function popupavis() {
 
     const emailInput = document.getElementById('emailInput');
 
-// Function to open the popup
+// Function pour ouvrire la popup
 
     function openPopup() {
 
@@ -63,7 +63,7 @@ function popupavis() {
 
     }
 
-// Function to close the popup
+// Function pour fermer la popup
 
     function closePopupFunc() {
 
@@ -72,31 +72,22 @@ function popupavis() {
 
     }
 
-// Function to submit the signup form
-
+// Function pour envoyer le formulaire
     function submitForm() {
-
         const email = emailInput.value;
-
-// Add your form submission logic here
-
         console.log(`Email submitted: ${email}`);
-
-        closePopupFunc(); // Close the popup after form submission
+        closePopupFunc(); 
 
     }
 
 // Event listeners
-
-// Trigger the popup to open (you can call this function on a button click or any other event)
-
     openPopup();
 
-// Close the popup when the close button is clicked
+// Ferme la popup quand le bouton fermer est clicker
 
     closePopup.addEventListener('click', closePopupFunc);
 
-// Close the popup when clicking outside the popup content
+// Fermer la popup quand on click en dehors de celle-ci
 
     popupOverlay.addEventListener('click', function (event) {
 

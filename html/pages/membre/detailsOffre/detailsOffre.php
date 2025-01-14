@@ -24,6 +24,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/InsererImage/InsererImage.
 
 // Récupération de l'identifiant de l'offre
 $idOffre = $_GET['id'] ?? '1';
+
+//connexion a la bdd
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $avis = $dbh->query("select titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis  from pact.vue_avis join pact.vue_compte_membre ON pact.vue_avis.idCompte = pact.vue_compte_membre.idCompte where idOffre = $idOffre")->fetchAll(PDO::FETCH_ASSOC);
@@ -36,7 +38,8 @@ try {
         $imagesAvis[$avi['idavis']] = $img;
     }
     $peutEcrireAvis = $dbh->query("SELECT count(*) FROM pact.vue_avis WHERE idCompte = {$_SESSION['idCompte']} AND idOffre = $idOffre")->fetchAll(PDO::FETCH_ASSOC)[0]['count'] == 0;
-
+   
+//requete pour recuperer les informations depuis la bdd
     $offresSql = $dbh->query(<<<STRING
 select distinct titre                                                                       AS nom,
        nomcategorie                                                                AS type,
@@ -99,10 +102,14 @@ STRING
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
+
 <?php Header::render(HeaderType::Member); ?>
+
 <div class=titre-pc>
     <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
 </div><main>
+
+<!--affichage des offre -->
     <div class="container">
         <div class="container-gauche">
             <div class="carousel">
@@ -235,6 +242,8 @@ STRING
                     if ($peutEcrireAvis) {
                     ?>
                     <p>Mettez un avis!</p>
+
+                    <!--ecrire un avis-->
                     <form method="post" enctype="multipart/form-data" action="/pages/membre/avis/creerAvis.php" onsubmit='return submitForm()'>
                         <div>
                             <?php  Input::render(id: "titre", name: "titre", required: true, maxLength: 50, placeholder: "Titre") ?>
@@ -274,6 +283,8 @@ STRING
             </div>
 
         </div>
+
+    <!--affichage de la liste des avis-->
     <div class="liste-avis">
         <div>
             <h1>Avis:</h1>
