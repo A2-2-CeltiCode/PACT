@@ -193,8 +193,8 @@ class Facture
                     $totalTTC = 0;
                     foreach ($this->optionsFiltrees as $option):
                         $joursRestants = $this->calculerJoursRestants($option['debutoption'], $option['finoption']);
-                        $prixOptionHT = $this->fetchData('SELECT prixht FROM pact._appliqueoption WHERE nomoption = :nomOption', ['nomOption' => $option['nomoption']]);
-                        $prixOptionTTC = $this->fetchData('SELECT prixttc FROM pact._appliqueoption WHERE nomoption = :nomOption', ['nomOption' => $option['nomoption']]);
+                        $prixOptionHT = $this->fetchData('SELECT prixht FROM pact._appliqueoption WHERE nomoption = :nomOption AND dateApplication <= :datePrestation ORDER BY dateApplication DESC LIMIT 1', ['nomOption' => $option['nomoption'], 'datePrestation' => $this->facture['dateprestaservices']]);
+                        $prixOptionTTC = $this->fetchData('SELECT prixttc FROM pact._appliqueoption WHERE nomoption = :nomOption AND dateApplication <= :datePrestation ORDER BY dateApplication DESC LIMIT 1', ['nomOption' => $option['nomoption'], 'datePrestation' => $this->facture['dateprestaservices']]);
 
                         $prixOptionTotalHT = (float)$prixOptionHT['prixht'] * $option['nbsemaines'];
                         $prixOptionTotalTTC = $prixOptionTTC['prixttc'] * $option['nbsemaines'];
@@ -212,7 +212,7 @@ class Facture
                             <td><strong><?php echo number_format($prixOptionTotalTTC,2) . "€" ?></strong></td>
                         </tr>
                     <?php endforeach; 
-                    $this->forfait = $this->fetchAllData('SELECT * FROM pact._appliqueforfait WHERE nomForfait = :nomforfait', ['nomforfait' => $this->offre['nomforfait']]);
+                    $this->forfait = $this->fetchAllData('SELECT * FROM pact._appliqueforfait WHERE nomForfait = :nomforfait AND dateApplication <= :datePrestation ORDER BY dateApplication DESC LIMIT 1', ['nomforfait' => $this->offre['nomforfait'], 'datePrestation' => $this->facture['dateprestaservices']]);
                     $prixForfaitHT = $this->forfait[0]['prixht'];
                     $prixForfaitTTC = $this->forfait[0]['prixttc'];
                     $prixForfaitTotalHT = $this->nbJours * $prixForfaitHT;

@@ -7,13 +7,18 @@ INSERT INTO _option (nomOption) VALUES
 ('A la une');
 
 INSERT INTO _applicationPrix(dateApplication, dateFin) VALUES
+('2010-01-01',null),
 (now(),null);
+
 
 -- Peupler la table _appliqueOption
 INSERT INTO _appliqueOption (nomOption, dateApplication, prixHT, prixTTC) VALUES
 ('Aucune', now(), 0.0, 0.0),
 ('En relief', now(), 8.34, 10.0),
-('A la une', now(), 16.68, 20.0);
+('A la une', now(), 16.68, 20.0),
+('Aucune', '2010-01-01', 0.0, 0.0),
+('En relief', '2010-01-01', 8.34, 10.0),
+('A la une', '2010-01-01', 16.68, 20.0);
 
 
 -- Peupler la table _gamme
@@ -55,9 +60,9 @@ INSERT INTO _forfaitPro (nomForfait) VALUES
 
 -- Peupler la table _appliqueForfait
 INSERT INTO _appliqueForfait (nomForfait, dateApplication, prixHT, prixTTC) VALUES
-('Gratuit', now(), 0.0, 0.0),
-('Standard', now(), 1.67, 2.0),
-('Premium', now(), 3.34, 4.0);
+('Gratuit', '2010-01-01', 0.0, 0.0),
+('Standard', '2010-01-01', 1.67, 2.0),
+('Premium', '2010-01-01', 3.34, 4.0);
 
 -- Peupler la table _language
 INSERT INTO _langage (nomLangage) VALUES
