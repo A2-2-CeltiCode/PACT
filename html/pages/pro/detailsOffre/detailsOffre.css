@@ -328,10 +328,19 @@ label{
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Styles pour les offres non vues */
 .avi.non-vu {
-  border-left: 5px solid var(--primary-color);
-  background-color: rgba(108, 2, 119, 0.05);
+  border: 2px dashed var(--primary-color);
+  /* background-color: var(--secondary-color); */
+}
+
+.avi .non-vu {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: inline-block;
 }
 
 .avi-title {

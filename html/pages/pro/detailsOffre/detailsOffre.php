@@ -26,7 +26,7 @@ try {
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas,estvu FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
     if ($filterBy === 'viewed') {
         $query .= " AND estvu = true";
@@ -301,8 +301,14 @@ try {
                     $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
                     $stmt->execute([':idAvis' => $avi['idavis']]);
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    // Ajouter la classe 'non-vu' si l'avis n'a pas été vu
+                    $nonVuClass = $avi['estvu'] ? '' : 'non-vu';
                     ?>
-                    <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
+                    <div class="avi <?= $nonVuClass ?>" data-idavis="<?= $avi["idavis"] ?>">
+                        <?php if (!$avi['estvu']): ?>
+                            <div class="non-vu">Non vu</div>
+                        <?php endif; ?>
                         <div>
                             <p class="avi-title">
                                 <?= $avi["titre"] ?>
