@@ -1,7 +1,7 @@
 /* Variables globales */
 :root {
     --primary-color: var(--primaire-membre);
-    --primary-hover: var(--secondaire-membre);
+    --primary-hover: var(--primaire-membre);
     --secondary-color: var(--gris1);
     --text-color: var(--noir);
     --text-dark: var(--noir);
@@ -24,6 +24,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  label{
+    align-items: flex-start !important;
+    padding-left: 0 !important;
   }
 
   h2 {

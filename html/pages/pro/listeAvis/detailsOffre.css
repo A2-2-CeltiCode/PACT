@@ -26,6 +26,11 @@
   box-sizing: border-box;
 }
 
+label{
+  align-items: flex-start !important;
+  padding-left: 0 !important;
+}
+
 h2 {
   font-size: 1.5rem;
   font-weight: 700;

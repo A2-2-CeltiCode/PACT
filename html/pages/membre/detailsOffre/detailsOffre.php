@@ -398,7 +398,7 @@ try {
             <!-- Titre de l'avis -->
             <div class="form-group">
                 <div class="form-label">
-                    <?php Label::render("label-titre", "", "", "Titre de votre avis"); ?>
+                    <?php Label::render("titre", "", "", "Titre de votre avis"); ?>
                 </div>
                 <?php Input::render(
                     "titre",
@@ -421,7 +421,7 @@ try {
                     required: true
                 ); ?>
             </div>
-            
+
             <!-- Évaluation par étoiles -->
             <div class="form-group">
                 <div class="form-label">

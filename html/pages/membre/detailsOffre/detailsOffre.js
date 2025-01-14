@@ -218,39 +218,6 @@ document.addEventListener("DOMContentLoaded", function () {
           });
       });
 
-      
-      // Validation du formulaire
-      if (form) {
-          form.addEventListener("submit", (e) => {
-              e.preventDefault();
-              
-              const noteSelected = form.querySelector('input[name="note"]:checked');
-              if (!noteSelected) {
-                  alert("Veuillez attribuer une note.");
-                  return;
-              }
-
-              const titre = form.querySelector('input[name="titre"]').value.trim();
-              if (titre.length < 3) {
-                  alert("Le titre doit contenir au moins 3 caractères.");
-                  return;
-              }
-
-              const commentaire = form.querySelector('textarea[name="commentaire"]').value.trim();
-              if (commentaire.length < 10) {
-                  alert("Le commentaire doit contenir au moins 10 caractères.");
-                  return;
-              }
-
-              const contexte = form.querySelector('select[name="contexteVisite"]').value;
-              if (!contexte) {
-                  alert("Veuillez sélectionner un contexte de visite.");
-                  return;
-              }
-
-              form.submit();
-          });
-      }
   }
 
   // Fonction d'initialisation globale des événements
