@@ -182,12 +182,3 @@ FROM _representeOffre NATURAL JOIN _image;
 CREATE OR REPLACE VIEW vue_image_avis (idAvis, idImage, nomImage) AS
 SELECT idAvis, idImage, nomImage
 FROM _representeAvis NATURAL JOIN _image;
-
-/*CREATE OR REPLACE VIEW vue_forfait (nomForfait) AS
-SELECT idAvis, idImage, nomImage
-FROM _representeAvis NATURAL JOIN _image;*/
-
-
-SELECT debutoption, nbsemaines
-FROM pact._annulationoption
-WHERE idoffre = 1 AND estannulee = false AND TO_CHAR(debutoption, 'MM-YYYY') = '10-2024'; 

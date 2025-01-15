@@ -12,7 +12,7 @@ SET SCHEMA 'pact';
 
 CREATE TABLE _adresse(
     idAdresse     SERIAL,
-    codePostal    INTEGER NOT NULL,
+    codePostal    INTEGER NOT NULL CHECK (codePostal < 100000),
     ville         VARCHAR(50) NOT NULL,
     rue           VARCHAR(50) NOT NULL,
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
@@ -34,12 +34,11 @@ CREATE TABLE _gamme(
 
 CREATE TABLE _applicationPrix(
     dateApplication   DATE,
-    dateFin           DATE,
     CONSTRAINT applicationPrix_pk PRIMARY KEY(dateApplication)
 );
 
 --
--- TABLE OPTION
+-- TABLES OPTION
 --
 
 CREATE TABLE _option(
@@ -52,6 +51,7 @@ CREATE TABLE _appliqueOption(
     dateApplication   DATE,
     prixHT            NUMERIC(5,2) NOT NULL,
     prixTTC           NUMERIC(5,2) NOT NULL,
+    CONSTRAINT appliqueOption_pk PRIMARY KEY(nomOption,dateApplication),
     CONSTRAINT appliqueOption_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption),
     CONSTRAINT appliqueOption_fk_applicationPrix FOREIGN KEY (dateApplication)
@@ -59,7 +59,7 @@ CREATE TABLE _appliqueOption(
 );
 
 --
--- TABLE FORFAIT
+-- TABLES FORFAIT
 --
 
 CREATE TABLE _forfait(
@@ -86,6 +86,7 @@ CREATE TABLE _appliqueForfait(
     dateApplication   DATE,
     prixHT            NUMERIC(5,2) NOT NULL,
     prixTTC           NUMERIC(5,2) NOT NULL,
+    CONSTRAINT appliqueForfait_pk PRIMARY KEY(nomForfait,dateApplication),
     CONSTRAINT appliqueForfait_fk_forfait FOREIGN KEY (nomForfait)
         REFERENCES _forfait(nomForfait),
     CONSTRAINT appliqueForfait_fk_applicationPrix FOREIGN KEY (dateApplication)
@@ -120,6 +121,7 @@ CREATE TABLE _compteMembre(
     prenom    VARCHAR(50) NOT NULL,
     nom       VARCHAR(50) NOT NULL,
     pseudo     VARCHAR(255) NOT NULL UNIQUE,
+    CONSTRAINT compteMembre_pk PRIMARY KEY(idCompte),
     CONSTRAINT compteMembre_fk_compte FOREIGN KEY (idCompte) 
         REFERENCES _compte(idCompte)
 );
@@ -136,6 +138,7 @@ CREATE TABLE _comptePro (
 
 CREATE TABLE _compteProPublic (
     idCompte     SERIAL,
+    CONSTRAINT compteProPublic_pk PRIMARY KEY(idCompte),
     CONSTRAINT compteProPublic_fk_compte FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte)
 );
@@ -143,6 +146,7 @@ CREATE TABLE _compteProPublic (
 CREATE TABLE _compteProPrive (
     idCompte    SERIAL,
     numSiren    CHAR(14) NOT NULL UNIQUE,
+    CONSTRAINT compteProPrive_pk PRIMARY KEY(idCompte),
     CONSTRAINT compteProPrive_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte)
 );
@@ -155,8 +159,8 @@ CREATE TABLE _offre(
     idOffre                 SERIAL,
     idCompte                SERIAL,
     titre                   VARCHAR(50) NOT NULL,
-    description             VARCHAR(100) NOT NULL,
-    descriptionDetaillee    VARCHAR(255),
+    description             VARCHAR(511) NOT NULL,
+    descriptionDetaillee    VARCHAR(1023),
     siteInternet            VARCHAR(50),
     nomOption               VARCHAR(50) NOT NULL,
     nomForfait              VARCHAR(50) NOT NULL,
@@ -187,6 +191,7 @@ CREATE TABLE _image(
 CREATE TABLE _representeOffre(
     idOffre INTEGER,
     idImage INTEGER,
+    CONSTRAINT representeOffre_pk PRIMARY KEY(idOffre,idImage),
     CONSTRAINT representeOffre_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
     CONSTRAINT representeOffre_fk_image FOREIGN KEY (idImage)
@@ -199,7 +204,7 @@ CREATE TABLE _representeOffre(
 
 CREATE TABLE _facture(
     idFacture             SERIAL,
-    idOffre               INTEGER NOT NULL,
+    idOffre               SERIAL NOT NULL,
     datePrestaServices    DATE NOT NULL,
     dateEcheance          DATE NOT NULL,
     CONSTRAINT facture_pk PRIMARY KEY(idFacture),
@@ -213,6 +218,7 @@ CREATE TABLE _annulationOption(
     idOffre       INTEGER NOT NULL,
     nomOption     VARCHAR(50) NOT NULL,
     estAnnulee    BOOLEAN DEFAULT FALSE,
+    CONSTRAINT annulationOption_pk PRIMARY KEY(nbSemaines,debutOption,idOffre,nomOption),
     CONSTRAINT annulationOption_fk_offre FOREIGN KEY (idOffre) 
         REFERENCES _offre(idOffre),
     CONSTRAINT annulationOption_fk_option FOREIGN KEY (nomOption)
@@ -257,7 +263,7 @@ CREATE TABLE _activite(
     tempsEnMinutes  INTEGER,
     valPrix         NUMERIC(5,2) NOT NULL,
     ageMin          INTEGER NOT NULL,
-    prestation      VARCHAR(50) NOT NULL, -- prestation
+    prestation      VARCHAR(50) NOT NULL,
     CONSTRAINT activite_pk PRIMARY KEY (idOffre),
     CONSTRAINT activite_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
@@ -377,6 +383,7 @@ CREATE TABLE _avis(
 CREATE TABLE _representeAvis(
     idAvis      INTEGER,
     idImage     INTEGER,
+    CONSTRAINT representeAvis_pk PRIMARY KEY(idAvis,idImage),
     CONSTRAINT representeAvis_fk_avis FOREIGN KEY (idAvis)
         REFERENCES _avis(idAvis),
     CONSTRAINT representeAvis_fk_image FOREIGN KEY (idImage)
@@ -384,9 +391,9 @@ CREATE TABLE _representeAvis(
 );
 
 CREATE TABLE _avis_votes (
-    idAvis INTEGER,
-    idCompte INTEGER,
-    type VARCHAR(10),
+    idAvis      INTEGER,
+    idCompte    INTEGER,
+    type        VARCHAR(10) NOT NULL,
     CONSTRAINT avis_votes_pk PRIMARY KEY (idAvis, idCompte),
     CONSTRAINT avis_votes_fk_avis FOREIGN KEY (idAvis) REFERENCES _avis(idAvis),
     CONSTRAINT avis_votes_fk_compte FOREIGN KEY (idCompte) REFERENCES _compte(idCompte)
@@ -401,7 +408,7 @@ CREATE TABLE _reponseAvis(
     idAvis        INTEGER NOT NULL,
     idCompte      INTEGER NOT NULL,
     commentaire   VARCHAR(255) NOT NULL,
-    dateReponse   DATE DEFAULT CURRENT_TIMESTAMP,
+    dateReponse   DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT reponseAvis_pk PRIMARY KEY(idReponse),
     CONSTRAINT reponseAvis_fk_avis FOREIGN KEY (idAvis)
         REFERENCES _avis(idAvis),
@@ -416,6 +423,7 @@ CREATE TABLE _reponseAvis(
 CREATE TABLE _guideeVisite (
     idOffre      SERIAL,
     nomLangage    VARCHAR(50) NOT NULL,
+    CONSTRAINT guideeVisite_pk PRIMARY KEY(idOffre,nomLangage),
     CONSTRAINT guideeVisite_fk_visite FOREIGN KEY (idOffre)
         REFERENCES _visite(idOffre),
     CONSTRAINT guideeVisite_fk_langage FOREIGN KEY (nomLangage)
@@ -429,6 +437,7 @@ CREATE TABLE _guideeVisite (
 CREATE TABLE _proposeRestaurant (
     idOffre      SERIAL,
     nomRepas     VARCHAR(50),
+    CONSTRAINT proposeRestaurant_pk PRIMARY KEY(idOffre,nomRepas),
     CONSTRAINT proposeRestaurant_fk_repas FOREIGN KEY (nomRepas)
         REFERENCES _repas(nomRepas),
     CONSTRAINT proposeRestaurant_fk_restaurant FOREIGN KEY (idOffre)
@@ -442,6 +451,7 @@ CREATE TABLE _proposeRestaurant (
 CREATE TABLE _possedeSpectacle (
     idOffre      SERIAL,
     nomTag       VARCHAR(50),
+    CONSTRAINT possedeSpectacle_pk PRIMARY KEY(idOffre,nomTag),
     CONSTRAINT possedeSpectacle_fk_spectacle FOREIGN KEY (idOffre)
         REFERENCES _spectacle(idOffre),
     CONSTRAINT possedeSpectacle_fk_tagAutre FOREIGN KEY (nomTag)
@@ -451,6 +461,7 @@ CREATE TABLE _possedeSpectacle (
 CREATE TABLE _possedeActivite (
     idOffre      SERIAL,
     nomTag       VARCHAR(50),
+    CONSTRAINT possedeActivite_pk PRIMARY KEY(idOffre,nomTag),
     CONSTRAINT possedeActivite_fk_activite FOREIGN KEY (idOffre)
         REFERENCES _activite(idOffre),
     CONSTRAINT possedeActivite_fk_tagAutre FOREIGN KEY (nomTag)
@@ -460,6 +471,7 @@ CREATE TABLE _possedeActivite (
 CREATE TABLE _possedeVisite (
     idOffre      SERIAL,
     nomTag      VARCHAR(50),
+    CONSTRAINT possedeVisite_pk PRIMARY KEY(idOffre,nomTag),
     CONSTRAINT possedeVisit_fk_visit FOREIGN KEY (idOffre)
         REFERENCES _visite(idOffre),
     CONSTRAINT possedeVisit_fk_tagAutre FOREIGN KEY (nomTag)
@@ -469,6 +481,7 @@ CREATE TABLE _possedeVisite (
 CREATE TABLE _possedeParcAttractions (
     idOffre      SERIAL,
     nomTag      VARCHAR(50),
+    CONSTRAINT possedeParcAttractions_pk PRIMARY KEY(idOffre,nomTag),
     CONSTRAINT possedeParcAttractions_fk_parcAttractions FOREIGN KEY (idOffre)
         REFERENCES _parcAttractions(idOffre),
     CONSTRAINT possedeParcAttractions_fk_tagAutre FOREIGN KEY (nomTag)
@@ -478,8 +491,10 @@ CREATE TABLE _possedeParcAttractions (
 CREATE TABLE _possedeRestaurant (
     idOffre      SERIAL,
     nomTag      VARCHAR(50),
+    CONSTRAINT possedeRestaurant_pk PRIMARY KEY(idOffre,nomTag),
     CONSTRAINT possedeRestaurant_fk_restaurant FOREIGN KEY (idOffre)
         REFERENCES _restaurant(idOffre),
     CONSTRAINT possedeRestaurant_fk_tagRestaurant FOREIGN KEY (nomTag)
         REFERENCES _tagRestaurant(nomTag)
 );
+

@@ -58,7 +58,8 @@ INSERT INTO _compte (mdp, email, idAdresse) VALUES
 ('0952c3c1da99414130cf203e6e399b8d5b8d6578b4e25149b14f2397949b10d1', 'user12@gmail.com', 21),
 ('3e78f1c32984ed554b602f052a6ee1dccf5e37b59fa0dac6d2712cf119d214dd', 'user13@gmail.com', 22),
 ('9011963039465470c0036871db381adacb92ced945356958c58f5054cca0ac2d', 'user14@gmail.com', 23),
-('822b343fb9eecc852f4fe6b4ebd27b35f6dcca6e1a19cc7453c2626d98641389', 'user15@gmail.com', 24);
+('822b343fb9eecc852f4fe6b4ebd27b35f6dcca6e1a19cc7453c2626d98641389', 'user15@gmail.com', 24),
+('2907a88109b26939d31308d4dec243389125d28355a494428ef1f4db9ee87eb6','user16@gmail.com', 25);
 
 -- Peupler la table _compteMembre
 INSERT INTO _compteMembre (idCompte, pseudo, prenom, nom) VALUES
@@ -84,89 +85,34 @@ INSERT INTO _compteMembre (idCompte, pseudo, prenom, nom) VALUES
 INSERT INTO _comptePro (idCompte, denominationSociale, raisonSocialePro, banqueRib) VALUES
 (2, 'Société A', 'Entreprise A', 'FR7612345678901234567890123'),
 (3, 'Société B', 'Entreprise B', 'FR7612345678901234567890124'),
-(4, 'Société C', 'Entreprise C', 'FR7612345678901234567890125');
+(4, 'Société C', 'Entreprise C', 'FR7612345678901234567890125'),
+(21,'Société D', 'Entreprise D', 'FR7612345678901234567890126');
 
 INSERT INTO _compteProPrive (idCompte,numSiren) VALUES
-(2, 'numerosiren1');
+(2, '987 654 321'),
+(21,'123 456 789');
 
 INSERT INTO _compteProPublic (idCompte) VALUES
 (3),(4);
 
--- Peupler la table _offre
 INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
-(2, 'En relief', 'Standard', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 2,'2024-09-13','06:00','17:00'),
-(2, 'A la une', 'Premium', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 3,'2024-10-01','07:00','16:00'),
-(2, 'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 4,'2024-12-02','08:00','15:00'),
-(2, 'Aucune', 'Standard', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 5,'2024-09-15','17:00','01:00'),
-(3, 'Aucune', 'Gratuit', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 6,'2024-07-08','02:00','14:00'),
-(3, 'Aucune', 'Gratuit', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 7,'2023-11-14','00:00','10:00'),
-(3, 'Aucune', 'Gratuit', 'Visite guidée de Brest', 'Explorez la ville portuaire de Brest', 'Visite de la rade, du château et du musée de la Marine', 'http://example.com/brest', TRUE, 27, '2024-04-05', '09:00', '17:00'),
-(3, 'Aucune', 'Gratuit', 'Spectacle à Quiberon', 'Incroyable spectacle de marionnettes à Quiberon', '', '', FALSE, 28, '2024-06-15', '10:00', '18:00'),
-(3, 'Aucune', 'Gratuit', 'Montagnes Russes à Perros-Guirec', 'Explorez les côtes bretonnes en kayak', 'Balade guidée le long des côtes rocheuses', 'http://example.com/perrosguirec', TRUE, 29, '2024-07-10', '08:00', '20:00'),
-(4, 'Aucune', 'Gratuit', 'Randonnée sur le GR34 à Saint-Malo', 'Partez sur les sentiers côtiers', 'Randonnée le long de la côte avec vues magnifiques', 'http://example.com/saintmalo', FALSE, 30, '2024-08-01', '07:00', '21:00'),
-(4, 'Aucune', 'Gratuit', 'Balade en bateau à Douarnenez', 'Découvrez le port de Douarnenez et ses alentours', 'Excursion en bateau dans la baie', 'http://example.com/douarnenez', TRUE, 31, '2024-09-15', '10:00', '18:00'),
-(4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire maritime', 'Exposition de l''histoire de la pêche et de la mer', 'http://example.com/paimpol', TRUE, 32, '2024-10-20', '09:00', '19:00'),
-(4, 'Aucune', 'Gratuit', 'Restaurant à Rennes', 'Goûtez aux spécialités bretonnes à Rennes', 'Dégustation de crêpes, galettes et cidre local', 'http://example.com/rennes', FALSE, 33, '2024-11-10', '11:00', '16:00'),
-(4, 'Aucune', 'Gratuit', 'Visite de Vannes', 'Explorez la beauté de Vannes', '', 'http://example.com/cotesarmor', TRUE, 34, '2024-12-01', '08:00', '18:00'),
-(4, 'Aucune', 'Gratuit', 'Restaurant exotique de Rennes', 'Goutez aux spécialités tropicales', '', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00');
-INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
-(2, 'En relief', 'Standard', 'Visite de Saint-Brieuc', 'Découvrez les merveilles de Saint-Brieuc', 'Une visite guidée de 2 heures', 'http://example.com/saintbrieuc', TRUE, 2,'2024-09-13','06:00','17:00'),
-(2, 'A la une', 'Premium', 'Spectacle à Morlaix', 'Profitez d''un spectacle spectaculaire', 'Marionnettes et tours de cartes bluffant !', 'http://example.com/Morlaix', FALSE, 3,'2024-10-01','07:00','16:00'),
-(2, 'A la une', 'Premium', 'Parc d''attractions de Brest', 'Parc incroyable', 'Parc proposant des attractions phenomenale', 'http://example.com/brest', TRUE, 4,'2024-12-02','08:00','15:00'),
-(2, 'Aucune', 'Standard', 'Restaurant gastronomique de Saint-Malo', 'Restaurant aux 7 saveurs !', '', 'http://example.com/saintmalo', TRUE, 5,'2024-09-15','17:00','01:00'),
-(3, 'Aucune', 'Gratuit', 'Activite de plongée', 'Parcourez les profondeurs marins', 'Decouvrer les profondeurs de Lorient', 'http://example.com/lorient', TRUE, 6,'2024-07-08','02:00','14:00'),
-(3, 'Aucune', 'Gratuit', 'Visite de Quimper', 'Visite mémorable', '', 'http://example.com/', TRUE, 7,'2023-11-14','00:00','10:00'),
-(3, 'Aucune', 'Gratuit', 'Visite guidée de Brest', 'Explorez la ville portuaire de Brest', 'Visite de la rade, du château et du musée de la Marine', 'http://example.com/brest', TRUE, 27, '2024-04-05', '09:00', '17:00'),
-(3, 'Aucune', 'Gratuit', 'Spectacle à Quiberon', 'Incroyable spectacle de marionnettes à Quiberon', '', '', FALSE, 28, '2024-06-15', '10:00', '18:00'),
-(3, 'Aucune', 'Gratuit', 'Montagnes Russes à Perros-Guirec', 'Explorez les côtes bretonnes en kayak', 'Balade guidée le long des côtes rocheuses', 'http://example.com/perrosguirec', TRUE, 29, '2024-07-10', '08:00', '20:00'),
-(4, 'Aucune', 'Gratuit', 'Randonnée sur le GR34 à Saint-Malo', 'Partez sur les sentiers côtiers', 'Randonnée le long de la côte avec vues magnifiques', 'http://example.com/saintmalo', FALSE, 30, '2024-08-01', '07:00', '21:00'),
-(4, 'Aucune', 'Gratuit', 'Balade en bateau à Douarnenez', 'Découvrez le port de Douarnenez et ses alentours', 'Excursion en bateau dans la baie', 'http://example.com/douarnenez', TRUE, 31, '2024-09-15', '10:00', '18:00'),
-(4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire maritime', 'Exposition de l''histoire de la pêche et de la mer', 'http://example.com/paimpol', TRUE, 32, '2024-10-20', '09:00', '19:00'),
-(4, 'Aucune', 'Gratuit', 'Restaurant à Rennes', 'Goûtez aux spécialités bretonnes à Rennes', 'Dégustation de crêpes, galettes et cidre local', 'http://example.com/rennes', FALSE, 33, '2024-11-10', '11:00', '16:00'),
-(4, 'Aucune', 'Gratuit', 'Visite de Vannes', 'Explorez la beauté de Vannes', '', 'http://example.com/cotesarmor', TRUE, 34, '2024-12-01', '08:00', '18:00'),
-(4, 'Aucune', 'Gratuit', 'Restaurant exotique de Rennes', 'Goutez aux spécialités tropicales', '', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00');
+(2, 'En relief', 'Premium', 'Visite de Saint-Brieuc', 'Plongez dans l''histoire et la culture de Saint-Brieuc à travers une visite guidée immersive, où chaque ruelle, chaque monument a une histoire à raconter. Un voyage fascinant pour les passionnés de patrimoine et de paysages bretons.', 'Cette visite guidée de 2 heures vous permettra de découvrir les joyaux cachés de Saint-Brieuc. Vous parcourrez les rues historiques de la ville, en passant devant des bâtiments emblématiques et en admirant les vues spectaculaires sur la baie. Votre guide passionné vous racontera l''histoire locale, des temps anciens aux événements marquants de la ville. Profitez également de moments de calme dans les jardins publics et sur les quais, tout en admirant la beauté naturelle de cette région du nord de la Bretagne.', 'http://example.com/saintbrieuc', TRUE, 2,'2024-09-13','06:00','17:00'),
+(2, 'A la une', 'Premium', 'Spectacle à Morlaix', 'Venez vivre un spectacle exceptionnel à Morlaix, où des artistes de talent vous transporteront dans un univers magique fait de marionnettes, tours de cartes et illusions époustouflantes. Une soirée divertissante pour tous les âges.', 'Le spectacle à Morlaix vous offrira une expérience incroyable, alliant magie et créativité. Plongez dans un univers visuel où les marionnettes prennent vie et où chaque tour de cartes vous émerveille. Laissez-vous surprendre par des illusions visuelles bluffantes réalisées par des magiciens confirmés. Ce spectacle est conçu pour captiver les petits comme les grands, en offrant un moment de pure magie et de féerie. Parfait pour une sortie familiale ou entre amis.', 'http://example.com/Morlaix', FALSE, 3,'2024-10-01','07:00','16:00'),
+(2, 'A la une', 'Premium', 'Parc d''attractions de Brest', 'Le parc d''attractions de Brest est l’endroit idéal pour vivre une journée pleine d''aventure, de sensations fortes et de rires. Entre montagnes russes, attractions aquatiques et spectacles à couper le souffle, il y en a pour tous les goûts.', 'Situé en plein cœur de Brest, ce parc propose une multitude d''attractions qui raviront les amateurs de sensations fortes et les familles en quête de divertissement. Vous pourrez tester des montagnes russes palpitantes, vous rafraîchir dans des attractions aquatiques ou assister à des spectacles exceptionnels en plein air. Pour les plus jeunes, le parc propose également des attractions ludiques et pédagogiques. Que vous soyez en quête d’adrénaline ou de moments de détente, ce parc saura répondre à toutes vos attentes et vous garantir une journée mémorable.', 'http://example.com/brest', TRUE, 4,'2024-12-02','08:00','15:00'),
+(2, 'Aucune', 'Standard', 'Restaurant gastronomique de Saint-Malo', 'Venez savourer des plats raffinés au restaurant gastronomique de Saint-Malo, où chaque bouchée est une explosion de saveurs. Offrez-vous un voyage culinaire exceptionnel dans un cadre élégant et accueillant.', 'Ce restaurant gastronomique à Saint-Malo est un lieu unique où l''art culinaire rencontre la tradition bretonne. Le chef met un point d''honneur à utiliser des produits locaux de qualité pour créer des plats innovants qui mettent en valeur la richesse des saveurs bretonnes. De l''entrée au dessert, chaque plat est une œuvre d''art, parfaitement équilibrée, aux textures subtiles et aux présentations soignées. Laissez-vous emporter par une expérience gastronomique inoubliable, accompagnée d''une sélection de vins raffinés qui sublimeront chaque dégustation.', 'http://example.com/saintmalo', TRUE, 5,'2024-09-15','17:00','01:00'),
+(3, 'Aucune', 'Gratuit', 'Activite de plongée', 'Explorez les profondeurs marines de Lorient et découvrez la richesse de la faune et de la flore sous-marine. Cette activité de plongée est l''occasion rêvée de vous immerger dans un monde fascinant et plein de surprises.', 'Offrez-vous une aventure inoubliable en plongeant dans les eaux cristallines de Lorient. Que vous soyez débutant ou plongeur expérimenté, cette activité est accessible à tous grâce à un encadrement professionnel. Lors de votre plongée, vous aurez l’opportunité d’observer une diversité incroyable de poissons, crustacés et plantes marines qui peuplent les fonds marins bretons. Le guide, passionné par la mer, partagera avec vous ses connaissances sur les écosystèmes sous-marins et vous fera découvrir des sites encore préservés de la région. Une expérience qui marquera à jamais vos souvenirs.', 'http://example.com/lorient', TRUE, 6,'2024-07-08','02:00','14:00'),
+(3, 'Aucune', 'Gratuit', 'Visite de Quimper', 'Partez à la découverte de Quimper, une ville pleine de charme et d’histoire. Lors de cette visite, vous plongerez dans l''âme de la Bretagne, à travers ses monuments historiques et son riche patrimoine culturel.', 'Lors de cette visite à Quimper, vous explorerez ses ruelles médiévales et son patrimoine exceptionnel. Vous découvrirez des sites incontournables comme la cathédrale Saint-Corentin, véritable chef-d’œuvre de l''architecture gothique, ainsi que ses maisons à colombages pittoresques. La ville vous offrira également un aperçu de la culture bretonne à travers ses traditions, son art et ses spécialités culinaires. Un véritable voyage dans le temps et la culture bretonne, tout en profitant de l''ambiance unique de cette ville portuaire.', 'http://example.com/', TRUE, 7,'2023-11-14','00:00','10:00'),
+(3, 'Aucune', 'Gratuit', 'Visite guidée de Brest', 'Explorez Brest, une ville portuaire dynamique et pleine d''histoire, grâce à une visite guidée qui vous fera découvrir la rade, le château et le musée de la Marine.', 'Cette visite guidée de Brest vous emmènera à la découverte de l''histoire maritime de la ville, en commençant par le Château de Brest, un imposant fort qui surplombe la rade. Vous explorerez également le Musée de la Marine, où vous en apprendrez davantage sur le passé naval de la ville et son rôle stratégique à travers les siècles. Le parcours vous offrira des vues spectaculaires sur la rade de Brest, l''un des plus grands ports militaires de France, et vous permettra de mieux comprendre l''impact de la mer sur l''histoire locale.', 'http://example.com/brest', TRUE, 27, '2024-04-05', '09:00', '17:00'),
+(3, 'Aucune', 'Gratuit', 'Spectacle à Quiberon', 'Assistez à un spectacle spectaculaire de marionnettes à Quiberon. Un événement magique pour toute la famille, mêlant art et divertissement dans un cadre idyllique.', 'Ce spectacle de marionnettes à Quiberon vous transportera dans un univers féérique, où des personnages fascinants prennent vie. Que ce soit pour les enfants ou les adultes, ce spectacle saura émerveiller les spectateurs par son côté surprenant et enchanteur. Les marionnettes, réalisées avec soin, évolueront dans des scénarios dynamiques et pleins d''humour. Idéal pour passer un moment convivial en famille ou entre amis, ce spectacle est un véritable événement à ne pas manquer pendant votre séjour à Quiberon.', 'ff', FALSE, 28, '2024-06-15', '10:00', '18:00'),
+(3, 'Aucune', 'Gratuit', 'Montagnes Russes à Perros-Guirec', 'Venez tester vos nerfs sur les montagnes russes à Perros-Guirec, tout en explorant les magnifiques côtes bretonnes en kayak. Une combinaison parfaite d''aventure et de nature.', 'À Perros-Guirec, préparez-vous à vivre des sensations fortes à bord des montagnes russes, avant de partir pour une balade en kayak le long des magnifiques côtes bretonnes. Les montagnes russes de Perros-Guirec offrent une expérience palpitante avec des descentes vertigineuses et des virages serrés, parfaits pour les amateurs de sensations fortes. Après cette montée d''adrénaline, vous pourrez vous détendre lors d''une balade en kayak, où vous naviguerez sur des eaux cristallines entourées de paysages spectaculaires, parfaits pour les amoureux de la nature et de l''aventure.', 'http://example.com/perrosguirec', TRUE, 29, '2024-07-10', '08:00', '20:00'),
+(4, 'Aucune', 'Gratuit', 'Randonnée sur le GR34 à Saint-Malo', 'Embarquez pour une randonnée époustouflante le long du GR34 à Saint-Malo. Un parcours de 180 kilomètres au cœur de la Bretagne, offrant des vues imprenables sur la mer et les paysages sauvages.', 'Le GR34, surnommé le sentier des douaniers, vous invite à découvrir les magnifiques paysages côtiers de la Bretagne. Ce parcours de randonnée vous emmènera le long de falaises escarpées, de plages sauvages et de petits villages pittoresques. Vous aurez l''occasion d''admirer la richesse naturelle de la région, entre mer et campagne, tout en respirant l''air frais de l''océan Atlantique. Chaque étape de la randonnée offre des vues incroyables sur la mer, les îles voisines et les paysages préservés de la Bretagne, pour une expérience inoubliable.', 'http://example.com/saintmalo', FALSE, 30, '2024-08-01', '07:00', '21:00'),
+(4, 'Aucune', 'Gratuit', 'Balade en bateau à Douarnenez', 'Découvrez le charmant port de Douarnenez et ses alentours à bord d’un bateau, lors d''une excursion en mer à couper le souffle.', 'Lors de cette excursion en bateau à Douarnenez, vous naviguerez sur les eaux calmes de la baie et pourrez admirer les paysages spectaculaires de la région. Vous longerez les côtes sauvages et découvrirez les petits ports typiques, tout en profitant de la beauté naturelle de cette partie de la Bretagne. Le capitaine, passionné par la mer, partagera avec vous des anecdotes locales et des informations sur la faune et la flore maritimes. Une sortie agréable et tranquille pour explorer la baie de Douarnenez d’une manière unique.', 'http://example.com/douarnenez', TRUE, 31, '2024-09-15', '10:00', '18:00'),
+(4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire de la pêche et de la mer en visitant le Musée de la mer à Paimpol, un lieu incontournable pour les passionnés d''histoire maritime.', 'Le Musée de la mer à Paimpol vous propose une immersion fascinante dans l''histoire de la mer, à travers des expositions captivantes sur la pêche, la navigation et la vie maritime. Vous découvrirez des objets anciens, des maquettes de bateaux, ainsi que des témoignages émouvants sur la vie des marins et des pêcheurs bretons. Ce musée est l''occasion idéale de mieux comprendre l''importance de la mer dans l’histoire de la région, tout en explorant des collections exceptionnelles qui retracent l''évolution des métiers maritimes au fil des siècles.', 'http://example.com/paimpol', TRUE, 32, '2024-10-20', '09:00', '19:00'),
+(21, 'A la une', 'Standard', 'Restaurant à Rennes', 'Venez goûter aux spécialités bretonnes à Rennes, dans un restaurant où la tradition et l''innovation se rencontrent pour un repas inoubliable.', 'Ce restaurant à Rennes vous invite à découvrir les saveurs de la Bretagne à travers une cuisine locale savoureuse et authentique. Vous pourrez déguster des crêpes, des galettes bretonnes préparées avec des ingrédients frais et locaux, ainsi que du cidre de qualité. Le cadre chaleureux et accueillant du restaurant vous permettra de passer un moment agréable en famille ou entre amis, tout en savourant des plats traditionnels qui mettent en valeur les produits du terroir breton. Une expérience culinaire à ne pas manquer lors de votre séjour à Rennes.', 'http://example.com/rennes', FALSE, 33, '2024-11-10', '11:00', '16:00'),
+(21, 'A la une', 'Standard', 'Visite de Vannes', 'Explorez la beauté de Vannes, une ville pleine de charme, avec ses ruelles médiévales et son port pittoresque. Une visite incontournable pour les amoureux de l’histoire et de la nature.', 'Lors de cette visite guidée de Vannes, vous découvrirez l’âme de la ville à travers ses rues pavées, ses remparts et ses monuments historiques. Vous admirerez la cathédrale Saint-Pierre, un chef-d’œuvre de l’architecture gothique, et explorerez le vieux quartier de la ville avec ses maisons à colombages. Vous en apprendrez également davantage sur l''histoire de Vannes, depuis son époque médiévale jusqu’à aujourd’hui, en découvrant des lieux emblématiques comme le château de l''Hermine et le port de plaisance. Cette visite vous offrira un aperçu complet de cette ville au charme intemporel.', 'http://example.com/cotesarmor', TRUE, 34, '2024-12-01', '08:00', '18:00'),
+(21, 'A la une', 'Standard', 'Restaurant exotique de Rennes', 'Laissez-vous emporter par les saveurs exotiques au restaurant de Rennes, un lieu unique qui marie subtilement la cuisine tropicale et les influences bretonnes.', 'Le restaurant exotique de Rennes vous invite à découvrir une cuisine originale où les épices et les fruits tropicaux se mêlent aux produits locaux pour créer des plats savoureux et surprenants. Vous pourrez savourer des plats inspirés des îles et des cuisines du monde entier, le tout dans un cadre coloré et chaleureux. Le restaurant met un accent particulier sur la fraîcheur des ingrédients et la qualité des produits, pour offrir une expérience culinaire inoubliable. Une excellente opportunité de découvrir des saveurs nouvelles et de s''évader le temps d’un repas.', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00');
 
 -- Peupler la table _image
-INSERT INTO _image (nomImage) VALUES
-('saintbrieuc1.jpg'),
-('visitesaintbrieuc.jpg'),
-('morlaix.jpg'),
-('parcBrest.jpg'),
-('saintmalo.jpg'),
-('Lorient.jpg'),
-('fonds-marin.jpg'),
-('quimper.jpg'),
-('brest.jpg'),
-('quiberon.jpg'),
-('port-perros.jpg'),
-('saint malo.jpg'),
-('Douarnenez.jpg'),
-('Paimpol.jpg'),
-('rennes.jpg'),
-('vannes.jpg'),
-('restau.jpg'),
-('parc.jpg'),
-('bat saint brieuc.jpg'),
-('gare-de-saint-brieuc.jpg');
-
-INSERT INTO _representeOffre (idOffre, idImage) VALUES
-(1, 1),
-(1, 2),
-(2, 3),
-(3, 4),
-(4, 5),
-(5, 6),
-(5, 7),
-(6, 8),
-(7, 9),
-(8, 10),
-(9, 11),
-(10, 12),
-(11, 13),
-(12, 14),
-(13, 15),
-(14, 16),
-(15, 17);
 INSERT INTO _image (nomImage) VALUES
 ('saintbrieuc1.jpg'),
 ('visitesaintbrieuc.jpg'),
@@ -330,56 +276,6 @@ INSERT INTO _reponseAvis (idAvis, idCompte, commentaire) VALUES
 (2, 3, 'Nous sommes désolés que le spectacle n’ait pas été à la hauteur de vos attentes.'),
 (3, 4, 'Merci pour votre retour ! Nous espérons vous revoir bientôt.'),
 (4, 5, 'Nous sommes heureux que vous ayez aimé le restaurant. À bientôt !');
-INSERT INTO _avis (idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, estVu) VALUES
-(1, 1, 'Une visite magnifique avec des guides passionnants et une vue incroyable sur Saint-Brieuc.', 5.0, 'Incroyable visite', 'Famille', '2024-09-10', FALSE),
-(2, 1, 'Le spectacle était décevant, les marionnettes manquaient de finesse et les tours de cartes étaient trop répétitifs.', 2.5, 'Deception...', 'Amis', '2024-10-15', FALSE),
-(3, 1, 'Super parc d’attractions, les enfants ont adoré ! Il y a beaucoup d’attractions adaptées pour tous les âges.', 4.5, 'Je recommande pour la famille', 'Famille', '2024-11-18', FALSE),
-(4, 1, 'Le restaurant était incroyable, une expérience culinaire de haute qualité. Un peu cher, mais ça en valait la peine.', 5.0, 'Délicieux repas', 'Couple', '2024-11-20', FALSE),
-(5, 1, 'L’activité de plongée était fantastique. Le matériel était neuf et la plongée dans les eaux claires de Lorient a été un moment inoubliable.', 5.0, 'Magnifique environnement sous-marins', 'Amis', '2024-11-22', FALSE),
-(6, 1, 'La visite de Quimper était bien, mais pas aussi exceptionnelle que je m’y attendais. Les guides étaient un peu trop pressés.', 3.0, 'Visite sympa avec mauvais guide', 'Solo', '2024-11-23', FALSE),
-(1, 5, 'Excellente visite guidée, les informations étaient claires et intéressantes. Parfait pour une première découverte de la ville.', 4.5, 'Très bonne visite', 'Amis', '2024-11-11', FALSE),
-(2, 5, 'Mauvaise expérience. Le spectacle était en retard et la qualité des prestations était loin de ce à quoi je m’attendais.', 1.5, 'Spectacle ABSOLUMENT PAS original', 'Famille', '2024-11-16', FALSE),
-(3, 5, 'Parc très bien entretenu, mais certains manèges étaient en maintenance pendant notre visite, ce qui a réduit l’expérience.', 4.0, 'Incomplet mais sympa', 'Famille', '2024-11-19', FALSE),
-(4, 5, 'Le cadre est magnifique, mais le service était un peu lent. Nous avons attendu longtemps avant d’être servis.', 3.0, '45min d''attente...', 'Couple', '2024-11-21', FALSE),
-(1, 6, 'La visite était fascinante et très bien structurée. Nous avons appris beaucoup de choses tout en profitant de magnifiques panoramas.', 5.0, 'Visite passionnante', 'Famille', '2024-11-18', FALSE),
-(1, 7, 'Excellente visite, même si la météo n’était pas parfaite, cela n’a pas gâché l’expérience. Les guides étaient super.', 4.5, 'Malgré la pluie, un super moment', 'Couple', '2024-11-19', FALSE),
-(1, 8, 'Une activité agréable, mais un peu trop rapide à mon goût. J’aurais aimé passer plus de temps à explorer.', 4.0, 'Trop rapide', 'Solo', '2024-11-20', FALSE),
-(1, 9, 'Je recommande vivement cette visite. Les explications étaient claires et les lieux visités étaient magnifiques.', 4.5, 'Très bonne expérience', 'Amis', '2024-11-21', FALSE),
-(1, 10, 'La vue était incroyable, mais le groupe était trop grand pour bien profiter de la visite. Il était difficile d’entendre les explications du guide.', 3.0, 'Groupe trop grand', 'Famille', '2024-11-22', FALSE),
-(1, 11, 'Visite agréable, mais j’aurais aimé un peu plus d’interaction avec le guide. Le temps est passé vite mais je reste un peu sur ma faim.', 4.0, 'Bien mais perfectible', 'Couple', '2024-11-23', FALSE),
-(1, 12, 'Une très belle expérience, le guide était passionné et nous a donné de nombreuses anecdotes intéressantes sur la ville.', 5.0, 'À faire absolument', 'Amis', '2024-11-24', FALSE),
-(1, 13, 'Très bon rapport qualité-prix. L’organisation était parfaite et les explications très enrichissantes. Je recommande.', 4.5, 'Très bon moment', 'Solo', '2024-11-25', FALSE),
-(1, 14, 'La visite était agréable, mais j’ai trouvé qu’il manquait un peu d’animation. Un peu plus de dynamisme aurait été bien.', 3.5, 'Peut mieux faire', 'Famille', '2024-11-26', FALSE),
-(1, 15, 'Une découverte magnifique de la ville, avec une vue incroyable. L''itinéraire était parfait pour apprécier chaque site en profondeur.', 5.0, 'Un incontournable', 'Couple', '2024-11-27', FALSE),
-(1, 16, 'Visite enrichissante, le guide était très professionnel et a su répondre à toutes nos questions. À faire absolument!', 4.5, 'Visite très informative', 'Famille', '2024-11-12', FALSE),
-(1, 17, 'Superbe expérience. Les paysages étaient époustouflants et l''accueil très chaleureux. On reviendra!', 5.0, 'Une expérience mémorable', 'Couple', '2024-11-13', FALSE),
-(1, 18, 'Belle découverte de la ville, mais un peu trop de monde ce jour-là. Le groupe était un peu trop grand.', 4.0, 'Bien mais trop fréquenté', 'Amis', '2024-11-14', FALSE),
-(6, 5, 'Temps pluvieux, c''est dommage', 1.0, 'Belle vue mais manque d''histoire', 'Solo', '2024-11-17', FALSE),
-(6, 6, 'Je suis déçu. La ville est belle, mais la visite était mal organisée et les arrêts étaient trop courts pour vraiment profiter des lieux.', 2.0, 'Visite mal organisée', 'Famille', '2024-10-02', FALSE),
-(6, 7, 'Je ne recommande pas cette visite. Le guide était ennuyeux et ne savait pas répondre aux questions. L''ambiance était terne.', 1.5, 'Guide ennuyeux', 'Solo', '2024-11-03', FALSE),
-(6, 8, 'Pas assez d''informations intéressantes. La visite manquait d''animation et le guide semblait pressé. Nous avons à peine eu le temps de poser des questions.', 2.5, 'Visite trop rapide et fade', 'Amis', '2024-10-04', FALSE),
-(6, 9, 'Très déçu de cette visite. Le groupe était trop grand et le guide avait du mal à s''adapter. Beaucoup de bruit et de distractions.', 2.0, 'Trop de monde et peu d''attention', 'Couple', '2024-11-05', FALSE),
-(6, 10, 'La visite était longue et monotone. Il n''y avait pas beaucoup de dynamisme et cela ne m''a pas du tout captivé. Je m''attendais à mieux.', 2.0, 'Visite trop monotone', 'Famille', '2024-11-06', FALSE),
-(6, 11, 'Une expérience fantastique. Le guide était passionné et a rendu chaque moment intéressant. Nous avons découvert des coins cachés de Quimper que nous n’aurions jamais trouvés seuls.', 5.0, 'À faire absolument', 'Famille', '2024-11-06', FALSE),
-(6, 12, 'Une visite fascinante avec un guide incroyablement compétent. Quimper est une ville magnifique et cette visite en a révélé tous les secrets. Très bien organisé, je recommande à 100%.', 5.0, 'Expérience mémorable', 'Solo', '2024-11-07', FALSE),
-(6, 13, 'Visite très intéressante, mais les informations étaient parfois un peu superficielles. Le guide pourrait approfondir certains points.', 3.5, 'Bonne visite, mais manque de détails', 'Famille', '2024-11-28', FALSE),
-(6, 14, 'L’ambiance était agréable, mais j’aurais aimé plus de temps pour explorer la ville à mon rythme.', 4.0, 'Sympathique mais trop court', 'Solo', '2024-11-29', FALSE),
-(7, 5, 'Une visite guidée très enrichissante ! La rade de Brest, le château et le musée de la Marine étaient impressionnants. Très bien organisé, je recommande.', 5.0, 'Visite incontournable', 'Famille', '2024-10-10', FALSE),
-(8, 6, 'Le spectacle était bien, mais je m’attendais à plus de finesse dans les marionnettes. Un peu déçu par l’ensemble.', 2.5, 'Dommage', 'Amis', '2024-09-16', FALSE),
-(9, 8, 'Les montagnes russes à Perros-Guirec étaient fantastiques, mais la balade en kayak le long des côtes rocheuses était encore plus incroyable. À refaire !', 5.0, 'Superbes paysages', 'Famille', '2024-09-12', FALSE),
-(10, 13, 'Très belle randonnée sur le GR34 à Saint-Malo. La vue sur l’océan était magnifique, mais l’itinéraire était un peu trop long et fatigant pour les enfants.', 3.5, 'Belle expérience, mais fatigante', 'Famille', '2024-08-05', FALSE),
-(11, 12, 'Une excursion en bateau à Douarnenez très agréable. Le paysage était superbe, mais le bateau était un peu vieux et il manquait un peu d’animations pendant la traversée.', 3.5, 'Bateau agréable, mais vieillissant', 'Couple', '2024-09-18', FALSE),
-(12, 7, 'Le musée de la mer à Paimpol est une excellente visite pour les passionnés d’histoire maritime. Les expositions étaient très intéressantes et bien présentées.', 5.0, 'Visite fascinante', 'Solo', '2024-10-21', FALSE),
-(13, 6, 'Le restaurant à Rennes offre une très bonne expérience gastronomique bretonne. Les crêpes et le cidre étaient délicieux, mais le service était un peu lent.', 4.0, 'Bonne expérience mais service lent', 'Couple', '2024-11-11', FALSE),
-(14, 18, 'Une belle visite de Vannes, mais il y avait trop de monde ce jour-là. Le guide était sympathique, mais nous avons eu du mal à entendre les explications.', 3.0, 'Sympa mais trop fréquenté', 'Amis', '2024-12-02', FALSE),
-(15, 15, 'Le restaurant exotique à Rennes est une expérience culinaire unique. Les plats étaient délicieux et originaux, mais l’ambiance était un peu trop bruyante pour profiter pleinement.', 4.0, 'Bonne expérience mais bruyant', 'Famille', '2024-12-03', FALSE);
-
--- Peupler la table _reponseAvis
-INSERT INTO _reponseAvis (idAvis, idCompte, commentaire) VALUES
-(1, 2, 'Merci pour votre avis positif ! Nous sommes ravis que vous ayez apprécié la visite.'),
-(2, 3, 'Nous sommes désolés que le spectacle n’ait pas été à la hauteur de vos attentes.'),
-(3, 4, 'Merci pour votre retour ! Nous espérons vous revoir bientôt.'),
-(4, 5, 'Nous sommes heureux que vous ayez aimé le restaurant. À bientôt !');
 
 INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES -- septembre octobre rien septembre
 (1, '2024-09-01','2024-10-20'),
@@ -393,7 +289,10 @@ INSERT INTO _facture (idOffre, datePrestaServices, dateEcheance) VALUES -- septe
 (4, '2024-09-01','2024-10-20'),
 (4, '2024-10-01','2024-11-20'),
 (4, '2024-11-01','2024-12-20'),
-(4, '2024-12-01','2025-01-20');
+(4, '2024-12-01','2025-01-20'),
+(13,'2024-12-01','2025-02-20'),
+(14,'2025-01-01','2025-02-20'),
+(15,'2025-01-01','2025-02-20');
 
 INSERT INTO _historiqueEnLigne(idOffre, jourDebut, jourFin) VALUES
 (1,'2024-09-13','2024-09-22'),
@@ -409,13 +308,13 @@ INSERT INTO _historiqueEnLigne(idOffre, jourDebut, jourFin) VALUES
 (4,'2024-10-01','2024-10-31'),
 (4,'2024-11-01','2024-11-13'),
 (4,'2024-11-19','2024-11-30'),
-(4,'2024-12-01',null);
+(13,'2024-12-01','2024-12-13'),
+(14,'2025-01-04',null);
 
 INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAnnulee) VALUES
 (1, '2024-09-09',1, 'En relief',False),
 (2, '2024-10-07',1, 'A la une' ,false),
 (4, '2024-09-23',1, 'En relief',True),
-(1, '2024-10-28',1, 'A la une',False),
 (1, '2024-10-28',1, 'A la une',False),
 (2, '2024-12-02',1, 'A la une',false),
 (4, '2024-10-14',2, 'En relief',False),
@@ -424,7 +323,10 @@ INSERT INTO _annulationOption(nbSemaines, debutOption, idOffre, nomOption, estAn
 (4, '2024-12-02',3, 'En relief',true),
 (4, '2024-12-02',3, 'A la une' ,false),
 (4, '2024-09-23',4, 'En relief',True),
-(3, '2024-10-14',4, 'A la une',False);
+(3, '2024-10-14',4, 'A la une',False),
+(4, '2025-01-06',13, 'A la une' ,false),
+(3, '2025-01-06',14, 'A la une' ,false),
+(2, '2025-01-06',15, 'A la une' ,false);
 
 INSERT INTO _representeAvis(idAvis, idImage) VALUES
 (9, 18),
