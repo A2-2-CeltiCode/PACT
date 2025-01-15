@@ -1,5 +1,5 @@
 <?php
-
+require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 use composants\Button\Button;
 use composants\Button\ButtonType;
 use composants\Input\Input;
@@ -53,11 +53,27 @@ class Header
     private static bool $jsIncluded = false;
 
     /**
+     * Instance de la connexion PDO.
+     *
+     * @var PDO
+     */
+    private static PDO $dbh;
+
+    /**
+     * Initialise la connexion à la base de données.
+     */
+    public static function initDbConnection(): void {
+        global $driver, $server, $dbname, $dbuser, $dbpass;
+        self::$dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    }
+
+    /**
      * Rend l'en-tête avec les éléments nécessaires (CSS, JavaScript, etc.) pour un utilisateur donné.
      *
      * @param string $type Le type d'utilisateur (Guest, Member, Pro). Par défaut, 'guest'.
      */
     public static function render(string $type = HeaderType::Guest): void {
+        self::initDbConnection();
         if (!self::$cssIncluded) {
             echo '<link rel="stylesheet"
                         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back_ios_new,arrow_forward_ios,close,menu" />';
@@ -191,17 +207,12 @@ class Header
 
     private static function renderNotificationIcon(): void {
         session_start();
-        $server = 'localhost';
-        $driver = 'pgsql';
-        $dbname = 'pact';
-        $dbuser = 'postgres';
-        $dbpass = 'derfDERF29';
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+        self::initDbConnection();
         $idCompte = $_SESSION['idCompte'];
         $query = "SELECT a.*, o.* FROM pact._avis a
               JOIN pact._offre o ON a.idOffre = o.idOffre
               WHERE o.idCompte = :idCompte AND a.estvu = false";
-        $stmt = $dbh->prepare($query);
+        $stmt = self::$dbh->prepare($query);
         $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
         $stmt->execute();
         $unreadReviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
