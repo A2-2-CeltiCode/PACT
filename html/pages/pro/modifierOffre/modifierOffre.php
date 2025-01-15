@@ -235,6 +235,7 @@ $options = $vueOffre["nomoption"];
         <section>
 
             <article>
+                <h4>Information de l'offre</h4>
                 <div>
                     <label>Nom de l'offre*</label>
                     <?php Input::render(name: "nomOffre", type: "text", required: "true", value: $nomOffre) ?>
@@ -261,18 +262,21 @@ $options = $vueOffre["nomoption"];
 
                 <div>
 
-                    <div>
-                        <label>Description de l'offre*</label>
-                        <?php Textarea::render(name: "descriptionOffre", required: "true", rows: 2, value: $descriptionOffre) ?>
-                    </div>
+
             </article>
             <article>
+                <h4>Description de l'offre</h4>
+                <div>
+                    <label>Description de l'offre*</label>
+                    <?php Textarea::render(name: "descriptionOffre", required: "true", rows: 2, value: $descriptionOffre) ?>
+                </div>
                 <div>
                     <label>Description Détaille</label>
                     <?php Textarea::render(name: "descriptionDetaillee", rows: 7, value: $descriptionDetaillee) ?>
                 </div>
-
-
+            </article>
+            <article>
+                <h4>Details de l'offre</h4>
 
                 </div>
 
@@ -280,13 +284,14 @@ $options = $vueOffre["nomoption"];
                     <input type="hidden" name="ancienLigne" value="<?php echo $estEnLigne; ?>">
                     <label>Est en ligne*</label>
                     <br>
-                    <input type="radio" id="vrai" name="estEnLigne" value="true" <?php if ($estEnLigne == "1") echo "checked"; ?>>
-                    <label for="oui">Oui</label>
-                    <input type="radio" id="faux" name="estEnLigne" value="false" <?php if ($estEnLigne == "0") echo "checked"; ?>>
-                    <label for="non">Non</label>
+                    <div class="flex">
+                        <input type="radio" id="vrai" name="estEnLigne" value="true" <?php if ($estEnLigne == "1") echo "checked"; ?>>
+                        <label for="oui">Oui</label>
+                        <input type="radio" id="faux" name="estEnLigne" value="false" <?php if ($estEnLigne == "0") echo "checked"; ?>>
+                        <label for="non">Non</label>
+                    </div>
                 </div>
 
-                <br>
 
                 <div>
                     
@@ -346,6 +351,7 @@ $options = $vueOffre["nomoption"];
 
                                         );
                                     ?>
+                                <br>
                                 <div class="selected-values">
                                     
                                 </div>
@@ -388,6 +394,7 @@ $options = $vueOffre["nomoption"];
                                 $tagVisite
                             );
                         ?>
+                        <br>
                         <div class="selected-values"></div>
                     </div>
                             <br><br>
@@ -450,6 +457,7 @@ $options = $vueOffre["nomoption"];
                                     
                                 );
                             ?>
+                            <br>
                             <div class="selected-values"></div>
                         </div>
                             <br><br>
@@ -486,6 +494,7 @@ $options = $vueOffre["nomoption"];
                                     $tagParc
                                 );
                             ?>
+                            <br>
                             <div class="selected-values"></div>
                         </div>
                             <br><br>
@@ -527,6 +536,7 @@ $options = $vueOffre["nomoption"];
                                 );
                                 
                             ?>
+                            <br>
                             <div class="selected-values"></div>
                         </div>
                             <br>
@@ -554,17 +564,17 @@ $options = $vueOffre["nomoption"];
                             </div>
                             <div>
                                 <label>Type de repas</label>
-                                <br><br>
+
                                 <div>
-                                <label>Type de repas</label>
                                 <br>
+                                <div class="flex">
                                 <input type="checkbox" id="dejeuner" name="typeRepas[]" value="Dejeuner">
                                 <label for="dejeuner">Dejeuner</label>
                                 <input type="checkbox" id="diner" name="typeRepas[]" value="Diner">
                                 <label for="diner">Diner</label>
                                 <input type="checkbox" id="snack" name="typeRepas[]" value="Snack">
                                 <label for="snack">Snack</label>
-                                
+                                </div>
                             </div>
                                 
                             </div>

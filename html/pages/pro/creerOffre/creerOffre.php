@@ -113,7 +113,7 @@ $rib = $stmt->fetchColumn();
                     </div>
                 </article>
                 <article>
-                    <h4>Details</h4>
+                    <h4>Details de l'offre</h4>
                     <br>
                     <div>
                         <?php

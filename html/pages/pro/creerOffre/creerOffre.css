@@ -7,6 +7,12 @@
     --success-color: #66BB6A;
     --background-gradient: linear-gradient(135deg, #F3E5F5, #fff);
     --section-hover: #F3E5F5;
+    --text-primary: #333;
+    --border-radius: 12px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --transition-default: all 0.3s ease;
 }
 
 * {
@@ -21,10 +27,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-}
-
-header, footer {
-    flex-shrink: 0;
+    color: var(--text-primary);
+    line-height: 1.6;
 }
 
 main {
@@ -38,11 +42,12 @@ main {
 /* Form styling */
 .info-display {
     background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(156, 39, 176, 0.1);
-    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    padding: 2.5rem;
     width: 100%;
     border: 1px solid var(--secondary-color);
+    margin-top: 2rem;
 }
 
 h1 {
@@ -50,34 +55,43 @@ h1 {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    font-size: 2.2rem;
-    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
     text-align: center;
-    padding: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-weight: 800;
+    letter-spacing: 2px;
 }
 
 section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
 }
 
 article {
-    padding: 1.5rem;
+    padding: 2rem;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-    border-left: 4px solid var(--secondary-color);
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--secondary-color);
+    transition: var(--transition-default);
 }
 
 article:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.15);
-    border-left: 4px solid var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+}
+
+h4 {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+    text-align: center;
 }
 
 /* Form elements */
@@ -96,7 +110,7 @@ label {
 
 .input-wrapper,
 textarea,
-select {
+main select {
     width: 100% !important;
     padding: 0.8rem !important;
     border: 2px solid #E1BEE7 !important;
@@ -107,13 +121,6 @@ select {
 }
 
 .input-wrapper:focus,
-h4 {
-    font-size: 1.5rem;
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
 textarea:focus,
 select:focus {
     outline: none;
@@ -132,31 +139,6 @@ textarea {
     min-height: 100px;
 }
 
-/* Buttons */
-.btns {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
-    padding: 1rem;
-}
-
-button {
-    padding: 0.8rem 1.6rem;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s;
-    background: var(--primary-gradient);
-    color: white;
-    border: none;
-}
-
-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
-}
-
 /* Dropdown and suggestions */
 .dropdown-content {
     position: absolute;
@@ -172,10 +154,9 @@ button:hover {
     border: 1px solid var(--secondary-color);
 }
 
-
 #suggestions div,
 #adresseSuggestions div {
-    padding: 0.8rem;
+    padding: 0.8rem 1rem;
     cursor: pointer;
     transition: background-color 0.2s;
 }
@@ -188,12 +169,13 @@ button:hover {
 /* Image upload area */
 .dropzone {
     border: 2px dashed var(--secondary-color);
-    border-radius: 8px;
-    padding: 2rem;
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
     text-align: center;
     background-color: #fafafa;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: var(--transition-default);
+    position: relative;
 }
 
 .dropzone:hover {
@@ -208,33 +190,61 @@ label[for*="required"]:after {
     margin-left: 4px;
 }
 
-/* Success states */
-.valid-input {
-    border-color: var(--success-color) !important;
-}
-
-#suggestions, #adresseSuggestions {
-    border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
-    background-color: white;
-    position: absolute;
-    z-index: 1000;
-}
-
-#suggestions div, #adresseSuggestions div {
-    padding: 10px;
-    cursor: pointer;
-}
-
-#suggestions div:hover, #adresseSuggestions div:hover {
-    background-color: #f0f0f0;
+/* Button styling */
+.btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--secondary-color);
 }
 
 /* Checkbox and radio styling */
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 input[type="checkbox"],
 input[type="radio"] {
     accent-color: var(--accent-color);
+    width: 1.2rem;
+    height: 1.2rem;
     margin-right: 0.5rem;
 }
 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    section {
+        grid-template-columns: 1fr;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    .info-display {
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+}
+.flex {
+    display: flex;
+    align-items: flex-start;
+    
+}
+
+#faux,
+#vrai,
+#diner,
+#dejeuner,
+#snack {
+    margin:0 1em;
+    flex-grow: 0 !important;
+}
