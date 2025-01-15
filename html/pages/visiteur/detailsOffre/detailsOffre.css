@@ -103,6 +103,15 @@ label{
   max-width: 800px;
 }
 
+.titre-svg svg:first-of-type {
+  width: 50px;
+  height: 50px;
+  stroke: var(--primaire-pro);
+  fill: rgba(0, 0, 0, 0);
+  padding: 0;
+  margin: 0;
+}
+
 /* Container principal */
 .container {
   max-width: 1280px;

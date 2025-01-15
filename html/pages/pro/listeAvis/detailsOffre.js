@@ -135,5 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  
   initButtons(); // Initialiser les écouteurs d'événements au chargement de la page
 });

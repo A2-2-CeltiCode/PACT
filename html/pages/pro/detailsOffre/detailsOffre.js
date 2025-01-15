@@ -199,6 +199,25 @@ document.addEventListener("DOMContentLoaded", function () {
           });
       });
     });
+
+    // Réinitialiser l'observateur pour marquer les avis comme vus
+    const avisElements = document.querySelectorAll(".avi.non-vu");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idAvis = entry.target.dataset.idavis;
+          fetch(`markAsSeen.php?idAvis=${idAvis}`, {
+            method: 'POST'
+          }).then(response => {
+            // ...existing code...
+          });
+        }
+      });
+    });
+
+    avisElements.forEach(avi => {
+      observer.observe(avi);
+    });
   }
 
   initButtons(); // Initialiser les écouteurs d'événements au chargement de la page
