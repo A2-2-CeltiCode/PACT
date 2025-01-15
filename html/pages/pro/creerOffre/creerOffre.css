@@ -1,12 +1,26 @@
 @import url(../../../ui.css);
 
-body {
+:root {
+    --primary-gradient: linear-gradient(135deg, #6A1B9A, #9C27B0);
+    --secondary-color: #E1BEE7;
+    --accent-color: #4A148C;
+    --success-color: #66BB6A;
+    --background-gradient: linear-gradient(135deg, #F3E5F5, #fff);
+    --section-hover: #F3E5F5;
+}
+
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: var(--background-gradient);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
 }
 
 header, footer {
@@ -14,91 +28,194 @@ header, footer {
 }
 
 main {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-label {
-    font-size: var(--p-medium-font-size);
-    color: var(--noir);
-    margin: 5px 0;
-    font-weight: var(--font-weight-normal);
-}
-
-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px 0;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-div {
-    margin: 5px 0;
-}
-
-article {
-    margin: 0 5vh;
     flex: 1;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Form styling */
+.info-display {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(156, 39, 176, 0.1);
+    padding: 2rem;
+    width: 100%;
+    border: 1px solid var(--secondary-color);
 }
 
 h1 {
-    font-size: 2em;
-    color: var(--primary-color);
-    margin-bottom: 20px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
+section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    z-index: 1;
+article {
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--secondary-color);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.dropdown-content.show {
-    display: block;
+article:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.15);
+    border-left: 4px solid var(--accent-color);
 }
 
-.btns {
-    padding: 1em;
-}
-
+/* Form elements */
 .input-wrapper {
-    width: 100% !important;
+    margin-bottom: 1.5rem;
+    position: relative;
 }
 
-#selected-values {
+label {
+    display: block;
+    font-size: var(--p-medium-font-size);
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.input-wrapper,
+textarea,
+select {
+    width: 100% !important;
+    padding: 0.8rem !important;
+    border: 2px solid #E1BEE7 !important;
+    border-radius: 6px !important;
+    font-size: 1rem !important;
+    transition: all 0.3s !important;
+    background-color: #fff !important;  
+}
+
+.input-wrapper:focus,
+h4 {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(74, 20, 140, 0.1);
+}
+
+.input-wrapper:hover,
+textarea:hover,
+select:hover {
+    border-color: var(--accent-color) !important;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Buttons */
+.btns {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+button {
+    padding: 0.8rem 1.6rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+/* Dropdown and suggestions */
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--secondary-color);
+}
+
+
+#suggestions div,
+#adresseSuggestions div {
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#suggestions div:hover,
+#adresseSuggestions div:hover {
+    background-color: var(--section-hover);
+}
+
+/* Image upload area */
+.dropzone {
+    border: 2px dashed var(--secondary-color);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    background-color: #fafafa;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dropzone:hover {
+    border-color: var(--accent-color);
+    background-color: var(--section-hover);
+}
+
+/* Required field indicator */
+label[for*="required"]:after {
+    content: '*';
+    color: #E91E63;
+    margin-left: 4px;
+}
+
+/* Success states */
+.valid-input {
+    border-color: var(--success-color) !important;
 }
 
 #suggestions, #adresseSuggestions {
     border: 1px solid #ccc;
-    max-height: 150px;
+    max-height: 200px;
     overflow-y: auto;
     background-color: white;
     position: absolute;
@@ -114,16 +231,10 @@ h1 {
     background-color: #f0f0f0;
 }
 
-button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+/* Checkbox and radio styling */
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--accent-color);
+    margin-right: 0.5rem;
 }
 
-button:hover {
-    background-color: var(--primary-color-dark);
-}

@@ -59,6 +59,8 @@ $rib = $stmt->fetchColumn();
             <h1>Créez votre Offre</h1>
             <section>
                 <article>
+                <h4>Information de l'offre</h4>
+                <br>
                     <div>
                         <label>Nom de l'offre*</label>
                         <?php Input::render(name: "nomOffre", type: "text", required: "true") ?>
@@ -95,6 +97,8 @@ $rib = $stmt->fetchColumn();
                     </div>
                 </article>
                 <article>
+                    <h4>Description de l'offre</h4>
+                    <br>
                     <div>
                         <label>Description de l'offre*</label>
                         <?php Textarea::render(name: "descriptionOffre", required: "true", rows: 2) ?>
@@ -109,6 +113,8 @@ $rib = $stmt->fetchColumn();
                     </div>
                 </article>
                 <article>
+                    <h4>Details</h4>
+                    <br>
                     <div>
                         <?php
                         if ($numsiren != null) {
