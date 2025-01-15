@@ -119,6 +119,7 @@ STRING;
         $class = "";
         $star = "";
         $gold = "";
+
         if ($this->option == "A la une") {
             $class = "une";
             $star = "<img class='star-overlay' alt='relief' src='/ressources/img/relief.png'>";

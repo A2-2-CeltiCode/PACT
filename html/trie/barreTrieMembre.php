@@ -67,7 +67,7 @@ class Trie {
         echo '</div>';
 
         echo '<input type="hidden" id="sortInput" name="sort" value="' . htmlspecialchars($sort) . '">';
-        echo '<div class="input">';
+        echo '<div id="barretrieContainer" class="input">'; // Ajoutez un ID ici
         echo '<div style="display: grid; gap: 1px;">';
         
         echo '</div>';
@@ -146,3 +146,4 @@ class Trie {
         echo '</div></form>';
     }
 }
+?>

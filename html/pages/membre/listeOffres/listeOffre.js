@@ -1,32 +1,16 @@
- document.addEventListener('DOMContentLoaded', function () {
-     const toggleButton = document.getElementById('toggleBarretrieButton');
-     const filterContainer = document.querySelector('.input'); // Utilise querySelector pour sélectionner le premier élément avec la classe 'input'
-
-     toggleButton.addEventListener('click', () => {
-         if (filterContainer) {
-             filterContainer.classList.toggle('open'); // Ajoute ou enlève la classe 'open'
-         }
-     });
-    
- });
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
     const toggleButton = document.getElementById('toggleBarretrieButton');
-    const filterContainer = document.querySelector('.input'); 
-    const pageOverlay = document.getElementById('pageOverlay'); 
+    const filterContainer = document.getElementById('barretrieContainer'); // Utilisez l'ID ici
+    const pageOverlay = document.getElementById('pageOverlay');
 
     toggleButton.addEventListener('click', () => {
         if (filterContainer) {
             if (!filterContainer.classList.contains('open')) {
-                // Ouvre la barre de tri
                 filterContainer.style.display = 'flex';
-                pageOverlay.style.display = 'block'; 
-                setTimeout(() => filterContainer.classList.add('open'), 10); 
+                pageOverlay.style.display = 'block';
+                setTimeout(() => filterContainer.classList.add('open'), 10);
                 toggleButton.textContent = 'Masquer la barre de tri';
             } else {
-                // Ferme la barre de tri avec un délai avant display none
                 filterContainer.classList.remove('open');
                 pageOverlay.style.display = 'none';
                 toggleButton.textContent = 'Afficher la barre de tri';
@@ -37,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             filterContainer.style.display = 'none';
                         }
                     },
-                    { once: true } 
+                    { once: true }
                 );
             }
         }
