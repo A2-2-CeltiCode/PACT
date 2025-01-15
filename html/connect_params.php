@@ -1,7 +1,7 @@
-<?php
 
+<?php
 $server = 'localhost';
 $driver = 'pgsql';
-$dbname = 'postgres';
+$dbname = 'sae';
 $dbuser = 'postgres';
-$dbpass = '842163';
+$dbpass = 'postgres';

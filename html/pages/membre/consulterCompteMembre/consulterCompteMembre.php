@@ -1,4 +1,5 @@
 <?php
+// Démarrer la session
 session_start();
 
 use \composants\Button\Button;
@@ -21,10 +22,12 @@ $message = "";
 $userInfo = [];
 $idCompte = $_SESSION['idCompte'];
 
-// Connexion à la base de données
 try {
+    // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    
 
+    // Définir le schéma "pact" pour la session
     $dbh->exec("SET search_path TO pact;");
     $sql = "SELECT idcompte, pseudo, email, numtel, nom, prenom, codepostal, ville, rue, cleapi
             FROM vue_compte_membre LEFT JOIN _cleApi USING (idcompte)
@@ -81,6 +84,8 @@ try {
 
         <!-- Message d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
+
+        <!-- Affichage des messages d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
 
         <hr id="separation">
