@@ -53,7 +53,6 @@ $rib = $stmt->fetchColumn();
 <body>
     <?php Header::render(HeaderType::Pro); ?>
 
-    <main>
         <form class="info-display" id="myForm" method="post" action="confimationCreationOffre.php"
             onsubmit="return validateForm()" enctype="multipart/form-data">
             <h1>Créez votre Offre</h1>

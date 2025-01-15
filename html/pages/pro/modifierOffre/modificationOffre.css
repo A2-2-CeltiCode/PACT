@@ -31,13 +31,7 @@ body {
     line-height: 1.6;
 }
 
-main {
-    flex: 1;
-    padding: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    width: 100%;
-}
+
 
 /* Form styling */
 .info-display {
@@ -47,7 +41,7 @@ main {
     padding: 2.5rem;
     width: 100%;
     border: 1px solid var(--secondary-color);
-    width: 95%;
+    width: 90%;
     margin: 2em auto; /* Center the element */
 }
 
