@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
+/*if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
     header("Location: /pages/pro/listeOffres/listeOffres.php");
 } elseif (!isset($_SESSION['idCompte'])) {
     header("Location: /pages/visiteur/accueil/accueil.php");
-}
-
+}*/
+$_SESSION['idCompte']=1;
 use composants\Button\ButtonType;
 error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
 use \composants\Select\Select;
@@ -91,6 +91,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="listeOffre.css">
     <link rel="stylesheet" href="listeOffre.js">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="../../../trie/trieGeneral.js"></script>
     
 </head>
@@ -113,7 +114,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <div id="nombreOffres">
         <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
     </div>
-    <div id="resultats" class="offres-container carrousel">
+    <div id="resultats" class="offres-container">
+   
         <!-- Affichage des résultats -->
         <?php
         foreach ($resultats as $item) {
