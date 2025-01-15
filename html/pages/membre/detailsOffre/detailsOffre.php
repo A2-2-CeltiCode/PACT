@@ -416,7 +416,9 @@ try {
                 <?php Input::render(
                     "titre",
                     "Un titre qui résume votre expérience",
-
+                    "text",
+                    "titre"
+                    
                 ); ?>
             </div>
 
@@ -485,7 +487,7 @@ try {
                 </div>
                 <div class="upload-section">
                     <?php InsererImage::render(
-                        "drop-zone",
+                        "drop-zone[]",
                         "Déposez vos photos ici ou cliquez pour sélectionner",
                         5,  // Limite à 5 photos
 

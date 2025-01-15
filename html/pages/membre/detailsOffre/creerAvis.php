@@ -3,7 +3,6 @@ session_start();
 $idCompte = $_SESSION['idCompte'];
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/connect_params.php';
-
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
 $stmt = $dbh->prepare("INSERT INTO pact._avis (idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis, estVu) VALUES (:idoffre, :idcompte, :commentaire, :note, :titre, :contextevisite, :datevisite, CURRENT_DATE, FALSE)");
