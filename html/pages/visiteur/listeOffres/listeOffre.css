@@ -18,7 +18,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 30px;
 }
 
 .offre{
@@ -55,7 +55,7 @@
 }
 
 .select-wrapper select{
-    color: var(--primaire-membre) !important;
+    color: var(--primaire-visiteur) !important;
     border: 1px solid var(--gris2) !important;
 }
 
@@ -119,7 +119,7 @@ input[type="number"]{
 }
 
 .styletitre::placeholder{
-    color : var(--primaire-membre) !important;
+    color : var(--primaire-visiteur) !important;
     font-size: 16px;
 }
 
@@ -184,8 +184,8 @@ input[type="number"]{
 
 
 .btnfiltres{
-    background-color: var(--primaire-membre) !important;
-    border: 1px solid var(--primaire-membre) !important;
+    background-color: var(--primaire-visiteur) !important;
+    border: 1px solid var(--primaire-visiteur) !important;
     border-radius: 0.5em !important;
 }
 
