@@ -1,14 +1,13 @@
-@media (max-width: 360px){
+@media (max-width: 500px){
 
-    .offres-container {
-        display: grid !important;
-        grid-template-columns: 300px;
+
+    .tri-somie{
+        display: flex;
+        flex-direction: column;
         justify-content: center;
-        gap: 20px;
-    }
-
-    .offre{
-        margin: 0;
+        align-items: center;
+        gap: 20px 0;
+        padding: 10px 12px;
     }
 
 }
@@ -112,8 +111,9 @@ input[type="number"]{
 
 .tri-somie{
     display: flex;
-    width: 440px;
-    height: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 20px;
     padding: 10px 12px;
 }
