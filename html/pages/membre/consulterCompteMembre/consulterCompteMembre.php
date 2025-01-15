@@ -1,4 +1,5 @@
 <?php
+// Démarrer la session
 session_start();
 
 use \composants\Button\Button;
@@ -19,15 +20,17 @@ $userInfo = [];
 // Initialisation des variables
 $message = "";
 $userInfo = [];
-$idCompte = $_SESSION['idCompte']; 
+$idCompte = $_SESSION['idCompte'];
 
-// Connexion à la base de données
 try {
+    // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     
+
+    // Définir le schéma "pact" pour la session
     $dbh->exec("SET search_path TO pact;");
-    $sql = "SELECT idcompte, pseudo, email, numtel, nom, prenom, codepostal, ville, rue
-            FROM vue_compte_membre
+    $sql = "SELECT idcompte, pseudo, email, numtel, nom, prenom, codepostal, ville, rue, cleapi
+            FROM vue_compte_membre LEFT JOIN _cleApi USING (idcompte)
             WHERE idCompte = :idCompte";
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
@@ -81,6 +84,8 @@ try {
 
         <!-- Message d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
+
+        <!-- Affichage des messages d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
 
         <hr id="separation">
@@ -163,6 +168,18 @@ try {
                     <td><input type="text" name="ville" class="editable" 
                     value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>" 
                     readonly data-original="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>"></td>
+                </tr>
+                <!-- Catégorie API -->
+                <tr>
+                    <th colspan="2" class="thhead"  style="background-color: #075997; color: white; text-align: center;">Tchatator</th>
+                </tr>
+                <tr>
+                    <th>Clé d'API</th>
+                    <td>
+                        <input type="text" readonly="" value="<?= htmlspecialchars(!empty($userInfo['cleapi']) ? 'Généré' : "Non généré") ?>">
+                        <?php Button::render(id: "copyButton", text: "<span>Copier</span>", onClick: "copyKey('" . $userInfo['cleapi'] . "')") ?>
+                        <?php Button::render(id: "generateButton", text: "<span>" . htmlspecialchars(empty($userInfo['cleapi']) ? 'Générer' : "Regénérer") . "</span>", onClick: "generateKey()") ?>
+                    </td>
                 </tr>
             </table>
 

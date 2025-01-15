@@ -155,6 +155,18 @@ try {
                         <input type="text" name="banquerib" class="editable" value="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
+                <!-- Catégorie API -->
+                <tr>
+                    <th colspan="2" class="thhead"  style="background-color: #6b3d84; color: white; text-align: center;">Tchatator</th>
+                </tr>
+                <tr>
+                    <th>Clé d'API</th>
+                    <td>
+                        <input type="text" readonly="" value="<?= htmlspecialchars(!empty($userInfo['cleapi']) ? 'Généré' : "Non généré") ?>">
+                        <?php Button::render(id: "copyButton", text: "<span>Copier</span>", onClick: "copyKey('" . $userInfo['cleapi'] . "')") ?>
+                        <?php Button::render(id: "generateButton", text: "<span>" . htmlspecialchars(empty($userInfo['cleapi']) ? 'Générer' : "Regénérer") . "</span>", onClick: "generateKey()") ?>
+                    </td>
+                </tr>
             </table>
 
 
