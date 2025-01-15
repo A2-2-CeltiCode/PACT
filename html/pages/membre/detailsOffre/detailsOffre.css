@@ -595,6 +595,7 @@
     box-shadow: var(--shadow-md);
     transition: visibility 0.5s, opacity 0.5s ease-in-out;
     opacity: 0;
+    padding: 1em;
 }
 
 .toast.show {
