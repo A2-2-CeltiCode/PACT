@@ -1,10 +1,37 @@
+@media (max-width: 360px){
+
+    .offres-container {
+        display: grid !important;
+        grid-template-columns: 300px;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .offre{
+        margin: 0;
+    }
+
+}
+
+
 .offres-container {
     display: flex;
-    gap: 10px; 
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
-.offre {
-    margin: 10px auto;
+
+.offre{
+    margin: 0;
 }
+
+.body{
+    margin: 0;
+}
+
+
+
+
 .button-container {
     display: flex;
     align-items: center;
@@ -28,7 +55,7 @@
 }
 
 .select-wrapper select{
-    color: var(--primaire-visiteur) !important;
+    color: var(--primaire-membre) !important;
     border: 1px solid var(--gris2) !important;
 }
 
@@ -39,9 +66,6 @@
     gap: 20px !important;
     justify-content: center !important;
     margin-top: 20px !important;
-    align-items: center
-
-
 }
 
 #styleShadow{
@@ -65,11 +89,16 @@
 
 .sliders_control{
     min-width: 150px !important;
+    min-height: 20px !important;
+
+}
+
+.slider-select-wrapper{
     padding-top: 10px !important;
 }
 
 .form_control_container{
-    color:var(--primaire-visiteur) !important;
+    color:var(--primaire-membre) !important;
 }
 
 input[type="number"]{
@@ -90,7 +119,7 @@ input[type="number"]{
 }
 
 .styletitre::placeholder{
-    color : var(--primaire-visiteur) !important;
+    color : var(--primaire-membre) !important;
     font-size: 16px;
 }
 
@@ -141,12 +170,6 @@ input[type="number"]{
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent grey */
     z-index: 1000; /* Ensure it's above other content */
     display: none; /* Hidden by default */
-    
-}
-
-.agencement {
-    max-height: 90vh; /* Ajustez la hauteur maximale selon vos besoins */
-    overflow-y: auto; /* Ajoute une barre de défilement verticale */
 }
 
 .page-overlay.active {
@@ -161,8 +184,8 @@ input[type="number"]{
 
 
 .btnfiltres{
-    background-color: var(--primaire-visiteur) !important;
-    border: 1px solid var(--primaire-visiteur) !important;
+    background-color: var(--primaire-membre) !important;
+    border: 1px solid var(--primaire-membre) !important;
     border-radius: 0.5em !important;
 }
 
@@ -175,4 +198,9 @@ input[type="number"]{
 
 .heure{
     margin: 10px 0;
+}
+
+.agencement {
+    max-height: 90vh; /* Ajustez la hauteur maximale selon vos besoins */
+    overflow-y: auto; /* Ajoute une barre de défilement verticale */
 }
