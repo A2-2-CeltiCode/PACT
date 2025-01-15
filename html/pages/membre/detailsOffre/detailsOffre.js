@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   const doc = parser.parseFromString(data, "text/html");
                   const avisList = doc.querySelector(".liste-avis > div:last-child");
                   document.querySelector(".liste-avis > div:last-child").innerHTML = avisList.innerHTML;
-                  initializeEvents();
+                  initializeEvents(); // Réinitialiser les événements après le tri
               });
       }
 
@@ -156,20 +156,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
       signalerButtons.forEach((button) => {
           button.addEventListener("click", function () {
-              const idReponse = this.dataset.idreponse;
-              fetch(`signalerReponse.php?idReponse=${idReponse}`)
-                  .then((response) => response.json())
-                  .then((data) => {
-                      if (data.success) {
-                          toast.classList.add("show");
-                          setTimeout(() => {
-                              toast.classList.remove("show");
-                          }, 3000);
-                      }
-                  });
+              toast.classList.add("show");
+              setTimeout(() => {
+                  toast.classList.remove("show");
+              }, 3000);
           });
       });
   }
+
+  // Initialisation des événements de signalement
+  const signalerButtons = document.querySelectorAll(".btn-signaler");
+  const toast = document.getElementById("toast");
+
+  signalerButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    });
+  });
 
   // Gestion de la popup de création d'avis
   function initializeAvisPopup() {
@@ -256,9 +262,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function initializeEvents() {
       initializeRepondreButtons();
       initializeThumbButtons();
-      initializeSignalerButtons();
       initializeAvisPopup();
       initializeSupprimerButtons();
+      initializeSignalerButtons(); // Ajouter l'initialisation des boutons de signalement
   }
 
   // Initialisation lors du chargement
