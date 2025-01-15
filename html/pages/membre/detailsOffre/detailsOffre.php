@@ -143,7 +143,7 @@ try {
 
 <body>
     <div id="toast" class="toast">Avis bien signalé</div>
-    <div class=titre>
+    <div class=titre-page>
         <?php Label::render("titre-svg", "", "", "", "../../../ressources/icone/{$typeOffre}.svg"); ?>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
     </div>
