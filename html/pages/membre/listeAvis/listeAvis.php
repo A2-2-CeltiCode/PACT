@@ -198,11 +198,7 @@ try {
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
                                         </div>
-                                        <form action="supprimerReponse.php" method="POST">
-                                            <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
-                                            <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                                            <?php Button::render("btn-supprimer", "", "Supprimer", ButtonType::Member, "", true); ?>
-                                        </form>
+
                                     </div>
                                 <?php endforeach; ?>
                             </div>
