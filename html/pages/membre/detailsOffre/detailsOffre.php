@@ -372,7 +372,7 @@ try {
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
                                             
-                                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
+                                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Member, "", false); ?>
                                         </div>
 
                                     </div>
