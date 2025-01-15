@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function activerModification() {
         editableInputs.forEach(input => {
             input.removeAttribute("readonly");
-            input.style.backgroundColor = "#f0f0f0"; // Indiquer visuellement que le champ est modifiable
+            input.style.backgroundColor = "#f0f0f0";
         });
 
         btnEnregistrer.style.display = "inline-block";
@@ -43,9 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function annulerModification() {
         editableInputs.forEach(input => {
-            input.value = input.dataset.original; // Restaurer la valeur originale
+            input.value = input.dataset.original;
             input.setAttribute("readonly", "readonly");
-            input.style.backgroundColor = "#f9f9f9"; // Retour au style initial
+            input.style.backgroundColor = "#f9f9f9"; 
         });
 
         btnEnregistrer.style.display = "none";

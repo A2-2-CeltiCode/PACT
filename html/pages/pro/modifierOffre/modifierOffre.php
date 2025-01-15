@@ -1,8 +1,8 @@
 <?php
 session_start();
 error_reporting(E_ALL ^ E_WARNING);
+require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
-require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
 $idOffre = $_POST['idOffre'] ?? 1;
@@ -260,6 +260,8 @@ $options = $vueOffre["nomoption"];
                     <?php Input::render(name: "siteWeb", type: "text", placeholder: 'ex : www.siteWeb.com', value: $siteWeb) ?>
                 </div>
 
+            </article>
+            <article class="description">
                 <div>
 
 
@@ -583,13 +585,63 @@ $options = $vueOffre["nomoption"];
                 <?php } ?>
             </article>
         </section>
-        <div class="btns">
-            <br>
-            <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
-            <?php Button::render(text: "Valider", type:"pro", submit: true , class:"valid"); ?>
-        </div>
-        <input type="hidden" name="idOffre" value="<?php echo $crampte;?>">
+        <section class="adaptable">
+        <div class="basDePage">
+            <div class="reunion">
+                        <div class="choix">
+                            <input type="hidden" name="ancienLigne" value="<?php echo $estEnLigne; ?>">
+                            <label>Est en ligne*</label>
+                            <br>
+                            <input type="radio" id="vrai" name="estEnLigne" value="true" <?php if ($estEnLigne == "1") echo "checked"; ?>>
+                            <label for="oui">Oui</label>
+                            <input type="radio" id="faux" name="estEnLigne" value="false" <?php if ($estEnLigne == "0") echo "checked"; ?>>
+                            <label for="non">Non</label>
+                        </div>
 
+                        <br>
+
+                        <div class="choix">
+                            
+                            <?php
+                            $stmt = $dbh->prepare(
+                                "SELECT debutOption FROM pact._annulationOption WHERE idOffre = :idOffre"
+                            );
+                            $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+                            $stmt->execute();
+                            $debutOption = $stmt->fetch(PDO::FETCH_COLUMN);
+                            
+                            if($options!="Aucune"){
+                                ?>
+                                <label>Annuler l'option <?php  echo(htmlspecialchars(strtolower($options))) ?> ?</label>
+                                <br>
+
+                                <input type="radio" id="oui" name="options" value="true" >
+                                <label for="oui">Oui</label>
+                                <input type="radio" id="non" name="options" value="false" checked>
+                                <label for="non">Non</label>
+                                <?php
+                            }
+                            ?>
+                        </div>
+            </div>
+            <div class="btns">
+                <br>
+                <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
+                <?php Button::render(text: "Valider", type:"pro", submit: true , class:"valid"); ?>
+            </div>
+            
+            
+            <input type="hidden" name="idOffre" value="<?php echo $crampte;?>">
+        </div>
+        <div class="droite">
+                <p>*:champ obligatoire</p>
+            </div>
+        
+        
+        </section>
+
+        
+        
 
     </form>
     

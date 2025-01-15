@@ -1,5 +1,4 @@
 <?php
-// Démarrer la session
 session_start();
 
 use \composants\Button\Button;
@@ -20,17 +19,13 @@ $userInfo = [];
 // Initialisation des variables
 $message = "";
 $userInfo = [];
-$idCompte = $_SESSION['idCompte']; //$_SESSION['idCompte']; // Récupération de l'ID depuis la session
+$idCompte = $_SESSION['idCompte']; 
 
+// Connexion à la base de données
 try {
-    // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     
-
-    // Définir le schéma "pact" pour la session
     $dbh->exec("SET search_path TO pact;");
-
-    // Requête pour récupérer les informations d'un compte professionnel privé
     $sql = "SELECT idcompte, pseudo, email, numtel, nom, prenom, codepostal, ville, rue
             FROM vue_compte_membre
             WHERE idCompte = :idCompte";
@@ -86,8 +81,6 @@ try {
 
         <!-- Message d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
-
-        <!-- Affichage des messages d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
 
         <hr id="separation">

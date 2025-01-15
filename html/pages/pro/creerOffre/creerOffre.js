@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Fonction pour afficher la section correspondante
     function showSection(typeOffre) {
-        hideAllSections(); // On masque toutes les sections d'abord
+        hideAllSections(); // On masque toutes les sections d'abords
         const section = document.getElementById(typeOffre);
         if (section) {
             section.style.display = 'block';

@@ -18,14 +18,13 @@ $message = "";
 $userInfo = [];
 $POST['pagePro'] = "info";
 
-$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
+$idCompte = $_SESSION['idCompte']; 
 
+// Connexion à la base de données
 try {
-    // Connexion à la base de données
     $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Définir le schéma "pact" pour la session
     $pdo->exec("SET search_path TO pact");
 
     // Requête pour récupérer les informations d'un compte professionnel privé
@@ -38,14 +37,12 @@ try {
     $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
     $stmt->execute();
 
-    // Vérification des résultats
     if ($stmt->rowCount() > 0) {
         $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
     } else {
         $message = "Aucune information trouvée pour cet utilisateur.";
     }
 } catch (PDOException $e) {
-    // Gestion des erreurs
     $message = "Erreur : " . $e->getMessage();
 }
 ?>

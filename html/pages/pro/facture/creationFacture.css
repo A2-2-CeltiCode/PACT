@@ -31,7 +31,13 @@ div{
     justify-content: space-between;
 }
 
+div{
+    display: flex;
+    justify-content: space-between;
+}
+
 .partie {
+    margin: 3em 10vw 3em 10vw;
     margin: 3em 10vw 3em 10vw;
     border: 1px solid var(--gris2);
     border-radius: 3px;
@@ -44,6 +50,11 @@ div{
 
 th {
     height: 2em;
+    text-align: left;
+}
+
+.partie th{
+    width: 10em;
     text-align: left;
 }
 

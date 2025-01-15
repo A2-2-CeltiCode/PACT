@@ -1,11 +1,11 @@
 <?php
-// session_start();
-// if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
-//     header("Location: /pages/pro/listeOffres/listeOffres.php");
-// } elseif (!isset($_SESSION['idCompte'])) {
-//     header("Location: /pages/visiteur/accueil/accueil.php");
-// }
-
+session_start();
+/*if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "pro") {
+    header("Location: /pages/pro/listeOffres/listeOffres.php");
+} elseif (!isset($_SESSION['idCompte'])) {
+    header("Location: /pages/visiteur/accueil/accueil.php");
+}*/
+$_SESSION['idCompte']=1;
 use composants\Button\ButtonType;
 error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
 use \composants\Select\Select;
@@ -29,7 +29,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
-$pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+$pdo = new PDO("$driver:host=$server;port=5432;dbname=$dbname", $dbuser, $dbpass);
 
 // Récupération des paramètres de la requête
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'idoffre DESC';
@@ -75,7 +75,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     }
     $nombreOffres = count($offres);
     echo json_encode(['offres' => $offres, 'nombreOffres' => $nombreOffres]);
-    exit; // Stoppe l'exécution pour AJAX
+    exit; 
 }
 
 // Si ce n'est pas une requête AJAX, inclure le HTML complet
@@ -91,6 +91,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="listeOffre.css">
     <link rel="stylesheet" href="listeOffre.js">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="../../../trie/trieGeneral.js"></script>
     
 </head>
@@ -114,6 +115,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
     </div>
     <div id="resultats" class="offres-container">
+   
         <!-- Affichage des résultats -->
         <?php
         foreach ($resultats as $item) {
