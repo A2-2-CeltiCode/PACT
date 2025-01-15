@@ -174,15 +174,21 @@ document.addEventListener("DOMContentLoaded", function () {
   function initializeAvisPopup() {
       const creerAvisButton = document.querySelector(".btn-creer-avis");
       const popupCreerAvis = document.getElementById("popup-creer-avis");
+      const popupDejaAvis = document.getElementById("popup-deja-avis");
       const closeCreerAvisBtn = popupCreerAvis.querySelector(".close");
+      const closeDejaAvisBtn = popupDejaAvis.querySelector(".close");
       const form = popupCreerAvis.querySelector("form");
       const imagePreview = document.getElementById("imagePreview");
       const dropZone = document.querySelector(".drop-zone");
 
       // Ouverture de la popup
       creerAvisButton.addEventListener("click", function() {
-          popupCreerAvis.style.display = "block";
-          document.body.style.overflow = "hidden";
+          if (dejaPublieAvis) {
+              popupDejaAvis.style.display = "block";
+          } else {
+              popupCreerAvis.style.display = "block";
+              document.body.style.overflow = "hidden";
+          }
       });
 
       // Fermeture de la popup
@@ -194,11 +200,16 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       closeCreerAvisBtn.addEventListener("click", closePopup);
+      closeDejaAvisBtn.addEventListener("click", function() {
+          popupDejaAvis.style.display = "none";
+      });
 
       // Fermeture en cliquant en dehors
       window.addEventListener("click", function(event) {
           if (event.target === popupCreerAvis) {
               closePopup();
+          } else if (event.target === popupDejaAvis) {
+              popupDejaAvis.style.display = "none";
           }
       });
 
@@ -220,12 +231,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
   }
 
+  // Initialisation des événements de suppression
+  function initializeSupprimerButtons() {
+      const supprimerButtons = document.querySelectorAll(".btn-supprimer");
+
+      supprimerButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+              const idAvis = this.dataset.idavis;
+              if (confirm("Êtes-vous sûr de vouloir supprimer cet avis ?")) {
+                  fetch(`supprimerAvis.php?idAvis=${idAvis}`, {
+                      method: 'POST'
+                  }).then(response => {
+                      if (response.ok) {
+                          location.reload();
+                      }
+                  });
+              }
+          });
+      });
+  }
+
   // Fonction d'initialisation globale des événements
   function initializeEvents() {
       initializeRepondreButtons();
       initializeThumbButtons();
       initializeSignalerButtons();
       initializeAvisPopup();
+      initializeSupprimerButtons();
   }
 
   // Initialisation lors du chargement

@@ -436,17 +436,17 @@
   }
   
   .btn-supprimer {
-    background-color: var(--secondary-color);
-    color: var(--text-dark);
+    background-color: var(--primary-color);
+    color: var(--white);
     border: none;
     border-radius: var(--radius-full);
-    padding: 8px 16px;
-    font-size: 14px;
+    padding: 12px 24px;
+    font-size: 16px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    margin-top: 8px;
-  }
+    margin-top: 16px;
+}
   
   .btn-supprimer:hover {
     background-color: var(--primary-hover);

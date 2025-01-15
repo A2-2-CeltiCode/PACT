@@ -33,7 +33,7 @@ try {
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas, pact.vue_compte_membre.idcompte FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
 
     if ($sortBy === 'date_asc') {
@@ -110,6 +110,13 @@ try {
         $thumbsUpMap[$avi['idavis']] = $avi['poucehaut'];
         $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
     }
+
+    // Vérification si l'utilisateur a déjà publié un avis sur cette offre
+    $stmt = $dbh->prepare("SELECT COUNT(*) as totalAvis FROM pact._avis WHERE idCompte = :idCompte AND idOffre = :idOffre");
+    $stmt->execute([':idCompte' => $idCompte, ':idOffre' => $idOffre]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $dejaPublieAvis = $result['totalavis'] > 0;
+    
 
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
@@ -346,7 +353,9 @@ try {
                             <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
                             <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
-
+                        <?php if ($avi['idcompte'] == $idCompte): ?>
+                            <button class="btn-supprimer" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
+                        <?php endif; ?>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
@@ -508,9 +517,15 @@ try {
         <img class="image-popup-content" id="image-popup-content">
     </div>
 
-    <script>
-        const idOffre = <?= json_encode($idOffre) ?>;
+    <div class="popup" id="popup-deja-avis">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <p>Vous avez déjà posté un avis sur cette offre.</p>
+        </div>
+    </div>
 
+    <script>
+        const dejaPublieAvis = <?= json_encode($dejaPublieAvis) ?>;
     </script>
     <script src="detailsOffre.js"></script>
     <script>
