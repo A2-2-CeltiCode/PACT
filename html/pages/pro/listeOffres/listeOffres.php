@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     header("Location: /pages/membre/accueil/accueil.php");
 } elseif (!isset($_SESSION['idCompte'])) {
