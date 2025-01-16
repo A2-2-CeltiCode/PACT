@@ -19,7 +19,6 @@ $stmt->bindParam(':datevisite', $dateVisite, PDO::PARAM_STR);
 $stmt->execute();
 
 $idavis = $dbh->lastInsertId();
-echo $idavis;
 $avis_dir = $_SERVER['DOCUMENT_ROOT'] . "/ressources/avis/$idavis";
 if (!file_exists($avis_dir)) {
     mkdir($avis_dir, 0777, true);
