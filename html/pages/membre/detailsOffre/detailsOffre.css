@@ -85,6 +85,8 @@
   
   /* Titre et en-tête */
   .titre-page {
+    display: flex;
+    justify-content: center;
     padding: 40px 24px 32px;
     margin-bottom: 0;
     position: relative;
