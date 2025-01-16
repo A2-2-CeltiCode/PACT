@@ -75,8 +75,8 @@ try {
 
         <!-- Boutons principaux -->
         <div class="modifier">
-            <button id="modifier" type="button">Modifier mes informations</button>
-            <button type="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
+            <button id="modifier" class="button" type="button">Modifier mes informations</button>
+            <button type="button" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
 
         <!-- Formulaire -->
