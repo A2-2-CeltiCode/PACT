@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL ^ E_WARNING);
+
 // Inclusion des fichiers nécessaires pour les composants de l'interface
 use \composants\Button\Button;
 use \composants\Button\ButtonType;
