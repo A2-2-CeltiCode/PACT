@@ -83,9 +83,8 @@
     box-shadow: var(--shadow-md);
   }
   
-  .titre {
-    display: flex;
-    justify-content: center;
+  /* Titre et en-tête */
+  .titre-page {
     padding: 40px 24px 32px;
     margin-bottom: 0;
     position: relative;
@@ -105,7 +104,7 @@
   .titre-svg svg:first-of-type {
     width: 50px;
     height: 50px;
-    stroke: var(--primaire-pro);
+    stroke: var(--primaire-membre);
     fill: rgba(0, 0, 0, 0);
     padding: 0;
     margin: 0;
