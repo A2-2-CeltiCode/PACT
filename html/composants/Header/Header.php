@@ -206,7 +206,9 @@ class Header
     }
 
     private static function renderNotificationIcon(): void {
-        session_start();
+        if(!isset($_SESSION)) {
+            session_start();
+        }
         self::initDbConnection();
         $idCompte = $_SESSION['idCompte'];
         $query = "SELECT a.*, o.* FROM pact._avis a
