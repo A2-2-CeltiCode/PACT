@@ -134,7 +134,6 @@ class Header
         } elseif ($type == HeaderType::Member) {
             echo '<a href="/pages/membre/accueil/accueil.php">Accueil</a>';
             echo '<a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a>';
-            //echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
             echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
             echo '<a href="/pages/pro/listeAvis/listeAvis.php">Liste des avis</a>';
@@ -271,7 +270,6 @@ class Header
         } elseif ($type == HeaderType::Member) {
             echo '<a href="/pages/membre/accueil/accueil.php">Accueil</a>';
             echo '<a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a>';
-            //echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
             echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
             echo '<a href="/pages/pro/listeAvis/listeAvis.php">Liste des avis</a>';
