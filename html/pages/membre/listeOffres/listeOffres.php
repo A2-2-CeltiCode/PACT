@@ -5,7 +5,7 @@ session_start();
 } elseif (!isset($_SESSION['idCompte'])) {
     header("Location: /pages/visiteur/accueil/accueil.php");
 }*/
-$_SESSION['idCompte']=1;
+$idCompte=$_SESSION['idCompte'];
 use composants\Button\ButtonType;
 error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
 use \composants\Select\Select;
