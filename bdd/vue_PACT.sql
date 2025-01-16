@@ -165,7 +165,6 @@ FROM _offre o LEFT JOIN _restaurant r ON r.idOffre = o.idOffre
               LEFT JOIN _image i ON ro.idImage = i.idImage
               LEFT JOIN _gamme g ON g.nomGamme = r.nomGamme
 WHERE c.nomCategorie = 'Restaurant';
-
             
 CREATE OR REPLACE VIEW vue_menu_restaurant AS
 SELECT idOffre, nomRepas
