@@ -56,7 +56,7 @@ if (!empty($_GET['nomcategorie'])) {
 $resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat,$status,$idCompte,$note,$gamme);
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-    header('Content-Type: application/json');
+    isset($_SESSION["idCompte"])?Header::render(type: HeaderType::Member):Header::render();
     $offres = [];
     foreach ($resultats as $item) {
         $sql = 'SELECT denominationsociale FROM pact._comptepro WHERE idcompte = :idcompte';
