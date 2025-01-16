@@ -30,8 +30,8 @@ try {
     // Requête pour récupérer les informations d'un compte professionnel privé
     $sql = "SELECT idcompte, mdp, email, numtel, denominationsociale, 
                    raisonsocialepro, banquerib, numsiren,
-                   codepostal, ville, rue
-            FROM vue_compte_pro
+                   codepostal, ville, rue, cleapi
+            FROM vue_compte_pro LEFT JOIN _cleApi USING (idcompte)
             WHERE idCompte = :idCompte";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
