@@ -286,6 +286,7 @@ main button:hover {
 
 .bouton{
     display: flex;
+    background-color: var(--primaire-pro);
 }
 
 #popupMotDePasse{
