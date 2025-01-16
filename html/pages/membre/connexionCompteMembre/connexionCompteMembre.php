@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL ^ E_WARNING);
+
 // Démarre la session pour gérer l'authentification
 session_start();
 if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
