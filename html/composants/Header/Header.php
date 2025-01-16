@@ -267,15 +267,15 @@ class Header
         Input::render(placeholder: 'Entrez une localisation...', icon: "/ressources/icone/test.svg");
         if ($type == HeaderType::Guest) {
             echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            echo '<a href="offre.php">Offres</a>';
+            echo '<a href="/pages/visiteur/listeOffres/listeOffres.php">Rechercher</a>';
         } elseif ($type == HeaderType::Member) {
-            echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            echo '<a href="offre.php">Offres</a>';
-            echo '<a href="offre.php">Favoris</a>';
+            echo '<a href="/pages/membre/accueil/accueil.php">Accueil</a>';
+            echo '<a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a>';
+            //echo '<a href="offre.php">Favoris</a>';
         } elseif ($type == HeaderType::Pro) {
-            echo '<a href="dashboardPro.php">Mes Offres</a>';
-            echo '<a href="dashboardPro.php">Liste des avis</a>';
-            echo '<a href="publierOffre.php">Créer une Offre</a>';
+            echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
+            echo '<a href="/pages/pro/listeAvis/listeAvis.php">Liste des avis</a>';
+            echo '<a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>';
         }
         //self::renderLanguageSelector();
         self::renderAccountSection($type);
