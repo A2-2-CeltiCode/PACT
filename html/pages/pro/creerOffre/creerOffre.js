@@ -77,10 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         langueDiv.style.display = show ? "block" : "none";
     }
 
-    function toggleDropdown(dropdownId) {
-        const dropdown = document.getElementById(dropdownId);
-        dropdown.classList.toggle("show");
-    }
+
 
     function validateForm() {
         const durepromotion = document.getElementById("durepromotion").value;

@@ -59,6 +59,13 @@ function toggleDropdown() {
     }
 }
 
+function resetDropdown() {
+    const dropdown = document.getElementById("notification-dropdown");
+    if (dropdown) {
+        dropdown.style.display = "none";
+    }
+}
+
 function openReplyPopup(idAvis) {
     event.stopPropagation();
     const popup = document.getElementById('popup-repondre');
@@ -88,6 +95,7 @@ function markAsSeen(idAvis) {
                     notificationCount.remove();
                 }
             }
+            resetDropdown(); // Réinitialiser l'état du dropdown
         }
     }).catch(error => console.error('Erreur:', error));
 }
@@ -118,6 +126,7 @@ function sendReply(idAvis, reponse) {
                       notificationCount.remove();
                   }
               }
+              resetDropdown(); // Réinitialiser l'état du dropdown
               // Ajouter la réponse au DOM
               const reponseHTML = `
                 <div class="reponse">
