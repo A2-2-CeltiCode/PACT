@@ -154,3 +154,49 @@ label {
     display: block;
     margin-bottom: 10px; 
 }
+
+@media (max-width: 768px) {
+    .conteneur {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .groupe-champ label {
+        font-size: 12px;
+    }
+
+    .conect {
+        width: 100%;
+    }
+
+    .bouton-connexion {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .inscription {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .conteneur {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .groupe-champ label {
+        font-size: 10px;
+    }
+
+    .bouton-connexion {
+        font-size: 12px;
+    }
+
+    .inscription {
+        font-size: 12px;
+    }
+}

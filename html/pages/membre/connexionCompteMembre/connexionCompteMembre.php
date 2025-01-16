@@ -60,13 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <title>Page de Connexion</title>
     <link rel="stylesheet" href="./connexionCompteMembre.css">
     <link rel="stylesheet" href="/ui.css">
 </head>
 <body>
-    <div class="conteneur">
+    <div class="conteneur responsive-conteneur">
         <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
         <!-- Logo de la page -->
         <img alt="Logo" src="/ressources/icone/logo.svg" />
@@ -80,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <!-- Formulaire de connexion -->
-        <form method="post" action="">
+        <form method="post" action="" class="responsive-form">
             <div class="groupe-champ">
                 <label for="username">Votre identifiant</label>
                 <?php Input::render(class : "conect" , type : "text", name:"username", placeholder:"Adresse e-mail", required : true)  ?>
