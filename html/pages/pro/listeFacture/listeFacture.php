@@ -63,7 +63,16 @@ function imprimerFacture(idfacture, idoffre, mois) {
         .then(html => {
             document.getElementById('factureContent').innerHTML = html;
             const printWindow = window.open('', '_blank');
-            printWindow.document.write(html);
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <link rel="stylesheet" href="/pages/pro/facture/creationFacture.css">
+                </head>
+                <body>
+                    ${html}
+                </body>
+                </html>
+            `);
             printWindow.document.close();
             printWindow.print();
         });
