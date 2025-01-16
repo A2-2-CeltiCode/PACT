@@ -29,8 +29,10 @@ if ($avis && $avis['idcompte'] == $idCompte) {
         }
     }
 
-
-
+    // Supprimer les réponses associées à l'avis
+    $stmt = $dbh->prepare("DELETE FROM pact._reponseavis WHERE idavis = :idavis");
+    $stmt->bindParam(':idavis', $idAvis, PDO::PARAM_INT);
+    $stmt->execute();
     
     // Supprimer l'avis
     $stmt = $dbh->prepare("DELETE FROM pact._representeavis WHERE idavis = :idavis");
