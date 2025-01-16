@@ -1,8 +1,8 @@
 
+
 <?php
 $server = 'localhost';
 $driver = 'pgsql';
-$dbname = 'postgres';
+$dbname = 'pact';
 $dbuser = 'postgres';
 $dbpass = 'derfDERF29';
-

@@ -395,7 +395,7 @@ $rib = $stmt->fetchColumn();
                 </article>
             </section>
             <div class="btns">
-                <?php Button::render(onClick: "window.location.href = '../listeOffres/listeOffres.php'; validateVille();", text: "Annuler", type: "pro", submit: false); ?>
+                <?php Button::render(onClick: "window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false); ?>
                 <?php Button::render(text: "Valider", type: "pro", submit: true); ?>
             </div>
         </form>

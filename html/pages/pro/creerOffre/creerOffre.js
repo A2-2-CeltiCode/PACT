@@ -184,19 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Erreur:', error));
     }
 
-    function validateVille() {
-        const input = document.getElementById('ville').value.toLowerCase();
-        if (validCities.includes(input)) {
-            const coordinates = cityCoordinates[input];
-            const postcode = cityPostcodes[input];
-            document.getElementById('longitude').value = coordinates[0];
-            document.getElementById('latitude').value = coordinates[1];
-            document.getElementById('postcode').value = postcode;
-            document.getElementById('villeForm').submit();
-        } else {
-            alert('Ville non valide. Veuillez sélectionner une ville proposée.');
-        }
-    }
+    
 
     // Ajout du gestionnaire d'événements pour cacher les suggestions
     document.addEventListener('click', function(event) {

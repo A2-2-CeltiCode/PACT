@@ -399,7 +399,7 @@ try {
                 <form action="envoyerReponse.php" method="POST">
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                    <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
+                    <textarea name="reponse" placeholder="Votre réponse..."></textarea>
                     <button type="submit">Envoyer</button>
                 </form>
             </div>
