@@ -286,6 +286,8 @@ main button:hover {
 
 .bouton{
     display: flex;
+}
+.button {
     background-color: var(--primaire-pro);
 }
 
