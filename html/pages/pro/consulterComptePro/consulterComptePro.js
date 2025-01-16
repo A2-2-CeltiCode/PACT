@@ -212,7 +212,7 @@ function generateKey() {
     let genText = document.getElementById("genText");
     copyBtn.disabled = false;
     copyBtn.classList.remove("btnDisabled");
-    genText.innerText = "Généré";
+    genText.value = "Généré";
     generateBtn.classList.add("material-symbols-outlined");
     generateBtn.style.backgroundColor = "var(--valide)";
     generateBtn.children[0].textContent = "check";
