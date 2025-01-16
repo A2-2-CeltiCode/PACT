@@ -178,7 +178,7 @@ try {
                 <tr>
                     <th>Clé d'API</th>
                     <td>
-                        <input type="text" readonly="" value="<?= htmlspecialchars(!empty($userInfo['cleapi']) ? 'Généré' : "Non généré") ?>">
+                        <input id="genText" type="text" readonly="" value="<?= htmlspecialchars(!empty($userInfo['cleapi']) ? 'Généré' : "Non généré") ?>">
                         <?php Button::render(id: "copyButton", text: "<span>Copier</span>", onClick: "copyKey('" . $userInfo['cleapi'] . "')") ?>
                         <?php Button::render(id: "generateButton", text: "<span>" . htmlspecialchars(empty($userInfo['cleapi']) ? 'Générer' : "Regénérer") . "</span>", onClick: "generateKey()") ?>
                     </td>

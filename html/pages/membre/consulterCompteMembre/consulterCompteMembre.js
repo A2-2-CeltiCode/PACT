@@ -234,8 +234,10 @@ function generateKey() {
     xmlHttp.send( null )
     let generateBtn = document.getElementById("generateButton");
     let copyBtn = document.getElementById("copyButton");
+    let genText = document.getElementById("genText");
     copyBtn.disabled = false;
     copyBtn.classList.remove("btnDisabled");
+    genText.innerText = "Généré";
     generateBtn.classList.add("material-symbols-outlined");
     generateBtn.style.backgroundColor = "var(--valide)";
     generateBtn.children[0].textContent = "check";
