@@ -80,8 +80,8 @@ try {
 
         <!-- Boutons principaux -->
         <div class="modifier">
-            <button type="button" onclick="activerModification()">Modifier mes informations</button>
-            <button type="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
+            <button type="button" class="button" onclick="activerModification()">Modifier mes informations</button>
+            <button type="button" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
 
         <!-- Message d'erreur -->
