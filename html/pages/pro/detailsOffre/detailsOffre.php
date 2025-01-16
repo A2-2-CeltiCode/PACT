@@ -276,7 +276,7 @@ try {
     <div>
         <div class="liste-avis">
             <div>
-                <h1>Avis:</h1>
+                <h1>Avis</h1>
             </div>
             <div class="filters">
                 <label for="sortBy">Trier par:</label>
