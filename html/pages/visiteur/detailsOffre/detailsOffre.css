@@ -87,6 +87,8 @@ label{
 
 /* Titre et en-tête */
 .titre {
+  display: flex;
+  justify-content: center;
   padding: 40px 24px 32px;
   margin-bottom: 0;
   position: relative;
@@ -106,7 +108,7 @@ label{
 .titre-svg svg:first-of-type {
   width: 50px;
   height: 50px;
-  stroke: var(--primaire-visiteur);
+  stroke: var(--primaire-pro);
   fill: rgba(0, 0, 0, 0);
   padding: 0;
   margin: 0;
