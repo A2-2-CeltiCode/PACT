@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL ^ E_WARNING);
+
 // Démarre la session pour gérer l'authentification
 session_start();
 if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
@@ -13,11 +15,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/connect_params.php";
 
+// Connexion à la base de données
 try {
-    // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-    // Définit explicitement le schéma 'pact'
     $dbh->exec("SET search_path TO pact;");
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
@@ -26,11 +27,8 @@ try {
 
 // Vérifie si le formulaire de connexion a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupère les valeurs soumises dans le formulaire
     $identifiant_utilisateur = $_POST['username'];
     $mot_de_passe_utilisateur = hash("sha256",$_POST['password']);
-
-    // Requête pour vérifier l'email et récupérer le mot de passe depuis la table _compte
     $requete_sql = 'SELECT * FROM pact.vue_compte_membre WHERE email = :identifiant';
 
     $requete_preparee = $dbh->prepare($requete_sql);
@@ -39,16 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
-        // Comparaison simple des mots de passe (avec hachage)
         if ($mot_de_passe_utilisateur === $compte['mdp']) {
-            // Si les informations sont correctes, démarrer la session
             $_SESSION['utilisateur_connecte'] = true;
             $_SESSION['identifiant_utilisateur'] = $compte['email'];
-            // Sauvegarder l'ID du compte dans la session
             $_SESSION['idCompte'] = $compte['idcompte'];
             $_SESSION['typeUtilisateur'] = "membre";
 
-            // Redirige vers le tableau de bord
             header("Location: ../" . ($_GET["context"] ?? "accueil/accueil.php"));
             exit();
         } else {
@@ -66,18 +60,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
     <title>Page de Connexion</title>
     <link rel="stylesheet" href="./connexionCompteMembre.css">
     <link rel="stylesheet" href="/ui.css">
 </head>
 <body>
-    <div class="conteneur">
+    <div class="conteneur responsive-conteneur">
         <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
         <!-- Logo de la page -->
         <img alt="Logo" src="/ressources/icone/logo.svg" />
         
-        <!-- Titre de la page -->
         <h1>Connectez-vous à votre compte</h1>
         <hr>
 
@@ -87,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <!-- Formulaire de connexion -->
-        <form method="post" action="">
+        <form method="post" action="" class="responsive-form">
             <div class="groupe-champ">
                 <label for="username">Votre identifiant</label>
                 <?php Input::render(class : "conect" , type : "text", name:"username", placeholder:"Adresse e-mail", required : true)  ?>
@@ -99,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             </div>
             <div class="connecte">
-                <!--<a class="lien-mdp-oublie" href="#">Mot de passe oublié ?</a>-->
                 <?php Button::render(class: "bouton-connexion", submit: true, type: "membre", text: "Se connecter"); ?>
             </div>
         </form>

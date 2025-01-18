@@ -26,21 +26,40 @@ table {
     border: none;
 }
 
+div{
+    display: flex;
+    justify-content: space-between;
+}
+
+div{
+    display: flex;
+    justify-content: space-between;
+}
+
 .partie {
-    margin: 3em 10vw;
+    margin: 3em 10vw 3em 10vw;
+    margin: 3em 10vw 3em 10vw;
     border: 1px solid var(--gris2);
     border-radius: 3px;
     padding: 1em;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.partie td {
-    width: 18em
+    display: inline-block;
+    vertical-align: top;
+    width: 35em;
 }
 
 th {
     height: 2em;
-    text-align: left
+    text-align: left;
+}
+
+.partie th{
+    width: 10em;
+    text-align: left;
+}
+
+.partie th{
+    width: 10em;
 }
 
 .info-facture,

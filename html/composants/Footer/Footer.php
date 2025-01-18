@@ -62,19 +62,24 @@ class Footer
 EOF;
 
         echo '<footer id="footer" class="' . $type . '">';
-
-        $buttonType = ButtonType::Guest;
-        $buttonText = 'DEVENIR PRO';
-
-        if ($type === FooterType::Member) {
+        
+        if($type === FooterType::Guest){
+            $buttonType = ButtonType::Guest;
+            $buttonText = 'DEVENIR PRO';
+            Button::render('lien-bouton', 'footer-button', $buttonText, $buttonType,
+            "window.location.href='/pages/pro/creationComptePro/creationComptePro.php'");
+        }
+        else if ($type === FooterType::Member) {
             $buttonType = ButtonType::Member;
+            $buttonText = 'DEVENIR PRO';
+            Button::render('lien-bouton', 'footer-button', $buttonText, $buttonType,
+            "window.location.href='/pages/pro/creationComptePro/creationComptePro.php'");
         } elseif ($type === FooterType::Pro) {
             $buttonType = ButtonType::Pro;
             $buttonText = "ACCÉDER A L'ESPACE PROFESSIONNEL";
+            Button::render('lien-bouton', 'footer-button', $buttonText, $buttonType,
+            "window.location.href='/pages/pro/consulterComptePro/consulterComptePro.php'");
         }
-
-        Button::render('lien-bouton', 'footer-button', $buttonText, $buttonType,
-            "window.location.href='/pages/pro/creationComptePro/creationComptePro.php'");
 
         // Liens importants
         echo <<<EOF

@@ -4,16 +4,14 @@ session_start();
 
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 
-$idCompte = $_SESSION['idCompte']; //$_SESSION['idCompte']; // Récupération de l'ID depuis la session
+$idCompte = $_SESSION['idCompte'];
 
+// Connexion à la base de données
 try {
-    // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
-    // Définir le schéma "pact" pour la session
     $dbh->exec("SET search_path TO pact;");
 
-    // Vérifier que les données ont été envoyées
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Récupérer et valider les données du formulaire
         $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, 'UTF-8');

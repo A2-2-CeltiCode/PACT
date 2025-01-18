@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL ^ E_WARNING);
+
 // Démarrer la session
 session_start();
 
@@ -20,7 +22,7 @@ $userInfo = [];
 // Initialisation des variables
 $message = "";
 $userInfo = [];
-$idCompte = $_SESSION['idCompte']; //$_SESSION['idCompte']; // Récupération de l'ID depuis la session
+$idCompte = $_SESSION['idCompte'];
 
 try {
     // Connexion à la base de données
@@ -29,10 +31,8 @@ try {
 
     // Définir le schéma "pact" pour la session
     $dbh->exec("SET search_path TO pact;");
-
-    // Requête pour récupérer les informations d'un compte professionnel privé
-    $sql = "SELECT idcompte, pseudo, email, numtel, nom, prenom, codepostal, ville, rue
-            FROM vue_compte_membre
+    $sql = "SELECT idcompte, pseudo, email, numtel, nom, prenom, codepostal, ville, rue, cleapi
+            FROM vue_compte_membre LEFT JOIN _cleApi USING (idcompte)
             WHERE idCompte = :idCompte";
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
@@ -80,8 +80,8 @@ try {
 
         <!-- Boutons principaux -->
         <div class="modifier">
-            <button type="button" onclick="activerModification()">Modifier mes informations</button>
-            <button type="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
+            <button type="button" class="button" onclick="activerModification()">Modifier mes informations</button>
+            <button type="button" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
 
         <!-- Message d'erreur -->
@@ -171,6 +171,18 @@ try {
                     value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>" 
                     readonly data-original="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>"></td>
                 </tr>
+                <!-- Catégorie API -->
+                <tr>
+                    <th colspan="2" class="thhead"  style="background-color: #075997; color: white; text-align: center;">Tchatator</th>
+                </tr>
+                <tr>
+                    <th>Clé d'API</th>
+                    <td>
+                        <input id="genText" type="text" readonly="" value="<?= htmlspecialchars(!empty($userInfo['cleapi']) ? 'Généré' : "Non généré") ?>">
+                        <?php Button::render(id: "copyButton", text: "<span>Copier</span>", onClick: "copyKey('" . $userInfo['cleapi'] . "')") ?>
+                        <?php Button::render(id: "generateButton", text: "<span>" . htmlspecialchars(empty($userInfo['cleapi']) ? 'Générer' : "Regénérer") . "</span>", onClick: "generateKey()") ?>
+                    </td>
+                </tr>
             </table>
 
             <!-- Boutons -->
@@ -194,6 +206,8 @@ try {
                 <div>
                     <label for="confirmerMdp">Confirmer le mot de passe :</label>
                     <input type="password" class="champsMdp" id="confirmerMdp" name="confirmerMdp" required>
+                    <p>Le mot de passe doit comporter au moins :<br>- 8 caractères<br>- 1 majuscule<br>- 1 minuscule<br>- 1 chiffre<br>- 1 caractère spécial (@$!%*?&).</p>
+                    <br>
                 </div>
                 <!-- Affichage des messages d'erreur ou de succès -->
                 <div id="erreurPopup" style="color: red; text-align: center; margin-bottom: 20px;">

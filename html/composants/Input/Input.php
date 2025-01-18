@@ -27,6 +27,7 @@ class Input
      * @param string   $icon      Chemin vers l'icône SVG à afficher à gauche du champ.
      * @param int|null $min       Valeur minimale pour le champ de saisie.
      * @param int|null $max       Valeur maximale pour le champ de saisie.
+     * @param string   $onkeyup   Fonction JavaScript à appeler lors de l'événement onkeyup.
      */
     public static function render(string $class = "",
                                   string $id = "",
@@ -40,7 +41,8 @@ class Input
                                   string $placeholder = "",
                                   string $icon = "",
                                   ?int   $min = null,
-                                  ?int   $max = null): void {
+                                  ?int   $max = null,
+                                  string $onkeyup = ""): void {
         // Définir le modèle par défaut selon le type
         switch ($type) {
             case 'email':
@@ -56,7 +58,7 @@ class Input
         // Préparer les attributs de l'input
         $attrs = ['type' => $type, 'class' => $class, 'id' => $id, 'name' => $name, 'value' => $value,
             'placeholder' => $placeholder, 'required' => $required ? 'required' : '', 'minlength' => $minLength,
-            'maxlength' => $maxLength, 'pattern' => $pattern, 'min' => $min, 'max' => $max];
+            'maxlength' => $maxLength, 'pattern' => $pattern, 'min' => $min, 'max' => $max, 'onkeyup' => $onkeyup];
 
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {

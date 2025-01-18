@@ -18,34 +18,31 @@ $message = "";
 $userInfo = [];
 $POST['pagePro'] = "info";
 
-$idCompte = $_SESSION['idCompte']; // ID de l'utilisateur connecté
+$idCompte = $_SESSION['idCompte']; 
 
+// Connexion à la base de données
 try {
-    // Connexion à la base de données
     $pdo = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Définir le schéma "pact" pour la session
     $pdo->exec("SET search_path TO pact");
 
     // Requête pour récupérer les informations d'un compte professionnel privé
     $sql = "SELECT idcompte, mdp, email, numtel, denominationsociale, 
                    raisonsocialepro, banquerib, numsiren,
-                   codepostal, ville, rue
-            FROM vue_compte_pro
+                   codepostal, ville, rue, cleapi
+            FROM vue_compte_pro LEFT JOIN _cleApi USING (idcompte)
             WHERE idCompte = :idCompte";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
     $stmt->execute();
 
-    // Vérification des résultats
     if ($stmt->rowCount() > 0) {
         $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
     } else {
         $message = "Aucune information trouvée pour cet utilisateur.";
     }
 } catch (PDOException $e) {
-    // Gestion des erreurs
     $message = "Erreur : " . $e->getMessage();
 }
 ?>
@@ -78,8 +75,8 @@ try {
 
         <!-- Boutons principaux -->
         <div class="modifier">
-            <button id="modifier" type="button">Modifier mes informations</button>
-            <button type="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
+            <button id="modifier" class="button" type="button">Modifier mes informations</button>
+            <button type="button" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
 
         <!-- Formulaire -->
@@ -158,6 +155,19 @@ try {
                         <input type="text" name="banquerib" class="editable" value="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['banquerib'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
+                <!-- Catégorie API -->
+                <tr>
+                    <th colspan="2" class="thhead"  style="background-color: #6b3d84; color: white; text-align: center;">Tchatator</th>
+                </tr>
+                <tr>
+                    <th>Clé d'API</th>
+                    <td>
+                        <input id="genText" type="text" readonly="" value="<?=
+                        htmlspecialchars(!empty($userInfo['cleapi']) ? 'Généré' : "Non généré") ?>">
+                        <?php Button::render(id: "copyButton", text: "<span>Copier</span>", onClick: "copyKey('" . $userInfo['cleapi'] . "')") ?>
+                        <?php Button::render(id: "generateButton", text: "<span>" . htmlspecialchars(empty($userInfo['cleapi']) ? 'Générer' : "Regénérer") . "</span>", onClick: "generateKey()") ?>
+                    </td>
+                </tr>
             </table>
 
 
@@ -186,6 +196,8 @@ try {
                 <div>
                     <label for="confirmerMdp">Confirmer le mot de passe :</label>
                     <input type="password" class="champsMdp" id="confirmerMdp" name="confirmerMdp" required>
+                    <p>Le mot de passe doit comporter au moins :<br>- 8 caractères<br>- 1 majuscule<br>- 1 minuscule<br>- 1 chiffre<br>- 1 caractère spécial (@$!%*?&).</p>
+                    <br>
                 </div>
                                 <!-- Affichage des messages d'erreur ou de succès -->
                 <div id="erreurPopup" style="color: red; text-align: center; margin-bottom: 20px;">

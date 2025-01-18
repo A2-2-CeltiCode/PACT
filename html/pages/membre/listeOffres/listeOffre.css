@@ -1,11 +1,36 @@
+@media (max-width: 500px){
+
+
+    .tri-somie{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px 0;
+        padding: 10px 12px;
+    }
+
+}
+
+
 .offres-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px; 
+    justify-content: center;
+    gap: 25px;
 }
-.offre {
-    margin: 10px auto;
+
+.offre{
+    margin: 0;
 }
+
+.body{
+    margin: 0;
+}
+
+
+
+
 .button-container {
     display: flex;
     align-items: center;
@@ -86,8 +111,9 @@ input[type="number"]{
 
 .tri-somie{
     display: flex;
-    width: 440px;
-    height: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 20px;
     padding: 10px 12px;
 }
@@ -177,4 +203,45 @@ input[type="number"]{
 .agencement {
     max-height: 90vh; /* Ajustez la hauteur maximale selon vos besoins */
     overflow-y: auto; /* Ajoute une barre de défilement verticale */
+}
+
+
+.relief,  .une {
+    border: 4px #FFD700 solid;
+    filter: drop-shadow(5px 5px 5px rgba(255, 187, 0, 0.5));
+}
+
+ .relief:hover,  .une:hover {
+    filter: drop-shadow(15px 15px 15px rgba(255, 208, 0, 0.747));
+}
+
+ .star-overlay {
+    position: absolute;
+}
+
+ .gold {
+    background-color: #fddc5c;
+}
+
+
+.image-container {
+    position: relative; /* Important pour positionner les éléments internes */
+    width: 300px;
+    height: 300px;
+    overflow: hidden; /* Évite que l'image ou l'étoile déborde */
+}
+
+.offre-image {
+    width: 105%;
+    height: 105%;
+    object-fit: cover; /* Assure que l'image remplit le conteneur */
+}
+
+.star-overlay {
+    position: absolute;
+    top: 5px; /* Distance par rapport au haut */
+    right: 5px; /* Distance par rapport à la droite */
+    z-index: 2; /* Assure que l'étoile est au-dessus de l'image */
+    width: 15%; /* Taille ajustée de l'étoile */
+    height: 15%;
 }

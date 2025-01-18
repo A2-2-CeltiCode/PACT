@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function activerModification() {
         editableInputs.forEach(input => {
             input.removeAttribute("readonly");
-            input.style.backgroundColor = "#f0f0f0"; // Indiquer visuellement que le champ est modifiable
+            input.style.backgroundColor = "#f0f0f0";
         });
 
         btnEnregistrer.style.display = "inline-block";
@@ -43,9 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function annulerModification() {
         editableInputs.forEach(input => {
-            input.value = input.dataset.original; // Restaurer la valeur originale
+            input.value = input.dataset.original;
             input.setAttribute("readonly", "readonly");
-            input.style.backgroundColor = "#f9f9f9"; // Retour au style initial
+            input.style.backgroundColor = "#f9f9f9"; 
         });
 
         btnEnregistrer.style.display = "none";
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (erreurs.length > 0) {
             afficherMessageErreur(erreurs);
         } else {
-            document.getElementById("formulaireCompteMembre").submit();
+            document.getElementById("formulaireCompteVisiteur").submit();
         }
     }
 
@@ -201,9 +201,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Boutons de la pop-up
     document
-        .querySelector("#popupMotDePasse button[onclick='validerMotDePasse(event)']")
+        .querySelector("#popupMotDePasse")
         .addEventListener("click", validerMotDePasse);
     document
         .querySelector("#popupMotDePasse button[onclick='fermerPopupMotDePasse()']")
         .addEventListener("click", fermerPopupMotDePasse);
+
+    let copyBtn = document.getElementById("copyButton");
+    if (copyBtn.attributes["onclick"].nodeValue.length < 75) {
+        copyBtn.disabled = true;
+        copyBtn.classList.add("btnDisabled");
+    }
 });
+
+function copyKey(key) {
+    let btn = document.getElementById("copyButton");
+    btn.classList.add("material-symbols-outlined");
+    btn.style.backgroundColor = "var(--valide)";
+    btn.children[0].textContent = "check";
+    navigator.clipboard.writeText(key);
+    setTimeout(() => {
+        btn.classList.remove("material-symbols-outlined");
+        btn.style.backgroundColor = "var(--primaire-membre)";
+        btn.children[0].textContent = "copier";
+    }, 3000);
+}
+
+function generateKey() {
+    let url = window.location.protocol + "//" + window.location.host + "/pages/membre/consulterCompteMembre/genererCle.php";
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false );
+    xmlHttp.send( null )
+    let generateBtn = document.getElementById("generateButton");
+    let copyBtn = document.getElementById("copyButton");
+    let genText = document.getElementById("genText");
+    copyBtn.disabled = false;
+    copyBtn.classList.remove("btnDisabled");
+    genText.value = "Généré";
+    generateBtn.classList.add("material-symbols-outlined");
+    generateBtn.style.backgroundColor = "var(--valide)";
+    generateBtn.children[0].textContent = "check";
+    setTimeout(() => {
+        generateBtn.classList.remove("material-symbols-outlined");
+        generateBtn.style.backgroundColor = "var(--primaire-membre)";
+        generateBtn.children[0].textContent = "Regénérer";
+    }, 3000);
+}

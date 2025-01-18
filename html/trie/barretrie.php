@@ -54,6 +54,7 @@ class Trie {
         ];
         
 
+        echo '<div id="nombreFiltresActifs">Nombre de filtres actifs : 0</div>'; // Ajouter cet élément
         echo '<form id="searchForm" method="GET" action="">';
         Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
         Select::render('custom-class', 'select-etat', 'etat', false, $optionsEtat, isset($_GET['etat']) ? $_GET['etat'] : 'tout');

@@ -38,7 +38,10 @@ body {
 
     img {
         border-radius: 5px 5px 0 0;
-        width: 300px;
+    }
+
+    .star {
+        display: none;
     }
 
     a {
@@ -49,7 +52,7 @@ body {
             background: aqua;*/
             display: flex;
             justify-content: space-between;
-            padding: 0 5px;
+            padding-right: 5px;
 
             > div {
                 display: flex;
@@ -160,13 +163,42 @@ main {
 
 .mixed {
     .relief, .une {
-        border: 2px #fb3b00 solid;
-        filter: drop-shadow(5px 5px 5px rgba(251, 59, 0, 0.5));
+        border: 4px #FFD700 solid;
+        filter: drop-shadow(5px 5px 5px rgba(255, 187, 0, 0.5));
         &:hover {
-            filter: drop-shadow(15px 15px 15px rgba(251, 59, 0, 0.5));
+            filter: drop-shadow(15px 15px 15px rgba(255, 208, 0, 0.747));
         }
     }
+    .star-overlay {
+        position: absolute;
+    }
+    .gold {
+        background-color: #fddc5c;
+    }
 }
+
+.image-container {
+    position: relative; /* Important pour positionner les éléments internes */
+    width: 300px;
+    height: 300px;
+    overflow: hidden; /* Évite que l'image ou l'étoile déborde */
+}
+
+.offre-image {
+    width: 105%;
+    height: 105%;
+    object-fit: cover; /* Assure que l'image remplit le conteneur */
+}
+
+.star-overlay {
+    /*position: absolute;*/
+    top: 5px; /* Distance par rapport au haut */
+    right: 5px; /* Distance par rapport à la droite */
+    z-index: 2; /* Assure que l'étoile est au-dessus de l'image */
+    width: 15%; /* Taille ajustée de l'étoile */
+    height: 15%;
+}
+
 
 @media screen and (max-width: 1024px) {
     header + div, .carrousel + div {
