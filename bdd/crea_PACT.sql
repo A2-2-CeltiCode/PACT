@@ -69,14 +69,14 @@ CREATE TABLE _forfait(
 
 CREATE TABLE _forfaitPublic(
     nomForfait  VARCHAR(50),
-    CONSTRAINT forfaitPublic_fk_forfait FOREIGN KEY (nomForfait) 
+    CONSTRAINT forfaitPublic_fk_forfait FOREIGN KEY (nomForfait)
         REFERENCES _forfait(nomForfait),
     CONSTRAINT forfaitPublic_pk PRIMARY KEY(nomForfait)
 );
 
 CREATE TABLE _forfaitPro(
     nomForfait  VARCHAR(50),
-    CONSTRAINT forfaitPro_fk_forfait FOREIGN KEY (nomForfait) 
+    CONSTRAINT forfaitPro_fk_forfait FOREIGN KEY (nomForfait)
         REFERENCES _forfait(nomForfait),
     CONSTRAINT forfaitPro_pk PRIMARY KEY(nomForfait)
 );
@@ -122,24 +122,24 @@ CREATE TABLE _compteMembre(
     nom       VARCHAR(50) NOT NULL,
     pseudo     VARCHAR(255) NOT NULL UNIQUE,
     CONSTRAINT compteMembre_pk PRIMARY KEY(idCompte),
-    CONSTRAINT compteMembre_fk_compte FOREIGN KEY (idCompte) 
+    CONSTRAINT compteMembre_fk_compte FOREIGN KEY (idCompte)
         REFERENCES _compte(idCompte)
 );
 
 CREATE TABLE _comptePro (
     idCompte              SERIAL,
-    denominationSociale   VARCHAR(50) NOT NULL,  
+    denominationSociale   VARCHAR(50) NOT NULL,
     raisonSocialePro      VARCHAR(50) NOT NULL,
     banqueRib             VARCHAR(35),
     CONSTRAINT comptePro_pk PRIMARY KEY(idCompte),
-    CONSTRAINT comptePro_fk_compte FOREIGN KEY (idCompte) 
+    CONSTRAINT comptePro_fk_compte FOREIGN KEY (idCompte)
         REFERENCES _compte(idCompte)
 );
 
 CREATE TABLE _compteProPublic (
     idCompte     SERIAL,
     CONSTRAINT compteProPublic_pk PRIMARY KEY(idCompte),
-    CONSTRAINT compteProPublic_fk_compte FOREIGN KEY (idCompte) 
+    CONSTRAINT compteProPublic_fk_compte FOREIGN KEY (idCompte)
         REFERENCES _comptePro(idCompte)
 );
 
@@ -147,7 +147,7 @@ CREATE TABLE _compteProPrive (
     idCompte    SERIAL,
     numSiren    CHAR(14) NOT NULL UNIQUE,
     CONSTRAINT compteProPrive_pk PRIMARY KEY(idCompte),
-    CONSTRAINT compteProPrive_fk_comptePro FOREIGN KEY (idCompte) 
+    CONSTRAINT compteProPrive_fk_comptePro FOREIGN KEY (idCompte)
         REFERENCES _comptePro(idCompte)
 );
 
@@ -170,7 +170,7 @@ CREATE TABLE _offre(
     heureOuverture          TIME NOT NULL,
     heureFermeture          TIME NOT NULL,
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
-    CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
+    CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte)
         REFERENCES _comptePro(idCompte),
     CONSTRAINT offre_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption),
@@ -208,7 +208,7 @@ CREATE TABLE _facture(
     datePrestaServices    DATE NOT NULL,
     dateEcheance          DATE NOT NULL,
     CONSTRAINT facture_pk PRIMARY KEY(idFacture),
-    CONSTRAINT facture_fk_offre FOREIGN KEY (idOffre) 
+    CONSTRAINT facture_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre)
 );
 
@@ -219,7 +219,7 @@ CREATE TABLE _annulationOption(
     nomOption     VARCHAR(50) NOT NULL,
     estAnnulee    BOOLEAN DEFAULT FALSE,
     CONSTRAINT annulationOption_pk PRIMARY KEY(nbSemaines,debutOption,idOffre,nomOption),
-    CONSTRAINT annulationOption_fk_offre FOREIGN KEY (idOffre) 
+    CONSTRAINT annulationOption_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
     CONSTRAINT annulationOption_fk_option FOREIGN KEY (nomOption)
         REFERENCES _option(nomOption)
@@ -230,7 +230,7 @@ CREATE TABLE _historiqueEnLigne(
     jourDebut     DATE,
     jourFin       DATE,
     CONSTRAINT historiqueEnLigne_pk PRIMARY KEY(idOffre,jourDebut),
-    CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre) 
+    CONSTRAINT historiqueEnLigne_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre)
 );
 
@@ -503,3 +503,5 @@ CREATE TABLE _cleApi (
     cleAPI CHAR(64) UNIQUE,
     FOREIGN KEY (idCompte) REFERENCES _compte(idCompte)
 );
+
+CREATE OR REPLACE FUNCTION getToken(int idCompte)
