@@ -166,12 +166,12 @@ foreach ($offresNoteSql as $item) {
             ?>
         </div>
         <div>
-            <button>
+            <button title="fleche arrière">
                 <span class="material-symbols-outlined">
                     arrow_back_ios_new
                 </span>
             </button>
-            <button>
+            <button title="fleche avant">
                 <span class="material-symbols-outlined">
                     arrow_forward_ios
                 </span>
@@ -189,12 +189,12 @@ foreach ($offresNoteSql as $item) {
             ?>
         </div>
         <div>
-            <button>
+            <button title="fleche arrière">
                 <span class="material-symbols-outlined">
                     arrow_back_ios_new
                 </span>
             </button>
-            <button>
+            <button title="fleche avant">
                 <span class="material-symbols-outlined">
                     arrow_forward_ios
                 </span>

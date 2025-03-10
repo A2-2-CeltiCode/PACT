@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             </div>
             <div class="connecte">
-                <?php Button::render(class: "bouton-connexion", submit: true, type: "membre", text: "Se connecter"); ?>
+                <?php Button::render(class: "bouton-connexion", submit: true, type: "membre", text: "Se connecter", title: "connexion"); ?>
             </div>
         </form>
         <!-- Lien pour créer un compte -->

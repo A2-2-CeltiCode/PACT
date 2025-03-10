@@ -75,8 +75,8 @@ try {
 
         <!-- Boutons principaux -->
         <div class="modifier">
-            <button id="modifier" class="button" type="button">Modifier mes informations</button>
-            <button type="button" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
+            <button id="modifier" title="Bouton pour modifier les informations" class="button" type="button">Modifier mes informations</button>
+            <button type="button" title="Bouton pour changer le mot de passe" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
 
         <!-- Formulaire -->
@@ -164,8 +164,8 @@ try {
                     <td>
                         <input id="genText" type="text" readonly="" value="<?=
                         htmlspecialchars(!empty($userInfo['cleapi']) ? 'Généré' : "Non généré") ?>">
-                        <?php Button::render(id: "copyButton", text: "<span>Copier</span>", onClick: "copyKey('" . $userInfo['cleapi'] . "')") ?>
-                        <?php Button::render(id: "generateButton", text: "<span>" . htmlspecialchars(empty($userInfo['cleapi']) ? 'Générer' : "Regénérer") . "</span>", onClick: "generateKey()") ?>
+                        <?php Button::render(id: "copyButton", text: "<span>Copier</span>",title:"bouton pour copier la cle API" ,onClick: "copyKey('" . $userInfo['cleapi'] . "')") ?>
+                        <?php Button::render(id: "generateButton",title:"generer une cle API" ,text: "<span>" . htmlspecialchars(empty($userInfo['cleapi']) ? 'Générer' : "Regénérer") . "</span>", onClick: "generateKey()") ?>
                     </td>
                 </tr>
             </table>
@@ -174,8 +174,8 @@ try {
 
             <!-- Boutons -->
             <div class="bouton">
-                <button type="button" id="btnEnregistrer" style="display: none;" onclick="validerMotDePasse(event)">Enregistrer</button>
-                <button type="button" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
+                <button type="button" title="bouton pour valider le changement de mot de passe" id="btnEnregistrer" style="display: none;" onclick="validerMotDePasse(event)">Enregistrer</button>
+                <button type="button" title="bouton pour annuler la modification de mot de passe" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
             </div>
         </form>
 
@@ -208,8 +208,8 @@ try {
                 </div>
 
                 <div class="boutonMdp" style="margin-top: 20px;">
-                    <button type="submit" id="btnEnregistrerMdp">Enregistrer</button>
-                    <button type="button" id="btnAnnulerMdp" onclick="fermerPopupMotDePasse()">Annuler</button>
+                    <button type="submit" title="bouton pour enregistrer les modifications" id="btnEnregistrerMdp">Enregistrer</button>
+                    <button type="button" title="bouton pour annuler les modification" id="btnAnnulerMdp" onclick="fermerPopupMotDePasse()">Annuler</button>
                 </div>
             </form>
         </div>

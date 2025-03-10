@@ -139,8 +139,8 @@ foreach ($offresNoteSql as $item) {
                 ?>
             </div>
             <div>
-                <button><span class="material-symbols-outlined">arrow_back_ios_new</span></button>
-                <button><span class="material-symbols-outlined">arrow_forward_ios</span></button>
+                <button title="fleche arriere"><span class="material-symbols-outlined">arrow_back_ios_new</span></button>
+                <button title="fleche avant"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
             </div>
         </div>
         <!-- Section "Les mieux notées" -->
