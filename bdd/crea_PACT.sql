@@ -109,8 +109,8 @@ CREATE TABLE _contexte(
 CREATE TABLE _compte (
     idCompte    SERIAL,
     idAdresse   SERIAL,
-    mdp         VARCHAR(255) NOT NULL,
-    email       VARCHAR(255) NOT NULL,
+    mdp         VARCHAR(255),
+    email       VARCHAR(255),
     CONSTRAINT compte_pk PRIMARY KEY(idCompte),
     CONSTRAINT compte_fk_adresse FOREIGN KEY (idAdresse)
         REFERENCES _adresse(idAdresse)
@@ -118,9 +118,9 @@ CREATE TABLE _compte (
 
 CREATE TABLE _compteMembre(
     idCompte  SERIAL,
-    prenom    VARCHAR(50) NOT NULL,
-    nom       VARCHAR(50) NOT NULL,
-    pseudo     VARCHAR(255) NOT NULL UNIQUE,
+    prenom    VARCHAR(50),
+    nom       VARCHAR(50),
+    pseudo     VARCHAR(255) UNIQUE,
     CONSTRAINT compteMembre_pk PRIMARY KEY(idCompte),
     CONSTRAINT compteMembre_fk_compte FOREIGN KEY (idCompte) 
         REFERENCES _compte(idCompte)
