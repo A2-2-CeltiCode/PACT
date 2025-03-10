@@ -585,8 +585,8 @@ $options = $vueOffre["nomoption"];
         </section>
         <div class="btns">
             <br>
-            <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';", text: "Annuler", type: "pro", submit: false, ); ?>
-            <?php Button::render(text: "Valider", type:"pro", submit: true , class:"valid"); ?>
+            <?php Button::render(onClick:"window.location.href = '../listeOffres/listeOffres.php';",title:"bouton annuler" , text: "Annuler", type: "pro", submit: false, ); ?>
+            <?php Button::render(text: "Valider", type:"pro",title:"bouton valider" ,submit: true , class:"valid"); ?>
         </div>
         <input type="hidden" name="idOffre" value="<?php echo $crampte;?>">
 

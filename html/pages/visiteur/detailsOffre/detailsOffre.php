@@ -133,7 +133,7 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <?php Header::render(HeaderType::Guest);?>
-<button class="retour"><a href="../listeOffres/listeOffres.php"><img
+<button class="retour" title="bouton retour"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
@@ -146,8 +146,8 @@ try {
         <div class="container-gauche">
             <div class="carousel">
 
-                <button class="carousel-button prev desactive">❮</button>
-                <button class="carousel-button next desactive">❯</button>
+                <button class="carousel-button prev desactive" title="flèche arrière">❮</button>
+                <button class="carousel-button next desactive" title="flèche avant">❯</button>
                 <div class="carousel-images">
                     <?php
                     // Affichage des images de l'offre
@@ -278,7 +278,7 @@ try {
         <div id="avis-list" class="liste-avis">
             <div class="avis-header">
                 <h1>Avis</h1>
-                <button class="btn-creer-avis">Créer un avis</button>
+                <button class="btn-creer-avis" title="bouton pour créer un avis">Créer un avis</button>
             </div>
             <div class="filters">
                 <label for="sortBy">Trier par:</label>
@@ -342,8 +342,8 @@ try {
                             </p>
                         </div>
                         <div class="thumbs">
-                            <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
 
                         <?php if (!empty($reponses)): ?>
@@ -381,7 +381,7 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                    <button type="submit">Envoyer</button>
+                    <button type="submit" title="bouton envoyer">Envoyer</button>
                 </form>
             </div>
         </div>
