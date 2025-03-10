@@ -169,6 +169,7 @@ CREATE TABLE _offre(
     creaDate                DATE DEFAULT CURRENT_TIMESTAMP,
     heureOuverture          TIME NOT NULL,
     heureFermeture          TIME NOT NULL,
+    nbJetons                INTEGER DEFAULT 3 CHECK (nbJetons > -1 AND nbJetons < 4),
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
@@ -371,6 +372,7 @@ CREATE TABLE _avis(
     estVu           BOOLEAN DEFAULT FALSE,
     pouceHaut       INTEGER DEFAULT 0,
     pouceBas        INTEGER DEFAULT 0,
+    estBlacklist       BOOLEAN DEFAULT FALSE,
     CONSTRAINT avis_pk PRIMARY KEY(idAvis),
     CONSTRAINT avis_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
@@ -397,6 +399,14 @@ CREATE TABLE _avis_votes (
     CONSTRAINT avis_votes_pk PRIMARY KEY (idAvis, idCompte),
     CONSTRAINT avis_votes_fk_avis FOREIGN KEY (idAvis) REFERENCES _avis(idAvis),
     CONSTRAINT avis_votes_fk_compte FOREIGN KEY (idCompte) REFERENCES _compte(idCompte)
+);
+
+CREATE TABLE _avis_blacklist (
+    idOffre   INTEGER,
+    idAvis    INTEGER,
+    CONSTRAINT avis_blacklist_pk PRIMARY KEY (idOffre, idAvis),
+    CONSTRAINT avis_blacklist_fk_offre FOREIGN KEY (idOffre) REFERENCES _offre(idOffre),
+    CONSTRAINT avis_blacklist_fk_avis FOREIGN KEY (idAvis) REFERENCES _avis(idAvis)
 );
 
 --
