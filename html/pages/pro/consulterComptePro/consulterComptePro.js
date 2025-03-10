@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnEnregistrerMdp = document.getElementById("btnEnregistrerMdp");
     const btnAnnulerMdp = document.getElementById("btnAnnulerMdp");
     const editableInputs = document.querySelectorAll("input.editable");
+    const nonEditableInputs = document.querySelectorAll("input.nonEditable");
     const messageErreur = document.getElementById("messageErreur");
+    const tdNonModif = document.querySelectorAll("td.nonE");
 
     const popupMotDePasse = document.getElementById("popupMotDePasse");
     const erreurPopup = document.getElementById("erreurPopup");
@@ -23,9 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function activerModification() {
         editableInputs.forEach(input => {
             input.removeAttribute("readonly");
-            input.style.backgroundColor = "#f0f0f0";
+            input.style.backgroundColor = "#f9f9f9";
         });
-
+        
+        tdNonModif.forEach(input => {
+            input.style.backgroundColor = "#b3b1b150";
+        })
+        
         btnEnregistrer.style.display = "inline-block";
         btnAnnuler.style.display = "inline-block";
         btnModifier.disabled = true;

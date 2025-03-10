@@ -126,7 +126,7 @@ main table td {
         input {
             justify-self: start;
         }
-}
+}}
 
 /* Titres des catégories */
 main table th[colspan="2"] {
