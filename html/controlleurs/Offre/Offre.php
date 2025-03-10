@@ -134,7 +134,7 @@ STRING;
 <div class="offre $class">
     <a href="../detailsOffre/detailsOffre.php?id=$this->idoffre">
         <div class="image-container">
-            <img class="offre-image" alt="imgOffre" src="$image">
+            <img class="offre-image" alt="" src="$image">
             $star
         </div>
         <div $gold>
