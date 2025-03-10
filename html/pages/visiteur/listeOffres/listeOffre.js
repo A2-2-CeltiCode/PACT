@@ -45,5 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+initializeSearchForm("listeOffres");
+
+
 
 

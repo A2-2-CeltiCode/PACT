@@ -1,175 +1,3 @@
-let lastRequest;
-let searchTimeout;
-
-
-function rechercher() {
-  
-
-  const params = new URLSearchParams();
-  const filtreActifCount = [
-    {
-      name: "titre",
-      value: document.querySelector('input[name="titre"]').value,
-    },
-    {
-      name: "localisation",
-      value: document.querySelector('input[name="localisation"]').value,
-    },
-    {
-      name: "minPrix",
-      value: document.querySelector('input[name="minPrix"]').value,
-      default: 0,
-    },
-    {
-      name: "maxPrix",
-      value: document.querySelector('input[name="maxPrix"]').value,
-      default: 100,
-    },
-    {
-      name: "ouverture",
-      value: document.querySelector('input[name="ouverture"]').value,
-    },
-    {
-      name: "fermeture",
-      value: document.querySelector('input[name="fermeture"]').value,
-    },
-    {
-      name: "etat",
-      value: document.querySelector('select[name="etat"]').value,
-      default: "ouvertetferme",
-    },
-    {
-      name: "trie",
-      value: document.querySelector('select[name="trie"]').value,
-      default: "idoffre DESC",
-    },
-
-    {
-      name: "note",
-      value: document.querySelector('input[name="note"]').value,
-      default: 0,
-    },
-    {
-      name: "inputnote",
-      value: document.querySelector('input[name="inputnoteValue"]').value,
-    },
-    {
-      name: "nomcategorie",
-      value: Array.from(
-        document.querySelectorAll('input[name="nomcategorie[]"]:checked')
-      )
-        .map((input) => input.value)
-        .join(","),
-    },
-    {
-      name: "option",
-      value: Array.from(
-        document.querySelectorAll('input[name="option[]"]:checked')
-      )
-        .map((input) => input.value)
-        .join(","),
-    },
-  ].reduce((count, { name, value, default: defaultValue }) => {
-    if (value && value != defaultValue) {
-      params.append(name, value);
-      return count + 1;
-    }
-    return count;
-  }, 0);
-
-  document.getElementById(
-    "nombreFiltresActifs"
-  ).innerText = `Nombre de filtres actifs : ${Math.max(
-    filtreActifCount - 3,
-    0
-  )}`;
-
-  const xhr = new XMLHttpRequest();
-  lastRequest = xhr;
-  xhr.open("GET", `get_points.php?${params.toString()}`, true);
-  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      try {
-        const response = JSON.parse(xhr.responseText);
-        console.log(response);
-        //Retirer les anciens points
-        map.eachLayer(function (layer) {
-          if (layer instanceof L.Marker) {
-            map.removeLayer(layer);
-          }
-        });
-        // Ajout des points sur la carte
-        response.forEach(function (point) {
-          L.marker([point.coordonneesx, point.coordonneesy])
-            .addTo(map)
-            .bindPopup(
-              `<div class="popup-offre">
-              <h3>${point.titre}</h3>
-              <img src="/ressources/${point.idoffre}/images/${point.nomimage}" style="width:200px;height:auto;">
-            </div>`
-            )
-            .on("mouseover", function (e) {
-              this.openPopup();
-            })
-            .on("mouseout", function (e) {
-              this.closePopup();
-            });
-        });
-      } catch (e) {
-        console.error("Erreur lors du traitement de la réponse JSON:", e);
-      }
-    } else {
-      console.error(
-        "Erreur lors de la requête AJAX:",
-        xhr.status,
-        xhr.statusText
-      );
-    }
-  };
-  xhr.send();
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("searchForm");
-  const inputs = [
-    'input[name="titre"]',
-    'input[name="localisation"]',
-    'input[name="minPrix"]',
-    'input[name="maxPrix"]',
-    'input[name="ouverture"]',
-    'input[name="fermeture"]',
-    'select[name="etat"]',
-    'select[name="trie"]',
-    'input[name="note"]',
-    'input[name="inputnoteValue"]',
-    'input[name="nomcategorie[]"]',
-    'input[name="option[]"]',
-  ];
-
-  inputs.forEach((selector) => {
-    document.querySelectorAll(selector).forEach((input) => {
-      input.addEventListener("input", () => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(rechercher, 300);
-      });
-      input.addEventListener("change", rechercher);
-    });
-  });
-
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-    rechercher();
-  });
-});
-
-
-
-
-
-
-
-
 // Initialisation de la carte
 var map = L.map("map").setView([48.5146, -2.7653], 8);
 
@@ -180,27 +8,74 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 // Récupération des points depuis le serveur
-fetch(
-  "get_points.php"
-)
+fetch("get_points.php")
   .then((response) => response.json())
   .then((points) => {
     // Ajout des points sur la carte
-    points.forEach(function (point) {
-      L.marker([point.coordonneesx, point.coordonneesy])
-        .addTo(map)
-        .bindPopup(
-          `<div class="popup-offre">
-          <h3>${point.titre}</h3>
-          <img src="/ressources/${point.idoffre}/images/${point.nomimage}" style="width:200px;height:auto;">
-        </div>`
-        )
-        .on("mouseover", function (e) {
-          this.openPopup();
-        })
-        .on("mouseout", function (e) {
-          this.closePopup();a
-        });
-    });
+    addMapMarkers(map, points);
   })
   .catch((error) => console.error("Erreur:", error));
+
+initializeSearchForm("test");
+
+//fonction
+
+function clearMapMarkers(map) {
+  map.eachLayer(function (layer) {
+    if (layer instanceof L.Marker) {
+      map.removeLayer(layer);
+    }
+  });
+}
+
+function addMapMarkers(map, points) {
+  points.forEach(function (point) {
+    L.marker([point.coordonneesx, point.coordonneesy])
+      .addTo(map)
+      .bindPopup(
+        `
+
+          <a href="../pages/visiteur/detailsOffre/detailsOffre.php?id=${point.idoffre}">
+            <div class="image-container">
+              <img class="offre-image" alt="" src="/ressources/${
+                point.idoffre
+              }/images/${point.nomimage}">
+            </div>
+            <div>
+              <div>
+                <p>${point.titre}</p>
+              </div>
+              <div>
+                <p>${generateStars(point.moynotes)}</p>
+              </div>
+            </div>
+            <div>
+              <div>
+                <p>${point.ville}</p>
+              </div>
+              <div>
+                <p>${parseFloat(point.valprix).toFixed(2)}€</p>
+              </div>
+            </div>
+            <div>
+              
+              <div>
+                <p>${point.heureouverture.slice(
+                  0,
+                  5
+                )} - ${point.heurefermeture.slice(0, 5)}</p>
+              </div>
+            </div>
+          </a>
+      `
+      );
+  });
+}
+
+function generateStars(rating) {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+  const emptyStars = 5 - fullStars - halfStar;
+
+  return "★".repeat(fullStars) + "☆".repeat(emptyStars);
+}

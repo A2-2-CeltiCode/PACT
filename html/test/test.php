@@ -12,11 +12,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
 
 
-$dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-$sql = "SELECT coordonneesX,coordonneesY   FROM pact.vue_offres";
-$sth = $dbh->prepare($sql);
-$sth->execute();
-$offre = $sth->fetchAll();
 
 $sort = $_GET['sort'] ?? 'idoffre DESC';
 $titre = $_GET['titre'] ?? '';
@@ -51,6 +46,7 @@ Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $ferm
   <body>
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="../trie/trieGeneral.js"></script>
     <script src="test.js"></script>
   </body>
 </html>
