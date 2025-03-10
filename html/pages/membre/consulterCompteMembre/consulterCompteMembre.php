@@ -80,8 +80,8 @@ try {
 
         <!-- Boutons principaux -->
         <div class="modifier">
-            <button type="button" class="button" onclick="activerModification()">Modifier mes informations</button>
-            <button type="button" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
+            <button type="button" title="Modifier information" class="button" onclick="activerModification()">Modifier mes informations</button>
+            <button type="button" title="Changer Mot de Passe" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
         </div>
 
         <!-- Message d'erreur -->
@@ -179,16 +179,16 @@ try {
                     <th>Clé d'API</th>
                     <td>
                         <input id="genText" type="text" readonly="" value="<?= htmlspecialchars(!empty($userInfo['cleapi']) ? 'Généré' : "Non généré") ?>">
-                        <?php Button::render(id: "copyButton", text: "<span>Copier</span>", onClick: "copyKey('" . $userInfo['cleapi'] . "')") ?>
-                        <?php Button::render(id: "generateButton", text: "<span>" . htmlspecialchars(empty($userInfo['cleapi']) ? 'Générer' : "Regénérer") . "</span>", onClick: "generateKey()") ?>
+                        <?php Button::render(id: "copyButton", text: "<span>Copier</span>",title: "copier cle API" ,onClick: "copyKey('" . $userInfo['cleapi'] . "')") ?>
+                        <?php Button::render(id: "generateButton",title:"generé une cle API" ,text: "<span>" . htmlspecialchars(empty($userInfo['cleapi']) ? 'Générer' : "Regénérer") . "</span>", onClick: "generateKey()") ?>
                     </td>
                 </tr>
             </table>
 
             <!-- Boutons -->
             <div class="bouton">
-                <button type="button" id="btnEnregistrer" style="display: none;" onclick="validerFormulaire(event)">Enregistrer</button>
-                <button type="button" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
+                <button type="button" title="Enregistrer Modification" id="btnEnregistrer" style="display: none;" onclick="validerFormulaire(event)">Enregistrer</button>
+                <button type="button" title="Annuler Modification" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
             </div>
         </form>
         <!-- Popup de changement de mot de passe -->
@@ -217,8 +217,8 @@ try {
                     <?php endif; ?>
                 </div>
                 <div id="btnMdp"style="margin-top: 20px;">
-                    <button type="submit" id="btnMdpEnregistrer">Enregistrer</button>
-                    <button type="button" id="btnMdpAnnuler" onclick="fermerPopupMotDePasse()">Annuler</button>
+                    <button type="submit" title="Enregistrer mot de passe" id="btnMdpEnregistrer">Enregistrer</button>
+                    <button type="button" title="Annuler Modification mot de passe" id="btnMdpAnnuler" onclick="fermerPopupMotDePasse()">Annuler</button>
                 </div>
             </form>
         </div>
