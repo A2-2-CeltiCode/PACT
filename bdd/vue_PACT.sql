@@ -42,6 +42,10 @@ CREATE OR REPLACE VIEW vue_reponse_avis AS
 SELECT idReponse, idAvis, idCompte, commentaire, dateReponse
 FROM _reponseAvis;
 
+CREATE OR REPLACE VIEW vue_avis_blacklist AS
+SELECT idOffre, idAvis, dateBlacklist
+FROM _avis_blacklist;
+
 --
 -- VUES OFFRES
 --
