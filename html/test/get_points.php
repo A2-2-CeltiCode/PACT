@@ -31,6 +31,11 @@ $note = $_GET['note'] ?? null;
 // Récupération des résultats
 $points = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation, $etat, null, null, $note, $option);
 
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+    echo json_encode($points);
+    exit;
+}
+
 echo json_encode($points);
 
 ?>

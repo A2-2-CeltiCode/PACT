@@ -1,0 +1,15 @@
+.popup-offre {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.popup-offre h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.popup-offre img {
+  margin-top: 10px;
+  border-radius: 5px;
+}
