@@ -108,7 +108,7 @@ class Header
                     <form action="/pages/pro/detailsOffre/envoyerReponse.php" method="POST">
                         <input type="hidden" name="idAvis" id="popup-idAvis">
                         <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                        <button type="submit">Envoyer</button>
+                        <button type="submit" title="Envoyer">Envoyer</button>
                     </form>
                 </div>
               </div>';
@@ -192,7 +192,7 @@ class Header
     private static function renderAccountSection(string $type): void {
         echo '<div>';
         if ($type == HeaderType::Guest) {
-            Button::render($class = '', $id = 'guest-button', $text = 'S\'inscrire / Se Connecter',
+            Button::render($class = '', $id = 'guest-button', $title="s'inscire/Se Connecter", $text = 'S\'inscrire / Se Connecter',
                 $type = ButtonType::Guest,
                 $onClick = "window.location.href='/pages/membre/connexionCompteMembre/connexionCompteMembre.php'");
         } elseif ($type == HeaderType::Member) {
@@ -229,8 +229,8 @@ class Header
                 echo '<div class="review" data-id="' . $review['idavis'] . '" onclick="redirectToAvis(' . $review['idavis'] . ')">';
                 echo '<strong>' . $review['titre'] . '</strong>';
                 echo '<p>' . $review['commentaire'] . '</p>';
-                echo '<button class="btn-repondre" onclick="openReplyPopup(' . $review['idavis'] . '); event.stopPropagation();">Répondre</button>';
-                echo '<button class="btn-mark-seen" data-id="' . $review['idavis'] . '">Marqué comme vu</button>';
+                echo '<button class="btn-repondre" title="Repondre" onclick="openReplyPopup(' . $review['idavis'] . '); event.stopPropagation();">Répondre</button>';
+                echo '<button class="btn-mark-seen" title="Marque vue" data-id="' . $review['idavis'] . '">Marqué comme vu</button>';
                 echo '</div>';
             }
         } else {
