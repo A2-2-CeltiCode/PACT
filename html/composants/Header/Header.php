@@ -192,7 +192,7 @@ class Header
     private static function renderAccountSection(string $type): void {
         echo '<div>';
         if ($type == HeaderType::Guest) {
-            Button::render($class = '', $id = 'guest-button', $title="s'inscire/Se Connecter", $text = 'S\'inscrire / Se Connecter',
+            Button::render($class = '', $id = 'guest-button', $title="S'inscrire/Se Connecter", $text = 'S\'inscrire / Se Connecter',
                 $type = ButtonType::Guest,
                 $onClick = "window.location.href='/pages/membre/connexionCompteMembre/connexionCompteMembre.php'");
         } elseif ($type == HeaderType::Member) {
