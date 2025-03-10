@@ -402,8 +402,9 @@ CREATE TABLE _avis_votes (
 );
 
 CREATE TABLE _avis_blacklist (
-    idOffre   INTEGER,
-    idAvis    INTEGER,
+    idOffre         INTEGER NOT NULL,
+    idAvis          INTEGER NOT NULL,
+    dateBlacklist   TIMESTAMP DEFAULT current_timestamp,
     CONSTRAINT avis_blacklist_pk PRIMARY KEY (idOffre, idAvis),
     CONSTRAINT avis_blacklist_fk_offre FOREIGN KEY (idOffre) REFERENCES _offre(idOffre),
     CONSTRAINT avis_blacklist_fk_avis FOREIGN KEY (idAvis) REFERENCES _avis(idAvis)
