@@ -27,6 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
             input.removeAttribute("readonly");
             input.style.backgroundColor = "#f9f9f9";
         });
+        nonEditableInputs.forEach(input => {
+            input.style.backgroundColor = "#999a9b00";
+        });
         
         tdNonModif.forEach(input => {
             input.style.backgroundColor = "#b3b1b150";

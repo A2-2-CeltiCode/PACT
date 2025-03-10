@@ -387,4 +387,5 @@ main button:hover {
 
 .boutonMdp{
     display: flex;
+    background-color: #999a9b00;
 }
