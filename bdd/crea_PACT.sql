@@ -16,6 +16,8 @@ CREATE TABLE _adresse(
     ville         VARCHAR(50) NOT NULL,
     rue           VARCHAR(50) NOT NULL,
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
+    coordonneesX   FLOAT,
+    coordonneesY   FLOAT,
     CONSTRAINT adresse_pk PRIMARY KEY(idAdresse)
 );
 
