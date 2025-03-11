@@ -6,7 +6,7 @@ use \composants\Button\Button;
 use \composants\Button\ButtonType;
 use \composants\Label\Label;
 
-//require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/connect_params.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Button/Button.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Input/Input.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Label/Label.php";
@@ -15,14 +15,13 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 // Initialisation des variables
 $message = "";
-$userInfo = [];
 $POST['pagePro'] = "info";
 
 $idCompte = $_SESSION['idCompte'] ; 
 
 // Connexion à la base de données
 try {
-    $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+    $pdo = new PDO("pgsql:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $pdo->exec("SET search_path TO pact");
@@ -32,9 +31,8 @@ try {
                    raisonsocialepro, banquerib, numsiren,
                    codepostal, ville, rue, cleapi
             FROM vue_compte_pro LEFT JOIN _cleApi USING (idcompte)
-            WHERE idCompte = :idCompte";
+            WHERE idCompte = $idCompte";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
