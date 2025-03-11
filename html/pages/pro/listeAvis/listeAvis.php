@@ -174,7 +174,7 @@ try {
                             
                             <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi['idoffre'] ?>"><?= $avi["titre"] ?></a>
                             </p>
-                            <div class="note">
+                            <div class="note" title="note offre icone">
                                 <?php
                                 for ($i = 0; $i < floor($avi["note"]); $i++) {
                                     echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");

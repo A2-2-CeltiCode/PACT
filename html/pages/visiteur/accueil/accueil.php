@@ -13,7 +13,7 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
     <style>
         header + div {
             <?php
@@ -150,7 +150,7 @@ foreach ($offresNoteSql as $item) {
 <div>
 <form action="/pages/visiteur/listeOffres/listeOffres.php" method="get">
     <?php Input::render(name:"titre", class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
-        icon: "/ressources/icone/recherche.svg") ?>
+        icon: "/ressources/icone/recherche.svg", title: "icone barre de recherche") ?>
 </form>
 </div>
 <main>

@@ -137,7 +137,7 @@ try {
 <body>
     <div id="toast" class="toast">Avis bien signalé</div>
     <div class=titre>
-        <?php Label::render("titre-svg", "", "", "", "../../../ressources/icone/{$typeOffre}.svg"); ?>
+        <?php Label::render("titre-svg", "", "", "", "../../../ressources/icone/{$typeOffre}.svg","icone type offre"); ?>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
     </div>
     <div class="container">
@@ -176,22 +176,22 @@ try {
         <div class="offre-infos">
             <?php
             // Affichage des détails de l'offre
-            Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/".$typeOffre.".svg");
+            Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/".$typeOffre.".svg","icone description offre");
             Label::render("offre-detail", "offre-detail", "", $offre['descriptiondetaillee']);
             ?>
             <div class="address">
                 <?php
                 // Construction de l'adresse complète
                 $adresseTotale = $adresse['codepostal'] . ' ' . $adresse['ville'] . ', ' . $adresse['rue'];
-                Label::render("offre-adresse", "", "", $adresseTotale, "../../../ressources/icone/localisateur.svg");
+                Label::render("offre-adresse", "", "", $adresseTotale, "../../../ressources/icone/localisateur.svg","icone adresse");
                 ?>
             </div>
-            <?php Label::render("offre-option", "", "", "" . $offre['numtel'], "../../../ressources/icone/telephone.svg"); ?>
+            <?php Label::render("offre-option", "", "", "" . $offre['numtel'], "../../../ressources/icone/telephone.svg","icone numero de telephone"); ?>
             <?php
 
-            Label::render("", "", "", $horaires, "../../../ressources/icone/horloge.svg");
+            Label::render("", "", "", $horaires, "../../../ressources/icone/horloge.svg","icone horaire offre");
             // Affichage du site internet de l'offre
-            Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
+            Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg","icone site internet offre");
 
             // Affichage des tags associés à l'offre
             $tagsString = '';
@@ -201,47 +201,47 @@ try {
             $tagsString = rtrim($tagsString, ', ');
             if (!empty($tagsString)) {
                 ?><br><?php
-                Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
+                Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg","icone tag de l'offre");
                 ?><br><?php
             }
-            Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
+            Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg","icone info complémentaire");
             ?>
             <ul>
                 <?php
                 // Affichage des informations spécifiques en fonction du type d'offre
-                switch ($typeOffre) {
+               switch ($typeOffre) {
                     case 'restaurant':
                         $string = $gammeRestaurant['nomgamme'];
                         $start = strpos($string, '(') + 1;
                         $end = strpos($string, ')');
 
                         $gamme = substr($string, $start, $end - $start);
-                        Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg");
+                        Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg","icon game restaurant");
                         break;
                     case 'spectacle':
-                        Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/horloge.svg");
-                        Label::render("", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/capacite.svg");
+                        Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée spectacle");
+                        Label::render("", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg","icone capacité de la salle pour spectacle");
                         break;
                     case 'parc_attractions':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/age.svg");
-                        Label::render("", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/attractions.svg");
+                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini pour parc");
+                        Label::render("", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg","icone nombre attractions parc");
                         break;
                     case 'activite':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/age.svg");
-                        Label::render("", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/horloge.svg");
-                        Label::render("", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/prestation.svg");
+                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini Activité");
+                        Label::render("", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée activité");
+                        Label::render("", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg","icone prestation Activité");
                         break;
                     case 'visite':
-                        Label::render("", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/horloge.svg");
-                        Label::render("", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/naviguer.svg");
+                        Label::render("", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée visite");
+                        Label::render("", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg","icone si viste guidée ou non");
                         break;
                     default:
-                        die("Aucune offre n'a été trouvée");
+                        die("Aucune offre n\'a été trouvée");
                 }
                 ?>
             </ul>
             <div class="moyenne-notes">
-                <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5", "../../../ressources/icone/note.svg"); ?>
+                <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5", "../../../ressources/icone/note.svg","icone moyenne de notes offre"); ?>
             </div>
         </div>
         <div class="offre-package-modification">
@@ -316,7 +316,7 @@ try {
                             <p class="avi-title">
                                 <?= $avi["titre"] ?>
                             </p>
-                            <div class="note">
+                            <div class="note" title="note offre">
                                 <?php
                                 for ($i = 0; $i < floor($avi["note"]); $i++) {
                                     echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
