@@ -22,11 +22,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
 
-$host = 'localhost';
-$dbname = 'postgres';
-$user = 'postgres';
-$password = '13phenix';
-$pdo = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
+
+$pdo = new  PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 // Récupération des paramètres de la requête
 $sort = $_GET['sort'] ?? 'idoffre DESC';
 $titre = $_GET['titre'] ?? '';
