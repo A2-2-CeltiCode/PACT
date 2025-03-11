@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Créez un Compte Professionnel PACT</title>
         <link rel="stylesheet" href="./creationComptePro.css">
-        <script src="creationComptePro.js" defer></script>
+        <script src="creationComptePro.js"></script>
     </head>
     <body>
         <div class="info-display">
