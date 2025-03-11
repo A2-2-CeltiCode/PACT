@@ -29,7 +29,7 @@ $idOffre = $_GET['id'] ?? $idOffre;
 
 try {
     // Connexion à la base de données
-    $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
