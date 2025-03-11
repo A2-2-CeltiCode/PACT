@@ -2,53 +2,53 @@
 var map = L.map("map").setView([48.5146, -2.7653], 8);
 
 var Spectacle = L.icon({
-  iconUrl: '/Untitled/visite.svg',
-  
-  iconSize:     [38, 95],
-  shadowSize:   [50, 64], 
-  iconAnchor:   [22, 94], 
-  shadowAnchor: [4, 62],  
-  popupAnchor:  [-3, -76] 
+  iconUrl: "/Untitled/visite.svg",
+
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
 });
 
 var Visite = L.icon({
-  iconUrl: '/Untitled/groupe.svg',
+  iconUrl: "/Untitled/groupe.svg",
 
-  iconSize:     [38, 95],
-  shadowSize:   [50, 64], 
-  iconAnchor:   [22, 94], 
-  shadowAnchor: [4, 62],  
-  popupAnchor:  [-3, -76] 
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
 });
 
 var Activite = L.icon({
-  iconUrl: '/Untitled/parc.svg',
+  iconUrl: "/Untitled/parc.svg",
 
-  iconSize:     [38, 95],
-  shadowSize:   [50, 64], 
-  iconAnchor:   [22, 94], 
-  shadowAnchor: [4, 62],  
-  popupAnchor:  [-3, -76] 
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
 });
 
 var Restaurant = L.icon({
-  iconUrl: '/Untitled/restaurant.svg',
+  iconUrl: "/Untitled/restaurant.svg",
 
-  iconSize:     [38, 95],
-  shadowSize:   [50, 64], 
-  iconAnchor:   [22, 94], 
-  shadowAnchor: [4, 62],  
-  popupAnchor:  [-3, -76] 
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
 });
 
 var Parc = L.icon({
-  iconUrl: '/Untitled/visite.svg',
+  iconUrl: "/Untitled/visite.svg",
 
-  iconSize:     [38, 95],
-  shadowSize:   [50, 64], 
-  iconAnchor:   [22, 94], 
-  shadowAnchor: [4, 62],  
-  popupAnchor:  [-3, -76] 
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
 });
 
 // Ajout des tuiles OpenStreetMap
@@ -84,34 +84,35 @@ function addMapMarkers(map, points) {
   points.forEach(function (point) {
     var iconType;
     switch (point.nomcategorie) {
-      case 'Spectacle':
-      iconType = Spectacle;
-      break;
-      case 'Visite':
-      iconType = Visite;
-      break;
-      case 'Activite':
-      iconType = Activite;
-      break;
-      case 'Restaurant':
-      iconType = Restaurant;
-      break;
-      case 'Parc':
-      iconType = Parc;
-      break;
+      case "Spectacle":
+        iconType = Spectacle;
+        break;
+      case "Visite":
+        iconType = Visite;
+        break;
+      case "Activite":
+        iconType = Activite;
+        break;
+      case "Restaurant":
+        iconType = Restaurant;
+        break;
+      case "Parc":
+        iconType = Parc;
+        break;
       default:
-      iconType = Parc;
+        iconType = Parc;
     }
 
-    var marker = L.marker([point.coordonneesx, point.coordonneesy], { icon: iconType })
-      .bindPopup(
+    var marker = L.marker([point.coordonneesx, point.coordonneesy], {
+      icon: iconType,
+    }).bindPopup(
       `
         <a href="../pages/visiteur/detailsOffre/detailsOffre.php?id=${
-        point.idoffre
+          point.idoffre
         }">
         <div class="carte-image-container">
           <img class="carte-offre-image" alt="" src="/ressources/${
-          point.idoffre
+            point.idoffre
           }/images/${point.nomimage}">
         </div>
         <div>
@@ -132,15 +133,20 @@ function addMapMarkers(map, points) {
         </div>
         <div>
           <div>
-          <p>${point.heureouverture.slice(
-            0,
-            5
-          )} - ${point.heurefermeture.slice(0, 5)}</p>
+          <p>${point.heureouverture.slice(0, 5)} - ${point.heurefermeture.slice(
+        0,
+        5
+      )}</p>
           </div>
+        </div>
+        <div>
+          <button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${
+            point.coordonneesx
+          },${point.coordonneesy}', '_blank')">Itinéraire</button>
         </div>
         </a>
       `
-      );
+    );
     markers.addLayer(marker);
   });
   map.addLayer(markers);
