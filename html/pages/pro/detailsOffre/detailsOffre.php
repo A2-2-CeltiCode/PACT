@@ -28,7 +28,7 @@ try {
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas,estvu FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas,estvu, estblacklist FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
     if ($filterBy === 'viewed') {
         $query .= " AND estvu = true";
@@ -47,6 +47,77 @@ try {
     }
 
     $avis = $dbh->query($query)->fetchAll(PDO::FETCH_ASSOC);
+
+    // S'assurer que PHP utilise bien UTC
+    date_default_timezone_set('UTC');
+
+    // Récupérer tous les avis blacklistés
+    $stmt = $dbh->prepare("
+        SELECT dateblacklist 
+        FROM pact._avis_blacklist 
+        WHERE idOffre = :idOffre
+        ORDER BY dateblacklist ASC  -- Récupérer les avis du plus ancien au plus récent
+    ");
+    $stmt->execute(['idOffre' => $idOffre]);
+    $blacklistedAvis = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    if (!$blacklistedAvis) {
+        $dateProchainBlacklist = "Aucun avis sous cooldown.";
+        $nbJetons = 3; // Tous les jetons sont disponibles
+    } else {
+        // Initialiser la variable pour le nombre d'avis sous cooldown
+        $underCooldownCount = 0;
+        $nextCooldownEnd = null;
+
+        foreach ($blacklistedAvis as $blacklisted) {
+            // Convertir la date de blacklistage en UTC
+            $date = new DateTime($blacklisted, new DateTimeZone('Europe/Paris'));
+            $date->setTimezone(new DateTimeZone('UTC'));
+
+            // Ajouter 30 secondes de cooldown
+            $date->modify('+30 seconds');
+
+            // Vérifier si cet avis est toujours sous cooldown
+            if ($date > new DateTime('now', new DateTimeZone('UTC'))) {
+                $underCooldownCount++;
+                // Trouver le prochain cooldown
+                if (!$nextCooldownEnd || $date < $nextCooldownEnd) {
+                    $nextCooldownEnd = $date;
+                }
+            }
+        }
+
+        // Ajuster nbJetons en fonction du nombre d'avis sous cooldown
+        if ($underCooldownCount == 1) {
+            $nbJetons = 2;
+        } elseif ($underCooldownCount == 2) {
+            $nbJetons = 1;
+        } elseif ($underCooldownCount == 3) {
+            $nbJetons = 0;
+        } elseif ($underCooldownCount == 0) {
+            $nbJetons = 3; // Si aucun avis n'est sous cooldown, tous les jetons sont disponibles
+        }
+
+        // Mise à jour du nombre de jetons à chaque refresh
+        $stmt = $dbh->prepare("UPDATE pact._offre SET nbJetons = :nbJetons WHERE idOffre = :idOffre");
+        $stmt->bindParam(':nbJetons', $nbJetons);
+        $stmt->bindParam(':idOffre', $idOffre);
+        $stmt->execute();
+
+        // Afficher le prochain jeton disponible
+        if ($nextCooldownEnd && $nextCooldownEnd <= new DateTime('now', new DateTimeZone('UTC'))) {
+            $dateProchainBlacklist = "Jeton disponible maintenant !";
+        } else {
+            if ($nextCooldownEnd) {
+                $nextCooldownEnd->setTimezone(new DateTimeZone('Europe/Paris'));
+                $dateProchainBlacklist = $nextCooldownEnd->format('d/m/Y - H:i:s');
+            } else {
+                $dateProchainBlacklist = "Aucun prochain cooldown.";
+            }
+        }
+    }
+
+
     
     // Calcul de la moyenne des notes
     $totalNotes = 0;
@@ -294,11 +365,22 @@ try {
                     <option value="viewed">Vus</option>
                     <option value="not_viewed">Non vus</option>
                 </select>
+                <div id="labelBlacklistage">
+                    <?php if ($nbJetons <= 1) { ?>
+                        <h4>Jetons de Blacklistage : <?php echo $offre['nbjetons']?> disponible</h4>
+                    <?php } else { ?>
+                    <h4>Jetons de Blacklistage : <?php echo $offre['nbjetons']?> disponibles</h4>
+                    <?php } ?>
+                    <?php if ($nbJetons < 3) { ?>
+                        <p>Prochain jeton de blacklistage : <?php echo $dateProchainBlacklist ?></p>
+                    <?php } ?>
+                </div>
+                
             </div>
             <div>
                 <?php
                 foreach ($avis as $avi) {
-                    if (!isset($avi["idavis"])) {
+                    if (!isset($avi["idavis"]) || $avi["estblacklist"]) {
                         continue;
                     }
                     
@@ -360,6 +442,14 @@ try {
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
                                 <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
                             <?php endif; ?>
+                            <form action="blacklisterAvis.php" method="POST" class="form-blacklist">
+                                <input type="hidden" name="idAvis" value="<?= $avi["idavis"] ?>">
+                                <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+                                <?php if ($nbJetons > 0) { ?>
+                                    <?php Button::render("btn-blacklister", "btn-blacklister","Blacklister l'avis", "Blacklister", ButtonType::Pro, "", true); ?>
+                                <?php } else { ?>
+                                    <?php Button::render("btn-blackliste-disabled", "btn-blackliste-disabled","Pas de jetons disponibles", "Blacklister", ButtonType::Pro, "", false); }?>
+                            </form>
                         </div>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
@@ -402,6 +492,24 @@ try {
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..."></textarea>
                     <button type="submit">Envoyer</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="popup" id="popup-blacklist">
+            <div class="popup-content-blacklist">
+                <span class="close">&times;</span>
+                <form action="blacklisterAvis.php" method="POST">
+                    <input type="hidden" name="idAvis" id="popup-idAvis">
+                    <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+                    <h4>Êtes-vous sûr de vouloir blacklister cet avis ?</h4>
+                    <br><br>
+                    <p>Vous avez actuellement <?php echo $nbJetons ?> jetons de blacklistage pour cette offre.</p>
+                    <p>Après avoir blacklisté cet avis, il vous restera <?php echo $nbJetons - 1?> jetons de blacklistage pour cette offre.</p>
+                    <div id="blacklist-buttons">
+                        <button id="blacklist-confirm" type="submit" title="Confirmation du blacklistage">Oui</button>
+                        <button id="blacklist-decline" type="button" id="btn-close-popup" title="Retour en arrière">Non</button>
+                    </div>
                 </form>
             </div>
         </div>
