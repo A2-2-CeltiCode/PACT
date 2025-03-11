@@ -3,6 +3,6 @@
 <?php
 $server = 'localhost';
 $driver = 'pgsql';
-$dbname = 'pact';
+$dbname = 'sae';
 $dbuser = 'postgres';
-$dbpass = 'derfDERF29';
+$dbpass = 'postgres';
