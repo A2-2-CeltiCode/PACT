@@ -10,6 +10,20 @@ function afficherChampSiren() {
 }
 
 function formValide() {
+    // Validation de la dénomination sociale
+    var denomination = document.forms["creerComptePro"]["denomination"].value;
+    if (!/^.{1,50}$/.test(denomination) && denomination !== "") {
+        alert("La dénomination sociale doit contenir au maximum 50 caractères.");
+        return false;
+    }
+
+    // Validation de la dénomination sociale
+    var raisonS = document.forms["creerComptePro"]["raisonS"].value;
+    if (!/^.{1,50}$/.test(raisonS) && raisonS !== "") {
+        alert("La raison sociale doit contenir au maximum 50 caractères.");
+        return false;
+    }
+
     // Vérification SIREN si "Entreprise privée" est cochée
     var estPrive = document.getElementById("estPrive").checked;
     var sirenInput = document.forms["creerComptePro"]["siren"].value.trim();
@@ -25,6 +39,13 @@ function formValide() {
         }
     }
 
+    // Validation de l'email : doit contenir un "@" et un "."
+    var email = document.forms["creerComptePro"]["email"].value;
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,255}$/.test(email)) {
+        alert("L'adresse email n'est pas valide et doit contenir au maximum 255 caractères.");
+        return false;
+    }
+
     // Validation du numéro de téléphone : uniquement des chiffres (max 10)
     var telephone = document.forms["creerComptePro"]["telephone"].value;
     if (!/^\d{10}$/.test(telephone) && telephone !== "") {
@@ -32,10 +53,10 @@ function formValide() {
         return false;
     }
 
-    // Validation de l'email : doit contenir un "@" et un "."
-    var email = document.forms["creerComptePro"]["email"].value;
-    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-        alert("L'adresse email n'est pas valide.");
+    // Validation de la rue (max 50)
+    var rue = document.forms["creerComptePro"]["rue"].value;
+    if (!/^.{1,50}$/.test(rue) && rue !== "") {
+        alert("La rue doit contenir au maximum 50 caractères.");    
         return false;
     }
 
@@ -48,22 +69,15 @@ function formValide() {
 
     // Validation de la ville : uniquement des lettres
     var ville = document.forms["creerComptePro"]["ville"].value;
-    if (!/^[A-Za-z\s]+$/.test(ville)) {
-        alert("La ville doit contenir uniquement des lettres et des espaces.");
+    if (!/^[A-Za-z\s-]{1,50}$/.test(ville)) {
+        alert("La ville peut contenir uniquement des lettres, des espaces et des tirets.");
         return false;
     }
 
-    // Validation du numéro de rue : uniquement des chiffres ou "bis" ou "ter"
-    var numero = document.forms["creerComptePro"]["numero"].value;
-    if (!/^\d+$/.test(numero) && !/^\d+(bis|ter)$/.test(numero) && numero !== "") {
-    alert("Le numéro de rue doit être constitué de chiffres, possiblement suivi de 'bis' ou 'ter'.");
-    return false;
-}
-
     // Validation du mot de passe : respect des règles
     var motDePasse = document.forms["creerComptePro"]["motDePasse"].value;
-    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(motDePasse)) {
-        alert("Le mot de passe doit comporter au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}/.test(motDePasse)) {
+        alert("Le mot de passe doit comporter au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial et au maximum 255 caractères.");
         return false;
     }
 

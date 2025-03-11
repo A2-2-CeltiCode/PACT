@@ -95,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créez un Compte PACT</title>
     <link rel="stylesheet" href="./creationCompteMembre.css">
+    <script src="creationCompteMembre.js"></script>
 </head>
 <body>
 <?php if ((empty($_POST)) || $emailUtilise ||$pseudoUtilise ){ ?>
