@@ -166,10 +166,12 @@ label{
   object-fit: cover;
 }
 
+
+
 .carousel-button {
   position: absolute;
   top: 50%;
-  opacity: 0;
+  opacity: 50%;
   transform: translateY(-50%) scale(0.9);
   transition: all 0.3s ease;
   background: rgba(255, 255, 255, 0.95);
@@ -202,6 +204,27 @@ label{
 
 .carousel-button.next {
   right: 16px;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.carousel-dots span {
+  width: 10px;
+  height: 10px;
+  background-color: #6d6d6d;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.carousel-dots .active {
+  background-color: #ececec;
 }
 
 /* Prix */
@@ -239,6 +262,7 @@ label{
   padding: 0;
 }
 
+
 .offre-detail {
   position: relative;
   width: 100%;
@@ -258,7 +282,10 @@ label{
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  cursor: pointer;
 }
+
+
 
 /* Réintégrer l'effet de flou uniquement lorsque le bouton "Voir plus" est présent */
 .offre-detail.collapsed:after {
@@ -567,6 +594,12 @@ label{
   color: var(--text-dark);
 }
 
+.label-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0px !important;
+}
+
 .filters select {
   padding: 8px 12px;
   border-radius: var(--radius-sm);
@@ -821,6 +854,12 @@ label{
   .avi > div:nth-last-child(2) img {
     width: 80px;
     height: 80px;
+  }
+}
+
+@media (max-width: 480px){
+  .carousel-button{
+    display: none !important;
   }
 }
 
