@@ -207,12 +207,15 @@ main {
 }
 
 .star-overlay {
-    /*position: absolute;*/
-    top: 5px; /* Distance par rapport au haut */
-    right: 5px; /* Distance par rapport à la droite */
+    position: absolute;
+    top: 0px; /* Distance par rapport au haut */
+    right: 0px; /* Distance par rapport à la droite */
     z-index: 2; /* Assure que l'étoile est au-dessus de l'image */
     width: 15%; /* Taille ajustée de l'étoile */
     height: 15%;
+    padding: 5px;
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
 }
 
 
