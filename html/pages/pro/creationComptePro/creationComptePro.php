@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Créez un Compte Professionnel PACT</title>
         <link rel="stylesheet" href="./creationComptePro.css">
-        <script src="creationComptePro.js" defer></script>
+        <script src="creationComptePro.js"></script>
     </head>
     <body>
         <div class="info-display">
@@ -160,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p class="form-texte small">L'IBAN pourra être renseigné plus tard.</p>
                 </div>
                 
-                <?php Button::render(class: "sign-upButton", submit: true, type: "pro", text: "S'inscrire");?>
+                <?php Button::render(class: "sign-upButton",title:"bouton pour s'inscrire en temp que pro" ,submit: true, type: "pro", text: "S'inscrire");?>
             </form>
             <hr>
             <p class="small">Vous avez déjà un compte ?</p>

@@ -35,7 +35,7 @@ try {
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas, pact.vue_compte_membre.idcompte FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, CASE WHEN pseudo IS NULL THEN '<em><i>Utilisateur Supprimé</i></em>' ELSE pseudo END AS pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas, pact.vue_compte_membre.idcompte FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
 
     if ($sortBy === 'date_asc') {
@@ -140,21 +140,21 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <?php Header::render(HeaderType::Member);?>
-<button class="retour"><a href="../listeOffres/listeOffres.php"><img
+<button class="retour" title="Revenir à la page des offres"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
     <div id="toast" class="toast">Avis bien signalé</div>
     <div class=titre-page>
-        <?php Label::render("titre-svg", "", "", "", "../../../ressources/icone/{$typeOffre}.svg"); ?>
+        <?php Label::render(class:"titre-svg",id: "", for:"",text: "", icon:"../../../ressources/icone/{$typeOffre}.svg",title:"icon type Offre"); ?>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
     </div>
     <div class="container">
         <div class="container-gauche">
             <div class="carousel">
 
-                <button class="carousel-button prev desactive">❮</button>
-                <button class="carousel-button next desactive">❯</button>
+                <button class="carousel-button prev desactive" title="bouton carousel précédent">❮</button>
+                <button class="carousel-button next desactive" title="bouton carousel suivant">❯</button>
                 <div class="carousel-images">
                     <?php
                     // Affichage des images de l'offre
@@ -170,10 +170,11 @@ try {
                         <?php else: ?>
                             
                             <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>"
-                            class="carousel-image">
+                            class="carousel-image" alt="imgOffre">
                             <?php endif ?>
                             <?php endforeach; ?>
                 </div>
+                <div class="carousel-dots"></div>
             </div>
             <?php if ($typeOffre !== 'restaurant'){ ?>
                 <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
@@ -186,22 +187,22 @@ try {
 
             <?php
             // Affichage des détails de l'offre
-            Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/".$typeOffre.".svg");
+            Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/".$typeOffre.".svg","icone de type de l'offre");
             Label::render("offre-detail", "offre-detail", "", $offre['descriptiondetaillee']);
             ?>
             <div class="address">
                 <?php
                 // Construction de l'adresse complète
                 $adresseTotale = $adresse['codepostal'] . ' ' . $adresse['ville'] . ', ' . $adresse['rue'];
-                Label::render("offre-adresse", "", "", $adresseTotale, "../../../ressources/icone/localisateur.svg");
+                Label::render("offre-adresse", "", "", $adresseTotale, "../../../ressources/icone/localisateur.svg","icon adresse offre");
                 ?>
             </div>
-            <?php Label::render("offre-option", "", "", "" . $offre['numtel'], "../../../ressources/icone/telephone.svg"); ?>
+            <?php Label::render("offre-option", "", "", "" . $offre['numtel'], "../../../ressources/icone/telephone.svg","icon num tel"); ?>
             <?php
 
-            Label::render("", "", "", $horaires, "../../../ressources/icone/horloge.svg");
+            Label::render("", "", "", $horaires, "../../../ressources/icone/horloge.svg","icon pour horaire");
             // Affichage du site internet de l'offre
-            Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
+            Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg","icon site internet");
 
             // Affichage des tags associés à l'offre
             $tagsString = '';
@@ -211,10 +212,10 @@ try {
             $tagsString = rtrim($tagsString, ', ');
             if (!empty($tagsString)) {
                 ?><br><?php
-                Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg");
+                Label::render("offre-tags", "", "", $tagsString, "../../../ressources/icone/tag.svg","icone des tags de l'offre");
                 ?><br><?php
             }
-            Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg");
+            Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg","icone pour les info complémentaires");
             ?>
             <ul>
                 <?php
@@ -226,24 +227,24 @@ try {
                         $end = strpos($string, ')');
 
                         $gamme = substr($string, $start, $end - $start);
-                        Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg");
+                        Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg","icon game restaurant");
                         break;
                     case 'spectacle':
-                        Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
-                        Label::render("", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée spectacle");
+                        Label::render("", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg","icone capacité de la salle pour spectacle");
                         break;
                     case 'parc_attractions':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg");
-                        Label::render("", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini pour parc");
+                        Label::render("", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg","icone nombre attractions parc");
                         break;
                     case 'activite':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg");
-                        Label::render("", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
-                        Label::render("", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini Activité");
+                        Label::render("", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée activité");
+                        Label::render("", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg","icone prestation Activité");
                         break;
                     case 'visite':
-                        Label::render("", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
-                        Label::render("", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg");
+                        Label::render("", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée visite");
+                        Label::render("", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg","icone si viste guidée ou non");
                         break;
                     default:
                         die("Aucune offre n\'a été trouvée");
@@ -288,7 +289,7 @@ try {
         <div class="liste-avis">
             <div class="avis-header">
                 <h1>Avis</h1>
-                <button class="btn-creer-avis">Créer un avis</button>
+                <?php Button::render(id: "aviscreate",class:"btn-creer-avis" ,text: "Créer un avis",title: "bouton pour créer un avis", type:"Member") ?>
             </div>
             <div class="filters">
                 <label for="sortBy">Trier par:</label>
@@ -319,7 +320,7 @@ try {
                         <p class="avi-content">
                             <?= $avi["commentaire"] ?>
                         </p>
-                        <div class="note">
+                        <div class="note" title="icone étoiles">
                             <?php
                             for ($i = 0; $i < floor($avi["note"]); $i++) {
                                 echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
@@ -352,11 +353,11 @@ try {
                             </p>
                         </div>
                         <div class="thumbs">
-                            <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
                         <?php if ($avi['idcompte'] == $idCompte): ?>
-                            <button class="btn-supprimer" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
+                            <button class="btn-supprimer" title="Supprimer un avis" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
                         <?php endif; ?>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
@@ -374,7 +375,7 @@ try {
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
                                             
-                                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Member, "", false); ?>
+                                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false); ?>
                                         </div>
 
                                     </div>
@@ -395,7 +396,7 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                    <button type="submit">Envoyer</button>
+                    <button type="submit" title="bouton Envoyer">Envoyer</button>
                 </form>
             </div>
         </div>
@@ -503,8 +504,9 @@ try {
                 <?php Button::render(
                     "btn-envoyer",
                     "submit-avis",
+                    "bouton pour publier un avis",
                     "Publier votre avis",
-                    ButtonType::Pro,
+                    ButtonType::Member,
                     "",
                     true
                 ); ?>

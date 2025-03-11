@@ -123,7 +123,7 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <?php Header::render(HeaderType::Pro); ?>
-<button class="retour"><a href="../listeOffres/listeOffres.php"><img
+<button class="retour" title="bouton fleche gauche"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
@@ -174,7 +174,7 @@ try {
                             
                             <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi['idoffre'] ?>"><?= $avi["titre"] ?></a>
                             </p>
-                            <div class="note">
+                            <div class="note" title="note offre icone">
                                 <?php
                                 for ($i = 0; $i < floor($avi["note"]); $i++) {
                                     echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
@@ -194,7 +194,7 @@ try {
                         <div>
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
                             }
                             ?>
                         </div>
@@ -208,13 +208,13 @@ try {
 
                         </div>
                         <div class="thumbs">
-                            <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
                         <div>
-                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Pro, "", false); ?>
+                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php Button::render("btn-repondre", "btn-repondre", "Répondre", ButtonType::Pro, "", false); ?>
+                                <?php Button::render("btn-repondre", "btn-repondre","bouton de reponse","Répondre", ButtonType::Pro, "", false); ?>
                             <?php endif; ?>
                         </div>
                         <?php if (!empty($reponses)): ?>
@@ -236,7 +236,7 @@ try {
                                         <form action="supprimerReponse.php" method="POST">
                                             <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
                                             <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                                            <?php Button::render("btn-supprimer", "", "Supprimer", ButtonType::Pro, "", true); ?>
+                                            <?php Button::render("btn-supprimer", "","bouton supprimer", "Supprimer", ButtonType::Pro, "", true); ?>
                                         </form>
                                     </div>
                                 <?php endforeach; ?>
@@ -256,7 +256,7 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                    <button type="submit">Envoyer</button>
+                    <button type="submit" title="bouton envoyer">Envoyer</button>
                 </form>
             </div>
         </div>
@@ -264,7 +264,7 @@ try {
         <!-- Popup pour afficher l'image en grand -->
         <div class="image-popup" id="image-popup">
             <span class="close">&times;</span>
-            <img class="image-popup-content" id="image-popup-content">
+            <img class="image-popup-content" id="image-popup-content" alt="'imgPopUp">
         </div>
 
     </div>

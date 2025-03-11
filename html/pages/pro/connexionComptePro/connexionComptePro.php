@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
     <title>Page de Connexion</title>
     <link rel="stylesheet" href="./connexionComptePro.css">
     <link rel="stylesheet" href="/ui.css">
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="conteneur">
         <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
         <!-- Logo de la page -->
-        <img alt="Logo" src="/ressources/icone/logo.svg" />
+        <img alt="Logo" src="/ressources/icone/logo.svg" title="logo de la page"/>
         
         <!-- Titre de la page -->
         <h1>Connectez-vous à votre compte</h1>
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             </div>
             <div class="connecte">
-                <?php Button::render(class: "bouton-connexion", submit: true, type: "pro", text: "Se connecter"); ?>
+                <?php Button::render(class: "bouton-connexion",title:"bouton de connexion" ,submit: true, type: "pro", text: "Se connecter"); ?>
             </div>
         </form>
         <!-- Lien pour créer un compte -->

@@ -95,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créez un Compte PACT</title>
     <link rel="stylesheet" href="./creationCompteMembre.css">
+    <script src="creationCompteMembre.js"></script>
 </head>
 <body>
 <?php if ((empty($_POST)) || $emailUtilise ||$pseudoUtilise ){ ?>
@@ -137,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p class="small">Le mot de passe doit comporter au moins :<br>- 8 caractères<br>- 1 majuscule<br>- 1 minuscule<br>- 1 chiffre<br>- 1 caractère spécial (@$!%*?&).</p>
                 </div>
                 
-                <?php Button::render(class: "sign-upButton", submit: true, type: "member", text: "S'inscrire");?>
+                <?php Button::render(class: "sign-upButton",title:"S'inscire en tant que membre" ,submit: true, type: "member", text: "S'inscrire");?>
             </form>
             <hr>
             <p class="small">Vous avez déjà un compte ?</p>

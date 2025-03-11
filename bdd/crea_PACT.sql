@@ -12,9 +12,9 @@ SET SCHEMA 'pact';
 
 CREATE TABLE _adresse(
     idAdresse     SERIAL,
-    codePostal    INTEGER NOT NULL CHECK (codePostal < 100000),
-    ville         VARCHAR(50) NOT NULL,
-    rue           VARCHAR(50) NOT NULL,
+    codePostal    VARCHAR(5),
+    ville         VARCHAR(50),
+    rue           VARCHAR(50),
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
     coordonneesX   FLOAT,
     coordonneesY   FLOAT,
@@ -111,8 +111,8 @@ CREATE TABLE _contexte(
 CREATE TABLE _compte (
     idCompte    SERIAL,
     idAdresse   SERIAL,
-    mdp         VARCHAR(255) NOT NULL,
-    email       VARCHAR(255) NOT NULL,
+    mdp         VARCHAR(255),
+    email       VARCHAR(255),
     CONSTRAINT compte_pk PRIMARY KEY(idCompte),
     CONSTRAINT compte_fk_adresse FOREIGN KEY (idAdresse)
         REFERENCES _adresse(idAdresse)
@@ -120,9 +120,9 @@ CREATE TABLE _compte (
 
 CREATE TABLE _compteMembre(
     idCompte  SERIAL,
-    prenom    VARCHAR(50) NOT NULL,
-    nom       VARCHAR(50) NOT NULL,
-    pseudo     VARCHAR(255) NOT NULL UNIQUE,
+    prenom    VARCHAR(50),
+    nom       VARCHAR(50),
+    pseudo     VARCHAR(255) UNIQUE,
     CONSTRAINT compteMembre_pk PRIMARY KEY(idCompte),
     CONSTRAINT compteMembre_fk_compte FOREIGN KEY (idCompte) 
         REFERENCES _compte(idCompte)
@@ -171,6 +171,7 @@ CREATE TABLE _offre(
     creaDate                DATE DEFAULT CURRENT_TIMESTAMP,
     heureOuverture          TIME NOT NULL,
     heureFermeture          TIME NOT NULL,
+    nbJetons                INTEGER DEFAULT 3 CHECK (nbJetons > -1 AND nbJetons < 4),
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
@@ -373,6 +374,7 @@ CREATE TABLE _avis(
     estVu           BOOLEAN DEFAULT FALSE,
     pouceHaut       INTEGER DEFAULT 0,
     pouceBas        INTEGER DEFAULT 0,
+    estBlacklist       BOOLEAN DEFAULT FALSE,
     CONSTRAINT avis_pk PRIMARY KEY(idAvis),
     CONSTRAINT avis_fk_offre FOREIGN KEY (idOffre)
         REFERENCES _offre(idOffre),
@@ -399,6 +401,15 @@ CREATE TABLE _avis_votes (
     CONSTRAINT avis_votes_pk PRIMARY KEY (idAvis, idCompte),
     CONSTRAINT avis_votes_fk_avis FOREIGN KEY (idAvis) REFERENCES _avis(idAvis),
     CONSTRAINT avis_votes_fk_compte FOREIGN KEY (idCompte) REFERENCES _compte(idCompte)
+);
+
+CREATE TABLE _avis_blacklist (
+    idOffre         INTEGER NOT NULL,
+    idAvis          INTEGER NOT NULL,
+    dateBlacklist   TIMESTAMP DEFAULT current_timestamp,
+    CONSTRAINT avis_blacklist_pk PRIMARY KEY (idOffre, idAvis),
+    CONSTRAINT avis_blacklist_fk_offre FOREIGN KEY (idOffre) REFERENCES _offre(idOffre),
+    CONSTRAINT avis_blacklist_fk_avis FOREIGN KEY (idAvis) REFERENCES _avis(idAvis)
 );
 
 --

@@ -30,12 +30,11 @@ $idOffre = $_GET['id'] ?? $idOffre;
 try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-    
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, CASE WHEN pseudo IS NULL THEN '<em><i>Utilisateur Supprimé</i></em>' ELSE pseudo END AS pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
 
     if ($sortBy === 'date_asc') {
@@ -133,7 +132,7 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <?php Header::render(HeaderType::Guest);?>
-<button class="retour"><a href="../listeOffres/listeOffres.php"><img
+<button class="retour" title="bouton retour"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
@@ -146,8 +145,8 @@ try {
         <div class="container-gauche">
             <div class="carousel">
 
-                <button class="carousel-button prev desactive">❮</button>
-                <button class="carousel-button next desactive">❯</button>
+                <button class="carousel-button prev desactive" title="flèche arrière">❮</button>
+                <button class="carousel-button next desactive" title="flèche avant">❯</button>
                 <div class="carousel-images">
                     <?php
                     // Affichage des images de l'offre
@@ -163,10 +162,11 @@ try {
                         <?php else: ?>
                             
                             <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>"
-                            class="carousel-image">
+                            class="carousel-image" alt="imgOffre">
                             <?php endif ?>
                             <?php endforeach; ?>
                 </div>
+                <div class="carousel-dots"></div>
             </div>
             <?php if ($typeOffre !== 'restaurant'): ?>
                 <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
@@ -278,7 +278,7 @@ try {
         <div id="avis-list" class="liste-avis">
             <div class="avis-header">
                 <h1>Avis</h1>
-                <button class="btn-creer-avis">Créer un avis</button>
+                <?php Button::render(id: "aviscreate",class:"btn-creer-avis" ,text: "Créer un avis",title: "bouton pour créer un avis") ?>
             </div>
             <div class="filters">
                 <label for="sortBy">Trier par:</label>
@@ -325,7 +325,7 @@ try {
                         <div>
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
                                 
                             }
                             ?>
@@ -342,8 +342,8 @@ try {
                             </p>
                         </div>
                         <div class="thumbs">
-                            <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
 
                         <?php if (!empty($reponses)): ?>
@@ -381,7 +381,7 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                    <button type="submit">Envoyer</button>
+                    <button type="submit" title="bouton envoyer">Envoyer</button>
                 </form>
             </div>
         </div>
@@ -390,7 +390,7 @@ try {
             <div class="popup-content">
             <span class="close">&times;</span>
             <p>Vous devez être connecté pour faire cette action.</p>
-            <a href="/pages/membre/connexionCompteMembre/connexionCompteMembre.php?context=detailsOffre/detailsOffre.php%3Fid=<?= $idOffre ?>" class="btn">Se connecter</a>
+            <?php Button::render(id: "buttonConnect",class:"btn" ,text: "Se connecter",title: "Se connecter pour créer un avis", path:"/pages/membre/connexionCompteMembre/connexionCompteMembre.php?context=detailsOffre/detailsOffre.php%3Fid=<?= $idOffre ?> ", type:"Guest") ?>
             </div>
         </div>
 

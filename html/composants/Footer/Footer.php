@@ -66,18 +66,18 @@ EOF;
         if($type === FooterType::Guest){
             $buttonType = ButtonType::Guest;
             $buttonText = 'DEVENIR PRO';
-            Button::render('lien-bouton', 'footer-button', $buttonText, $buttonType,
+            Button::render('lien-bouton', 'footer-button','cree compte pro', $buttonText, $buttonType,
             "window.location.href='/pages/pro/creationComptePro/creationComptePro.php'");
         }
         else if ($type === FooterType::Member) {
             $buttonType = ButtonType::Member;
             $buttonText = 'DEVENIR PRO';
-            Button::render('lien-bouton', 'footer-button', $buttonText, $buttonType,
+            Button::render('lien-bouton', 'footer-button','cree compte pro', $buttonText, $buttonType,
             "window.location.href='/pages/pro/creationComptePro/creationComptePro.php'");
         } elseif ($type === FooterType::Pro) {
             $buttonType = ButtonType::Pro;
             $buttonText = "ACCÉDER A L'ESPACE PROFESSIONNEL";
-            Button::render('lien-bouton', 'footer-button', $buttonText, $buttonType,
+            Button::render('lien-bouton', 'footer-button','consulter son compte', $buttonText, $buttonType,
             "window.location.href='/pages/pro/consulterComptePro/consulterComptePro.php'");
         }
 

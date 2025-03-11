@@ -75,7 +75,7 @@ class OffreHandler
         } else {
             $path_img = "../../../ressources/" . $idoffre . "/images/" . $images;
             if (file_exists($path_img)) {
-                echo '<img src="' . htmlspecialchars($path_img) . '" class="image-carte">';
+                echo '<img src="' . htmlspecialchars($path_img) . '" class="image-carte" alt="imgOffre">';
             } else {
                 echo '<div class="image-offre"><svg xmlns="http://www.w3.org/2000/svg" height="10em" viewBox="0 -960 960 960" width="10em" fill="#000000">
                     <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z" />
@@ -137,11 +137,11 @@ class OffreHandler
         echo '<div class="button-container">';
         echo '<form action="../listeFacture/listeFacture.php" method="POST class="buttonCarte">';
         echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
-        Button::render("button-facture", "", "Facture", ButtonType::Pro, "", true);
+        Button::render("button-facture", "","bouton facture", "Facture", ButtonType::Pro, "", true);
         echo '</form>';
         echo '<form action="../modifierOffre/modifierOffre.php" method="POST" class="buttonCarte">';
         echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
-        Button::render("button-modif", "", "Modifier", ButtonType::Pro, "", true);
+        Button::render("button-modif", "", "bouton modifier","Modifier", ButtonType::Pro, "", true);
         echo '</form>';
         echo '</div>';
         echo '</div>';

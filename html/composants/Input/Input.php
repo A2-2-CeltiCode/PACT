@@ -42,7 +42,8 @@ class Input
                                   string $icon = "",
                                   ?int   $min = null,
                                   ?int   $max = null,
-                                  string $onkeyup = ""): void {
+                                  string $onkeyup = "",
+                                  String $title = ""): void {
         // Définir le modèle par défaut selon le type
         switch ($type) {
             case 'email':
@@ -53,7 +54,8 @@ class Input
                 break;
             default:
                 break;
-        }
+        } 
+                                  
 
         // Préparer les attributs de l'input
         $attrs = ['type' => $type, 'class' => $class, 'id' => $id, 'name' => $name, 'value' => $value,
@@ -70,7 +72,7 @@ class Input
         $input = "<input " . self::renderAttributes($attrs) . " />";
         if ($icon) {
             $svgContent = self::cleanSvgContent(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $icon));
-            echo "<div class='input-wrapper'><div class='input-icone'>{$svgContent}</div>$input</div>";
+            echo "<div class='input-wrapper'><div class='input-icone' title='{$title}'>{$svgContent}</div>$input</div>";
         } else {
             echo "<div class='input-wrapper'>$input</div>";
         }

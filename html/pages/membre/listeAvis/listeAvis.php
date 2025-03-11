@@ -111,8 +111,9 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <?php Header::render(HeaderType::Member); ?>
-<button class="retour"><a href="../listeOffres/listeOffres.php"><img
-            src="../../../ressources/icone/arrow_left.svg"></a></button>
+
+<button class="retour" title="bouton fleche gauche" ><a href="../listeOffres/listeOffres.php"><img
+            src="../../../ressources/icone/arrow_left.svg" alt="imgAvis"></a></button>
 
 <body>
     <!-- Toast de confirmation -->
@@ -148,7 +149,7 @@ try {
                             <p class="avi-title">
                                 <?= $avi["titre"] ?>
                             </p>
-                            <div class="note">
+                            <div class="note" title="notes étoiles">
                                 <?php
                                 for ($i = 0; $i < floor($avi["note"]); $i++) {
                                     echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
@@ -168,7 +169,7 @@ try {
                         <div>
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
                             }
                             ?>
                         </div>
@@ -181,8 +182,8 @@ try {
                             </p>
                         </div>
                         <div class="thumbs">
-                            <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
@@ -219,7 +220,7 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                    <button type="submit">Envoyer</button>
+                    <button type="submit" title="bouton envoyer">Envoyer</button>
                 </form>
             </div>
         </div>
@@ -227,7 +228,7 @@ try {
         <!-- Popup pour afficher l'image en grand -->
         <div class="image-popup" id="image-popup">
             <span class="close">&times;</span>
-            <img class="image-popup-content" id="image-popup-content">
+            <img class="image-popup-content" id="image-popup-content" alt="imgPopUp">
         </div>
 
     </div>
