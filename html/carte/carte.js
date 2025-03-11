@@ -107,7 +107,7 @@ function addMapMarkers(map, points) {
       icon: iconType,
     }).bindPopup(
       `
-        <a href="../pages/visiteur/detailsOffre/detailsOffre.php?id=${
+        <a href="/pages/visiteur/detailsOffre/detailsOffre.php?id=${
           point.idoffre
         }">
         <div class="carte-image-container">
