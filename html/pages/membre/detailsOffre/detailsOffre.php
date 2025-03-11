@@ -288,7 +288,7 @@ try {
         <div class="liste-avis">
             <div class="avis-header">
                 <h1>Avis</h1>
-                <button class="btn-creer-avis" title="bouton pour créer un avis">Créer un avis</button>
+                <?php Button::render(id: "aviscreate",class:"btn-creer-avis" ,text: "Créer un avis",title: "bouton pour créer un avis", type:"Member") ?>
             </div>
             <div class="filters">
                 <label for="sortBy">Trier par:</label>
@@ -505,7 +505,7 @@ try {
                     "submit-avis",
                     "bouton pour publier un avis",
                     "Publier votre avis",
-                    ButtonType::Pro,
+                    ButtonType::Member,
                     "",
                     true
                 ); ?>

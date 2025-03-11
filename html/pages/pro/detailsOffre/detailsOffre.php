@@ -400,7 +400,7 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..."></textarea>
-                    <button type="submit" title="bouton envoyer">Envoyer</button>
+                    <?php Button::render("btn-supprimer", "","bouton envoyer", "Envoyer", ButtonType::Pro, "", true); ?>
                 </form>
             </div>
         </div>
