@@ -139,12 +139,13 @@ function addMapMarkers(map, points) {
       )}</p>
           </div>
         </div>
+        </a>
         <div>
           <button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${
             point.coordonneesx
           },${point.coordonneesy}', '_blank')">Itinéraire</button>
         </div>
-        </a>
+        
       `
     );
     markers.addLayer(marker);
