@@ -34,7 +34,12 @@ function formValide() {
         return false;
     }
 
-    
+    // Validation de la rue (max 50)
+    var rue = document.forms["creerCompteMembre"]["rue"].value;
+    if (!/^.{1,50}$/.test(rue) && rue !== "") {
+        alert("La rue doit contenir au maximum 50 caractères.");    
+        return false;
+    }
 
     // Validation du code postal : 5 chiffres
     var codePostal = document.forms["creerCompteMembre"]["codePostal"].value;
@@ -45,15 +50,15 @@ function formValide() {
 
     // Validation de la ville : uniquement des lettres
     var ville = document.forms["creerCompteMembre"]["ville"].value;
-    if (!/^[A-Za-z\s]{1,50}$/.test(ville)) {
-        alert("La ville doit contenir uniquement des lettres et des espaces.");
+    if (!/^[A-Za-z\s-]{1,50}$/.test(ville)) {
+        alert("La ville peut contenir uniquement des lettres, des espaces et des tirets.");
         return false;
     }
 
     // Validation du mot de passe : respect des règles
     var motDePasse = document.forms["creerCompteMembre"]["motDePasse"].value;
-    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(motDePasse)) {
-        alert("Le mot de passe doit comporter au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}/.test(motDePasse)) {
+        alert("Le mot de passe doit comporter au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial et au maximum 255 caractères.");
         return false;
     }
 
