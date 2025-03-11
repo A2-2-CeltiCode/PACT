@@ -29,8 +29,7 @@ $idOffre = $_GET['id'] ?? $idOffre;
 
 try {
     // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-    
+    $dbh = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
@@ -278,7 +277,7 @@ try {
         <div id="avis-list" class="liste-avis">
             <div class="avis-header">
                 <h1>Avis</h1>
-                <button class="btn-creer-avis" title="bouton pour créer un avis">Créer un avis</button>
+                <?php Button::render(id: "aviscreate",class:"btn-creer-avis" ,text: "Créer un avis",title: "bouton pour créer un avis") ?>
             </div>
             <div class="filters">
                 <label for="sortBy">Trier par:</label>
@@ -390,7 +389,7 @@ try {
             <div class="popup-content">
             <span class="close">&times;</span>
             <p>Vous devez être connecté pour faire cette action.</p>
-            <a href="/pages/membre/connexionCompteMembre/connexionCompteMembre.php?context=detailsOffre/detailsOffre.php%3Fid=<?= $idOffre ?>" class="btn">Se connecter</a>
+            <?php Button::render(id: "buttonConnect",class:"btn" ,text: "Se connecter",title: "Se connecter pour créer un avis", path:"/pages/membre/connexionCompteMembre/connexionCompteMembre.php?context=detailsOffre/detailsOffre.php%3Fid=<?= $idOffre ?> ", type:"Guest") ?>
             </div>
         </div>
 

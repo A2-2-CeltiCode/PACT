@@ -22,7 +22,7 @@ $idOffre = $_GET['idOffre'] ?? $idOffre;
 
 try {
     // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $dbh = new PDO("$driver:host=$host;dbname=$dbname", $user, $password);
     
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
@@ -400,7 +400,7 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..."></textarea>
-                    <button type="submit" title="bouton envoyer">Envoyer</button>
+                    <?php Button::render("btn-supprimer", "","bouton envoyer", "Envoyer", ButtonType::Pro, "", true); ?>
                 </form>
             </div>
         </div>
