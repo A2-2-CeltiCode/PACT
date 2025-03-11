@@ -222,6 +222,22 @@ try {
                 </div>
             </form>
         </div>
+        <div id="deleteConfirmationPopup">
+            <p>Êtes-vous sûr de vouloir supprimer votre compte ?<br>Cette action est irréversible.</p>
+            <div>
+                <button id="deleteConfirm" onClick="deleteAccount()">
+                    Confirmer
+                </button>
+                <button id="deleteCancel" onClick="hideDeletePopup()">
+                    Annuler
+                </button>
+            </div>
+        </div>
+        <div>
+            <button id="btnDeleteAccount" onClick="showDeletePopup()">
+                Supprimer le compte
+            </button>
+        </div>
     </main>
 
     <?php Footer::render(HeaderType::Member); ?>

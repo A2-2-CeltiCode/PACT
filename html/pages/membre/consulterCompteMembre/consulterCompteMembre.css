@@ -1,3 +1,5 @@
+@import url("/ui.css");
+
 @font-face {
     font-display: swap;
     font-family: 'Encode Sans';
@@ -466,4 +468,47 @@ main table {
     color: var(--primaire-membre);  /* old IE */
     background-color: var(--primaire-membre);  /* Modern Browsers */
 }
+}
+
+#btnDeleteAccount {
+    background-color: var(--erreur);
+    transition-duration: 250ms;
+    &:hover {
+        filter: brightness(75%);
+    }
+}
+
+#deleteConfirmationPopup {
+    display: none;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; 
+    transform: translate(-50%, -50%);
+    #deleteConfirm {
+        background-color: var(--erreur);
+    }
+    #deleteCancel {
+        background-color: var(--valide);
+    }
+    p {
+        padding-bottom: 20px;
+    }
+    div {
+        padding-left: 20px;
+        padding-right: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10vw;
+    }
+}
+
+main > div:last-child {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px;
 }
