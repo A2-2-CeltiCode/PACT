@@ -423,7 +423,6 @@ label{
   background-color: var(--primary-color);
   color: var(--white);
   border: none;
-  border-radius: var(--radius-full);
   padding: 12px 24px;
   font-size: 16px;
   font-weight: 500;
