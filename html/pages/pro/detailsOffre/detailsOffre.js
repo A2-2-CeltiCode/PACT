@@ -66,25 +66,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   const repondreButtons = document.querySelectorAll(".btn-repondre");
-  const popup = document.getElementById("popup-repondre");
-  const closeBtn = popup.querySelector(".close");
+  const popupRepondre = document.getElementById("popup-repondre");
+  const closeBtn = popupRepondre.querySelector(".close");
   const idAvisInput = document.getElementById("popup-idAvis");
 
   repondreButtons.forEach((button) => {
     button.addEventListener("click", function () {
       const idAvis = this.closest(".avi").dataset.idavis;
       idAvisInput.value = idAvis;
-      popup.style.display = "block";
+      popupRepondre.style.display = "block";
     });
   });
 
   closeBtn.addEventListener("click", function () {
-    popup.style.display = "none";
+    popupRepondre.style.display = "none";
   });
 
   window.addEventListener("click", function (event) {
-    if (event.target === popup) {
-      popup.style.display = "none";
+    if (event.target === popupRepondre) {
+      popupRepondre.style.display = "none";
     } else {
       document.querySelectorAll(".avi.prioritaire").forEach((element) => {
         element.classList.remove("prioritaire");
@@ -131,24 +131,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const repondreButtons = document.querySelectorAll(".btn-repondre");
     const signalerButtons = document.querySelectorAll(".btn-signaler");
     const idAvisInput = document.getElementById("popup-idAvis");
-    const popup = document.getElementById("popup-repondre");
-    const closeBtn = popup.querySelector(".close");
+    const popupRepondre = document.getElementById("popup-repondre");
+    const closeBtn = popupRepondre.querySelector(".close");
 
     repondreButtons.forEach(button => {
       button.addEventListener("click", function () {
         const idAvis = this.closest(".avi").dataset.idavis;
         idAvisInput.value = idAvis;
-        popup.style.display = "block";
+        popupRepondre.style.display = "block";
       });
     });
 
     closeBtn.addEventListener("click", function () {
-      popup.style.display = "none";
+      popupRepondre.style.display = "none";
     });
 
     window.addEventListener("click", function (event) {
-      if (event.target === popup) {
-        popup.style.display = "none";
+      if (event.target === popupRepondre) {
+        popupRepondre.style.display = "none";
       }
     });
 
@@ -244,5 +244,38 @@ document.addEventListener("DOMContentLoaded", function () {
       observer.observe(avi);
   });
 
-  
+  const blacklistButtons = document.querySelectorAll(".btn-blacklister");
+    const popupBlacklist = document.getElementById("popup-blacklist");
+    const closePopupBlacklist = popupBlacklist.querySelector(".close");
+    const closePopupButton = document.getElementById("blacklist-decline");
+
+    blacklistButtons.forEach((button) => {
+        button.addEventListener("click", function (event) {
+            event.preventDefault(); // Empêche le formulaire de se soumettre immédiatement
+            const form = this.closest("form");
+            const idAvis = form.querySelector("input[name='idAvis']").value;
+            const idOffre = form.querySelector("input[name='idOffre']").value;
+
+            // Mettre à jour les champs cachés du popup avec les valeurs actuelles
+            popupBlacklist.querySelector("input[name='idAvis']").value = idAvis;
+            popupBlacklist.querySelector("input[name='idOffre']").value = idOffre;
+
+            // Afficher le popup
+            popupBlacklist.style.display = "block";
+        });
+    });
+
+    closePopupBlacklist.addEventListener("click", function () {
+        popupBlacklist.style.display = "none";
+    });
+
+    closePopupButton.addEventListener("click", function () {
+        popupBlacklist.style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+        if (event.target === popupBlacklist) {
+            popupBlacklist.style.display = "none";
+        }
+    });
 });
