@@ -44,9 +44,13 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
 </head>
 
 <?php
+$host = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$password = '13phenix';
 
 try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
 //    $offresProchesSql = $dbh->query("select distinct vue_offres.titre AS nom, nomcategorie AS type, vue_offres.ville, nomimage as idimage, idoffre, COALESCE(ppv.denominationsociale, ppu.denominationsociale) AS nomProprio, tempsenminutes AS duree, avg(note) AS note from pact.vue_offres LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte JOIN pact.vue_avis USING (idOffre) GROUP BY nom, type, vue_offres.ville, idimage, idOffre, nomProprio, duree, nomoption");
 
     $offresUnesSql = $dbh->query(<<<STRING
@@ -146,7 +150,7 @@ foreach ($offresNoteSql as $item) {
 ?>
 
 <body>
-<?php isset($_SESSION["idCompte"])?Header::render(type: HeaderType::Member):Header::render(); ?>
+<?php // isset($_SESSION["idCompte"])?Header::render(type: HeaderType::Member):Header::render(); ?>
 <div>
 <form action="/pages/visiteur/listeOffres/listeOffres.php" method="get">
     <?php Input::render(name:"titre", class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
@@ -157,8 +161,9 @@ foreach ($offresNoteSql as $item) {
     <div>
 
     <!-- affichage des offres a la une -->
+     
         <h2>À la une!</h2>
-        <div class="carrousel">
+        <div class="carrousel mixed">
             <?php
             foreach ($offreUnes as $item) {
                 echo $item;
