@@ -523,8 +523,6 @@ label{
   background-color: var(--primary-color);
   color: var(--white);
   border: none;
-  border-radius: var(--radius-full);
-  padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.2s;
 }

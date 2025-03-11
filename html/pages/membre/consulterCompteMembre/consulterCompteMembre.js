@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnEnregistrerMdp = document.getElementById("btnMdpEnregistrer");
     const btnAnnulerMdp = document.getElementById("btnMdpAnnuler");
     const footer = document.getElementsByTagName("footer")[0];
+    const tdNonModif = document.querySelectorAll("td.nonE");
+    const nonEditableInputs = document.querySelectorAll("input.nonEditable");
 
     // Variables pour la pop-up de changement de mot de passe
     const popupMotDePasse = document.getElementById("popupMotDePasse");
@@ -25,8 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
     function activerModification() {
         editableInputs.forEach(input => {
             input.removeAttribute("readonly");
-            input.style.backgroundColor = "#f0f0f0";
+            input.style.backgroundColor = "#f9f9f9";
         });
+        nonEditableInputs.forEach(input => {
+            input.style.backgroundColor = "#999a9b00";
+        });
+        
+        tdNonModif.forEach(input => {
+            input.style.backgroundColor = "#b3b1b150";
+        })
 
         btnEnregistrer.style.display = "inline-block";
         btnAnnuler.style.display = "inline-block";
