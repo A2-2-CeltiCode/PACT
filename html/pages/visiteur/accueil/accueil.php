@@ -160,7 +160,7 @@ foreach ($offresNoteSql as $item) {
     <!-- affichage des offres a la une -->
      
         <h2>À la une!</h2>
-        <div class="carrousel mixed">
+        <div class="carrousel">
             <?php
             foreach ($offreUnes as $item) {
                 echo $item;
