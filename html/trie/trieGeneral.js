@@ -83,22 +83,22 @@ function rechercher(page = 1) {
 
   const xhr = new XMLHttpRequest();
   lastRequest = xhr;
-  const url = page == "test" ? "get_points.php" : "listeOffres.php";
+  const url = "/trie/getOffre.php";
   xhr.open("GET", `${url}?${params.toString()}`, true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.onload = function () {
     if (xhr.status === 200) {
       try {
         const response = JSON.parse(xhr.responseText);
-        if (page == "test") {
-          console.log(response);
-          clearMapMarkers(map);
-          addMapMarkers(map, response);
-        } else {
-          document.getElementById("resultats").innerHTML = response.offres.join("");
-          document.getElementById("nombreOffres").innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
-          applyStyles();
-        }
+        
+        console.table(response);
+        clearMapMarkers(map);
+        addMapMarkers(map, response.points);
+        
+        document.getElementById("resultats").innerHTML = response.offres.join("");
+        document.getElementById("nombreOffres").innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
+        applyStyles();
+        
       } catch (e) {
         console.error("Erreur lors du traitement de la réponse JSON:", e);
       }

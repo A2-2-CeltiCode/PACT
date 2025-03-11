@@ -41,7 +41,7 @@ $points = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ou
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     $offres = [];
-    foreach ($resultats as $item) {
+    foreach ($points as $item) {
         $sql = 'SELECT denominationsociale FROM pact._comptepro WHERE idcompte = :idcompte';
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':idcompte', $item['idcompte'], PDO::PARAM_INT);

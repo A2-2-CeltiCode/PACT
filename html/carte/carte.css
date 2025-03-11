@@ -18,7 +18,7 @@
 .leaflet-popup-content {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   font-size: 14px;
   width: 100% !important;
 }
@@ -32,7 +32,7 @@
 }
 
 /* Conteneur d'image amélioré */
-.image-container {
+.carte-image-container {
   width: 100%;
   height: 140px;
   overflow: hidden;
@@ -40,19 +40,20 @@
 }
 
 /* Style d'image amélioré */
-.offre-image {
+.carte-offre-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  transform-origin: center center; /* Ajouté pour centrer le zoom */
 }
 
-.leaflet-popup-content a:hover .offre-image {
+.leaflet-popup-content a:hover .carte-offre-image {
   transform: scale(1.05);
 }
 
 /* Informations de l'offre */
-.leaflet-popup-content > a > div:not(.image-container) {
+.leaflet-popup-content > a > div:not(.carte-image-container) {
   padding: 8px 12px;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -110,4 +111,3 @@
   text-align: center;
   margin: 6px 0;
 }
-
