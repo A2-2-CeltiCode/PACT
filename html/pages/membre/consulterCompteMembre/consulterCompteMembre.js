@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const btnModifier = document.querySelector(".modifier button[onclick='activerModification()']");
+    const btnModifier = document.getElementById("modifier");
     const btnChangerMotDePasse = document.querySelector(".modifier button[onclick='ouvrirPopupMotDePasse()']");
     const btnEnregistrer = document.getElementById("btnEnregistrer");
     const btnAnnuler = document.getElementById("btnAnnuler");
-    const editableInputs = document.querySelectorAll("input.editable");
     const messageErreur = document.getElementById("messageErreur");
-    const btnEnregistrerMdp = document.getElementById("btnMdpEnregistrer");
-    const btnAnnulerMdp = document.getElementById("btnMdpAnnuler");
+    const btnEnregistrerMdp = document.getElementById("btnEnregistrerMdp");
+    const btnAnnulerMdp = document.getElementById("btnAnnulerMdp");
+    const editableInputs = document.querySelectorAll("input.editable");
     const footer = document.getElementsByTagName("footer")[0];
     const tdNonModif = document.querySelectorAll("td.nonE");
     const nonEditableInputs = document.querySelectorAll("input.nonEditable");
@@ -36,16 +36,15 @@ document.addEventListener("DOMContentLoaded", () => {
         tdNonModif.forEach(input => {
             input.style.backgroundColor = "#b3b1b150";
         })
-
+        
         btnEnregistrer.style.display = "inline-block";
         btnAnnuler.style.display = "inline-block";
         btnModifier.disabled = true;
-        footer.classList.remove('footer-fixed');
-        footer.classList.add('footer-relative');
 
-        // Effacer les messages d'erreur s'ils existent
         effacerMessageErreur();
     }
+
+    document.getElementById("modifier").addEventListener("click", activerModification);
 
     /**
      * Annuler les modifications et restaurer les valeurs originales.
@@ -54,17 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
         editableInputs.forEach(input => {
             input.value = input.dataset.original;
             input.setAttribute("readonly", "readonly");
-            input.style.backgroundColor = "#f9f9f9"; 
+            input.style.backgroundColor = "#f9f9f9";
         });
 
         btnEnregistrer.style.display = "none";
         btnAnnuler.style.display = "none";
         btnModifier.disabled = false;
-        footer.classList.remove('footer-relative');
-        footer.classList.add('footer-fixed');
-    
-
-        // Effacer les messages d'erreur s'ils existent
         effacerMessageErreur();
     }
 
@@ -74,46 +68,44 @@ document.addEventListener("DOMContentLoaded", () => {
     function validerFormulaire(event) {
         event.preventDefault();
         let erreurs = [];
-    
-        const champs = {
-            nom: {
-                element: document.querySelector('input[name="nom"]'),
-                regex: /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[-\s][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/,
-                message: "Le champ 'Nom' contient des caractères invalides.",
-            },
-            prenom: {
-                element: document.querySelector('input[name="prenom"]'),
-                regex: /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[-\s][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/,
-                message: "Le champ 'Prénom' contient des caractères invalides.",
-            },
-            email: {
-                element: document.querySelector('input[name="email"]'),
-                regex: /^[^\s@]+@[^\s@]+.[^\s@]+$/,
-                message: "L'adresse e-mail n'est pas valide.",
-            },
-            numtel: {
-                element: document.querySelector('input[name="numtel"]'),
-                regex: /^\d{2}([ .]?\d{2}){4}$/,
-                message: "Le numéro de téléphone doit contenir 10 chiffres.",
-            },
-            codepostal: {
-                element: document.querySelector('input[name="codepostal"]'),
-                regex: /^\d{5}$/,
-                message: "Le code postal doit contenir exactement 5 chiffres.",
-            },
-        };
-    
-        for (const champ in champs) {
-            const { element, regex, message } = champs[champ];
-            if (!regex.test(element.value)) {
-                erreurs.push(message);
-            }
+
+        const email = document.querySelector("input[name='email']").value;
+        const numTel = document.querySelector("input[name='numtel']").value;
+        const rue = document.querySelector("input[name='rue']").value;
+        const codePostal = document.querySelector("input[name='codepostal']").value;
+        const ville = document.querySelector("input[name='ville']").value;
+        const nom = document.querySelector("input[name='nom']").value;
+        const prenom = document.querySelector("input[name='prenom']").value;
+
+        // Validation des champs
+        if (!/^(\d{2}([ .])?){4}\d{2}$/.test(numTel)) {
+            erreurs.push("Le numéro de téléphone doit contenir uniquement 10 chiffres.");
+        }
+        if (!/^\d{5}$/.test(codePostal)) {
+            erreurs.push("Le code postal doit contenir exactement 5 chiffres.");
+        }
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,255}$/.test(email)) {
+            erreurs.push("L'adresse email n'est pas valide et doit contenir au maximum 255 caractères.");
+        }
+        if (!/^.{1,50}$/.test(rue)) {
+            erreurs.push("La rue doit contenir au maximum 50 caractères.");
+        }
+        if (!/^.{1,50}$/.test(nom)) {
+            erreurs.push("Le nom doit contenir au maximum 50 caractères.");
+        }
+        if (!/^.{1,50}$/.test(prenom)) {
+            erreurs.push("Le prenom doit contenir au maximum 50 caractères.");
+        }
+        if (!/^[A-Za-z\s-]{1,50}$/.test(ville)) {
+            erreurs.push("La ville peut contenir uniquement des lettres, des espaces et des tirets.");
         }
     
+        // Afficher les erreurs ou soumettre le formulaire
         if (erreurs.length > 0) {
             afficherMessageErreur(erreurs);
+            window.scrollTo(0, 0);
         } else {
-            document.getElementById("formulaireCompteVisiteur").submit();
+            document.getElementById("formulaireCompteMembre").submit();
         }
     }
 
@@ -122,6 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function ouvrirPopupMotDePasse() {
         popupMotDePasse.style.display = "block";
+        btnEnregistrerMdp.style.display = "inline-block";
+        btnAnnulerMdp.style.display = "inline-block";
     }
 
     /**
@@ -204,17 +198,10 @@ document.addEventListener("DOMContentLoaded", () => {
     btnAnnuler.addEventListener("click", annulerModification);
     btnEnregistrer.addEventListener("click", validerFormulaire);
     btnChangerMotDePasse.addEventListener("click", ouvrirPopupMotDePasse);
+    
     // Événements pour la pop-up de mot de passe
     btnEnregistrerMdp.addEventListener("click", validerMotDePasse);
     btnAnnulerMdp.addEventListener("click", fermerPopupMotDePasse);
-
-    // Boutons de la pop-up
-    document
-        .querySelector("#popupMotDePasse")
-        .addEventListener("click", validerMotDePasse);
-    document
-        .querySelector("#popupMotDePasse button[onclick='fermerPopupMotDePasse()']")
-        .addEventListener("click", fermerPopupMotDePasse);
 
     let copyBtn = document.getElementById("copyButton");
     if (copyBtn.attributes["onclick"].nodeValue.length < 75) {
