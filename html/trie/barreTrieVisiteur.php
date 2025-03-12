@@ -9,7 +9,6 @@ use composants\InputRangeDouble\InputRangeDouble;
 use composants\Button\ButtonType;
 
 use composants\InputRange\InputRange;
-    
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controlleurs/Offre/Offre.php';
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Select/Select.php";
 require_once  $_SERVER["DOCUMENT_ROOT"] . '/composants/CheckboxSelect/CheckboxSelect.php';
@@ -21,10 +20,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/InputRangeDouble/InputRangeDouble.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/InputRange/InputRange.php';
 
-
-
 class Trie {
     public static function render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories,$status=null) {
+        
         echo '<link rel="stylesheet" type="text/css" href="/trie/style.css">';
 
         $optionsCategorie = [
@@ -152,5 +150,7 @@ class Trie {
             echo '<input type="hidden" id="status" name="status" value="' . htmlspecialchars($status) . '">';
         }
         echo '</div></form>';
+        
+        
     }
 }

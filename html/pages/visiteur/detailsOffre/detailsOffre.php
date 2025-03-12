@@ -166,6 +166,7 @@ try {
                             <?php endif ?>
                             <?php endforeach; ?>
                 </div>
+                <div class="carousel-dots"></div>
             </div>
             <?php if ($typeOffre !== 'restaurant'): ?>
                 <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>

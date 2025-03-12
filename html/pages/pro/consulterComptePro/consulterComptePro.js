@@ -69,23 +69,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let erreurs = [];
 
-        const numTel = document.querySelector("input[name='numtel']").value;
-        const codePostal = document.querySelector("input[name='codepostal']").value;
         const email = document.querySelector("input[name='email']").value;
+        const numTel = document.querySelector("input[name='numtel']").value;
+        const rue = document.querySelector("input[name='rue']").value;
+        const codePostal = document.querySelector("input[name='codepostal']").value;
+        const ville = document.querySelector("input[name='ville']").value;
         const rib = document.querySelector("input[name='banquerib']").value;
 
         // Validation des champs
         if (!/^(\d{2}([ .])?){4}\d{2}$/.test(numTel)) {
-            erreurs.push("Le numéro de téléphone doit être au format : 01.02.03.04.05, 01 02 03 04 05 ou 0102030405.");
+            erreurs.push("Le numéro de téléphone doit contenir uniquement 10 chiffres.");
         }
         if (!/^\d{5}$/.test(codePostal)) {
             erreurs.push("Le code postal doit contenir exactement 5 chiffres.");
         }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            erreurs.push("L'adresse e-mail n'est pas valide.");
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,255}$/.test(email)) {
+            erreurs.push("L'adresse email n'est pas valide et doit contenir au maximum 255 caractères.");
         }
         if (!/^[a-zA-Z0-9]{1,34}$/.test(rib)) {
             erreurs.push("Le RIB doit contenir jusqu'à 34 caractères alphanumériques.");
+        }
+        if (!/^.{1,50}$/.test(rue)) {
+            erreurs.push("La rue doit contenir au maximum 50 caractères.");
+        }
+        if (!/^[A-Za-z\s-]{1,50}$/.test(ville)) {
+            erreurs.push("La ville peut contenir uniquement des lettres, des espaces et des tirets.");
         }
 
         // Afficher les erreurs ou soumettre le formulaire

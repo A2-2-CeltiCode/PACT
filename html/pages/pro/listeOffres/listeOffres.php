@@ -90,6 +90,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <link rel="stylesheet" href="../../../ui.css">
     <link rel="stylesheet" href="../../../composants/Label/Label.css">
     <script src="../../../trie/trieGeneral.js"></script>
+    <script src="listeOffres.js"></script>
 </head>
 <?php Header::render(HeaderType::Pro); ?>
 

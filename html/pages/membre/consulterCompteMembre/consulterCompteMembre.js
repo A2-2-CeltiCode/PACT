@@ -256,3 +256,19 @@ function generateKey() {
         generateBtn.children[0].textContent = "Regénérer";
     }, 3000);
 }
+
+function deleteAccount() {
+    let url = window.location.protocol + "//" + window.location.host + "/pages/membre/consulterCompteMembre/supprimerCompte.php"
+    window.location.replace(url)
+}
+
+function showDeletePopup() {
+    let popup = document.getElementById("deleteConfirmationPopup")
+    popup.style.display = "block"
+
+}
+
+function hideDeletePopup() {
+    let popup = document.getElementById("deleteConfirmationPopup")
+    popup.style.display = "none"
+}
