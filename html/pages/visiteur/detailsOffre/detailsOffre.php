@@ -24,13 +24,18 @@ session_start();
 $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
-$idOffre = $_GET['idOffre'];
-$idOffre = $_GET['id'] ?? $idOffre;
+$idOffre = 1;//$_GET['idOffre'];
+//$idOffre = $_GET['id'] ?? $idOffre;
+
+$host = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$password = '13phenix';
 
 try {
     
 
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
@@ -93,6 +98,7 @@ try {
     $images = $dbh->query('SELECT pact._representeoffre.idImage, pact._image.nomImage FROM pact._representeoffre JOIN pact._image ON pact._representeoffre.idImage = pact._image.idImage WHERE pact._representeoffre.idOffre = ' . "'$idOffre'", PDO::FETCH_ASSOC)->fetchAll();    $carte = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._parcAttractions JOIN pact._image ON pact._parcAttractions.carteParc = pact._image.idImage WHERE pact._parcAttractions.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $menu = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._restaurant JOIN pact._image ON pact._restaurant.menuRestaurant = pact._image.idImage WHERE pact._restaurant.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $horaires = substr($offre['heureouverture'], 0, 5) . " - " . substr($offre['heurefermeture'], 0, 5);
+    $typeOption = $dbh->query('SELECT nomoption FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     // Vérification de l'existence de l'offre
     if (!$offre) {
         throw new Exception("Aucune offre trouvée");
@@ -132,7 +138,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php Header::render(HeaderType::Guest);?>
+<?php //Header::render(HeaderType::Guest);?>
 <button class="retour" title="bouton retour"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
@@ -182,8 +188,9 @@ try {
                 </div>
             </div>
         </div>
+        <?php $typeOption["nomoption"] = str_replace(" ","",$typeOption["nomoption"])?>
 
-        <div class="offre-infos">
+        <div class="offre-infos <?php echo $typeOption["nomoption"]?>">
             <?php
             // Affichage des détails de l'offre
             Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/".$typeOffre.".svg");
