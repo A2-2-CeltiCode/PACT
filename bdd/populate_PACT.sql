@@ -35,7 +35,8 @@ INSERT INTO _adresse (codePostal, ville, rue, numTel, coordonneesX, coordonneesY
 (22500, 'Paimpol', 'Chemin de Kerano', '02 78 04 21 78', 48.7800, -3.0450),
 (35000, 'Rennes', 'Rue Gurvand', '02 95 21 46 91', 48.1173, -1.6778),
 (56000, 'Vannes', 'Rue des Luscanen', '09 24 78 24 36', 47.6582, -2.7608),
-(35000, 'Rennes', 'Rue Hippolyte Lucas', '01 75 62 38 04', 48.1173, -1.6778);
+(35000, 'Rennes', 'Rue Hippolyte Lucas', '01 75 62 38 04', 48.1173, -1.6778),
+(22000, 'Saint-Brieuc', '2 Rue nominoë', '01 23 45 67 89', 48.5146, -2.7653);
 
 -- Peupler la table _compte
 INSERT INTO _compte (mdp, email, idAdresse) VALUES
