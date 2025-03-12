@@ -240,9 +240,9 @@ try {
             </div>
             <div class="offre-prix">           
                 <?php if ($typeOffre !== 'restaurant'){ ?>
-                    <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
+                    <?php Label::render("", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php }else{; ?>
-                <?php Label::render("offre-prix", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
+                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
                 <?php }; ?>
 
                 <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1) . "/5"); ?>
