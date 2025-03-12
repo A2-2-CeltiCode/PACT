@@ -21,7 +21,8 @@
 }
 
 .offre{
-    margin: 0;
+    margin: 0; 
+    
 }
 
 .body{
@@ -205,17 +206,10 @@ input[type="number"]{
     overflow-y: auto; /* Ajoute une barre de défilement verticale */
 }
 
-.relief,  .une {
-    border: 4px #FFD700 solid;
-    filter: drop-shadow(5px 5px 5px rgba(255, 187, 0, 0.5));
-}
 
- .relief:hover,  .une:hover {
-    filter: drop-shadow(15px 15px 15px rgba(255, 208, 0, 0.747));
-}
 
  .star-overlay {
-    position: absolute;
+    position: absolut;
 }
 
  .gold {
@@ -236,11 +230,3 @@ input[type="number"]{
     object-fit: cover; /* Assure que l'image remplit le conteneur */
 }
 
-.star-overlay {
-    position: absolute;
-    top: 5px; /* Distance par rapport au haut */
-    right: 5px; /* Distance par rapport à la droite */
-    z-index: 2; /* Assure que l'étoile est au-dessus de l'image */
-    width: 15%; /* Taille ajustée de l'étoile */
-    height: 15%;
-}

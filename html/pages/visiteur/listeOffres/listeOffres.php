@@ -22,8 +22,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/carte/carte.php';
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
-$pdo = new PDO("$driver:host=$server;port=5432;dbname=$dbname", $dbuser, $dbpass);
 
+
+$pdo = new  PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 // Récupération des paramètres de la requête
 $sort = $_GET['sort'] ?? 'idoffre DESC';
 $titre = $_GET['titre'] ?? '';
@@ -66,7 +67,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 // Si ce n'est pas une requête AJAX, inclure le HTML complet
 ?>
-<?php Header::render(HeaderType::Guest); ?>
+<?php //Header::render(HeaderType::Guest); ?>
 
 <!DOCTYPE html>
 <html lang="fr">

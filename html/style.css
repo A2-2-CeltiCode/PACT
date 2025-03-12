@@ -16,8 +16,10 @@ body {
     border: 2px solid var(--gris2);
     border-radius: 5px;
     display: inline-block;
-
+    background: white;
+    margin: 16px;
     transition-duration: 0.2s;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
 
     &:hover {
         transform: scale(1.08);
@@ -29,12 +31,6 @@ body {
         margin-top: 12px;
         margin-bottom: 12px;
     }
-
-    background: white;
-
-    margin: 16px;
-
-    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
 
     img {
         border-radius: 5px 5px 0 0;
@@ -48,8 +44,6 @@ body {
         text-decoration: none;
 
         > div {
-            /*border: 1px solid red;
-            background: aqua;*/
             display: flex;
             justify-content: space-between;
             padding-right: 5px;
@@ -66,16 +60,81 @@ body {
                     margin: 5px;
                 }
             }
-
         }
     }
 }
 
+/* 🔥 Styles pour les cartes spéciales */
+
+.une {
+    border: 4px solid gold;
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.3);
+    order: -1;
+
+    .star-overlay {
+        background-color: white;
+        border-bottom-left-radius: 15px;
+    }
+    .gold{
+        background-color: rgb(255, 221, 28);
+    }
+}
+
+.relief {
+    border: 4px solid #f39c12;
+    background: rgba(243, 156, 18, 0.1); 
+    box-shadow: 0px 3px 8px rgba(243, 156, 18, 0.2);
+
+    &:hover {
+        filter: drop-shadow(15px 15px 15px rgba(243, 156, 18, 0.2)) !important;
+    }
+
+    .star-overlay {
+        display: none;
+    }
+
+    .gold {
+        background: rgba(243, 156, 18, 0.5); 
+    }
+}
+
+/* Effet commun au hover */
+.relief:hover, .une:hover {
+    filter: drop-shadow(15px 15px 15px rgba(255, 208, 0, 0.747));
+}
+
+/* ✅ Positionnement et apparence des étoiles */
+.image-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.offre-image {
+    width: 105%;
+    height: 105%;
+    object-fit: cover;
+}
+
+.star-overlay {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 2;
+    width: 15%;
+    height: 15%;
+    padding: 5px;
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}
+
+/* Gestion de la barre de recherche */
 header + div {
     display: flex;
     justify-content: center;
     align-items: center;
-    /*padding: 70px 0;*/
     min-height: 55px;
     height: 15vh;
     background-position: center;
@@ -86,27 +145,23 @@ header + div {
         font-weight: bold;
     }
 
-
     form > div {
         border-radius: 2em !important;
         background-color: white;
         opacity: 95%;
         height: 43px;
-        input {
-            &::placeholder {
-                color: rgb(51, 51, 51);
-            }   
-        }
+        
+        input::placeholder {
+            color: rgb(51, 51, 51);
+        }   
+
         input:focus::placeholder {
             color: transparent;
-          }
-        
+        }
     }
-    
 }
 
-
-
+/* Carrousel d’offres */
 main {
     margin-top: 64px;
     margin-bottom: 64px;
@@ -116,15 +171,14 @@ main {
             margin-left: 7vw;
         }
 
-
         > div {
             padding-left: 9vw;
             white-space: nowrap;
             overflow-x: auto;
             padding-bottom: 20px;
-            /* cache la scrollbar */
             -ms-overflow-style: none; /* Internet Explorer 10+ */
             scrollbar-width: none; /* Firefox */
+
             &::-webkit-scrollbar {
                 display: none; /* Safari et Chrome */
             }
@@ -142,7 +196,6 @@ main {
         justify-content: space-between;
         padding-right: 128px;
 
-
         button {
             position: relative;
             border-radius: 500px;
@@ -150,10 +203,6 @@ main {
             height: 50px;
             border: 2px solid var(--noir);
             background-color: var(--gris1);
-
-            &:first-child {
-
-            }
 
             .material-symbols-outlined {
                 position: absolute;
@@ -166,59 +215,72 @@ main {
     }
 }
 
-#ouvert{
+/* Statut des offres */
+#ouvert {
     color: #008000;
-
 }
-#ferme{
+
+#ferme {
     color: #ff0000;
 }
-#bientot{
+
+#bientot {
     color: #ff8000;
 }
 
+/* Gestion de la hiérarchie des offres */
 .mixed {
     .relief, .une {
         border: 4px #FFD700 solid;
         filter: drop-shadow(5px 5px 5px rgba(255, 187, 0, 0.5));
+
         &:hover {
             filter: drop-shadow(15px 15px 15px rgba(255, 208, 0, 0.747));
         }
     }
+
     .star-overlay {
         position: absolute;
     }
-    .gold {
-        background-color: #fddc5c;
+
+    .une {
+        border: 4px solid gold;
+        background: rgba(255, 215, 0, 0.1);
+        box-shadow: 0px 4px 10px rgba(255, 217, 0, 0.912);
+        order: -1;
+        
+        &:hover {
+            filter: drop-shadow(15px 15px 15px rgba(255, 208, 0, 0.747));
+        }
+
+        .star-overlay {
+            background-color: white;
+            border-bottom-left-radius: 15px;
+        }
+    }
+
+    .relief {
+        border: 4px solid #f39c12;
+        background: rgba(243, 156, 18, 0.1); 
+        box-shadow: 0px 3px 8px rgba(243, 156, 18, 0.2);
+
+        &:hover {
+            filter: drop-shadow(15px 15px 15px rgba(243, 156, 18, 0.2)) !important;
+        }
+
+        .star-overlay {
+            display: none;
+        }
+
+        .gold {
+            background: rgba(243, 156, 18, 0.5); 
+        }
     }
 }
 
-.image-container {
-    position: relative; /* Important pour positionner les éléments internes */
-    width: 300px;
-    height: 300px;
-    overflow: hidden; /* Évite que l'image ou l'étoile déborde */
-}
-
-.offre-image {
-    width: 105%;
-    height: 105%;
-    object-fit: cover; /* Assure que l'image remplit le conteneur */
-}
-
-.star-overlay {
-    /*position: absolute;*/
-    top: 5px; /* Distance par rapport au haut */
-    right: 5px; /* Distance par rapport à la droite */
-    z-index: 2; /* Assure que l'étoile est au-dessus de l'image */
-    width: 15%; /* Taille ajustée de l'étoile */
-    height: 15%;
-}
-
-
+/* 📏 Adaptation mobile */
 @media screen and (max-width: 1024px) {
     header + div, .carrousel + div {
         display: none;
     }
 }
-
