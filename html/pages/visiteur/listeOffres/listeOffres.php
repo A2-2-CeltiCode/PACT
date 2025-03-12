@@ -67,7 +67,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 // Si ce n'est pas une requête AJAX, inclure le HTML complet
 ?>
-<?php //Header::render(HeaderType::Guest); ?>
+<?php Header::render(HeaderType::Guest); ?>
 
 <!DOCTYPE html>
 <html lang="fr">
