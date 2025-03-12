@@ -371,15 +371,59 @@
     background: var(--white);
     border-radius: var(--radius-sm);
     padding: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    max-width: 390px;
+    height: fit-content;
+  }
+  
+  .container-avis{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
   }
   
   .avi-title {
     font-size: 20px;
     font-weight: 700;
     color: var(--text-dark);
-    margin-bottom: 12px;
+    margin-bottom: 0px !important;
+  }
+  
+  .avis-user{
+    font-weight: 300;
+    font-size: small !important;
+    margin-top: 0px !important;
+  }
+  
+  .container-img-avis{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+  
+  .container-head-avis{
+    display:flex;
+    justify-content: space-between;
+  }
+  
+  .container-avis-footer{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .container-bottom-avis{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .container-info-avis > p{
+    font-size: x-small;
+    font-weight: 100;
   }
   
   .note {
