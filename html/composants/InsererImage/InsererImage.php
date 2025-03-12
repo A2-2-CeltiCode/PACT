@@ -51,7 +51,7 @@ class InsererImage
         // Rendre la zone de dépôt d'image avec les paramètres dynamiques
         echo "
         <div class='drop-zone' id='{$id}' data-id='{$id}' data-max-files='{$maxFiles}'>{$message}</div>
-        <input type='file' id='fileInput-{$id}' name='{$id}' {$acceptStr} {$multipleAttr} {$requiredAttr} style='display: none;'>
+        <input type='file' id='fileInput-{$id}' name='{$id}[]' {$acceptStr} {$multipleAttr} {$requiredAttr} style='display: none;'>
         <div id='successMessage-{$id}' style='display:none; color: green;'>Image ajoutée avec succès !</div><br>
         <div id='imagePreview-{$id}' class='image-preview'></div>
         <div id='imagePreviewModal-{$id}' class='image-preview-modal'>
