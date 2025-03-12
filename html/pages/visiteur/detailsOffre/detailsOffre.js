@@ -169,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const thumbsUpButtons = document.querySelectorAll(".thumbs-up");
     const thumbsDownButtons = document.querySelectorAll(".thumbs-down");
+    const popupCreerAvis = document.getElementById("popup-creer-avis");
 
     thumbsUpButtons.forEach((button) => {
       button.addEventListener("click", function () {
@@ -197,7 +198,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const creerAvisButton = document.querySelector(".btn-creer-avis");
-    const popupCreerAvis = document.getElementById("popup-creer-avis");
     const closeCreerAvisBtn = popupCreerAvis.querySelector(".close");
 
     creerAvisButton.addEventListener("click", function () {
