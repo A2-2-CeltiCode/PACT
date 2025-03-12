@@ -177,17 +177,18 @@ try {
                 <div class="carousel-dots"></div>
             </div>
 
-            <div class="offre-prix">           
+            <div class="offre-prix">
                 <?php if ($typeOffre !== 'restaurant'){ ?>
                     <?php Label::render("", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php }else{; ?>
                 <?php Label::render("", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
                 <?php }; ?>
-
-                <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1) . "/5"); ?>
-                <div class="note">
+                
+                <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
+                <div class="note-m">
                     <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");?>
                 </div>
+            </div>
             </div>
         </div>
 
