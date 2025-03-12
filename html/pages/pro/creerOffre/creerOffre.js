@@ -1,3 +1,82 @@
+// Initialisation de la carte
+var map = L.map("map").setView([48.5146, -2.7653], 8);
+
+var Spectacle = L.icon({
+  iconUrl: "/Untitled/visite.svg",
+
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
+});
+
+var Visite = L.icon({
+  iconUrl: "/Untitled/groupe.svg",
+
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
+});
+
+var Activite = L.icon({
+  iconUrl: "/Untitled/parc.svg",
+
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
+});
+
+var Restaurant = L.icon({
+  iconUrl: "/Untitled/restaurant.svg",
+
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
+});
+
+var Parc = L.icon({
+  iconUrl: "/Untitled/visite.svg",
+
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [22, 94],
+  shadowAnchor: [4, 62],
+  popupAnchor: [-3, -76],
+});
+
+// Ajout des tuiles OpenStreetMap
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+
+
+function addMapMarkers(map, points,zoom) {
+    clearMapMarkers(map);
+    points.forEach(point => {
+        L.marker([point.coordonneesx, point.coordonneesy])
+            .addTo(map);
+        map.setView([point.coordonneesx, point.coordonneesy], zoom)
+    });
+   
+}
+
+function clearMapMarkers(map) {
+    map.eachLayer(function (layer) {
+      if (layer instanceof L.Marker) {
+        map.removeLayer(layer);
+      }
+    });
+  }
+
 document.addEventListener("DOMContentLoaded", function () {
     const selectElement = document.querySelector('select[name="typeOffre"]');
     const sections = document.querySelectorAll('.section');
@@ -136,6 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('latitude').value = lat;
         document.getElementById('postcode').value = postcode;
         selectedCity = city.toLowerCase();
+        points = [{ coordonneesx: lat.toString() , coordonneesy: lon.toString() }];
+        addMapMarkers(map, points,10);
     }
 
     function suggestAdresses() {
@@ -147,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch(`https://api-adresse.data.gouv.fr/search/?q=${input}&postcode=${postcode}&limit=100`)
+        fetch(`https://api-adresse.data.gouv.fr/search/?q=${input}&postcode=${postcode}&limit=8`)
             .then(response => response.json())
             .then(data => {
                 if (data.features.length === 0) {
@@ -160,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         const address = feature.properties.name;
                         const street = feature.properties.street || '';
                         const housenumber = feature.properties.housenumber || '';
-                        return `<div onclick="selectAdresse('${housenumber} ${street} ${address}')">${housenumber} ${street} ${address}</div>`;
+                        return `<div onclick="selectAdresse('${housenumber} ${street}')">${housenumber} ${street}</div>`;
                     }).join('');
                 document.getElementById('adresseSuggestions').innerHTML = suggestions;
             })
@@ -179,6 +260,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     const coordinates = data.features[0].geometry.coordinates;
                     document.getElementById('longitude').value = coordinates[0];
                     document.getElementById('latitude').value = coordinates[1];
+                    points = [{ coordonneesx: coordinates[1].toString(), coordonneesy: coordinates[0].toString() }];
+                    addMapMarkers(map, points,15);
                 }
             })
             .catch(error => console.error('Erreur:', error));
@@ -205,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.selectVille = selectVille;
     window.suggestAdresses = suggestAdresses;
     window.selectAdresse = selectAdresse;
-    window.validateVille = validateVille;
+    window.validateVille = selectVille;
     window.toggleLangue = toggleLangue;
     window.toggleDropdown = toggleDropdown;
     window.validateForm = validateForm;
