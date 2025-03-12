@@ -232,6 +232,29 @@
     box-shadow: 0 2px 8px rgba(108, 2, 119, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
+  .offre-prix label{
+    font-size: medium;
+  } 
+  .moyenne-notes{
+    margin-left: 75%;
+    margin-right: 0;
+    padding-right: 0;
+   }
+   
+   .note-m {
+     display: flex;
+     align-items: center;
+     gap: 2px;
+   }
+   .note-m svg {
+     width: 29px;
+     height: 29px;
+   }
+   
+   .note-m svg path {
+     fill: var(--primary-color);
+   }
+  
   
   /* Bloc d'informations */
   .offre-infos {
@@ -832,6 +855,9 @@
     .titre-offre {
       font-size: 1.5rem;
     }
+    .moyenne-notes{
+      margin-left: 50%;
+     }
   
     .carousel-images {
       height: 280px;
