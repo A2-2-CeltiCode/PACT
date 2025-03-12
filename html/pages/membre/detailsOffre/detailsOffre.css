@@ -232,6 +232,13 @@
     box-shadow: 0 2px 8px rgba(108, 2, 119, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
+  .offre-prix label{
+    font-size: medium;
+  } 
+  .moyenne-notes{
+   margin-left: 70%;
+  }
+  
   
   /* Bloc d'informations */
   .offre-infos {
@@ -832,6 +839,9 @@
     .titre-offre {
       font-size: 1.5rem;
     }
+    .moyenne-notes{
+      margin-left: 50%;
+     }
   
     .carousel-images {
       height: 280px;

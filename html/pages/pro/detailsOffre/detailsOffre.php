@@ -238,11 +238,16 @@ try {
                 </div>
                 <div class="carousel-dots"></div>
             </div>
-            <?php if ($typeOffre !== 'restaurant'){ ?>
-                <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
-            <?php }else{; ?>
-            <?php Label::render("offre-prix", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
-            <?php }; ?>
+            <div class="offre-prix">           
+                <?php if ($typeOffre !== 'restaurant'){ ?>
+                    <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
+                <?php }else{; ?>
+                <?php Label::render("offre-prix", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
+                <?php }; ?>
+
+                <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1) . "/5"); ?>
+                <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");?>
+            </div>
         </div>
 
         <div class="offre-infos">
