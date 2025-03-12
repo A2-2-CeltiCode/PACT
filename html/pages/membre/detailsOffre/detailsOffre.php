@@ -343,7 +343,13 @@ try {
                         </div>
                         <div>
                             <p>
-                                <?= $avi["pseudo"] ?>
+                                <?php 
+                                if ($avi["idcompte"] == $idCompte) {
+                                    echo $avi["pseudo"]." (vous)"; 
+                                }
+                                else {
+                                    echo $avi["pseudo"];
+                                }?>
                             </p>
                             <p>
                                 le <?= $avi["datevisite"] ?>

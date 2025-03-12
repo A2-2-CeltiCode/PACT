@@ -175,7 +175,7 @@ try {
                         </div>
                         <div>
                             <p>
-                                <?= $avi["pseudo"] ?>
+                                <?= $avi["pseudo"]." (vous)" ?>
                             </p>
                             <p>
                                 le <?= $avi["datevisite"] ?> en <?= $avi["contextevisite"] ?>
