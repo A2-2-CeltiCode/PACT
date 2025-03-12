@@ -384,7 +384,7 @@ try {
                 </div>
                 
             </div>
-            <div>
+            <div class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
                     if (!isset($avi["idavis"]) || $avi["estblacklist"]) {
@@ -402,49 +402,57 @@ try {
                         <?php if (!$avi['estvu']): ?>
                             <div class="non-vu">Non vu</div>
                         <?php endif; ?>
-                        <div>
-                            <p class="avi-title">
-                                <?= $avi["titre"] ?>
-                            </p>
-                            <div class="note" title="note offre">
-                                <?php
-                                for ($i = 0; $i < floor($avi["note"]); $i++) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
-                                }
-                                if (fmod($avi["note"], 1) != 0) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
-                                }
-                                for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
-                                }
-                                ?>
+                        <div class="container-head-avis">
+                            <div>
+                                <p class="avi-title">
+                                    <?= $avi["titre"] ?>
+                                </p>
+                                <p>
+                                    en <?= $avi["contextevisite"] ?>
+                                </p>
                             </div>
+                                <div class="note" title="note offre">
+                                    <?php
+                                    for ($i = 0; $i < floor($avi["note"]); $i++) {
+                                        echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
+                                    }
+                                    if (fmod($avi["note"], 1) != 0) {
+                                        echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
+                                    }
+                                    for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
+                                        echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
+                                    }
+                                    ?>
+                                </div>
                         </div>
                         <p class="avi-content">
                             <?= $avi["commentaire"] ?>
                         </p>
-                        <div>
+
+                        <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
                                 echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
                             }
                             ?>
                         </div>
-                        <div>
-                            <p>
-                                <?= $avi["pseudo"] ?>
-                            </p>
-                            <p>
-                                le <?= $avi["datevisite"] ?> en <?= $avi["contextevisite"] ?>
-                            </p>
+                        <div class="container-bottom-avis">
+                            <div class="container-info-avis">
+                                <p>
+                                    le <?= $avi["datevisite"] ?> 
+                                </p>
+                                <p class="avis-user">
+                                    <?= $avi["pseudo"] ?>
+                                </p>
 
-                        </div>
-                        <div class="thumbs">
-                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            </div>
+                            <div class="thumbs">
+                                <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                                <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            </div>
                         </div>
                         <br>
-                        <div>
+                        <div class="option-user">
                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
                                 <?php Button::render("btn-repondre", "btn-repondre","bouton repondre", "Répondre", ButtonType::Pro, "", false); ?>
@@ -463,11 +471,11 @@ try {
 
                                 <?php foreach ($reponses as $reponse): ?>
                                     <div class="reponse">
-                                    <h2>Réponse:</h2>
-                                        <p class="reponse-content">
+                                        <p class="avis-title">Réponse:</p>
+                                        <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div>
+                                        <div class="container-info-avis">
                                             <p>
                                                 <?= $reponse["pseudo"] ?>
                                             </p>

@@ -309,7 +309,8 @@ try {
                     <option value="note_asc">Note croissante</option>
                 </select>
             </div>
-            <div>
+
+            <div class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
                     if (!isset($avi["idavis"])) {
@@ -321,14 +322,16 @@ try {
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
+                    <div class="container-head-avis">
                         <div>
                             <p class="avi-title">
                                 <?= $avi["titre"] ?>
                             </p>
+                            <p>
+                                en <?= $avi["contextevisite"] ?>
+                            </p>
                         </div>
-                        <p class="avi-content">
-                            <?= $avi["commentaire"] ?>
-                        </p>
+                        
                         <div class="note" title="icone étoiles">
                             <?php
                             for ($i = 0; $i < floor($avi["note"]); $i++) {
@@ -342,7 +345,12 @@ try {
                             }
                             ?>
                         </div>
-                        <div>
+                    </div>
+                    <p class="avi-content">
+                            <?= $avi["commentaire"] ?>
+                        </p>
+
+                        <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
                                 echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
@@ -350,21 +358,21 @@ try {
                             }
                             ?>
                         </div>
-                        <div>
-                            <p>
-                                <?= $avi["pseudo"] ?>
-                            </p>
-                            <p>
-                                le <?= $avi["datevisite"] ?>
-                            </p>
-                            <p>
-                                en <?= $avi["contextevisite"] ?>
-                            </p>
+                        <div class="container-bottom-avis">
+                            <div class="container-infos-avis">
+                                <p>
+                                    <?= $avi["pseudo"] ?>
+                                </p>
+                                <p>
+                                    le <?= $avi["datevisite"] ?>
+                                </p>
+                            </div>
+                            <div class="thumbs">
+                                <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                                <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            </div>
                         </div>
-                        <div class="thumbs">
-                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
-                        </div>
+                        
                         <?php if ($avi['idcompte'] == $idCompte): ?>
                             <button class="btn-supprimer" title="Supprimer un avis" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
                         <?php endif; ?>
@@ -372,11 +380,11 @@ try {
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
                                     <div class="reponse">
-                                        <h2>Réponse:</h2>
-                                        <p class="reponse-content">
+                                        <p class="avis-title">Réponse:</p>
+                                        <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div>
+                                        <div class="container-info-avis">
                                             <p>
                                                 <?= $reponse["pseudo"] ?>
                                             </p>
