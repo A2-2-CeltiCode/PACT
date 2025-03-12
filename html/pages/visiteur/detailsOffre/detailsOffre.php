@@ -27,15 +27,10 @@ $idCompte = $_SESSION['idCompte'];
 $idOffre = 1;//$_GET['idOffre'];
 //$idOffre = $_GET['id'] ?? $idOffre;
 
-$host = 'localhost';
-$dbname = 'postgres';
-$user = 'postgres';
-$password = '13phenix';
-
 try {
     
 
-    $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
@@ -137,7 +132,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php //Header::render(HeaderType::Guest);?>
+<?php Header::render(HeaderType::Guest);?>
 <button class="retour" title="bouton retour"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
