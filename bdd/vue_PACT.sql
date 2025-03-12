@@ -50,7 +50,8 @@ FROM _avis_blacklist;
 -- VUES OFFRES
 --
 
-CREATE OR REPLACE VIEW vue_offres AS
+DROP MATERIALIZED VIEW IF EXISTS vue_offres;
+CREATE MATERIALIZED VIEW vue_offres AS
 SELECT DISTINCT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _offre.nomforfait,
        _offre.titre, _offre.description, _offre.descriptiondetaillee, _offre.siteinternet, _offre.heureOuverture, _offre.heureFermeture,_adresse.codepostal, _adresse.ville,
        COALESCE(_spectacle.nomcategorie, _activite.nomcategorie, _visite.nomcategorie, _parcattractions.nomcategorie, _restaurant.nomcategorie) AS nomcategorie,
