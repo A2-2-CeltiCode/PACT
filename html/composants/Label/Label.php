@@ -19,13 +19,15 @@ class Label
      * @param string $for ID de l'input associé.
      * @param string $text Texte à afficher dans le label.
      * @param string $icon Chemin vers l'icône SVG à afficher à gauche du texte.
+     * @param string $title titre de l'icône à afficher.
      */
     public static function render(
         $class = "",
         $id = "",
         $for = "",
         $text = "",
-        $icon = ""
+        $icon = "",
+        $title = ""
     ) {
         // Inclure CSS une seule fois
         if (!self::$cssIncluded) {
@@ -46,7 +48,7 @@ class Label
 
             // Ajouter la classe CSS pour que le style soit appliqué
             echo "<label " . self::renderAttributes($attrs) . ">
-                    <div class='label-icon'>
+                    <div class='label-icon' title='{$title}'>
                         <div class='svg-inline'>{$svgContent}</div>
                     </div>{$text}
                 </label>";

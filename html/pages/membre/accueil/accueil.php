@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
 
     <style>
         header + div {
@@ -71,6 +71,41 @@ try {
     GROUP BY nom, type, vue_offres.ville, idimage, idOffre, nomProprio, duree, nomoption, ouverture, fermeture, nomgamme, valprix
     STRING);
 
+    $offresNouveautésSql = $dbh->query(<<<STRING
+    select distinct vue_offres.titre                                                                       AS nom,
+        nomcategorie                                    AS type,
+        vue_offres.ville,
+        nomimage as idimage,
+        idoffre,
+        COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
+        tempsenminutes                                                              AS duree,
+        nomoption,
+        AVG(note) AS note,
+        heureouverture AS ouverture,
+        heurefermeture AS fermeture,
+        nomgamme,
+        valprix
+    from pact.vue_offres
+    LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
+          LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
+    JOIN pact.vue_avis USING (idOffre)
+    GROUP BY nom,
+       type,
+       vue_offres.ville,
+       idimage,
+       idOffre,
+       nomProprio,
+       duree,
+       nomoption,
+       ouverture,
+       fermeture,
+       nomgamme,
+       valprix
+    ORDER BY idOffre DESC
+    LIMIT 10
+    STRING
+    );
+
     // Requête pour récupérer les offres les mieux notées
     $offresNoteSql = $dbh->query(<<<STRING
     SELECT DISTINCT vue_offres.titre AS nom,
@@ -108,6 +143,13 @@ foreach ($offresUnesSql as $item) {
     $offreUnes[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
         $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'], $item['valprix'], $item['nomgamme']);
 }
+$offresNouveautés = [];
+foreach ($offresNouveautésSql as $item) {
+    $item['nomgamme'] = $item['nomgamme'] ?? 'test';
+    $item['valprix'] = $item['valprix'] ?? 'test';
+    $offresNouveautés[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
+        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
+}
 $offresNote = [];
 foreach ($offresNoteSql as $item) {
     $item['nomgamme'] = $item['nomgamme'] ?? 'test';
@@ -124,7 +166,7 @@ foreach ($offresNoteSql as $item) {
     ?>
     <div>
         <form action="/pages/visiteur/listeOffres/listeOffres.php" method="get">
-            <?php Input::render(name:"titre", class:"barre_recherche", placeholder:"Recherche activitées, restaurants, lieux ...", icon:"/ressources/icone/recherche.svg") ?>
+            <?php Input::render(name:"titre", class:"barre_recherche", placeholder:"Recherche activitées, restaurants, lieux ...", icon:"/ressources/icone/recherche.svg",title:"icone de recherche") ?>
         </form>
     </div>
     <main>
@@ -143,8 +185,31 @@ foreach ($offresNoteSql as $item) {
                 <button title="fleche avant"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
             </div>
         </div>
-        <!-- Section "Les mieux notées" -->
         <div>
+            <!-- affichage des nouvelles offres -->
+            <h2>Nouveautés</h2>
+            <div class="carrousel">
+                <?php
+                foreach ($offresNouveautés as $item) {
+                    echo $item;
+                }
+                ?>
+            </div>
+            <div>
+                <button title="fleche arrière">
+                    <span class="material-symbols-outlined">
+                        arrow_back_ios_new
+                    </span>
+                </button>
+                <button title="fleche avant">
+                    <span class="material-symbols-outlined">
+                        arrow_forward_ios
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div>
+            <!-- Section "Les mieux notées" -->
             <h2>Les mieux notées</h2>
             <div class="carrousel mixed">
                 <?php

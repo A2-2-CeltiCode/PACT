@@ -149,7 +149,7 @@ try {
                             <p class="avi-title">
                                 <?= $avi["titre"] ?>
                             </p>
-                            <div class="note">
+                            <div class="note" title="notes étoiles">
                                 <?php
                                 for ($i = 0; $i < floor($avi["note"]); $i++) {
                                     echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");

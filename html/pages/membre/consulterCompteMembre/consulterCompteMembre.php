@@ -58,7 +58,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Compte</title>
     <link rel="stylesheet" href="consulterCompteMembre.css">
-    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="icone PACT">
     <script src="consulterCompteMembre.js"></script>
       
 
@@ -117,8 +117,8 @@ try {
                 </tr>
                 <tr>
                     <th>Pseudo</th>
-                    <td>
-                        <input type="text" name="pseudo" 
+                    <td class="nonE">
+                        <input type="text" name="pseudo" class="nonEditable"
                             value="<?= htmlspecialchars($userInfo['pseudo'] ?? 'Non renseigné') ?>" 
                             readonly data-original="<?= htmlspecialchars($userInfo['pseudo'] ?? 'Non renseigné') ?>">
                     </td>
@@ -221,6 +221,22 @@ try {
                     <button type="button" title="Annuler Modification mot de passe" id="btnMdpAnnuler" onclick="fermerPopupMotDePasse()">Annuler</button>
                 </div>
             </form>
+        </div>
+        <div id="deleteConfirmationPopup">
+            <p>Êtes-vous sûr de vouloir supprimer votre compte ?<br>Cette action est irréversible.</p>
+            <div>
+                <button id="deleteConfirm" onClick="deleteAccount()">
+                    Confirmer
+                </button>
+                <button id="deleteCancel" onClick="hideDeletePopup()">
+                    Annuler
+                </button>
+            </div>
+        </div>
+        <div>
+            <button id="btnDeleteAccount" onClick="showDeletePopup()">
+                Supprimer le compte
+            </button>
         </div>
     </main>
 
