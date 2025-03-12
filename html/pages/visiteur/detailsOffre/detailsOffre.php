@@ -24,8 +24,8 @@ session_start();
 $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
-$idOffre = 1;//$_GET['idOffre'];
-//$idOffre = $_GET['id'] ?? $idOffre;
+$idOffre = $_GET['idOffre'];
+$idOffre = $_GET['id'] ?? $idOffre;
 
 try {
     
