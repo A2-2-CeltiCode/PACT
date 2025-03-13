@@ -250,8 +250,11 @@ try {
                 }
                 ?>
             </ul>
+            
+            <div class="moyenne-notes">
+                <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5"); ?>
+            </div>
 
-           
         </div>
         <div class="offre-package-modification">
             

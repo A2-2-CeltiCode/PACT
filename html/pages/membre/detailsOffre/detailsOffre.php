@@ -190,9 +190,7 @@ try {
                 </div>
             </div>
             </div>
-        </div>
-
-        <div class="offre-infos">
+            <div class="offre-infos">
 
             <?php
             // Affichage des détails de l'offre
@@ -265,6 +263,9 @@ try {
             </div>
            
         </div>
+        </div>
+
+        
         <div class="offre-package-modification">
             
 
