@@ -87,7 +87,7 @@
   .titre-page {
     display: flex;
     justify-content: center;
-    padding: 40px 24px 32px;
+    padding: 30px 24px 10px;
     margin-bottom: 0;
     position: relative;
     text-align: center;
@@ -116,7 +116,7 @@
   .container {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 32px 24px;
+    padding: 22px 24px;
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: 40px;
@@ -236,7 +236,6 @@
     font-size: medium;
   } 
   .moyenne-notes{
-    margin-left: 75%;
     margin-right: 0;
     padding-right: 0;
    }
@@ -900,7 +899,7 @@
       font-size: 1.5rem;
     }
     .moyenne-notes{
-      margin-left: 50%;
+      margin-left: 0%;
      }
   
     .carousel-images {
