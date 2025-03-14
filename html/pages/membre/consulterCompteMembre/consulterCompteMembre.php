@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL ^ E_WARNING);
 
 // Démarrer la session
 session_start();
@@ -18,10 +17,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 // Initialisation des variables
 $message = "";
 $userInfo = [];
-
-// Initialisation des variables
-$message = "";
-$userInfo = [];
 $idCompte = $_SESSION['idCompte'];
 
 try {
@@ -33,9 +28,8 @@ try {
     $dbh->exec("SET search_path TO pact;");
     $sql = "SELECT idcompte, pseudo, email, numtel, nom, prenom, codepostal, ville, rue, cleapi
             FROM vue_compte_membre LEFT JOIN _cleApi USING (idcompte)
-            WHERE idCompte = :idCompte";
+            WHERE idCompte = $idCompte";
     $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(':idCompte', $idCompte, PDO::PARAM_INT);
     $stmt->execute();
 
     // Vérification des résultats
@@ -76,28 +70,22 @@ try {
             </div>
             <?php unset($_SESSION['message']); ?>
         <?php endif; ?>
-
-
-        <!-- Boutons principaux -->
-        <div class="modifier">
-            <button type="button" title="Modifier information" class="button" onclick="activerModification()">Modifier mes informations</button>
-            <button type="button" title="Changer Mot de Passe" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
-        </div>
-
+        
         <!-- Message d'erreur -->
         <div id="messageErreur" style="color: red; display: none;"></div>
-
-        <!-- Affichage des messages d'erreur -->
-        <div id="messageErreur" style="color: red; display: none;"></div>
-
-        <hr id="separation">
+        
+        <!-- Boutons principaux -->
+        <div class="modifier">
+            <button id="modifier" title="Bouton pour modifier les informations" class="button" type="button">Modifier mes informations</button>
+            <button type="button" title="Bouton pour changer le mot de passe" class="button" onclick="ouvrirPopupMotDePasse()">Changer le mot de passe</button>
+        </div>
 
         <!-- Formulaire -->
         <form id="formulaireCompteMembre" method="post" action="enregistrerModifications.php">
-        <table>
+            <table>
                 <!-- Catégorie Identité -->
                 <tr>
-                    <th colspan="2" class="thhead" style="background-color: #075997; color: white; text-align: center;">Identité</th>
+                    <th colspan="2" style="background-color: #075997; color: white; text-align: center;">Identité</th>
                 </tr>
                 <tr>
                     <th>Nom</th>
@@ -131,17 +119,13 @@ try {
                 <tr>
                     <th>Email</th>
                     <td>
-                        <input type="email" name="email" class="editable" 
-                            value="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>" 
-                            readonly data-original="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>">
+                        <input type="email" name="email" class="editable" value="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['email'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
                 <tr>
                     <th>Numéro de Téléphone</th>
                     <td>
-                        <input type="text" name="numtel" class="editable" 
-                            value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>" 
-                            readonly data-original="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>">
+                        <input type="text" name="numtel" class="editable" value="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>" readonly data-original="<?= htmlspecialchars($userInfo['numtel'] ?? 'Non renseigné') ?>">
                     </td>
                 </tr>
 
@@ -187,8 +171,8 @@ try {
 
             <!-- Boutons -->
             <div class="bouton">
-                <button type="button" title="Enregistrer Modification" id="btnEnregistrer" style="display: none;" onclick="validerFormulaire(event)">Enregistrer</button>
-                <button type="button" title="Annuler Modification" id="btnAnnuler" style="display: none;" onclick="annulerModification()">Annuler</button>
+                <button type="button" title="bouton pour valider le changement de mot de passe" id="btnEnregistrer" style="display: none;">Enregistrer</button>
+                <button type="button" title="bouton pour annuler la modification de mot de passe" id="btnAnnuler" style="display: none;">Annuler</button>
             </div>
         </form>
         <!-- Popup de changement de mot de passe -->
@@ -213,12 +197,12 @@ try {
                 <div id="erreurPopup" style="color: red; text-align: center; margin-bottom: 20px;">
                     <?php if (isset($_SESSION['error'])): ?>
                         <?= htmlspecialchars($_SESSION['error']) ?>
-                        <?php unset($_SESSION['error']); ?>
+                        <?php unset(    $_SESSION['error']); ?>
                     <?php endif; ?>
                 </div>
-                <div id="btnMdp"style="margin-top: 20px;">
-                    <button type="submit" title="Enregistrer mot de passe" id="btnMdpEnregistrer">Enregistrer</button>
-                    <button type="button" title="Annuler Modification mot de passe" id="btnMdpAnnuler" onclick="fermerPopupMotDePasse()">Annuler</button>
+                <div class="boutonMdp" style="margin-top: 20px;">
+                    <button type="submit" title="bouton pour enregistrer les modifications" id="btnEnregistrerMdp">Enregistrer</button>
+                    <button type="button" title="bouton pour annuler les modification" id="btnAnnulerMdp">Annuler</button>
                 </div>
             </form>
         </div>
