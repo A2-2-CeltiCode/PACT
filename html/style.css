@@ -131,7 +131,7 @@ body {
 }
 
 /* Gestion de la barre de recherche */
-header + div {
+header + navbar  {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -166,7 +166,7 @@ main {
     margin-top: 64px;
     margin-bottom: 64px;
 
-    > div {
+    > section {
         h2 {
             margin-left: 7vw;
         }
@@ -183,6 +183,37 @@ main {
                 display: none; /* Safari et Chrome */
             }
         }
+        > nav {
+            display: flex;
+            justify-content: space-between;
+            padding-right: 128px;
+            padding-left: 9vw;
+            white-space: nowrap;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+            scrollbar-width: none; /* Firefox */
+
+            &::-webkit-scrollbar {
+                display: none; /* Safari et Chrome */
+            }
+            button {
+                position: relative;
+                border-radius: 500px;
+                width: 50px;
+                height: 50px;
+                border: 2px solid var(--noir);
+                background-color: var(--gris1);
+    
+                .material-symbols-outlined {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    font-size: 32px;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
     }
 }
 
@@ -191,7 +222,7 @@ main {
     overflow-x: auto;
     overflow-y: visible;
 
-    + div {
+    + div{
         display: flex;
         justify-content: space-between;
         padding-right: 128px;

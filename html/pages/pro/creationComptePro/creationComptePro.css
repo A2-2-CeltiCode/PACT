@@ -62,7 +62,7 @@ form {
     flex-direction: column;
 }
 
-.info-display {
+section {
     margin: 2% 0;
     background-color: var(--blanc);
     display: flex;

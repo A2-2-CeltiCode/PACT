@@ -184,12 +184,13 @@ try {
                 <?php if ($typeOffre !== 'restaurant'){ ?>
                     <?php Label::render("", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php }else{; ?>
-                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
+                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme']); ?>
                 <?php }; ?>
-                
-                <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
-                <div class="note-m">
-                    <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");?>
+                <div class="note-moyenne">
+                    <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
+                    <div class="note-m">
+                        <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");?>
+                    </div>
                 </div>
             </div>
             </div>
@@ -261,9 +262,7 @@ try {
                 }
                 ?>
             </ul>
-            <div class="moyenne-notes">
-                <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5"); ?>
-            </div>
+            
            
         </div>
         </div>
@@ -304,6 +303,11 @@ try {
                 <h1>Avis</h1>
                 <?php Button::render(id: "aviscreate",class:"btn-creer-avis" ,text: "Créer un avis",title: "bouton pour créer un avis", type:"Member") ?>
             </div>
+            <?php
+            if ($nombreAvis > 0){
+                ?>
+
+            
             <div class="filters">
                 <label for="sortBy">Trier par:</label>
                 <select id="sortBy">
@@ -413,6 +417,11 @@ try {
                 }
                 ?>
             </div>
+            <?php
+            } else  {
+                echo "<p>Aucun avis n'a été trouvé pour cette offre.</p>";
+            }
+            ?>
         </div>
 
         <div class="popup" id="popup-repondre">

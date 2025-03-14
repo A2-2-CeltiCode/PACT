@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <?php if ((empty($_POST)) || $emailUtilise ||$pseudoUtilise ){ ?>
         
-        <div class="info-display">
+        <section>
             <a href="/"><p id="retour-accueil">Retour à l'accueil</p></a>
             <a href="/"><img alt="Logo" src="../../../ressources/icone/logo.svg"></a>
             <h1>Créez votre compte Membre</h1>
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p class="small">Vous avez déjà un compte ?</p>
             <p class="small"><a href="../connexionCompteMembre/connexionCompteMembre.php">Connectez vous</a> avec votre compte PACT</p>
             <?php exit();?>
-        </div>
+        </section>
     </body>
 </html>
 <?php } ?>
