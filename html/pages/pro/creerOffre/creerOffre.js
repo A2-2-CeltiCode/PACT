@@ -250,9 +250,12 @@ document.addEventListener("DOMContentLoaded", function () {
             },
           ];
           addMapMarkers(map, points, 10);
-          document.getElementById("postcode").value = data.features[0].properties.postcode;
-        }else{
-          clearMapMarkers(map);}
+          document.getElementById("postcode").value =
+            data.features[0].properties.postcode;
+        
+        } else {
+          clearMapMarkers(map);
+        }
       })
       .catch((error) => console.error("Erreur:", error));
   }
@@ -269,42 +272,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-  function suggestPostale() {
-    console.log("suggestPostale");
-    const input = document.getElementById("ville").value.toLowerCase();
-    
-
-    fetch(
-      `https://api-adresse.data.gouv.fr/search/?q=${input}&type=municipality&limit=10`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // Mettre à jour la carte si une seule ville est trouvée ou si le nom de la ville correspond à l'entrée
-        if (data.features.length === 1 || validCities.includes(input)) {
-          const coordinates = data.features[0].geometry.coordinates;
-          points = [
-            {
-              coordonneesx: coordinates[1].toString(),
-              coordonneesy: coordinates[0].toString(),
-            },
-          ];
-          addMapMarkers(map, points, 10);
-          document.getElementById("postcode").value = data.features[0].properties.postcode;
-        }else{
-          clearMapMarkers(map);}
-      })
-      .catch((error) => console.error("Erreur:", error));
-  }
-
-
-
   function suggestAdresses() {
     const input = document.getElementById("adresse").value.toLowerCase();
     const ville = document.getElementById("ville").value.toLowerCase();
     const postcode = document.getElementById("postcode").value;
     if (
       input.length < 3 ||
-      !selectedCity ||
       ville !== selectedCity ||
       !postcode
     ) {
@@ -322,6 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "<div>Aucune adresse trouvée</div>";
           return;
         }
+
         const suggestions = data.features
           .filter(
             (feature) => feature.properties.city.toLowerCase() === selectedCity
@@ -335,8 +309,13 @@ document.addEventListener("DOMContentLoaded", function () {
           .join("");
         document.getElementById("adresseSuggestions").innerHTML = suggestions;
 
-        // Mettre à jour la carte si une seule adresse est trouvée
-        if (data.features.length === 1) {
+        // Mettre à jour la carte si une seule adresse est trouvée ou si l'input est égal à une adresse
+        if (
+          data.features.length === 1 ||
+          data.features.some(
+            (feature) => feature.properties.name.toLowerCase() === input
+          )
+        ) {
           const coordinates = data.features[0].geometry.coordinates;
           points = [
             {
@@ -345,6 +324,21 @@ document.addEventListener("DOMContentLoaded", function () {
             },
           ];
           addMapMarkers(map, points, 15);
+        } else {
+          fetch(
+            `https://api-adresse.data.gouv.fr/search/?q=${ville}&type=municipality&limit=10`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              const coordinates = data.features[0].geometry.coordinates;
+              points = [
+                {
+                  coordonneesx: coordinates[1].toString(),
+                  coordonneesy: coordinates[0].toString(),
+                },
+              ];
+              addMapMarkers(map, points, 10);
+            });
         }
       })
       .catch((error) => console.error("Erreur:", error));
@@ -397,13 +391,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Expose functions to global scope if needed
   window.suggestVilles = suggestVilles;
   window.selectVille = selectVille;
-  window.suggestPostale = suggestPostale;
   window.suggestAdresses = suggestAdresses;
   window.selectAdresse = selectAdresse;
   window.validateVille = selectVille;
   window.toggleLangue = toggleLangue;
   window.toggleDropdown = toggleDropdown;
   window.validateForm = validateForm;
-
-
 });
