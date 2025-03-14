@@ -92,7 +92,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <script src="../../../trie/trieGeneral.js"></script>
     <script src="listeOffres.js"></script>
 </head>
-<?php Header::render(HeaderType::Pro); ?>
+<?php Header::render(HeaderType::Pro); 
+
+
+?>
 
 <body>
 

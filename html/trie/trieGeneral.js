@@ -9,6 +9,10 @@ function rechercher(page = 1) {
       value: document.querySelector('input[name="titre"]').value,
     },
     {
+      name: "status",
+      value: document.querySelector('input[name="status"]').value,
+    },
+    {
       name: "localisation",
       value: document.querySelector('input[name="localisation"]').value,
     },
@@ -83,21 +87,25 @@ function rechercher(page = 1) {
 
   const xhr = new XMLHttpRequest();
   lastRequest = xhr;
-  const url = "/trie/getOffre.php";
+  if(typeof clearMapMarkers === 'function'){
+     url = "/trie/getOffre.php";
+  }else{
+     url = "listeOffres.php";
+  }
   xhr.open("GET", `${url}?${params.toString()}`, true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.onload = function () {
     if (xhr.status === 200) {
       try {
         const response = JSON.parse(xhr.responseText);
-        
-        console.table(response);
-        clearMapMarkers(map);
-        addMapMarkers(map, response.points);
-        
+        if(typeof clearMapMarkers === 'function'){
+          console.table(response);
+          clearMapMarkers(map);
+          addMapMarkers(map, response.points);
+        }
         document.getElementById("resultats").innerHTML = response.offres.join("");
         document.getElementById("nombreOffres").innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
-        applyStyles();
+        
         
       } catch (e) {
         console.error("Erreur lors du traitement de la réponse JSON:", e);
@@ -146,7 +154,21 @@ function initializeSearchForm(page) {
 }
 
 function applyStyles() {
-  document.querySelectorAll(".offre").forEach((offre) => {
-    offre.style.margin = "10px auto";
+  
+}
+
+function changerStatus(nouveauStatus) {
+  document.querySelectorAll('.onglet').forEach(onglet => {
+      onglet.classList.remove('actif');
   });
+
+  event.target.classList.add('actif');
+
+  const url = new URL(window.location);
+  url.searchParams.set('status', nouveauStatus);
+  window.history.pushState({}, '', url);
+
+  document.querySelector('input[name="status"]').value = nouveauStatus;
+
+  rechercher();
 }
