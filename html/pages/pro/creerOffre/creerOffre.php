@@ -61,7 +61,7 @@ $rib = $stmt->fetchColumn();
     
 
         <form class="info-display" id="myForm" method="post" action="confimationCreationOffre.php"
-            onsubmit="return validateForm()" enctype="multipart/form-data">
+            onsubmit="return validateForm() && validateVilleAdresseCodePostal()" enctype="multipart/form-data">
             <h1>Créez votre Offre</h1>
             <section>
                 <article>
@@ -77,14 +77,15 @@ $rib = $stmt->fetchColumn();
                             <?php Input::render(name: "ville", type: "text", id: "ville", required: "true", placeholder: 'Ville*', onkeyup: "suggestVilles()") ?>
                             <div id="suggestions"></div>
                         </div>
-                        <?php Input::render(name: "codePostal", id: "postcode", type: "number", required: 'true', placeholder: "Code Postal*") ?>
+                        <?php Input::render(name: "codePostal", id: "postcode", type: "number", required: 'true', placeholder: "Code Postal*",onkeyup:"suggestPostale") ?>
                         <div>
                             <?php Input::render(name: "adressePostale", id: "adresse", type: "text", placeholder: 'Adresse Postale', onkeyup: "suggestAdresses()") ?>
                             <div id="adresseSuggestions"></div>
                         </div>
                         <input type="hidden" id="longitude" name="longitude">
                         <input type="hidden" id="latitude" name="latitude">
-                        <div id="map" style="height: 300px; width: 400px;"></div>
+                        <div id="map" style="height: 300px; width: 100%;"></div>
+                        <br>
                     </div>
                     <div>
                         <label>Numéro de téléphone*</label>
