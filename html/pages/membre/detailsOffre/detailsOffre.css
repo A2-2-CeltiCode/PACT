@@ -231,6 +231,7 @@
     margin: 24px 0 8px;
     box-shadow: 0 2px 8px rgba(108, 2, 119, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    justify-content: space-between;
   }
   .offre-prix label{
     font-size: medium;
@@ -284,6 +285,11 @@
     padding: 24px;
     top: 24px;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    height: fit-content;
+  }
+
+  .note-moyenne{
+    display: flex;
   }
   
   /* Descriptions */
@@ -422,11 +428,16 @@
   }
   
   .container-avis{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 40px;
+  }
+
+  .liste-avis{
+    > p{
+      display: flex;
+      justify-content: center;
+    }
   }
   
   .avi-title {

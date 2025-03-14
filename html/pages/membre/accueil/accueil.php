@@ -11,7 +11,7 @@
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
 
     <style>
-        header + div {
+        header + navbar {
             <?php
             // Dynamisation du style en fonction du type d'utilisateur
             if (isset($_SESSION["typeUtilisateur"]) && $_SESSION["typeUtilisateur"] == "membre") {
@@ -164,14 +164,14 @@ foreach ($offresNoteSql as $item) {
     // Affichage de l'en-tête dynamique en fonction de l'utilisateur
     isset($_SESSION["idCompte"]) ? Header::render(type: HeaderType::Member) : Header::render();
     ?>
-    <div>
+    <navbar>
         <form action="/pages/visiteur/listeOffres/listeOffres.php" method="get">
             <?php Input::render(name:"titre", class:"barre_recherche", placeholder:"Recherche activitées, restaurants, lieux ...", icon:"/ressources/icone/recherche.svg",title:"icone de recherche") ?>
         </form>
-    </div>
+    </navbar>
     <main>
         <!-- Section "À la une" -->
-        <div>
+        <section>
             <h2>À la une!</h2>
             <div class="carrousel">
                 <?php
@@ -180,12 +180,12 @@ foreach ($offresNoteSql as $item) {
                 }
                 ?>
             </div>
-            <div>
+            <nav>
                 <button title="fleche arriere"><span class="material-symbols-outlined">arrow_back_ios_new</span></button>
                 <button title="fleche avant"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
-            </div>
-        </div>
-        <div>
+            </nav>
+        </section>
+        <section>
             <!-- affichage des nouvelles offres -->
             <h2>Nouveautés</h2>
             <div class="carrousel">
@@ -195,7 +195,7 @@ foreach ($offresNoteSql as $item) {
                 }
                 ?>
             </div>
-            <div>
+            <nav>
                 <button title="fleche arrière">
                     <span class="material-symbols-outlined">
                         arrow_back_ios_new
@@ -206,9 +206,9 @@ foreach ($offresNoteSql as $item) {
                         arrow_forward_ios
                     </span>
                 </button>
-            </div>
-        </div>
-        <div>
+            </nav>
+        </section>
+        <section>
             <!-- Section "Les mieux notées" -->
             <h2>Les mieux notées</h2>
             <div class="carrousel mixed">
@@ -218,11 +218,11 @@ foreach ($offresNoteSql as $item) {
                 }
                 ?>
             </div>
-            <div>
+            <nav>
                 <button><span class="material-symbols-outlined">arrow_back_ios_new</span></button>
                 <button><span class="material-symbols-outlined">arrow_forward_ios</span></button>
-            </div>
-        </div>
+            </nav>
+        </section>
     </main>
     <?php
     isset($_SESSION["idCompte"]) ? Footer::render(type: FooterType::Member) : Footer::render();

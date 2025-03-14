@@ -93,6 +93,7 @@ try {
     $images = $dbh->query('SELECT pact._representeoffre.idImage, pact._image.nomImage FROM pact._representeoffre JOIN pact._image ON pact._representeoffre.idImage = pact._image.idImage WHERE pact._representeoffre.idOffre = ' . "'$idOffre'", PDO::FETCH_ASSOC)->fetchAll();    $carte = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._parcAttractions JOIN pact._image ON pact._parcAttractions.carteParc = pact._image.idImage WHERE pact._parcAttractions.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $menu = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._restaurant JOIN pact._image ON pact._restaurant.menuRestaurant = pact._image.idImage WHERE pact._restaurant.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $horaires = substr($offre['heureouverture'], 0, 5) . " - " . substr($offre['heurefermeture'], 0, 5);
+    $typeOption = $dbh->query('SELECT nomoption FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     // Vérification de l'existence de l'offre
     if (!$offre) {
         throw new Exception("Aucune offre trouvée");
@@ -183,12 +184,13 @@ try {
                 <?php if ($typeOffre !== 'restaurant'){ ?>
                     <?php Label::render("", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php }else{; ?>
-                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
+                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme']); ?>
                 <?php }; ?>
-                
-                <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
-                <div class="note-m">
-                    <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");?>
+                <div class="note-moyenne">
+                    <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
+                    <div class="note-m">
+                        <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");?>
+                    </div>
                 </div>
             </div>
             </div>
@@ -260,9 +262,7 @@ try {
                 }
                 ?>
             </ul>
-            <div class="moyenne-notes">
-                <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5"); ?>
-            </div>
+            
            
         </div>
         </div>
@@ -303,6 +303,11 @@ try {
                 <h1>Avis</h1>
                 <?php Button::render(id: "aviscreate",class:"btn-creer-avis" ,text: "Créer un avis",title: "bouton pour créer un avis", type:"Member") ?>
             </div>
+            <?php
+            if ($nombreAvis > 0){
+                ?>
+
+            
             <div class="filters">
                 <label for="sortBy">Trier par:</label>
                 <select id="sortBy">
@@ -412,6 +417,11 @@ try {
                 }
                 ?>
             </div>
+            <?php
+            } else  {
+                echo "<p>Aucun avis n'a été trouvé pour cette offre.</p>";
+            }
+            ?>
         </div>
 
         <div class="popup" id="popup-repondre">

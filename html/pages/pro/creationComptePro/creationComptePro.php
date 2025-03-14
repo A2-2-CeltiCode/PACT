@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <script src="creationComptePro.js"></script>
     </head>
     <body>
-        <div class="info-display">
+        <section>
             <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
             <a href="/pages/visiteur/accueil/accueil.php"><img alt="Logo" src="../../../ressources/icone/logo.svg"></a>
             <h1>Créez votre compte Professionnel</h1>
@@ -166,6 +166,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p class="small">Vous avez déjà un compte ?</p>
             <p class="small"><a href="../connexionComptePro/connexionComptePro.php">Connectez vous</a> avec votre compte PACT Professionel</p>
             <?php exit();?>
-        </div>
+        </section>
     </body>
 </html>

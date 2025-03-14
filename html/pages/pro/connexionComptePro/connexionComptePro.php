@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="/ui.css">
 </head>
 <body>
-    <div class="conteneur">
+    <section class="conteneur">
         <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
         <!-- Logo de la page -->
         <img alt="Logo" src="/ressources/icone/logo.svg" title="logo de la page"/>
@@ -92,6 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="inscription">
             Vous n'avez pas de compte ? <a href="../creationComptePro/creationComptePro.php">Créez un compte dès maintenant</a>
         </div>
-    </div>
+    </section>
 </body>
 </html>
