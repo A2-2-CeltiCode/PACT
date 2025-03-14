@@ -340,8 +340,8 @@ try {
                         continue;
                     }
                     
-                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
-                    $stmt->execute([':idAvis' => $avi['idavis']]);
+                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
+                    $stmt->execute([':idAvis' => $avi['idavis']]);  
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
@@ -370,8 +370,8 @@ try {
                         </div>
                     </div>
                     <p class="avi-content">
-                            <?= $avi["commentaire"] ?>
-                        </p>
+                        <?= $avi["commentaire"] ?>
+                    </p>
 
                         <div class="container-img-avis">
                             <?php
@@ -412,16 +412,17 @@ try {
                                         <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div class="container-info-avis">
+                                        <div class="container-bottom-avis">
+                                            <div class="container-infos-avis">
                                             <p>
-                                                <?= $reponse["pseudo"] ?>
+                                                <?= $reponse["denominationsociale"] ?>
                                             </p>
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
-                                            
                                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false); ?>
-                                        </div>
+                                            </div>
+                                </div>
 
                                     </div>
                                 <?php endforeach; ?>
