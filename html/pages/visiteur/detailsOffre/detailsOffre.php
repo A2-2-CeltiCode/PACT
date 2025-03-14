@@ -79,6 +79,10 @@ try {
     $stmt = $dbh->query('SELECT estguidee FROM pact.vue_visite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC);
     $guidee = $stmt->fetch();
 
+    if($guidee['estguidee'] == true){
+        $langueGuidee = $dbh->query('SELECT nomlangage FROM pact.vue_visite_guidee WHERE idoffre = ' .$idOffre, PDO::FETCH_ASSOC)->fetchAll();
+    }
+
     // Récupération des autres informations pertinentes
     $minutesVisite = $dbh->query('SELECT tempsenminutes FROM pact.vue_visite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $prestation = $dbh->query('SELECT prestation FROM pact.vue_activite WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
@@ -249,6 +253,17 @@ try {
                     case 'visite':
                         Label::render("", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg");
                         Label::render("", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg");
+                        echo "<br>";
+                        if($guidee['estguidee'] == 'Oui'){
+                            echo "Langue : ";
+                            for ($i=0; $i < count($langueGuidee)  ; $i++) { 
+                                if( $i < count($langueGuidee)-1){
+                                    Label::render("","","",$langueGuidee[$i]["nomlangage"].",");
+                                }else{
+                                    Label::render("","","",$langueGuidee[$i]["nomlangage"]);
+                                }                     
+                            }
+                        }
                         break;
                     default:
                         die("Aucune offre n\'a été trouvée");
@@ -256,9 +271,7 @@ try {
                 ?>
             </ul>
             
-            <div class="moyenne-notes">
-                <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5"); ?>
-            </div>
+            
 
         </div>
         <div class="offre-package-modification">
