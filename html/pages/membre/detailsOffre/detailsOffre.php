@@ -362,7 +362,13 @@ try {
                         <div class="container-bottom-avis">
                             <div class="container-infos-avis">
                                 <p>
-                                    <?= $avi["pseudo"] ?>
+                                    <?php 
+                                      if ($avi["idcompte"] == $idCompte) {
+                                          echo $avi["pseudo"]." (vous)"; 
+                                      }
+                                      else {
+                                          echo $avi["pseudo"];
+                                    }?>
                                 </p>
                                 <p>
                                     le <?= $avi["datevisite"] ?>
@@ -372,8 +378,7 @@ try {
                                 <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
                                 <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                             </div>
-                        </div>
-                        
+                        </div>   
                         <?php if ($avi['idcompte'] == $idCompte): ?>
                             <button class="btn-supprimer" title="Supprimer un avis" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
                         <?php endif; ?>
