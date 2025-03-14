@@ -144,10 +144,12 @@ try {
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
+    <?php $typeOption["nomoption"] = str_replace(" ","",$typeOption["nomoption"])?>
     <div id="toast" class="toast">Avis bien signalé</div>
     <div class=titre-page>
         <?php Label::render(class:"titre-svg",id: "", for:"",text: "", icon:"../../../ressources/icone/{$typeOffre}.svg",title:"icon type Offre"); ?>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
+        <img class="etoile-une-svg" id="<?php echo $typeOption['nomoption']; ?>" src="../../../ressources/img/relief.png">
     </div>
     <div class="container">
         <div class="container-gauche">
@@ -190,7 +192,7 @@ try {
                 </div>
             </div>
             </div>
-            <div class="offre-infos">
+            <div class="offre-infos <?php echo $typeOption["nomoption"]?>">
 
             <?php
             // Affichage des détails de l'offre

@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const items = document.querySelectorAll(".carousel-image");
   const dotsContainer = document.querySelector(".carousel-dots");
 
+
+
   // création des dots
   items.forEach((item, index) => {
     if (images.length !== 1) {
