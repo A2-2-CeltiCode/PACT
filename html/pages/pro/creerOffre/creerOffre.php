@@ -95,14 +95,6 @@ $rib = $stmt->fetchColumn();
                         <label>Site Web</label>
                         <?php Input::render(name: "siteWeb", type: "text", placeholder: 'ex : www.siteWeb.com') ?>
                     </div>
-                    <div>
-                        <label>Heure d'ouverture</label>
-                        <?php Input::render(name: "ouverture", type: "time", placeholder: '', required: "true") ?>
-                    </div>
-                    <div></div>
-                        <label>Heure de fermeture</label>
-                        <?php Input::render(name: "fermeture", type: "time", placeholder: '', required: "true") ?>
-                    </div>
                 </article>
                 <article>
                     <h4>Description de l'offre</h4>
@@ -114,6 +106,15 @@ $rib = $stmt->fetchColumn();
                     <div>
                         <label>Description Détaille</label>
                         <?php Textarea::render(name: "descriptionDetaillee", rows: 7) ?>
+                    </div>
+
+                    <div>
+                        <label>Heure d'ouverture</label>
+                        <?php Input::render(name: "ouverture", type: "time", placeholder: '', required: "true") ?>
+                    </div>
+                    <div>
+                        <label>Heure de fermeture</label>
+                        <?php Input::render(name: "fermeture", type: "time", placeholder: '', required: "true") ?>
                     </div>
                     <div>
                         <label>Photo*</label>
