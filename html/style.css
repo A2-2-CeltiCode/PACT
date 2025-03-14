@@ -83,29 +83,13 @@ header + div {
     .barre_recherche {
         width: 75vw;
         background-color: transparent;
-        font-weight: bold;
     }
-
 
     form > div {
-        border-radius: 2em !important;
-        background-color: white;
-        opacity: 95%;
+        background-color: rgba(255, 255, 255, 0.7);
         height: 43px;
-        input {
-            &::placeholder {
-                color: rgb(51, 51, 51);
-            }   
-        }
-        input:focus::placeholder {
-            color: transparent;
-          }
-        
     }
-    
 }
-
-
 
 main {
     margin-top: 64px;
@@ -221,4 +205,3 @@ main {
         display: none;
     }
 }
-

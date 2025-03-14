@@ -12,9 +12,9 @@ SET SCHEMA 'pact';
 
 CREATE TABLE _adresse(
     idAdresse     SERIAL,
-    codePostal    INTEGER NOT NULL CHECK (codePostal < 100000),
-    ville         VARCHAR(50) NOT NULL,
-    rue           VARCHAR(50) NOT NULL,
+    codePostal    VARCHAR(5),
+    ville         VARCHAR(50),
+    rue           VARCHAR(50),
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
     CONSTRAINT adresse_pk PRIMARY KEY(idAdresse)
 );

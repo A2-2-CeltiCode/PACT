@@ -164,7 +164,7 @@ try {
                         <?php else: ?>
                             
                             <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>"
-                            class="carousel-image" alt="imgOffre">
+                            class="carousel-image">
                             <?php endif ?>
                             <?php endforeach; ?>
                 </div>
@@ -326,7 +326,7 @@ try {
                         <div>
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
                                 
                             }
                             ?>
