@@ -34,6 +34,10 @@ CREATE OR REPLACE VIEW vue_avis AS
 SELECT idAvis, idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, dateAvis, estVu, pouceHaut, pouceBas, estBlacklist
 FROM _avis;
 
+CREATE OR REPLACE VIEW vue_reponse AS
+SELECT _reponseAvis.idReponse, _reponseAvis.idAvis, _reponseAvis.idCompte, _reponseAvis.commentaire, _reponseAvis.dateReponse, _comptePro.denominationSociale
+FROM _reponseAvis NATURAL JOIN _comptePro;
+
 --
 -- VUE REPONSE AVIS
 --
