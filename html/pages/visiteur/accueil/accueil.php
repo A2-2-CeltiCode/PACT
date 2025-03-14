@@ -15,7 +15,7 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
     <style>
-        header + div {
+        header + navbar {
             <?php
             if (isset($_SESSION["typeUtilisateur"]) && $_SESSION["typeUtilisateur"] == "membre") {
                 echo 'background-image: url("/ressources/img/font-barre-recherce-membre.png");';
@@ -186,14 +186,14 @@ foreach ($offresNoteSql as $item) {
 ?>
 <body>
 <?php isset($_SESSION["idCompte"])?Header::render(type: HeaderType::Member):Header::render(); ?>
-<div>
+<navbar>
 <form action="/pages/visiteur/listeOffres/listeOffres.php" method="get">
     <?php Input::render(name:"titre", class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
         icon: "/ressources/icone/recherche.svg", title: "icone barre de recherche") ?>
 </form>
-</div>
+</navbar>
 <main>
-    <div>
+    <section>
         <!-- affichage des offres a la une -->
         <h2>À la une!</h2>
         <div class="carrousel">
@@ -203,7 +203,7 @@ foreach ($offresNoteSql as $item) {
             }
             ?>
         </div>
-        <div>
+        <nav>
             <button title="fleche arrière">
                 <span class="material-symbols-outlined">
                     arrow_back_ios_new
@@ -214,9 +214,9 @@ foreach ($offresNoteSql as $item) {
                     arrow_forward_ios
                 </span>
             </button>
-        </div>
-    </div>
-    <div>
+        </nav>
+    </section>
+    <section>
         <!-- affichage des nouvelles offres -->
         <h2>Nouveautés</h2>
         <div class="carrousel">
@@ -226,7 +226,7 @@ foreach ($offresNoteSql as $item) {
             }
             ?>
         </div>
-        <div>
+        <nav>
             <button title="fleche arrière">
                 <span class="material-symbols-outlined">
                     arrow_back_ios_new
@@ -237,9 +237,9 @@ foreach ($offresNoteSql as $item) {
                     arrow_forward_ios
                 </span>
             </button>
-        </div>
-    </div>
-    <div>
+        </nav>
+    </section>
+    <section>
         <!-- affichage des offres les mieux notées -->
         <h2>Les mieux notées</h2>
         <div class="carrousel mixed">
@@ -249,7 +249,7 @@ foreach ($offresNoteSql as $item) {
             }
             ?>
         </div>
-        <div>
+        <nav>
             <button title="fleche arrière">
                 <span class="material-symbols-outlined">
                     arrow_back_ios_new
@@ -260,8 +260,8 @@ foreach ($offresNoteSql as $item) {
                     arrow_forward_ios
                 </span>
             </button>
-        </div>
-    </div>
+        </nav>
+    </section>
 <!--    <div>
         <h2>Les mieux noté!</h2>
         <div class="carrousel">
