@@ -65,6 +65,10 @@ class Offre
 
     }
 
+    public function getId() {
+        return $this->idoffre;
+    }
+
     public function __toString(): string {
         $texte=null;
         $argent=null;

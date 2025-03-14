@@ -99,7 +99,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
     <div class="titre-page">
         <h1>Mes Offres</h1>
-        <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "", "Créer une Offre", ButtonType::Pro, "", true); ?></a>
+        <a href="../creerOffre/creerOffre.php"><?php Button::render("btn-cree", "","bouton pour crée une offre", "Créer une Offre", ButtonType::Pro, "", true); ?></a>
     </div>
     <section>
         <div class="barre trie-visible" id="styleShadow">

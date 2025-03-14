@@ -32,6 +32,7 @@ class Button
      */
     public static function render(string $class = "",
                                   string $id = "",
+                                  string $title ="",
                                   string $text = "",
                                   string $type = "",
                                   string $onClick = "",
@@ -60,10 +61,10 @@ class Button
         }
         if (empty($path)) {
             // Affiche le bouton
-        echo "<button type=\"{$isSubmit}\" class=\"button {$class} {$backgroundColorClass}\" id=\"{$id}\" onclick=\"{$onClick}\";>{$text}</button>";
+        echo "<button type=\"{$isSubmit}\" class=\"button {$class} {$backgroundColorClass}\" id=\"{$id}\" title=\"{$title}\" onclick=\"{$onClick}\";>{$text}</button>";
         }else {
             // Affiche le bouton avec le path
-            echo "<a href=\"$path\"><button type=\"{$isSubmit}\" class=\"button {$class} {$backgroundColorClass}\" id=\"{$id}\" onclick=\"{$onClick}\";>{$text}</button></a>";
+            echo "<a href=\"$path\"><button type=\"{$isSubmit}\" class=\"button {$class} {$backgroundColorClass}\" id=\"{$id}\" title=\"{$title}\" onclick=\"{$onClick}\";>{$text}</button></a>";
         }
         
     }

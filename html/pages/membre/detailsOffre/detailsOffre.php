@@ -24,8 +24,11 @@ session_start();
 $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
-$idOffre = $_GET['idOffre'];
-$idOffre = $_GET['id'] ?? $idOffre;
+$idOffre = $_GET['id'];
+$offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
+$offresRecentesArray = unserialize($offresRecentesTxt);
+$offresRecentesArray[$idOffre] = time();
+setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time()+60*60*24*15, "/");
 
 try {
     // Connexion à la base de données
@@ -35,7 +38,7 @@ try {
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
 
-    $query = "SELECT titre, note, commentaire, pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas, pact.vue_compte_membre.idcompte FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, CASE WHEN pseudo IS NULL THEN '<em><i>Utilisateur Supprimé</i></em>' ELSE pseudo END AS pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas, pact.vue_compte_membre.idcompte FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
 
     if ($sortBy === 'date_asc') {
@@ -140,7 +143,7 @@ try {
     <link rel="stylesheet" href="../../../ui.css">
 </head>
 <?php Header::render(HeaderType::Member);?>
-<button class="retour"><a href="../listeOffres/listeOffres.php"><img
+<button class="retour" title="Revenir à la page des offres"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
@@ -153,8 +156,8 @@ try {
         <div class="container-gauche">
             <div class="carousel">
 
-                <button class="carousel-button prev desactive">❮</button>
-                <button class="carousel-button next desactive">❯</button>
+                <button class="carousel-button prev desactive" title="bouton carousel précédent">❮</button>
+                <button class="carousel-button next desactive" title="bouton carousel suivant">❯</button>
                 <div class="carousel-images">
                     <?php
                     // Affichage des images de l'offre
@@ -288,7 +291,7 @@ try {
         <div class="liste-avis">
             <div class="avis-header">
                 <h1>Avis</h1>
-                <button class="btn-creer-avis">Créer un avis</button>
+                <button class="btn-creer-avis" title="bouton pour créer un avis">Créer un avis</button>
             </div>
             <div class="filters">
                 <label for="sortBy">Trier par:</label>
@@ -352,11 +355,11 @@ try {
                             </p>
                         </div>
                         <div class="thumbs">
-                            <button class="thumbs-up" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                         </div>
                         <?php if ($avi['idcompte'] == $idCompte): ?>
-                            <button class="btn-supprimer" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
+                            <button class="btn-supprimer" title="Supprimer un avis" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
                         <?php endif; ?>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
@@ -374,7 +377,7 @@ try {
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
                                             
-                                            <?php Button::render("btn-signaler", "btn-signaler", "Signaler", ButtonType::Member, "", false); ?>
+                                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false); ?>
                                         </div>
 
                                     </div>
@@ -395,7 +398,7 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                    <button type="submit">Envoyer</button>
+                    <button type="submit" title="bouton Envoyer">Envoyer</button>
                 </form>
             </div>
         </div>
@@ -503,6 +506,7 @@ try {
                 <?php Button::render(
                     "btn-envoyer",
                     "submit-avis",
+                    "bouton pour publier un avis",
                     "Publier votre avis",
                     ButtonType::Pro,
                     "",
