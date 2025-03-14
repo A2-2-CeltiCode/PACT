@@ -129,13 +129,16 @@ try {
 <body>
     <!-- Toast de confirmation -->
     <div id="toast" class="toast">Avis bien signalé</div>
-    <div>
-    <div>
+    <section>
         <div class="liste-avis">
-            <div>
+            <div class="avis-header">
                 <h1>Avis</h1>
             </div>
-            <div class="filters">
+            <?php
+            if ($nombreAvis > 0){
+                ?>
+
+            <aside class="filters">
                 <label for="sortBy">Trier par:</label>
                 <select id="sortBy">
                     <option value="date_desc" selected>Date décroissante</option>
@@ -150,8 +153,9 @@ try {
                     <option value="viewed">Vus</option>
                     <option value="not_viewed">Non vus</option>
                 </select>
-            </div>
-            <div>
+            </aside>
+
+            <article class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
                     if (!isset($avi["idavis"])) {
@@ -169,11 +173,17 @@ try {
                         <?php if (!$avi['estvu']): ?>
                             <div class="non-vu">Non vu</div>
                         <?php endif; ?>
-                        <div>
-                            <p class="avi-title">
-                            
-                            <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi['idoffre'] ?>"><?= $avi["titre"] ?></a>
-                            </p>
+                        <div class="container-head-avis">
+                            <div>
+                                <p class="avi-title">
+                                
+                                <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi['idoffre'] ?>"><?= $avi["titre"] ?></a>
+                                </p>
+                                <p>
+                                    en <?= $avi["contextevisite"] ?>
+                                </p>
+                            </div>
+
                             <div class="note" title="note offre icone">
                                 <?php
                                 for ($i = 0; $i < floor($avi["note"]); $i++) {
@@ -191,41 +201,44 @@ try {
                         <p class="avi-content">
                             <?= $avi["commentaire"] ?>
                         </p>
-                        <div>
+
+                        <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
                                 echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
                             }
                             ?>
                         </div>
-                        <div>
-                            <p>
-                                <?= $avi["pseudo"] ?>
-                            </p>
-                            <p>
-                                le <?= $avi["datevisite"] ?>  en <?= $avi["contextevisite"] ?>
-                            </p>
 
+                        <div class="container-bottom-avis">
+                            <div class="container-infos-avis">
+                                <p>
+                                    <?= $avi["pseudo"] ?>
+                                </p>
+                                <p>
+                                    le <?= $avi["datevisite"] ?>  
+                                </p>
+
+                            </div>
+                            <div class="thumbs">
+                                <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                                <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            </div>
                         </div>
-                        <div class="thumbs">
-                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
-                        </div>
-                        <div>
                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
                                 <?php Button::render("btn-repondre", "btn-repondre","bouton de reponse","Répondre", ButtonType::Pro, "", false); ?>
                             <?php endif; ?>
-                        </div>
+                        
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
                                     <div class="reponse">
-                                    <h2>Réponse:</h2>
-                                        <p class="reponse-content">
+                                        <p class="avis-title">Réponse:</p>
+                                        <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div>
+                                        <div class="container-infos-avis">
                                             <p>
                                                 <?= $reponse["pseudo"] ?>
                                             </p>
@@ -246,7 +259,12 @@ try {
                     <?php
                 }
                 ?>
-            </div>
+            </article>
+            <?php
+            } else  {
+                echo "<p>Aucun avis n'a été trouvé pour cette offre.</p>";
+            }
+            ?>
         </div>
 
         <div class="popup" id="popup-repondre">
@@ -267,7 +285,7 @@ try {
             <img class="image-popup-content" id="image-popup-content" alt="'imgPopUp">
         </div>
 
-    </div>
+    </section>
 
     <script>
         const idOffre = <?= json_encode($idOffre) ?>;

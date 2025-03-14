@@ -209,13 +209,13 @@ try {
 <body>
     <?php $typeOption["nomoption"] = str_replace(" ","",$typeOption["nomoption"])?>
     <div id="toast" class="toast">Avis bien signalé</div>
-    <div class=titre>
+    <div class="titre-page">
         <?php Label::render("titre-svg", "", "", "", "../../../ressources/icone/{$typeOffre}.svg","icone type offre"); ?>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
         <img class="etoile-une-svg" id="<?php echo $typeOption['nomoption']; ?>" src="../../../ressources/img/relief.png">
     </div>
-    <div class="container">
-        <div class="container-gauche">
+    <section class="container">
+        <article class="container-gauche">
             <div class="carousel">
 
                 <button class="carousel-button prev desactive" title="bouton carousel précédent">❮</button>
@@ -247,15 +247,16 @@ try {
                 <?php }else{; ?>
                 <?php Label::render("", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
                 <?php }; ?>
-                
-                <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
-                <div class="note-m">
-                    <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");?>
+                <div class="note-moyenne">
+                    <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
+                    <div class="note-m">
+                        <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");?>
+                    </div>
                 </div>
             </div>
-        </div>
+        </article>
 
-        <div class="offre-infos <?php echo $typeOption["nomoption"]?>">
+        <article class="offre-infos <?php echo $typeOption["nomoption"]?>">
             <?php
             // Affichage des détails de l'offre
             Label::render("offre-description", "", "", $offre['description'], "../../../ressources/icone/".$typeOffre.".svg","icone description offre");
@@ -322,10 +323,9 @@ try {
                 }
                 ?>
             </ul>
-            <div class="moyenne-notes">
-                <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5", "../../../ressources/icone/note.svg","icone moyenne de notes offre"); ?>
-            </div>
-        </div>
+            
+        </article>
+    </section>
         <div class="offre-package-modification">
             
 
@@ -353,41 +353,42 @@ try {
             */ ?>
         </div>
 
-
-    </div>
-    <div>
+    <section>
         <div class="liste-avis">
             <div>
                 <h1>Avis</h1>
             </div>
-            <div class="filters">
-                <label for="sortBy">Trier par:</label>
-                <select id="sortBy">
-                    <option value="date_desc" selected>Date décroissante</option>
-                    <option value="date_asc">Date croissante</option>
-                    <option value="note_desc">Note décroissante</option>
-                    <option value="note_asc">Note croissante</option>
-                </select>
+            <?php
+            if ($nombreAvis > 0){
+                ?>
+                <aside class="filters">
+                    <label for="sortBy">Trier par:</label>
+                    <select id="sortBy">
+                        <option value="date_desc" selected>Date décroissante</option>
+                        <option value="date_asc">Date croissante</option>
+                        <option value="note_desc">Note décroissante</option>
+                        <option value="note_asc">Note croissante</option>
+                    </select>
 
-                <label for="filterBy">Filtrer par:</label>
-                <select id="filterBy">
-                    <option value="all">Tous</option>
-                    <option value="viewed">Vus</option>
-                    <option value="not_viewed">Non vus</option>
-                </select>
-                <div id="labelBlacklistage">
-                    <?php if ($nbJetons <= 1) { ?>
-                        <h4>Jetons de Blacklistage : <?php echo $offre['nbjetons']?> disponible</h4>
-                    <?php } else { ?>
-                    <h4>Jetons de Blacklistage : <?php echo $offre['nbjetons']?> disponibles</h4>
-                    <?php } ?>
-                    <?php if ($nbJetons < 3) { ?>
-                        <p>Prochain jeton de blacklistage : <?php echo $dateProchainBlacklist ?></p>
-                    <?php } ?>
-                </div>
-                
-            </div>
-            <div class="container-avis">
+                    <label for="filterBy">Filtrer par:</label>
+                    <select id="filterBy">
+                        <option value="all">Tous</option>
+                        <option value="viewed">Vus</option>
+                        <option value="not_viewed">Non vus</option>
+                    </select>
+                    <div id="labelBlacklistage">
+                        <?php if ($nbJetons <= 1) { ?>
+                            <h4>Jetons de Blacklistage : <?php echo $offre['nbjetons']?> disponible</h4>
+                        <?php } else { ?>
+                        <h4>Jetons de Blacklistage : <?php echo $offre['nbjetons']?> disponibles</h4>
+                        <?php } ?>
+                        <?php if ($nbJetons < 3) { ?>
+                            <p>Prochain jeton de blacklistage : <?php echo $dateProchainBlacklist ?></p>
+                        <?php } ?>
+                    </div>
+                    
+                </aside>
+            <article class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
                     if (!isset($avi["idavis"]) || $avi["estblacklist"]) {
@@ -499,7 +500,12 @@ try {
                     <?php
                 }
                 ?>
-            </div>
+            </article>
+            <?php
+            } else  {
+                echo "<p>Aucun avis n'a été trouvé pour cette offre.</p>";
+            }
+            ?>
         </div>
 
         <div class="popup" id="popup-repondre">
@@ -532,7 +538,7 @@ try {
             </div>
         </div>
 
-    </div>
+    </section>
 
     <script>
         const idOffre = <?= json_encode($idOffre) ?>;

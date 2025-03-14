@@ -183,6 +183,8 @@ body {
   margin: 24px 0 8px;
   box-shadow: 0 2px 8px rgba(108, 2, 119, 0.2);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  justify-content: space-between;
+
 }
 
 /* Bloc d'informations */
@@ -324,6 +326,21 @@ body {
   padding: 24px;
   margin-bottom: 24px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  max-width: 390px;
+  height: fit-content;
+}
+
+.container-avis{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 40px;
+}
+
+.liste-avis{
+  > p{
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .avi.non-vu {
@@ -345,7 +362,41 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: var (--text-dark);
-  margin-bottom: 12px;
+  margin-bottom: 0px !important;
+}
+
+.avis-user{
+  font-weight: 300;
+  font-size: small !important;
+  margin-top: 0px !important;
+}
+
+.container-img-avis{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.container-head-avis{
+  display:flex;
+  justify-content: space-between;
+}
+
+.container-avis-footer{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.container-bottom-avis{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-info-avis > p{
+  font-size: x-small;
+  font-weight: 100;
 }
 
 .note {

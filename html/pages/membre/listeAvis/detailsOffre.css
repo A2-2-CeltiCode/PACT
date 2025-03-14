@@ -102,6 +102,40 @@ body {
   gap: 24px;
 }
 
+.container-avis{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 40px;
+}
+
+.container-img-avis{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.container-head-avis{
+  display:flex;
+  justify-content: space-between;
+}
+
+.container-avis-footer{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.container-bottom-avis{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-info-avis > p{
+  font-size: x-small;
+  font-weight: 100;
+}
+
 /* Carousel */
 .carousel {
   position: relative;
