@@ -28,7 +28,8 @@ $idOffre = $_GET['idOffre'];
 $idOffre = $_GET['id'] ?? $idOffre;
 
 try {
-    // Connexion à la base de données
+    
+
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
@@ -168,9 +169,18 @@ try {
                 </div>
                 <div class="carousel-dots"></div>
             </div>
-            <?php if ($typeOffre !== 'restaurant'): ?>
-                <?php Label::render("offre-prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
-            <?php endif; ?>
+            <div class="offre-prix">
+                <?php if ($typeOffre !== 'restaurant'){ ?>
+                    <?php Label::render("", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
+                <?php }else{; ?>
+                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
+                <?php }; ?>
+                
+                <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
+                <div class="note-m">
+                    <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");?>
+                </div>
+            </div>
         </div>
 
         <div class="offre-infos">
@@ -240,10 +250,11 @@ try {
                 }
                 ?>
             </ul>
+            
             <div class="moyenne-notes">
                 <?php Label::render("moyenne-notes", "", "", "Moyenne des notes: " . number_format($moyenneNotes, 1) . "/5"); ?>
             </div>
-           
+
         </div>
         <div class="offre-package-modification">
             
@@ -289,7 +300,8 @@ try {
                     <option value="note_asc">Note croissante</option>
                 </select>
             </div>
-            <div>
+
+            <div class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
                     if (!isset($avi["idavis"])) {
@@ -301,28 +313,34 @@ try {
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
-                        <div>
-                            <p class="avi-title">
-                                <?= $avi["titre"] ?>
-                            </p>
+                        <div class="container-head-avis">
+                            <div>
+                                <p class="avi-title">
+                                    <?= $avi["titre"] ?>
+                                </p>
+                                <p>
+                                    en <?= $avi["contextevisite"] ?>
+                                </p>
+                            </div>
+                                <div class="note">
+                                    <?php
+                                        for ($i = 0; $i < floor($avi["note"]); $i++) {
+                                            echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
+                                        }
+                                        if (fmod($avi["note"], 1) != 0) {
+                                            echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
+                                        }
+                                        for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
+                                            echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
+                                        }
+                                    ?>
+                                </div>
                         </div>
                         <p class="avi-content">
                             <?= $avi["commentaire"] ?>
                         </p>
-                        <div class="note">
-                            <?php
-                            for ($i = 0; $i < floor($avi["note"]); $i++) {
-                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
-                            }
-                            if (fmod($avi["note"], 1) != 0) {
-                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
-                            }
-                            for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
-                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
-                            }
-                            ?>
-                        </div>
-                        <div>
+                        
+                        <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
                                 echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
@@ -330,31 +348,31 @@ try {
                             }
                             ?>
                         </div>
-                        <div>
-                            <p>
-                                <?= $avi["pseudo"] ?>
-                            </p>
-                            <p>
-                                le <?= $avi["datevisite"] ?>
-                            </p>
-                            <p>
-                                en <?= $avi["contextevisite"] ?>
-                            </p>
-                        </div>
-                        <div class="thumbs">
-                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                        <div class="container-bottom-avis">
+                            <div class="container-info-avis">
+                                <p>
+                                    le <?= $avi["datevisite"] ?>
+                                </p>
+                                <p class="avis-user">
+                                    <?= $avi["pseudo"] ?>
+                                </p>
+                            
+                            </div>
+                            <div class="thumbs">
+                                <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                                <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            </div>
                         </div>
 
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
                                     <div class="reponse">
-                                    <h2>Réponse:</h2>
-                                        <p class="reponse-content">
+                                        <p class="avis-title">Réponse:</p>
+                                        <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div>
+                                        <div class="container-info-avis">
                                             <p>
                                                 <?= $reponse["pseudo"] ?>
                                             </p>
