@@ -118,6 +118,49 @@ ORDER BY 9 DESC
 STRING
     );
 
+    if (isset($_COOKIE["offresRecentes"])) {
+        $ofr = unserialize($_COOKIE["offresRecentes"]);
+        $l = implode(', ', array_keys($ofr));
+
+        $offresRecentesSql = $dbh->query(<<<STRING
+select
+   distinct pact.vue_offres.titre AS nom,
+   nomcategorie AS type,
+   vue_offres.ville,
+   nomimage as idimage,
+   idoffre,
+   COALESCE(ppv.denominationsociale,ppu.denominationsociale) AS nomProprio,
+   tempsenminutes AS duree,
+   nomoption,
+   AVG(note) AS note,
+   heureouverture AS ouverture,
+   heurefermeture AS fermeture,
+   nomgamme,
+   valprix
+from pact.vue_offres
+   LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
+   LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
+   JOIN pact.vue_avis USING (idOffre)
+WHERE idoffre IN ($l)
+GROUP BY nom,
+   type,
+   vue_offres.ville,
+   idimage,
+   idOffre,
+   nomProprio,
+   duree,
+   nomoption,
+   ouverture,
+   fermeture,
+   nomgamme,
+   valprix
+LIMIT 10
+STRING
+        );
+    } else {
+        $offresRecentesSql = [];
+    }
+
     $dbh = null;
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br>";
@@ -143,6 +186,13 @@ foreach ($offresNoteSql as $item) {
     $offresNote[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
         $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
 }
+$offresRecentes = [];
+foreach ($offresRecentesSql as $item) {
+    $item['nomgamme'] = $item['nomgamme'] ?? 'test';
+    $item['valprix'] = $item['valprix'] ?? 'test';
+    $offresRecentes[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
+        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
+}
 ?>
 
 <body>
@@ -154,6 +204,45 @@ foreach ($offresNoteSql as $item) {
 </form>
 </div>
 <main>
+    <?php
+    if (count($offresRecentes) > 0) {
+        arsort($ofr);
+        $tmp = [];
+        foreach (array_keys($ofr) as $value) {
+            foreach ($offresRecentes as $offre) {
+                if ($offre->getId() == $value) {
+                    $tmp[] = $offre;
+                }
+            }
+        }
+        ?>
+            <div>
+
+        <!-- affichage des offres a la une -->
+            <h2>Offres consultées récement</h2>
+            <div class="carrousel">
+                <?php
+                foreach ($tmp as $item) {
+                    echo $item;
+                }
+                ?>
+            </div>
+            <div>
+                <button title="fleche arrière">
+                    <span class="material-symbols-outlined">
+                        arrow_back_ios_new
+                    </span>
+                </button>
+                <button title="fleche avant">
+                    <span class="material-symbols-outlined">
+                        arrow_forward_ios
+                    </span>
+                </button>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
     <div>
 
     <!-- affichage des offres a la une -->

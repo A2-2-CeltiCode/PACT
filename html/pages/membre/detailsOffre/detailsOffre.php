@@ -24,8 +24,11 @@ session_start();
 $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
-$idOffre = $_GET['idOffre'];
-$idOffre = $_GET['id'] ?? $idOffre;
+$idOffre = $_GET['id'];
+$offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
+$offresRecentesArray = unserialize($offresRecentesTxt);
+$offresRecentesArray[$idOffre] = time();
+setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time()+60*60*24*15, "/");
 
 try {
     // Connexion à la base de données
