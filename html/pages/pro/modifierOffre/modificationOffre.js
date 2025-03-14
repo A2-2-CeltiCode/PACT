@@ -60,10 +60,10 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 const ville = document.getElementById("ville").value;
 const adresse = document.getElementById("adresse").value;
-
+const postcode = document.getElementById("postcode").value;
 if (ville && adresse) {
   fetch(
-    `https://api-adresse.data.gouv.fr/search/?q=${adresse},${ville}&limit=1`
+    `https://api-adresse.data.gouv.fr/search/?q=${adresse},${ville},${postcode}&limit=1`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -77,7 +77,7 @@ if (ville && adresse) {
             coordonneesy: coordinates[0].toString(),
           },
         ];
-        addMapMarkers(map, points, 15);
+        addMapMarkers(map, points, 13);
       } else {
         alert("Aucune coordonnée trouvée pour cette adresse.");
       }
