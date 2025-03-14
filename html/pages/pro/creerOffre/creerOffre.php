@@ -82,9 +82,10 @@ $rib = $stmt->fetchColumn();
                             <?php Input::render(name: "adressePostale", id: "adresse", type: "text", placeholder: 'Adresse Postale', onkeyup: "suggestAdresses()") ?>
                             <div id="adresseSuggestions"></div>
                         </div>
+                        <div id="map" style="height: 300px; width: 100%;"></div>
                         <input type="hidden" id="longitude" name="longitude">
                         <input type="hidden" id="latitude" name="latitude">
-                        <div id="map" style="height: 300px; width: 100%;"></div>
+                        
                         <br>
                     </div>
                     <div>
