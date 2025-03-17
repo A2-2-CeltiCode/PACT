@@ -14,6 +14,7 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         header + navbar {
             <?php
@@ -285,8 +286,21 @@ foreach ($offresNoteSql as $item) {
         </div>
     </div>-->
 </main>
+
+<div class="loader-wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+</div>
+
 <?php isset($_SESSION["idCompte"])?Footer::render(type: FooterType::Member):Footer::render(); ?>
+
+<script>
+    $(window).on("load",function(){
+        $(".loader-wrapper").fadeOut("slow");
+    });
+</script>
 </body>
+
 <script src="accueil.js"></script>
+
 </html>
 
