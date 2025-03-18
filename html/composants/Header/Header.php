@@ -66,7 +66,7 @@ class Header
         global $driver, $server, $dbname, $dbuser, $dbpass;
         self::$dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     }
-
+    
     /**
      * Rend l'en-tête avec les éléments nécessaires (CSS, JavaScript, etc.) pour un utilisateur donné.
      *
