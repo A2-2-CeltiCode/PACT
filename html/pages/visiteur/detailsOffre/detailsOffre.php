@@ -439,7 +439,7 @@ try {
             <div class="popup-content">
             <span class="close">&times;</span>
             <p>Vous devez être connecté pour faire cette action.</p>
-            <?php Button::render(id: "buttonConnect",class:"btn" ,text: "Se connecter",title: "Se connecter pour créer un avis", path:"/pages/membre/connexionCompteMembre/connexionCompteMembre.php?context=detailsOffre/detailsOffre.php%3Fid=<?= $idOffre ?> ", type:"Guest") ?>
+            <?php Button::render(id: "buttonConnect",class:"btn" ,text: "Se connecter",title: "Se connecter pour créer un avis", path:"/pages/membre/connexionCompteMembre/connexionCompteMembre.php?context=detailsOffre/detailsOffre.php?id=$idOffre", type:"Guest") ?>
             </div>
         </div>
 
