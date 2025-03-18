@@ -136,12 +136,6 @@ class OffreHandler
         echo '</div>';
         echo '</div>';
         echo '<div class="button-container">';
-        if ($status === 'horsligne'): ?>
-            <form action="../supprimerOffre/supprimerOffre.php" method="POST" class="buttonCarte" onsubmit="event.stopPropagation();">
-                <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
-                <button type="button" class="button-suppr" style="background: none; border: none;" onclick="showDeletePopup(event, <?php echo $idoffre; ?>, '<?php echo htmlspecialchars($offre['titre']); ?>', '<?php echo htmlspecialchars($offre['valprix'] . ' €'); ?>', '<?php echo htmlspecialchars($offre['nomoption']); ?>')"><img src="../../../ressources/icone/delete.svg" alt="supprimer" class="icon-button"></button>
-            </form>
-        <?php endif;
         echo '<form action="../listeFacture/listeFacture.php" method="POST" class="buttonCarte" onsubmit="event.stopPropagation();">';
         echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
         echo '<button type="submit" class="button-facture" style="background: none; border: none;"><img src="../../../ressources/icone/facture.svg" alt="facture" class="icon-button"></button>';
@@ -150,6 +144,12 @@ class OffreHandler
         echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
         echo '<button type="submit" class="button-modif" style="background: none; border: none;"><img src="../../../ressources/icone/edit.svg" alt="modifier" class="icon-button"></button>';
         echo '</form>';
+        if ($status === 'horsligne'): ?>
+            <form action="../supprimerOffre/supprimerOffre.php" method="POST" class="buttonCarte" onsubmit="event.stopPropagation();">
+                <input type="hidden" name="idOffre" value="<?php echo $idoffre; ?>">
+                <button type="button" class="button-suppr" style="background: none; border: none;" onclick="showDeletePopup(event, <?php echo $idoffre; ?>, '<?php echo htmlspecialchars($offre['titre']); ?>', '<?php echo htmlspecialchars($offre['valprix'] . ' €'); ?>', '<?php echo htmlspecialchars($offre['nomoption']); ?>')"><img src="../../../ressources/icone/delete.svg" alt="supprimer" class="icon-button"></button>
+            </form>
+        <?php endif;
         echo '</div>';
         echo '</div>';
 
@@ -196,7 +196,7 @@ class OffreHandler
             margin-top: 20px;
         }
         #delete-confirm {
-            background-color: #4CAF50; /* Green */
+            background-color: #4CAF50; 
             color: white;
             border: none;
             padding: 10px 20px;
@@ -208,7 +208,7 @@ class OffreHandler
             background-color: #45a049;
         }
         #delete-decline {
-            background-color: #f44336; /* Red */
+            background-color: #f44336;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -220,7 +220,7 @@ class OffreHandler
         }
         </style>';
 
-        // HTML for delete confirmation popup
+        // HTML du popup
         echo '<div class="popup" id="popup-delete">
             <div class="popup-content">
             <span class="close" onclick="closeDeletePopup()">&times;</span>
@@ -236,7 +236,7 @@ class OffreHandler
             </div>
         </div>';
 
-        // JavaScript for handling the popup
+        // JavaScript du popup
         echo '<script>
         function showDeletePopup(event, idOffre, offreTitre) {
             document.getElementById("popup-offre-titre").innerText = offreTitre; 
