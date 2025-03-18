@@ -18,6 +18,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barreTrieMembre.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/carte/carte.php';
+
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
@@ -87,6 +89,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 <div id="barretrie">
 <?php
 Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories);
+$renderer = new Carte();
+    $renderer->render();
 ?>
 </div>
 <br>
