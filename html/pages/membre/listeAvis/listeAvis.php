@@ -145,8 +145,8 @@ try {
                         continue;
                     }
                     
-                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
-                    $stmt->execute([':idAvis' => $avi['idavis']]);
+                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
+                    $stmt->execute([':idAvis' => $avi['idavis']]);  
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
@@ -189,13 +189,7 @@ try {
                         <div class="container-bottom-avis">
                             <div class="container-infos-avis">
                                 <p>
-                                    <?php 
-                                      if ($avi["idcompte"] == $idCompte) {
-                                          echo $avi["pseudo"]." (vous)"; 
-                                      }
-                                      else {
-                                          echo $avi["pseudo"];
-                                    }?>
+                                    <?php echo $avi["pseudo"]." (vous)"; ?> 
                                 </p>
                                 <p>
                                     le <?= $avi["datevisite"] ?>
@@ -217,16 +211,17 @@ try {
                                         <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div class="container-info-avis">
+                                        <div class="container-bottom-avis">
+                                            <div class="container-infos-avis">
                                             <p>
-                                                <?= $reponse["pseudo"] ?>
+                                                <?= $reponse["denominationsociale"] ?>
                                             </p>
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
-                                            
                                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false); ?>
-                                        </div>
+                                            </div>
+                                </div>
 
                                     </div>
                                 <?php endforeach; ?>
@@ -243,130 +238,6 @@ try {
             }
             ?>
         </div>
-
-        <div class="popup" id="popup-repondre">
-            <div class="popup-content">
-                <span class="close">&times;</span>
-                <form action="envoyerReponse.php" method="POST">
-                    <input type="hidden" name="idAvis" id="popup-idAvis">
-                    <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                    <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                    <button type="submit" title="bouton Envoyer">Envoyer</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="popup" id="popup-creer-avis">
-    <div class="popup-content">
-        <div class="popup-header">
-            <h2>Créer un nouvel avis</h2>
-            <span class="close">&times;</span>
-        </div>
-        
-        <form action="creerAvis.php" method="POST" enctype="multipart/form-data" class="avis-form">
-            <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-            
-            <!-- Titre de l'avis -->
-            <div class="form-group">
-                <div class="form-label">
-                    <?php Label::render("titre", "", "", "Titre de votre avis"); ?>
-                </div>
-                <?php Input::render(
-                    "titre",
-                    "Un titre qui résume votre expérience",
-                    "text",
-                    "titre"
-                    
-                ); ?>
-            </div>
-
-            
-            <!-- Commentaire détaillé -->
-            <div class="form-group">
-                <div class="form-label">
-                    <?php Label::render("label-commentaire", "", "", "Votre avis détaillé"); ?>
-                </div>
-                <?php Textarea::render(
-                    class: "form-control commentaire",
-                    id: "commentaire",
-                    name: "commentaire",
-                    placeholder: "Partagez votre expérience en détail...",
-                    required: true
-                ); ?>
-            </div>
-
-            <!-- Évaluation par étoiles -->
-            <div class="form-group">
-                <div class="form-label">
-                    <?php Label::render("label-note", "", "", "Votre note"); ?>
-                </div>
-                <div class="rating" role="radiogroup" aria-label="Note sur 5 étoiles">
-                    <?php for ($i = 5; $i >= 1; $i--): ?>
-                        <input type="radio" 
-                               name="note" 
-                               id="star<?= $i ?>" 
-                               value="<?= $i ?>"
-                               aria-label="<?= $i ?> étoiles"
-                               required>
-                        <label for="star<?= $i ?>" title="<?= $i ?> étoiles">☆</label>
-                    <?php endfor; ?>
-                </div>
-            </div>
-
-            <!-- Contexte de la visite -->
-            <div class="form-group">
-                <div class="form-label">
-                    <?php Label::render("label-contexte", "", "", "Contexte de votre visite"); ?>
-                </div>
-                <?php
-                $optionsContexte = [
-                    '' => 'Sélectionnez un contexte',
-                    'Affaires' => 'Voyage d\'affaires',
-                    'Couple' => 'En couple',
-                    'Famille' => 'En famille',
-                    'Amis' => 'Entre amis',
-                    'Solo' => 'Voyage solo'
-                ];
-                Select::render(
-                    'contexteVisite',
-                    '',
-                    'contexteVisite',
-                    true,
-                    $optionsContexte,
-                    'form-control'
-                );
-                ?>
-            </div>
-
-            <!-- Upload de photos -->
-            <div class="form-group">
-                <div class="form-label">
-                    <?php Label::render("label-photos", "", "", "Ajoutez des photos"); ?>
-                </div>
-                <div class="upload-section">
-                    <?php InsererImage::render(
-                        "drop-zone[]",
-                        "Déposez vos photos ici ou cliquez pour sélectionner",
-                        5,  // Limite à 5 photos
-
-                    ) ?>
-                    <div class="upload-preview" id="imagePreview"></div>
-                </div>
-            </div>
-
-            <!-- Bouton de soumission -->
-            <div class="form-group">
-                <?php Button::render(
-                    "btn-envoyer",
-                    "submit-avis",
-                    "bouton pour publier un avis",
-                    "Publier votre avis",
-                    ButtonType::Member,
-                    "",
-                    true
-                ); ?>
-            </div>
-        </form>
     </div>
 </div>
 

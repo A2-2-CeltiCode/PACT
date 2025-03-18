@@ -411,8 +411,8 @@ try {
                         continue;
                     }
                     
-                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
-                    $stmt->execute([':idAvis' => $avi['idavis']]);
+                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
+                    $stmt->execute([':idAvis' => $avi['idavis']]);  
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     // Ajouter la classe 'non-vu' si l'avis n'a pas été vu
@@ -446,25 +446,31 @@ try {
                                 </div>
                         </div>
                         <p class="avi-content">
-                            <?= $avi["commentaire"] ?>
-                        </p>
+                        <?= $avi["commentaire"] ?>
+                    </p>
 
                         <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                
                             }
                             ?>
                         </div>
                         <div class="container-bottom-avis">
-                            <div class="container-info-avis">
+                            <div class="container-infos-avis">
                                 <p>
-                                    le <?= $avi["datevisite"] ?> 
+                                    <?php 
+                                      if ($avi["idcompte"] == $idCompte) {
+                                          echo $avi["pseudo"]." (vous)"; 
+                                      }
+                                      else {
+                                          echo $avi["pseudo"];
+                                    }?>
                                 </p>
-                                <p class="avis-user">
-                                    <?= $avi["pseudo"] ?>
+                                <p>
+                                    le <?= $avi["datevisite"] ?>
                                 </p>
-
                             </div>
                             <div class="thumbs">
                                 <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
@@ -488,26 +494,28 @@ try {
                         </div>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
-
                                 <?php foreach ($reponses as $reponse): ?>
                                     <div class="reponse">
                                         <p class="avis-title">Réponse:</p>
                                         <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div class="container-info-avis">
+                                        <div class="container-bottom-avis">
+                                            <div class="container-infos-avis">
                                             <p>
-                                                <?= $reponse["pseudo"] ?>
+                                                <?= $reponse["denominationsociale"] . " (vous)" ?>
                                             </p>
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
+                                            <form action="supprimerReponse.php" method="POST">
+                                                <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
+                                                <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+                                                <?php Button::render("btn-supprimer", "","bouton supprimer", "Supprimer", ButtonType::Pro, "", true); ?>
+                                            </form>
+                                            </div>
                                         </div>
-                                        <form action="supprimerReponse.php" method="POST">
-                                            <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
-                                            <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                                            <?php Button::render("btn-supprimer", "","bouton supprimer", "Supprimer", ButtonType::Pro, "", true); ?>
-                                        </form>
+
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -531,7 +539,7 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..."></textarea>
-                    <?php Button::render("btn-supprimer", "","bouton envoyer", "Envoyer", ButtonType::Pro, "", true); ?>
+                    <?php Button::render("btn-reponse", "btn-reponse","bouton envoyer", "Envoyer", ButtonType::Pro, "", true); ?>
                 </form>
             </div>
         </div>
