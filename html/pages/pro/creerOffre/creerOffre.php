@@ -45,16 +45,23 @@ $rib = $stmt->fetchColumn();
 
 <head>
     <title>Création d'une offre</title>
-    <script src="creerOffre.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
     <link rel="stylesheet" href="creerOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
+    
 </head>
 
 <body>
     <?php Header::render(HeaderType::Pro); ?>
+    
 
         <form class="info-display" id="myForm" method="post" action="confimationCreationOffre.php"
-            onsubmit="return validateForm()" enctype="multipart/form-data">
+            onsubmit="return validateForm() && validateVilleAdresseCodePostal()" enctype="multipart/form-data">
             <h1>Créez votre Offre</h1>
             <section>
                 <article>
@@ -70,13 +77,16 @@ $rib = $stmt->fetchColumn();
                             <?php Input::render(name: "ville", type: "text", id: "ville", required: "true", placeholder: 'Ville*', onkeyup: "suggestVilles()") ?>
                             <div id="suggestions"></div>
                         </div>
-                        <?php Input::render(name: "codePostal", id: "postcode", type: "number", required: 'true', placeholder: "Code Postal*") ?>
+                        <?php Input::render(name: "codePostal", id: "postcode", type: "number", required: 'true', placeholder: "Code Postal*",onkeyup:"suggestPostale") ?>
                         <div>
                             <?php Input::render(name: "adressePostale", id: "adresse", type: "text", placeholder: 'Adresse Postale', onkeyup: "suggestAdresses()") ?>
                             <div id="adresseSuggestions"></div>
                         </div>
+                        <div id="map" style="height: 300px; width: 100%;"></div>
                         <input type="hidden" id="longitude" name="longitude">
                         <input type="hidden" id="latitude" name="latitude">
+                        
+                        <br>
                     </div>
                     <div>
                         <label>Numéro de téléphone*</label>
@@ -85,14 +95,6 @@ $rib = $stmt->fetchColumn();
                     <div>
                         <label>Site Web</label>
                         <?php Input::render(name: "siteWeb", type: "text", placeholder: 'ex : www.siteWeb.com') ?>
-                    </div>
-                    <div>
-                        <label>Heure d'ouverture</label>
-                        <?php Input::render(name: "ouverture", type: "time", placeholder: '', required: "true") ?>
-                    </div>
-                    <div></div>
-                        <label>Heure de fermeture</label>
-                        <?php Input::render(name: "fermeture", type: "time", placeholder: '', required: "true") ?>
                     </div>
                 </article>
                 <article>
@@ -105,6 +107,15 @@ $rib = $stmt->fetchColumn();
                     <div>
                         <label>Description Détaille</label>
                         <?php Textarea::render(name: "descriptionDetaillee", rows: 7) ?>
+                    </div>
+
+                    <div>
+                        <label>Heure d'ouverture</label>
+                        <?php Input::render(name: "ouverture", type: "time", placeholder: '', required: "true") ?>
+                    </div>
+                    <div>
+                        <label>Heure de fermeture</label>
+                        <?php Input::render(name: "fermeture", type: "time", placeholder: '', required: "true") ?>
                     </div>
                     <div>
                         <label>Photo*</label>
@@ -399,6 +410,8 @@ $rib = $stmt->fetchColumn();
                 <?php Button::render(text: "Valider",title:"bouton valider" ,type: "pro", submit: true); ?>
             </div>
         </form>
+        
+
     </main>
     <?php Footer::render(FooterType::Pro); ?>
 </body>

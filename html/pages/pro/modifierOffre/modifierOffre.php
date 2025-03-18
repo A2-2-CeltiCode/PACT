@@ -186,7 +186,13 @@ $options = $vueOffre["nomoption"];
     ?>
     <title>Modification d'une offre</title>
 
-    <script src="modificationOffre.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+
     <link rel="stylesheet" href="../../../ui.css">
     <link rel="stylesheet" href="modificationOffre.css">
     <script>
@@ -224,7 +230,7 @@ $options = $vueOffre["nomoption"];
 <?php Header::render(HeaderType::Pro); ?>
 
 <body>
-    <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data">
+    <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data" onsubmit="return validateForm();">
         
         <input type="hidden" name="typeOffre" value="<?php echo $typeOffre['nomcategorie']; ?>">
         <input type="hidden" name="typePromotion" value="<?php echo $options; ?>">
@@ -243,10 +249,14 @@ $options = $vueOffre["nomoption"];
 
                 <div>
                     <label>Information de l'offre</label>
-                    <?php Input::render(name: "ville", type: "text", required: "true", placeholder: 'Ville*', value: $ville) ?>
-                    <?php Input::render(name: "codePostal", type: "number", required: 'true', placeholder: "Code Postal*", value: $codePostal) ?>
-                    <?php Input::render(name: "adressePostale", id: "adressePostale", type: "text", placeholder: 'Adresse Postale', value: $rue) ?>
-
+                    <?php Input::render(name: "ville", type: "text", id: "ville", required: "true", placeholder: 'Ville*', value: $ville,onkeyup: "suggestVilles()") ?>
+                    <div id="suggestions"></div>
+                    <?php Input::render(name: "codePostal", type: "number",id:"postcode", required: 'true', placeholder: "Code Postal*", value: $codePostal) ?>
+                    <?php Input::render(name: "adressePostale", id: "adresse", type: "text", placeholder: 'Adresse Postale', value: $rue,onkeyup: "suggestAdresses()") ?>
+                    <div id="adresseSuggestions"></div>
+                    <div id="map" style="height: 300px; width: 100%;"></div>
+                    <input type="hidden" id="longitude" name="longitude">
+                    <input type="hidden" id="latitude" name="latitude">
 
                 </div>
 
