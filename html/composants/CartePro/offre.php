@@ -153,7 +153,7 @@ class OffreHandler
         echo '</div>';
         echo '</div>';
 
-        // CSS styles for icons and popup
+        // CSS
         echo '<style>
         .icon-button:hover {
             background-color: #d0d0d0;
