@@ -256,6 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
             data.features[0].properties.postcode;
         } else {
           clearMapMarkers(map);
+          document.getElementById("postcode").value =""
         }
       })
       .catch((error) => console.error("Erreur:", error));
