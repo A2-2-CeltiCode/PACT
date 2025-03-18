@@ -29,7 +29,6 @@ $idOffre = $_GET['id'] ?? $idOffre;
 
 
 try {
-    
 
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     // Ajout des filtres pour trier les avis
@@ -179,10 +178,11 @@ try {
             </div>
 
             <div class="offre-prix">
+                <?php Label::render("horaire", "", "", $horaires, "../../../ressources/icone/horloge.svg","icon pour horaire"); ?>
                 <?php if ($typeOffre !== 'restaurant'){ ?>
-                    <?php Label::render("", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
+                    <?php Label::render("prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php }else{; ?>
-                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
+                <?php Label::render("prix", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
                 <?php }; ?>
                 <div class="note-moyenne">
                     <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
@@ -210,7 +210,7 @@ try {
             <?php Label::render("offre-option", "", "", "" . $offre['numtel'], "../../../ressources/icone/telephone.svg"); ?>
             <?php
 
-            Label::render("", "", "", $horaires, "../../../ressources/icone/horloge.svg");
+         
             // Affichage du site internet de l'offre
             Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
 

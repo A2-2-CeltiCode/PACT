@@ -237,11 +237,11 @@ label{
   font-size: 24px;
   font-weight: 700;
   color: var(--text-dark);
-  background: rgba(108, 2, 119, 0.15);
+  background: rgba(255, 255, 255, 0.15);
   padding: 12px 24px;
   border-radius: var(--radius-md);
   margin: 24px 0 8px;
-  box-shadow: 0 2px 8px rgba(108, 2, 119, 0.2);
+  box-shadow: 0 2px 8px rgba(55, 54, 54, 0.799);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   justify-content: space-between;
 }
@@ -251,6 +251,10 @@ label{
 .moyenne-notes{
  margin-right: 0;
  padding-right: 0;
+}
+.horaire{
+  margin-right: -7%;
+  margin-bottom: -9px;
 }
 
 .note-m {
