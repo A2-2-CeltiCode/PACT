@@ -252,8 +252,9 @@ label{
  margin-right: 0;
  padding-right: 0;
 }
-.prix{
-  margin-right: 70%;
+.horaire{
+  margin-right: -7%;
+  margin-bottom: -9px;
 }
 
 .note-m {

@@ -24,15 +24,11 @@ session_start();
 $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
-$idOffre = 1; //$_GET['idOffre'];
-//$idOffre = $_GET['id'] ?? $idOffre;
+$idOffre = $_GET['idOffre'];
+$idOffre = $_GET['id'] ?? $idOffre;
 
 
 try {
-    $host = 'localhost';
-    $dbname = 'postgres';
-    $user = 'postgres';
-    $password = '13phenix';
 
     $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
     // Ajout des filtres pour trier les avis
@@ -141,7 +137,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php //Header::render(HeaderType::Guest);?>
+<?php Header::render(HeaderType::Guest);?>
 <button class="retour" title="bouton retour"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
@@ -182,6 +178,7 @@ try {
             </div>
 
             <div class="offre-prix">
+                <?php Label::render("horaire", "", "", $horaires, "../../../ressources/icone/horloge.svg","icon pour horaire"); ?>
                 <?php if ($typeOffre !== 'restaurant'){ ?>
                     <?php Label::render("prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php }else{; ?>
@@ -213,7 +210,7 @@ try {
             <?php Label::render("offre-option", "", "", "" . $offre['numtel'], "../../../ressources/icone/telephone.svg"); ?>
             <?php
 
-            Label::render("", "", "", $horaires, "../../../ressources/icone/horloge.svg");
+         
             // Affichage du site internet de l'offre
             Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg");
 

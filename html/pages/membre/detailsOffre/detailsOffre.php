@@ -185,6 +185,7 @@ try {
             </div>
 
             <div class="offre-prix">
+                <?php Label::render("horaire", "", "", $horaires, "../../../ressources/icone/horloge.svg","icon pour horaire"); ?>
                 <?php if ($typeOffre !== 'restaurant'){ ?>
                     <?php Label::render("", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php }else{; ?>
@@ -215,7 +216,6 @@ try {
             <?php Label::render("offre-option", "", "", "" . $offre['numtel'], "../../../ressources/icone/telephone.svg","icon num tel"); ?>
             <?php
 
-            Label::render("", "", "", $horaires, "../../../ressources/icone/horloge.svg","icon pour horaire");
             // Affichage du site internet de l'offre
             Label::render("offre-website", "", "", "<a href='" . $offre['siteinternet'] . "' target='_blank'>" . $offre['siteinternet'] . "</a>", "../../../ressources/icone/naviguer.svg","icon site internet");
 
