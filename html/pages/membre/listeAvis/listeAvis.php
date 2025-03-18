@@ -118,13 +118,17 @@ try {
 <body>
     <!-- Toast de confirmation -->
     <div id="toast" class="toast">Avis bien signalé</div>
-    <div>
-    <div>
+    <section>
         <div class="liste-avis">
-            <div>
+            <div class="avis-header">
                 <h1>Avis</h1>
             </div>
-            <div class="filters">
+            <?php
+            if ($nombreAvis > 0){
+                ?>
+
+            
+            <aside class="filters">
                 <label for="sortBy">Trier par:</label>
                 <select id="sortBy">
                     <option value="date_desc" selected>Date décroissante</option>
@@ -132,8 +136,9 @@ try {
                     <option value="note_desc">Note décroissante</option>
                     <option value="note_asc">Note croissante</option>
                 </select>
-            </div>
-            <div>
+            </aside>
+
+            <article class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
                     if (!isset($avi["idavis"])) {
@@ -145,61 +150,82 @@ try {
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
+                    <div class="container-head-avis">
                         <div>
                             <p class="avi-title">
                                 <?= $avi["titre"] ?>
                             </p>
-                            <div class="note" title="notes étoiles">
-                                <?php
-                                for ($i = 0; $i < floor($avi["note"]); $i++) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
-                                }
-                                if (fmod($avi["note"], 1) != 0) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
-                                }
-                                for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
-                                    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
-                                }
-                                ?>
-                            </div>
+                            <p>
+                                en <?= $avi["contextevisite"] ?>
+                            </p>
                         </div>
-                        <p class="avi-content">
-                            <?= $avi["commentaire"] ?>
-                        </p>
-                        <div>
+                        
+                        <div class="note" title="icone étoiles">
                             <?php
-                            foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
+                            for ($i = 0; $i < floor($avi["note"]); $i++) {
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
+                            }
+                            if (fmod($avi["note"], 1) != 0) {
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg");
+                            }
+                            for ($i = 0; $i <= 4 - $avi["note"]; $i++) {
+                                echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg");
                             }
                             ?>
                         </div>
-                        <div>
-                            <p>
-                                <?= $avi["pseudo"]." (vous)" ?>
-                            </p>
-                            <p>
-                                le <?= $avi["datevisite"] ?> en <?= $avi["contextevisite"] ?>
-                            </p>
+                    </div>
+                    <p class="avi-content">
+                            <?= $avi["commentaire"] ?>
+                        </p>
+
+                        <div class="container-img-avis">
+                            <?php
+                            foreach ($imagesAvis[$avi["idavis"]] as $image) {
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                
+                            }
+                            ?>
                         </div>
-                        <div class="thumbs">
-                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
-                        </div>
+                        <div class="container-bottom-avis">
+                            <div class="container-infos-avis">
+                                <p>
+                                    <?php 
+                                      if ($avi["idcompte"] == $idCompte) {
+                                          echo $avi["pseudo"]." (vous)"; 
+                                      }
+                                      else {
+                                          echo $avi["pseudo"];
+                                    }?>
+                                </p>
+                                <p>
+                                    le <?= $avi["datevisite"] ?>
+                                </p>
+                            </div>
+                            <div class="thumbs">
+                                <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                                <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            </div>
+                        </div>   
+                        <?php if ($avi['idcompte'] == $idCompte): ?>
+                            <button class="btn-supprimer" title="Supprimer un avis" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
+                        <?php endif; ?>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
                                     <div class="reponse">
-                                    <h2>Réponse:</h2>
-                                        <p class="reponse-content">
+                                        <p class="avis-title">Réponse:</p>
+                                        <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div>
+                                        <div class="container-info-avis">
                                             <p>
                                                 <?= $reponse["pseudo"] ?>
                                             </p>
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
+                                            
+                                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false); ?>
                                         </div>
 
                                     </div>
@@ -210,7 +236,12 @@ try {
                     <?php
                 }
                 ?>
-            </div>
+            </article>
+            <?php
+            } else  {
+                echo "<p>Aucun avis n'a été trouvé pour cette offre.</p>";
+            }
+            ?>
         </div>
 
         <div class="popup" id="popup-repondre">
@@ -220,18 +251,126 @@ try {
                     <input type="hidden" name="idAvis" id="popup-idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                    <button type="submit" title="bouton envoyer">Envoyer</button>
+                    <button type="submit" title="bouton Envoyer">Envoyer</button>
                 </form>
             </div>
         </div>
 
-        <!-- Popup pour afficher l'image en grand -->
-        <div class="image-popup" id="image-popup">
+        <div class="popup" id="popup-creer-avis">
+    <div class="popup-content">
+        <div class="popup-header">
+            <h2>Créer un nouvel avis</h2>
             <span class="close">&times;</span>
-            <img class="image-popup-content" id="image-popup-content" alt="imgPopUp">
         </div>
+        
+        <form action="creerAvis.php" method="POST" enctype="multipart/form-data" class="avis-form">
+            <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+            
+            <!-- Titre de l'avis -->
+            <div class="form-group">
+                <div class="form-label">
+                    <?php Label::render("titre", "", "", "Titre de votre avis"); ?>
+                </div>
+                <?php Input::render(
+                    "titre",
+                    "Un titre qui résume votre expérience",
+                    "text",
+                    "titre"
+                    
+                ); ?>
+            </div>
 
+            
+            <!-- Commentaire détaillé -->
+            <div class="form-group">
+                <div class="form-label">
+                    <?php Label::render("label-commentaire", "", "", "Votre avis détaillé"); ?>
+                </div>
+                <?php Textarea::render(
+                    class: "form-control commentaire",
+                    id: "commentaire",
+                    name: "commentaire",
+                    placeholder: "Partagez votre expérience en détail...",
+                    required: true
+                ); ?>
+            </div>
+
+            <!-- Évaluation par étoiles -->
+            <div class="form-group">
+                <div class="form-label">
+                    <?php Label::render("label-note", "", "", "Votre note"); ?>
+                </div>
+                <div class="rating" role="radiogroup" aria-label="Note sur 5 étoiles">
+                    <?php for ($i = 5; $i >= 1; $i--): ?>
+                        <input type="radio" 
+                               name="note" 
+                               id="star<?= $i ?>" 
+                               value="<?= $i ?>"
+                               aria-label="<?= $i ?> étoiles"
+                               required>
+                        <label for="star<?= $i ?>" title="<?= $i ?> étoiles">☆</label>
+                    <?php endfor; ?>
+                </div>
+            </div>
+
+            <!-- Contexte de la visite -->
+            <div class="form-group">
+                <div class="form-label">
+                    <?php Label::render("label-contexte", "", "", "Contexte de votre visite"); ?>
+                </div>
+                <?php
+                $optionsContexte = [
+                    '' => 'Sélectionnez un contexte',
+                    'Affaires' => 'Voyage d\'affaires',
+                    'Couple' => 'En couple',
+                    'Famille' => 'En famille',
+                    'Amis' => 'Entre amis',
+                    'Solo' => 'Voyage solo'
+                ];
+                Select::render(
+                    'contexteVisite',
+                    '',
+                    'contexteVisite',
+                    true,
+                    $optionsContexte,
+                    'form-control'
+                );
+                ?>
+            </div>
+
+            <!-- Upload de photos -->
+            <div class="form-group">
+                <div class="form-label">
+                    <?php Label::render("label-photos", "", "", "Ajoutez des photos"); ?>
+                </div>
+                <div class="upload-section">
+                    <?php InsererImage::render(
+                        "drop-zone[]",
+                        "Déposez vos photos ici ou cliquez pour sélectionner",
+                        5,  // Limite à 5 photos
+
+                    ) ?>
+                    <div class="upload-preview" id="imagePreview"></div>
+                </div>
+            </div>
+
+            <!-- Bouton de soumission -->
+            <div class="form-group">
+                <?php Button::render(
+                    "btn-envoyer",
+                    "submit-avis",
+                    "bouton pour publier un avis",
+                    "Publier votre avis",
+                    ButtonType::Member,
+                    "",
+                    true
+                ); ?>
+            </div>
+        </form>
     </div>
+</div>
+
+    </section>
 
     <script>
         const idOffre = <?= json_encode($idOffre) ?>;
