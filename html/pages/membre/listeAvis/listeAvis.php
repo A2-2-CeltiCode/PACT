@@ -145,8 +145,8 @@ try {
                         continue;
                     }
                     
-                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
-                    $stmt->execute([':idAvis' => $avi['idavis']]);
+                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
+                    $stmt->execute([':idAvis' => $avi['idavis']]);  
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
@@ -189,13 +189,7 @@ try {
                         <div class="container-bottom-avis">
                             <div class="container-infos-avis">
                                 <p>
-                                    <?php 
-                                      if ($avi["idcompte"] == $idCompte) {
-                                          echo $avi["pseudo"]." (vous)"; 
-                                      }
-                                      else {
-                                          echo $avi["pseudo"];
-                                    }?>
+                                    <?php echo $avi["pseudo"]." (vous)"; ?> 
                                 </p>
                                 <p>
                                     le <?= $avi["datevisite"] ?>
@@ -217,16 +211,17 @@ try {
                                         <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div class="container-info-avis">
+                                        <div class="container-bottom-avis">
+                                            <div class="container-infos-avis">
                                             <p>
-                                                <?= $reponse["pseudo"] ?>
+                                                <?= $reponse["denominationsociale"] ?>
                                             </p>
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
-                                            
                                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false); ?>
-                                        </div>
+                                            </div>
+                                </div>
 
                                     </div>
                                 <?php endforeach; ?>
@@ -243,20 +238,8 @@ try {
             }
             ?>
         </div>
-
-        <div class="popup" id="popup-repondre">
-            <div class="popup-content">
-                <span class="close">&times;</span>
-                <form action="envoyerReponse.php" method="POST">
-                    <input type="hidden" name="idAvis" id="popup-idAvis">
-                    <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                    <textarea name="reponse" placeholder="Votre réponse..." required></textarea>
-                    <button type="submit" title="bouton Envoyer">Envoyer</button>
-                </form>
-            </div>
-        </div>
-
-
+    </div>
+</div>
 
     </section>
 
