@@ -21,7 +21,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/InsererImage/InsererImage.
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Textarea/Textarea.php";
 
 session_start();
-$idCompte = $_SESSION['idCompte'];
+$idCompte = 1; //$_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
 $idOffre = $_GET['id'];
@@ -31,6 +31,10 @@ $offresRecentesArray[$idOffre] = time();
 setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time()+60*60*24*15, "/");
 
 try {
+    $host = 'localhost';
+    $dbname = 'postgres';
+    $user = 'postgres';
+    $password = '13phenix';
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     

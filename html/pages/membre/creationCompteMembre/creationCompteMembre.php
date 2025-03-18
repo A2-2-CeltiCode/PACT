@@ -104,6 +104,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
     <script src="creationCompteMembre.js"></script>
+    <script>
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("btnS").click();
+            } 
+        });
+    </script>
 </head>
 <body>
 <?php if ((empty($_POST)) || $emailUtilise ||$pseudoUtilise ){ ?>
@@ -151,7 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p class="small">Le mot de passe doit comporter au moins :<br>- 8 caractères<br>- 1 majuscule<br>- 1 minuscule<br>- 1 chiffre<br>- 1 caractère spécial (@$!%*?&).</p>
                 </div>
                 
-                <?php Button::render(class: "sign-upButton",title:"S'inscire en tant que membre" ,submit: true, type: "member", text: "S'inscrire");?>
+                <?php Button::render(class: "sign-upButton",title:"S'inscire en tant que membre" ,submit: true, type: "member", text: "S'inscrire",id:"btnS");?>
             </form>
             <hr>
             <p class="small">Vous avez déjà un compte ?</p>
