@@ -99,6 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Lien pour créer un compte -->
         <div class="inscription">
             Vous n'avez pas de compte ? <a href="../creationCompteMembre/creationCompteMembre.php">Créez un compte dès maintenant</a>
+            <br>
+            Vous êtes un professionnel ? <a href="../../pro/connexionComptePro/connexionComptePro.php">Connectez-vous dès maintenant</a>
         </div>
     </section>
 </body>

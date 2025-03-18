@@ -64,11 +64,7 @@ class Header
      */
     public static function initDbConnection(): void {
         global $driver, $server, $dbname, $dbuser, $dbpass;
-        $host = 'localhost';
-        $dbname = 'postgres';
-        $user = 'postgres';
-        $password = '13phenix';
-        self::$dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
+        self::$dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     }
 
     /**
