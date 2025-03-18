@@ -98,6 +98,7 @@ try {
             $nbJetons = 3; // Si aucun avis n'est sous cooldown, tous les jetons sont disponibles
         }
 
+
         // Mise à jour du nombre de jetons à chaque refresh
         $stmt = $dbh->prepare("UPDATE pact._offre SET nbJetons = :nbJetons WHERE idOffre = :idOffre");
         $stmt->bindParam(':nbJetons', $nbJetons);
@@ -250,7 +251,7 @@ try {
                 <?php if ($typeOffre !== 'restaurant'){ ?>
                     <?php Label::render("", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php }else{; ?>
-                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
+                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme']); ?>
                 <?php }; ?>
                 <div class="note-moyenne">
                     <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
@@ -393,9 +394,9 @@ try {
                     </select>
                     <div id="labelBlacklistage">
                         <?php if ($nbJetons <= 1) { ?>
-                            <h4>Jetons de Blacklistage : <?php echo $offre['nbjetons']?> disponible</h4>
+                            <h4>Jetons de Blacklistage : <?php echo $nbJetons?> disponible</h4>
                         <?php } else { ?>
-                        <h4>Jetons de Blacklistage : <?php echo $offre['nbjetons']?> disponibles</h4>
+                        <h4>Jetons de Blacklistage : <?php echo $nbJetons?> disponibles</h4>
                         <?php } ?>
                         <?php if ($nbJetons < 3) { ?>
                             <p>Prochain jeton de blacklistage : <?php echo $dateProchainBlacklist ?></p>

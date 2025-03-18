@@ -38,8 +38,14 @@ updateDots();
     images.forEach((img, index) => {
       img.style.display = index === currentIndex ? "block" : "none";
     });
-    prevButton.style.display = currentIndex === 0 ? "flex" : "flex";
-    nextButton.style.display = currentIndex === images.length - 1 ? "flex" : "flex";
+    if (images.length === 1) {
+      prevButton.style.display = "none";
+      nextButton.style.display = "none";
+    } else {
+      prevButton.style.display = currentIndex === 0 ? "flex" : "flex";
+      nextButton.style.display =
+        currentIndex === images.length - 1 ? "flex" : "flex";
+    }
         updateDots();
   }
 

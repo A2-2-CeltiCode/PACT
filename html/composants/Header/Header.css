@@ -51,13 +51,169 @@ body > header {
         }
     }
 
-    nav > a {
+    nav {
         margin: 0 10px;
         text-decoration: none;
         color: var(--gris3);
         font-weight: bold;
     }
+    ul{
+        top:0;
+        margin:auto;
+        text-align:center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        height:100%;
+        list-style: none;
+        padding: 0; /* Supprime le padding par défaut des listes */
+        margin: 0;  /* Supprime la marge par défaut des listes */
+        .visiteur-header{
+            margin:0 20px;
+            position:relative;
+            list-style: none;
+          a{
+            text-decoration:none;
+            display:block;
+            padding:5px 0;
+            font-family:'Open Sans';
+            font-size:26px;
+            line-height:1;
+            font-weight:bold;
+            position:relative;
+            z-index:1;
+            text-align: center;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(
+                to right,
+                var(--primaire-visiteur),
+                var(--primaire-visiteur) 50%,
+                var(--noir) 50%);
+            background-size: 200% 100%;
+            background-position: -100%;
+            transition: all 0.3s ease-in-out;
+            &:before{
+              display:block;
+              content:'';
+              width:0;
+              height:3px;
+              bottom:5px;
+              left:0;
+              bottom:-3px;
+              z-index:0;
+              position:absolute;
+              background:var(--primaire-visiteur);
+              transition: all 0.3s ease-in-out;
+            }
+            &:hover{
+              background-position: 0%;
+              &:before{
+                width:100%;
+              }
+            }
+          }
+        }
+        .pro-header{
+            margin:0 20px;
+            position:relative;
+            list-style: none;
+          a{
+            text-decoration:none;
+            display:block;
+            padding:5px 0;
+            font-family:'Open Sans';
+            font-size:26px;
+            line-height:1;
+            font-weight:bold;
+            position:relative;
+            z-index:1;
+            text-align: center;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(
+                to right,
+                var(--primaire-pro),
+                var(--primaire-pro) 50%,
+                var(--noir) 50%);
+            background-size: 200% 100%;
+            background-position: -100%;
+            transition: all 0.3s ease-in-out;
+            &:before{
+              display:block;
+              content:'';
+              width:0;
+              height:3px;
+              bottom:5px;
+              left:0;
+              bottom:-3px;
+              z-index:0;
+              position:absolute;
+              background:var(--primaire-pro);
+              transition: all 0.3s ease-in-out;
+            }
+            &:hover{
+              background-position: 0%;
+              &:before{
+                width:100%;
+              }
+            }
+          }
+
+        }
+        .membre-header{
+            margin:0 20px;
+            position:relative;
+            list-style: none;
+          a{
+            text-decoration:none;
+            display:block;
+            padding:5px 0;
+            font-family:'Open Sans';
+            font-size:26px;
+            line-height:1;
+            font-weight:bold;
+            position:relative;
+            z-index:1;
+            text-align: center;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(
+                to right,
+                var(--primaire-membre),
+                var(--primaire-membre) 50%,
+                var(--noir) 50%);
+            background-size: 200% 100%;
+            background-position: -100%;
+            transition: all 0.3s ease-in-out;
+            &:before{
+              display:block;
+              content:'';
+              width:0;
+              height:3px;
+              bottom:5px;
+              left:0;
+              bottom:-3px;
+              z-index:0;
+              position:absolute;
+              background:var(--primaire-membre);
+              transition: all 0.3s ease-in-out;
+            }
+            &:hover{
+              background-position: 0%;
+              &:before{
+                width:100%;
+              }
+            }
+          }
+
+        }
+      }
 }
+
+
+
+
 
 .entete-langue {
     display: flex;

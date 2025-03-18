@@ -1280,3 +1280,12 @@
   padding: 0 !important;
 }
 
+@media (max-width: 360px){
+
+  .container-avis{
+    display: grid;
+    grid-template-columns: repeat(1,1fr) ;
+    grid-gap: 40px;
+  }
+  
+}

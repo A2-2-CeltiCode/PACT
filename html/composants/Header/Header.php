@@ -129,15 +129,22 @@ class Header
     private static function renderNav(string $type): void {
         echo '<nav>';
         if ($type == HeaderType::Guest) {
-            echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            echo '<a href="/pages/visiteur/listeOffres/listeOffres.php">Rechercher</a>';
+            echo '<ul>
+                    <li class="visiteur-header"><a href="/pages/visiteur/accueil/accueil.php">Accueil</a></li>
+                    <li class="visiteur-header"><a href="/pages/visiteur/listeOffres/listeOffres.php">Rechercher</a></li>
+                </ul>';
+
         } elseif ($type == HeaderType::Member) {
-            echo '<a href="/pages/membre/accueil/accueil.php">Accueil</a>';
-            echo '<a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a>';
+            echo '<ul>
+                    <li class="membre-header"><a href="/pages/membre/accueil/accueil.php">Accueil</a></li>
+                    <li class="membre-header"><a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a></li>
+                </ul>';
         } elseif ($type == HeaderType::Pro) {
-            echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
-            echo '<a href="/pages/pro/listeAvis/listeAvis.php">Liste des avis</a>';
-            echo '<a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>';
+            echo '<ul>
+                    <li class="pro-header"><a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>
+                    <li class="pro-header"><a href="/pages/pro/listeAvis/listeAvis.php">Liste des avis</a>
+                    <li class="pro-header"><a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>
+                </ul>';
         }
         echo '</nav>';
     }
