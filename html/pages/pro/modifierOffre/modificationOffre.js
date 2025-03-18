@@ -171,27 +171,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const ville = document.getElementById("ville").value.toLowerCase();
     const adresse = document.getElementById("adresse").value.toLowerCase();
     const postcode = document.getElementById("postcode").value;
-
-    if (!selectedCity || ville !== selectedCity || !postcode) {
+    fetch(
+      `https://api-adresse.data.gouv.fr/search/?q=${adresse},${ville},${postcode}&limit=1`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+    if (data.features.length === 0) {
       alert("Veuillez sélectionner une ville valide.");
       return false;
     }
-
-    if (!adresse) {
-      alert("Veuillez entrer une adresse valide.");
-      return false;
-    }
-
+    console.log(data.features[0].properties.city);
     return true;
+    })
   }
 
+  
+
   function validateForm() {
-    const durepromotion = document.getElementById("durepromotion").value;
-    if (durepromotion > 4) {
-      alert("La durée de la promotion ne doit pas dépasser 4.");
-      return false;
-    }
-    if (!validateVilleAdresseCodePostal()) {
+    
+    if (validateVilleAdresseCodePostal()==false) {
       return false;
     }
     return true;
@@ -265,6 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function selectVille(city, lon, lat, postcode) {
     document.getElementById("ville").value = city;
+    document.getElementById("adresse").value="";
     document.getElementById("suggestions").innerHTML = "";
     document.getElementById("longitude").value = lon;
     document.getElementById("latitude").value = lat;
@@ -278,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const input = document.getElementById("adresse").value.toLowerCase();
     const ville = document.getElementById("ville").value.toLowerCase();
     const postcode = document.getElementById("postcode").value;
-    if (input.length < 3 || ville !== selectedCity || !postcode) {
+    if (input.length < 3) {
       document.getElementById("adresseSuggestions").innerHTML = "";
       return;
     }
@@ -385,6 +384,12 @@ document.addEventListener("DOMContentLoaded", function () {
       suggestionsAdresse.innerHTML = "";
     }
   });
+
+
+
+
+
+
 
   // Expose functions to global scope if needed
   window.suggestVilles = suggestVilles;

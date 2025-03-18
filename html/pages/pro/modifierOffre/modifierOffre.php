@@ -230,7 +230,7 @@ $options = $vueOffre["nomoption"];
 <?php Header::render(HeaderType::Pro); ?>
 
 <body>
-    <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data">
+    <form class="info-display" id="myForm" method="post" action="confirmationModificationOffre.php" enctype="multipart/form-data" onsubmit="return validateForm();">
         
         <input type="hidden" name="typeOffre" value="<?php echo $typeOffre['nomcategorie']; ?>">
         <input type="hidden" name="typePromotion" value="<?php echo $options; ?>">

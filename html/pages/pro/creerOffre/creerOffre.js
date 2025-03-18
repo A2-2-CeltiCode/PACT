@@ -181,17 +181,17 @@ document.addEventListener("DOMContentLoaded", function () {
     return true;
   }
 
-  function validateForm() {
-    const durepromotion = document.getElementById("durepromotion").value;
-    if (durepromotion > 4) {
-      alert("La durée de la promotion ne doit pas dépasser 4.");
-      return false;
+    function validateForm() {
+      const durepromotion = document.getElementById("durepromotion").value;
+      if (durepromotion > 4) {
+        alert("La durée de la promotion ne doit pas dépasser 4.");
+        return false;
+      }
+      if (!validateVilleAdresseCodePostal()) {
+        return false;
+      }
+      return true;
     }
-    if (!validateVilleAdresseCodePostal()) {
-      return false;
-    }
-    return true;
-  }
 
   let validCities = [];
   let cityCoordinates = {};
@@ -262,6 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function selectVille(city, lon, lat, postcode) {
     document.getElementById("ville").value = city;
+    document.getElementById("adresse").value="";
     document.getElementById("suggestions").innerHTML = "";
     document.getElementById("longitude").value = lon;
     document.getElementById("latitude").value = lat;
