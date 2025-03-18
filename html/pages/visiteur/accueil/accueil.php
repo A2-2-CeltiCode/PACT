@@ -237,6 +237,38 @@ foreach ($offresRecentesSql as $item) {
 ?>
 <body>
 <?php isset($_SESSION["idCompte"])?Header::render(type: HeaderType::Member):Header::render(); ?>
+<div class="carousel">
+    
+    <button class="carousel-button prev desactive" title="flèche arrière">❮</button>
+    <button class="carousel-button next desactive" title="flèche avant">❯</button>
+    <div class="carousel-images">
+        <?php
+        
+        $offresUnesSql->execute();
+        $resultats = $offresUnesSql->fetchAll(PDO::FETCH_ASSOC);
+        // Affichage des images de l'offre
+        foreach ($resultats as $offre):
+            ?>
+            <div class="carousel-item">
+                <img src="../../../ressources/<?php echo $offre["idoffre"]; ?>/images/<?php echo $offre['idimage']; ?>"
+                class="carousel-image" alt="imgOffre">
+                <div class="carousel-text-overlay">
+                    <p class="blanc"><?php echo($offre["nom"]) ?></p>
+                    <p class="blanc">Type: <?php echo($offre["type"]) ?></p>
+                    <p class="blanc">Ville: <?php echo($offre["ville"]) ?></p>
+                    <p class="blanc">Propriétaire: <?php echo($offre["nomProprio"]) ?></p>
+                    <p class="blanc">Durée: <?php echo($offre["duree"]) ?> minutes</p>
+                    <p class="blanc">Note: <?php echo($offre["note"]) ?>/5</p>
+                    <p class="blanc">Ouverture: <?php echo($offre["ouverture"]) ?></p>
+                    <p class="blanc">Fermeture: <?php echo($offre["fermeture"]) ?></p>
+                    <p class="blanc">Gamme: <?php echo($offre["nomgamme"]) ?></p>
+                    <p class="blanc">Prix: <?php echo($offre["valprix"]) ?> €</p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="carousel-dots"></div>
+</div>
 <navbar>
 <form action="/pages/visiteur/listeOffres/listeOffres.php" method="get">
     <?php Input::render(name:"titre", class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
@@ -244,7 +276,11 @@ foreach ($offresRecentesSql as $item) {
 </form>
 </navbar>
 <main>
+
     <?php
+
+    
+
     if (count($offresRecentes) > 0) {
         arsort($ofr);
         $tmp = [];
