@@ -251,6 +251,9 @@ label{
  margin-right: 0;
  padding-right: 0;
 }
+.prix{
+  margin-right: 70%;
+}
 
 .note-m {
   display: flex;

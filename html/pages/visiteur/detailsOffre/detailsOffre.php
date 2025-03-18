@@ -24,14 +24,17 @@ session_start();
 $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
-$idOffre = $_GET['idOffre'];
-$idOffre = $_GET['id'] ?? $idOffre;
+$idOffre = 1; //$_GET['idOffre'];
+//$idOffre = $_GET['id'] ?? $idOffre;
 
 
 try {
-    
+    $host = 'localhost';
+    $dbname = 'postgres';
+    $user = 'postgres';
+    $password = '13phenix';
 
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
     $filterBy = $_GET['filterBy'] ?? 'all';
@@ -138,7 +141,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php Header::render(HeaderType::Guest);?>
+<?php //Header::render(HeaderType::Guest);?>
 <button class="retour" title="bouton retour"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
@@ -179,9 +182,9 @@ try {
             </div>
             <div class="offre-prix">
                 <?php if ($typeOffre !== 'restaurant'){ ?>
-                    <?php Label::render("", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
+                    <?php Label::render("prix", "", "", "Prix: " . $offre['valprix'] . "€"); ?>
                 <?php }else{; ?>
-                <?php Label::render("", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
+                <?php Label::render("prix", "", "", "Prix: " . $offre['nomgamme'] . "€"); ?>
                 <?php }; ?>
                 
                 <?php Label::render("moyenne-notes", "", "", " " . number_format($moyenneNotes, 1)); ?>
