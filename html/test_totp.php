@@ -14,5 +14,3 @@ $grCodeUri = $sec->getQrCodeUri(
     '[DATA]'
 );
 echo "<img src='{$grCodeUri}'>";
-echo "<br>";
-echo TOTP::createFromSecret($sec->getSecret())->at($sec->clock->now());
