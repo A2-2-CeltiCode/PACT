@@ -9,6 +9,7 @@ use composants\Input\Input;
 use composants\Button\Button;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controlleurs/Offre/Offre.php';
+require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/CartePro/offre.php";
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/composants/Select/Select.php";
 require_once  $_SERVER["DOCUMENT_ROOT"] . '/composants/CheckboxSelect/CheckboxSelect.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/composants/Checkbox/Checkbox.php';
