@@ -232,7 +232,7 @@ foreach ($offresRecentesSql as $item) {
             }
         }
         ?>
-            <div>
+            <section>
 
         <!-- affichage des offres a la une -->
             <h2>Offres consultées récement</h2>
@@ -255,7 +255,7 @@ foreach ($offresRecentesSql as $item) {
                     </span>
                 </button>
             </div>
-        </div>
+            </section>
     <?php
     }
     ?>
