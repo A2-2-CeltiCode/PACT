@@ -2,12 +2,12 @@ SET SCHEMA 'pact';
 
 -- Peupler la table _adresse
 INSERT INTO _adresse (codePostal, ville, rue, numTel, coordonneesX, coordonneesY) VALUES
-(22000, 'Saint-Brieuc', '2 Rue nominoë', '01 23 45 67 89', 48.5146, -2.7653),
-(29600, 'Morlaix', '4 Rue Nos', '04 12 34 56 78', 48.5784, -3.8274),
-(29200, 'Brest', '9 Rue Jean Jaures', '04 12 34 56 78', 48.3904, -4.4861),
-(35400, 'Saint-Malo', '7 Rue de la République', '04 12 34 56 78', 48.6493, -2.0257),
-(56100, 'Lorient', '3 Rue Baignus', '04 12 34 56 78', 47.7489, -3.3666),
-(29000, 'Quimper', '1 Rue Contours', '04 12 34 56 78', 47.9961, -4.0963),
+(22000, 'Saint-Brieuc', '2 Rue nominoë', '01 23 45 67 89', 48.5188099, -2.7814173),
+(29600, 'Morlaix', '4 Rue Nos', '04 12 34 56 78', 48.5824932, -3.8331972),
+(29200, 'Brest', '9 Rue Jean Jaures', '04 12 34 56 78', 48.3913278, -4.4841283),
+(35400, 'Saint-Malo-de-Beignon', '7 Rue Fontaine aux Biches', '04 12 34 56 78', 47.952484, -2.148577),
+(56100, 'Lorient', '3 Rue Baignus', '04 12 34 56 78', 47.7477336, -3.3660907),
+(29000, 'Quimper', '1 Rue Contours', '04 12 34 56 78', 47.9960325, -4.1024782),
 (35000, 'Rennes', '45 Rue les Maux', '04 91 23 45 67', 48.1173, -1.6778),
 (33000, 'Bordeaux', '10 Rue de la Lune', '05 56 78 90 12', 44.8378, -0.5792),
 (44000, 'Nantes', '20 Rue de la Liberté', '02 40 12 34 56', 47.2184, -1.5536),
@@ -27,15 +27,15 @@ INSERT INTO _adresse (codePostal, ville, rue, numTel, coordonneesX, coordonneesY
 (21000, 'Dijon', '8 Rue de la Libération', '03 80 25 67 89', 47.3220, 5.0415),
 (49000, 'Angers', '21 Rue du Cormier', '02 41 23 45 67', 47.4784, -0.5632),
 (90000, 'Belfort', '5 Rue de l''Industrie', '03 84 58 69 01', 47.6396, 6.8638),
-(29200, 'Brest', 'Place De Lattre de Tassigny', '01 24 28 67 95', 48.3904, -4.4861),
+(29200, 'Brest', 'Place De Lattre de Tassigny', '01 24 28 67 95', 48.3878055, -4.5123608),
 (56170, 'Quiberon', 'Rue des Alizés', '01 48 97 24 95', 47.4825, -3.1204),
 (22700, 'Perros-Guirec', 'Rue Antoine Laurent de Lavoisier', '04 98 78 97 75', 48.8154, -3.4453),
 (35400, 'Saint-Malo', 'Rue Jules Saffray', '07 34 61 72 12', 48.6493, -2.0257),
 (29100, 'Douarnenez', 'Rue Jeanne d''Arc', '02 78 98 34 56', 48.0956, -4.3290),
 (22500, 'Paimpol', 'Chemin de Kerano', '02 78 04 21 78', 48.7800, -3.0450),
-(35000, 'Rennes', 'Rue Gurvand', '02 95 21 46 91', 48.1173, -1.6778),
+(35000, 'Rennes', 'Rue Gurvand', '02 95 21 46 91', 48.1041366, -1.6753072),
 (56000, 'Vannes', 'Rue des Luscanen', '09 24 78 24 36', 47.6582, -2.7608),
-(35000, 'Rennes', 'Rue Hippolyte Lucas', '01 75 62 38 04', 48.1173, -1.6778),
+(35000, 'Rennes', 'Rue Hippolyte Lucas', '01 75 62 38 04', 48.0670467, -1.7053024),
 (22000, 'Saint-Brieuc', '2 Rue nominoë', '01 23 45 67 89', 48.5146, -2.7653);
 
 -- Peupler la table _compte

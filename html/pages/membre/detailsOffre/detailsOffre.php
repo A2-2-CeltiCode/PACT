@@ -151,13 +151,13 @@ try {
 <body>
     <?php $typeOption["nomoption"] = str_replace(" ","",$typeOption["nomoption"])?>
     <div id="toast" class="toast">Avis bien signalé</div>
-    <div class=titre-page>
+    <div class="titre-page">
         <?php Label::render(class:"titre-svg",id: "", for:"",text: "", icon:"../../../ressources/icone/{$typeOffre}.svg",title:"icon type Offre"); ?>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
         <img class="etoile-une-svg" id="<?php echo $typeOption['nomoption']; ?>" src="../../../ressources/img/relief.png">
     </div>
-    <div class="container">
-        <div class="container-gauche">
+    <section class="container">
+        <article class="container-gauche">
             <div class="carousel">
 
                 <button class="carousel-button prev desactive" title="bouton carousel précédent">❮</button>
@@ -197,8 +197,8 @@ try {
                     </div>
                 </div>
             </div>
-            </div>
-            <div class="offre-infos <?php echo $typeOption["nomoption"]?>">
+            </article>
+            <article class="offre-infos <?php echo $typeOption["nomoption"]?>">
 
             <?php
             // Affichage des détails de l'offre
@@ -279,8 +279,8 @@ try {
             </ul>
             
            
-        </div>
-        </div>
+        </article>
+        </section>
 
         
         <div class="offre-package-modification">
@@ -311,8 +311,7 @@ try {
         </div>
 
 
-    </div>
-    <div>
+    <section>
         <div class="liste-avis">
             <div class="avis-header">
                 <h1>Avis</h1>
@@ -323,7 +322,7 @@ try {
                 ?>
 
             
-            <div class="filters">
+            <aside class="filters">
                 <label for="sortBy">Trier par:</label>
                 <select id="sortBy">
                     <option value="date_desc" selected>Date décroissante</option>
@@ -331,17 +330,17 @@ try {
                     <option value="note_desc">Note décroissante</option>
                     <option value="note_asc">Note croissante</option>
                 </select>
-            </div>
+            </aside>
 
-            <div class="container-avis">
+            <article class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
                     if (!isset($avi["idavis"])) {
                         continue;
                     }
                     
-                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
-                    $stmt->execute([':idAvis' => $avi['idavis']]);
+                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
+                    $stmt->execute([':idAvis' => $avi['idavis']]);  
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     <div class="avi" data-idavis="<?= $avi["idavis"] ?>">
@@ -370,8 +369,8 @@ try {
                         </div>
                     </div>
                     <p class="avi-content">
-                            <?= $avi["commentaire"] ?>
-                        </p>
+                        <?= $avi["commentaire"] ?>
+                    </p>
 
                         <div class="container-img-avis">
                             <?php
@@ -412,16 +411,17 @@ try {
                                         <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div class="container-info-avis">
+                                        <div class="container-bottom-avis">
+                                            <div class="container-infos-avis">
                                             <p>
-                                                <?= $reponse["pseudo"] ?>
+                                                <?= $reponse["denominationsociale"] ?>
                                             </p>
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
-                                            
                                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false); ?>
-                                        </div>
+                                            </div>
+                                </div>
 
                                     </div>
                                 <?php endforeach; ?>
@@ -431,7 +431,7 @@ try {
                     <?php
                 }
                 ?>
-            </div>
+            </article>
             <?php
             } else  {
                 echo "<p>Aucun avis n'a été trouvé pour cette offre.</p>";
@@ -565,7 +565,7 @@ try {
     </div>
 </div>
 
-    </div>
+    </section>
 
     <!-- Popup pour afficher l'image en grand -->
     <div class="image-popup" id="image-popup">
