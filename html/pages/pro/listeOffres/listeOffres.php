@@ -36,6 +36,7 @@ require_once "./verifFindemois.php";
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
 $idCompte = $_SESSION['idCompte'];
 $status = $_GET['status'] ?? 'enligne';
+
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 $pdo = new PDO("$driver:host=$server;port=5432;dbname=$dbname", $dbuser, $dbpass);
 
