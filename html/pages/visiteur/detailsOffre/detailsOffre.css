@@ -136,6 +136,9 @@ label{
   position: relative;
 }
 
+
+
+
 /* Container gauche */
 .container-gauche {
   display: flex;
@@ -999,4 +1002,15 @@ label{
   display: block;
   width: 80%;
   max-width: 700px;
+}
+
+
+@media (max-width: 360px){
+
+  .container-avis{
+    display: grid;
+    grid-template-columns: repeat(1,1fr) ;
+    grid-gap: 40px;
+  }
+  
 }
