@@ -706,7 +706,6 @@ body {
   width: 80%;
   max-width: 700px;
 }
-
 /* Responsive */
 @media (max-width: 1024px) {
   .titre {
@@ -749,7 +748,7 @@ body {
     height: 350px;
   }
 
-  .avi > div:nth-last-child(2) img {
+  .avi > .container-img-avis img {
     width: 100px;
     height: 100px;
   }
@@ -762,6 +761,18 @@ body {
   .offre-prix {
     font-size: 20px;
     padding: 10px 20px;
+  }
+
+  .container-avis {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .avi {
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
 }
 
@@ -779,21 +790,55 @@ body {
   }
 
   .avi {
-    padding: 16px;
+    padding: 12px;
+    font-size: 14px;
   }
 
-  .avi > div:nth-last-child(2) img {
+  .avi > .container-img-avis img {
     width: 80px;
     height: 80px;
   }
+
+  .note svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .container-head-avis {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .thumbs button {
+    font-size: 14px;
+    padding: 6px 8px;
+  }
+
+  .btn-supprimer {
+    font-size: 14px;
+    padding: 8px;
+    margin-top: 10px;
+  }
 }
 
-@media (max-width: 360px){
-
-  .container-avis{
-    display: grid;
-    grid-template-columns: repeat(1,1fr) ;
-    grid-gap: 40px;
+@media (max-width: 360px) {
+  .container-avis {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
-  
+
+  .avi {
+    padding: 10px;
+  }
+
+  .avi > .container-img-avis img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
 }
