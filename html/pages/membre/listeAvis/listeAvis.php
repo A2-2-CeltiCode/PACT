@@ -14,7 +14,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 session_start();
-$idCompte = 1;//$_SESSION['idCompte'];
+$idCompte = $_SESSION['idCompte'];
 $idAvisPrioritaire = $_POST['idAvis'] ?? $_GET['idOffre'] ?? null;
 
 try {
