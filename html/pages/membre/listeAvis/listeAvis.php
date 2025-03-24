@@ -18,8 +18,14 @@ $idCompte = 1;//$_SESSION['idCompte'];
 $idAvisPrioritaire = $_POST['idAvis'] ?? $_GET['idOffre'] ?? null;
 
 try {
+
+    
+$host = 'localhost';
+$dbname = 'postgres';
+$user = 'postgres';
+$password = '13phenix';
     // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
     
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
@@ -110,7 +116,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php Header::render(HeaderType::Member); ?>
+<?php //Header::render(HeaderType::Member); ?>
 
 <button class="retour" title="bouton fleche gauche" ><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg" alt="imgAvis"></a></button>
