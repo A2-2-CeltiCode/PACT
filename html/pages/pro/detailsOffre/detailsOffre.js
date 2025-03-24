@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-
+let keydownHandler;
 document.addEventListener("DOMContentLoaded", function () {
   const repondreButtons = document.querySelectorAll(".btn-repondre");
   const popupRepondre = document.getElementById("popup-repondre");
@@ -148,6 +148,14 @@ document.addEventListener("DOMContentLoaded", function () {
       idAvisInput.value = idAvis;
       popupRepondre.style.display = "block";
     });
+    keydownHandler = function(event) {
+      if (event.key === "Enter") {
+          document.getElementById("submit-avis").click();
+      } else if (event.key === "Escape") {
+          document.querySelector(".close").click();
+      }};
+  
+    document.addEventListener("keydown", keydownHandler);
   });
 
   closeBtn.addEventListener("click", function () {

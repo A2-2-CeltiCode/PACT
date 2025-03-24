@@ -1,3 +1,12 @@
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+      document.getElementById("btn-val").click();
+  }else if(event.key ==="Escape"){
+    document.getElementById("btn-anul").click();
+  }
+});
+
+
 // Initialisation de la carte
 var map = L.map("map");
 
