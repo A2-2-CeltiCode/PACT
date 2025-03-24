@@ -1,3 +1,9 @@
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        document.getElementById("btn-val").click();
+    } 
+});
+
 // Fonction pour afficher ou masquer le champ SIREN
 function afficherChampSiren() {
     var estPrive = document.getElementById("estPrive");

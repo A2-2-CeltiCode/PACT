@@ -65,6 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Page de Connexion</title>
     <link rel="stylesheet" href="./connexionCompteMembre.css">
     <link rel="stylesheet" href="/ui.css">
+    <script>
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("bouton-connexion").click();
+            } 
+        });
+    </script>
 </head>
 <body>
     <section class="conteneur responsive-conteneur">
@@ -93,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             </div>
             <div class="connecte">
-                <?php Button::render(class: "bouton-connexion", submit: true, type: "membre", text: "Se connecter", title: "connexion"); ?>
+                <?php Button::render(class: "bouton-connexion", submit: true, type: "membre", text: "Se connecter", title: "connexion", id:"bouton-connexion"); ?>
             </div>
         </form>
         <!-- Lien pour créer un compte -->

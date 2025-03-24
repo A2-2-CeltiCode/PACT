@@ -259,6 +259,8 @@ signalerButtons.forEach((button) => {
   });
 });
 
+let keydownHandler;
+
 // Gestion de la popup de création d'avis
 function initializeAvisPopup() {
   const creerAvisButton = document.querySelector(".btn-creer-avis");
@@ -277,6 +279,14 @@ function initializeAvisPopup() {
     } else {
       popupCreerAvis.style.display = "block";
       document.body.style.overflow = "hidden";
+      keydownHandler = function(event) {
+        if (event.key === "Enter") {
+            document.getElementById("submit-avis").click();
+        } else if (event.key === "Escape") {
+            document.querySelector(".close").click();
+        }};
+    
+      document.addEventListener("keydown", keydownHandler);
     }
   });
 
@@ -286,6 +296,7 @@ function initializeAvisPopup() {
     document.body.style.overflow = "";
     form.reset();
     imagePreview.innerHTML = "";
+    document.removeEventListener("keydown", keydownHandler);
   }
 
   closeCreerAvisBtn.addEventListener("click", closePopup);

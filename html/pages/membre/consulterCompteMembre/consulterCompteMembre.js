@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const popupMotDePasse = document.getElementById("popupMotDePasse");
     const erreurPopup = document.getElementById("erreurPopup");
     const formChangerMotDePasse = document.getElementById("formulaireMotDePasse");
+    let keydownHandler;
 
 
     // Rouvrir la pop-up si une erreur est détectée (via PHP)
@@ -36,6 +37,15 @@ document.addEventListener("DOMContentLoaded", () => {
         tdNonModif.forEach(input => {
             input.style.backgroundColor = "#b3b1b150";
         })
+
+        keydownHandler = function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("btnEnregistrer").click();
+            } else if (event.key === "Escape") {
+                document.getElementById("btnAnnuler").click();
+        }};
+
+        document.addEventListener("keydown", keydownHandler);
         
         btnEnregistrer.style.display = "inline-block";
         btnAnnuler.style.display = "inline-block";
@@ -54,8 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
             input.value = input.dataset.original;
             input.setAttribute("readonly", "readonly");
             input.style.backgroundColor = "#f9f9f9";
-        });
 
+        });
+        document.removeEventListener("keydown", keydownHandler);
         btnEnregistrer.style.display = "none";
         btnAnnuler.style.display = "none";
         btnModifier.disabled = false;
@@ -116,6 +127,15 @@ document.addEventListener("DOMContentLoaded", () => {
         popupMotDePasse.style.display = "block";
         btnEnregistrerMdp.style.display = "inline-block";
         btnAnnulerMdp.style.display = "inline-block";
+
+        keydownHandler = function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("btnEnregistrerMdp").click();
+            } else if (event.key === "Escape") {
+                document.getElementById("btnAnnulerMdp").click();
+        }};
+
+        document.addEventListener("keydown", keydownHandler);
     }
 
     /**
@@ -127,6 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const erreurPopup = document.getElementById("erreurPopup");
         erreurPopup.style.display = "none";
         erreurPopup.innerHTML = "";
+
+        document.removeEventListener("keydown", keydownHandler);
     }
 
     /**
