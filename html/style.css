@@ -137,29 +137,29 @@ header + navbar {
   justify-content: center;
   align-items: center;
   min-height: 55px;
-  height: 15vh;
+  height: 10vh;
   background-position: center;
+}
 
-  .barre_recherche {
-    width: 75vw;
-    background-color: transparent;
-    font-weight: bold;
-  }
+.barre_recherche {
+  width: 75vw;
+  background-color: transparent;
+  font-weight: bold;
+}
 
-  form > div {
-    border-radius: 2em !important;
-    background-color: white;
-    opacity: 95%;
-    height: 43px;
+form > div {
+  border-radius: 2em !important;
+  background-color: white;
+  opacity: 95%;
+  height: 43px;
+}
 
-    input::placeholder {
-      color: rgb(51, 51, 51);
-    }
+input::placeholder {
+  color: rgb(51, 51, 51);
+}
 
-    input:focus::placeholder {
-      color: transparent;
-    }
-  }
+input:focus::placeholder {
+  color: transparent;
 }
 
 /* Carrousel d’offres */
@@ -169,7 +169,7 @@ main {
 
   > section {
     h2 {
-      margin-left: 7vw;
+      margin-left: 3vw;
     }
 
     > div {
@@ -422,8 +422,8 @@ main {
   background: var(--secondary-color);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin: 0;
-  width: 100vw;
   max-width: 100vw;
+  margin: 20px 20px; /* Ajouter des marges en haut et en bas */
 }
 
 .carousel:hover {
@@ -432,7 +432,7 @@ main {
 }
 
 .carousel-images {
-  height: 600px; 
+  height: 600px;
   position: relative;
 }
 
@@ -469,8 +469,8 @@ main {
   color: white;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
     rgba(0, 0, 0, 0) 100%
   );
   padding: 30px 20px 20px;
@@ -478,8 +478,6 @@ main {
   transition: transform 0.3s ease;
   transform: translateY(0);
 }
-
-
 
 .carousel-text-overlay p {
   margin: 5px 0;
@@ -565,7 +563,7 @@ main {
 
 /* Amélioration des carousels secondaires (les carrousels) */
 .carrousel {
-  padding-left: 9vw;
+  padding-left: 3vw;
   white-space: nowrap;
   overflow-x: auto;
   padding-bottom: 20px;

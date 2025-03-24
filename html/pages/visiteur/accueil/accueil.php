@@ -237,6 +237,13 @@ foreach ($offresRecentesSql as $item) {
 ?>
 <body>
 <?php isset($_SESSION["idCompte"])?Header::render(type: HeaderType::Member):Header::render(); ?>
+
+<navbar>
+        <form action="/pages/visiteur/listeOffres/listeOffres.php" method="get">
+            <?php Input::render(name:"titre", class:"barre_recherche", placeholder:"Recherche activitées, restaurants, lieux ...", icon:"/ressources/icone/recherche.svg",title:"icone de recherche") ?>
+        </form>
+    </navbar>
+
 <div class="carousel">
     
     <button class="carousel-button prev desactive" title="flèche arrière">❮</button>
@@ -269,12 +276,7 @@ foreach ($offresRecentesSql as $item) {
     </div>
     <div class="carousel-dots"></div>
 </div>
-<navbar>
-<form action="/pages/visiteur/listeOffres/listeOffres.php" method="get">
-    <?php Input::render(name:"titre", class: "barre_recherche", placeholder: "Recherche activitées, restaurants, lieux ...",
-        icon: "/ressources/icone/recherche.svg", title: "icone barre de recherche") ?>
-</form>
-</navbar>
+
 <main>
 
     <?php

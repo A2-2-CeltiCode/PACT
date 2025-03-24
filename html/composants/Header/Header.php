@@ -100,7 +100,9 @@ class Header
         self::renderNav($type);
         //self::renderLanguageSelector();
         self::renderAccountSection($type);
+
         self::renderBurger($type);
+        
 
         echo '<div class="popup" id="popup-repondre">
                 <div class="popup-content">
@@ -292,9 +294,17 @@ class Header
     <span class="menuIcon material-symbols-outlined">menu</span>
     <span class="closeIcon material-symbols-outlined">close</span>
   </button>
-  <div id="overlay"></div>
 EOF;
 
+    }
+
+    /**
+     * Vérifie si l'écran est de taille mobile.
+     *
+     * @return bool
+     */
+    private static function isMobile(): bool {
+        return preg_match('/Mobile|Android|BlackBerry|IEMobile|Silk/', $_SERVER['HTTP_USER_AGENT']);
     }
 }
 ?>
