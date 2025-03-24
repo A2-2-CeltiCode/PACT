@@ -136,7 +136,7 @@ class OffreHandler
         echo '</div>';
         echo '</div>';
         echo '<div class="button-container">';
-        echo '<form action="../listeFacture/listeFacture.php" method="POST" class="buttonCarte" onsubmit="event.stopPropagation();">';
+        echo '<form action="../listeFacture/listeFacture.php" method="GET" class="buttonCarte" onsubmit="event.stopPropagation();">';
         echo '<input type="hidden" name="idOffre" value="' . $idoffre . '">';
         echo '<button type="submit" class="button-facture" style="background: none; border: none;"><img src="../../../ressources/icone/facture.svg" alt="facture" class="icon-button"></button>';
         echo '</form>';
@@ -177,7 +177,7 @@ class OffreHandler
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
-            max-width: 400px;
+            max-width: 1000px;
             text-align: center;
         }
         .close {
@@ -226,9 +226,13 @@ class OffreHandler
             <span class="close" onclick="closeDeletePopup()">&times;</span>
             <form action="../../pro/listeOffres/supprimerOffre.php" method="POST">
             <input type="hidden" name="idOffre" id="popup-idOffre">
-            <h4>Êtes-vous sûr de vouloir supprimer cette offre ?</h4>
-            <p id="popup-offre-titre"></p>
-            <div id="delete-buttons">
+            <h3 style="text-align: left;">Êtes-vous sûr de vouloir supprimer cette offre ?</h4>
+            <br><p style="text-align: left; font-size: 1.1em">Avant de supprimer l\'offre, vérifiez bien que vous avez téléchargé toutes les factures associées</p>
+            <p style="color: red; text-align: left; font-size: 1.1em">Vous ne pourrez pas revenir en arrière. Cette action est irréversible</p>
+            <br><hr><br>
+            <p style="font-size: 1.2em;">Nom de l\'offre :</p>
+            <p id="popup-offre-titre" style="font-size: 1.2em;"></p>
+            <div id="delete-buttons"><br>
             <button id="delete-confirm" type="submit" title="Confirmation de la suppression">Oui</button>
             <button id="delete-decline" type="button" onclick="closeDeletePopup()" title="Retour en arrière">Non</button>
             </div>
