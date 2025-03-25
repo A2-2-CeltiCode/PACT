@@ -325,7 +325,7 @@ try {
                     <option value="note_asc">Note croissante</option>
                 </select>
             </aside>
-
+            salut les gars
             <article class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
@@ -410,15 +410,8 @@ try {
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
-                                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Visiteur, "", false); ?>
                                             </div>
                                         </div>
-                                        <form action="supprimerReponse.php" method="POST">
-                                            <input type="hidden" name="idReponse" value="<?= $reponse['idreponse'] ?>">
-                                            <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                                            <?php Button::render("btn-supprimer", "","bouton supprimer", "Supprimer", ButtonType::Pro, "", true); ?>
-                                        </form>
-
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -433,7 +426,6 @@ try {
                 echo "<p>Aucun avis n'a été trouvé pour cette offre.</p>";
             }
             ?>
-
         </div>
 
         <div class="popup" id="popup-repondre">
