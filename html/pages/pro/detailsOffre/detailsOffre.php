@@ -14,19 +14,15 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 session_start();
-$idCompte = 1; //$_SESSION['idCompte'];
+$idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
 $idOffre = $_POST['idOffre'] ?? '1';
 $idOffre = $_GET['idOffre'] ?? $idOffre;
 
 try {
-    $host = 'localhost';
-    $dbname = 'postgres';
-    $user = 'postgres';
-    $password = '13phenix';
     // Connexion à la base de données
-    $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
@@ -211,7 +207,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php //    Header::render(HeaderType::Pro); ?>
+<?php Header::render(HeaderType::Pro); ?>
 <button class="retour" title="fleche gauche"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
