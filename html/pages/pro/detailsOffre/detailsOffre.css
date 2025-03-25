@@ -653,7 +653,7 @@ label{
   background-color: var(--primary-hover);
 }
 
-.popup-content-blacklist, .popup-content-reponse-pro {
+.popup-content-blacklist {
   background-color: #fff;
   margin: 15% auto;
   padding: 20px;
@@ -666,10 +666,107 @@ label{
   box-shadow: var(--shadow-md);
 }
 
-.popup-content-reponse-pro {
-  height: 40%;
-  max-height: 325px;
+/* --- Popup de réponse --- */
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
 }
+
+.popup-content-reponse-pro {
+  background-color: #ffffff;
+  margin: 5% auto;
+  padding: 30px 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Bouton fermeture (croix) */
+.popup-content-reponse-pro .close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 26px;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.popup-content-reponse-pro .close:hover {
+  color: #000;
+}
+
+/* Affichage de l'avis sélectionné */
+.avis-selectionne {
+  margin-bottom: 25px;
+  border-left: 4px solid var(--primary-color);
+  padding-left: 16px;
+}
+
+#popup-avis-titre {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+#popup-avis-contenu {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Formulaire */
+.popup-content-reponse-pro form h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.popup-content-reponse-pro textarea {
+  width: 100%;
+  height: 120px;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  transition: border-color 0.2s;
+}
+
+.popup-content-reponse-pro textarea:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+/* Boutons */
+#reponse-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+#reponse-buttons button {
+  padding: 10px 18px;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
 
 #blacklist-buttons, #reponse-buttons {
   display: flex;

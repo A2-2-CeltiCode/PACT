@@ -165,32 +165,58 @@ document.addEventListener("DOMContentLoaded", function () {
     const popupReponse = document.getElementById("popup-reponse-pro");
     const closePopupReponse = popupReponse.querySelector(".close");
     const closePopupButtonReponse = document.getElementById("reponse-decline");
-
+  
     const signalerButtons = document.querySelectorAll(".btn-signaler");
     const idAvisInput = document.getElementById("popup-idAvis");
-
+  
+    // 🆕 Nouveaux éléments pour afficher l'avis sélectionné
+    const popupAvisTitre = document.getElementById("popup-avis-titre");
+    const popupAvisContenu = document.getElementById("popup-avis-contenu");
+  
     repondreButtons.forEach(button => {
       button.addEventListener("click", function () {
-        const idAvis = this.closest(".avi").dataset.idavis;
+        const aviElement = this.closest(".avi");
+        const idAvis = aviElement.dataset.idavis;
+  
+        const titre = aviElement.querySelector(".avi-title")?.textContent.trim();
+        const contenu = aviElement.querySelector(".avi-content")?.textContent.trim();
+  
+        // Remplir les champs du popup
         idAvisInput.value = idAvis;
+        popupAvisTitre.textContent = titre || "Titre non disponible";
+        popupAvisContenu.textContent = contenu || "Contenu non disponible";
+  
         popupReponse.style.display = "block";
       });
     });
 
+      // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
+      window.addEventListener("keydown", function (event) {
+        if (popupReponse.style.display === "block") {
+            if (event.key === "Escape") {
+                popupReponse.style.display = "none";
+            } else if (event.key === "Enter") {
+                if (formReponse.checkValidity()) {
+                    formReponse.submit(); 
+                }
+            }
+        }
+    });
+  
     closePopupReponse.addEventListener("click", function () {
       popupReponse.style.display = "none";
     });
-
+  
     closePopupButtonReponse.addEventListener("click", function () {
       popupReponse.style.display = "none";
     });
-
+  
     window.addEventListener("click", function (event) {
-        if (event.target === popupReponse) {
-            popupReponse.style.display = "none";
-        }
+      if (event.target === popupReponse) {
+        popupReponse.style.display = "none";
+      }
     });
-
+  
     signalerButtons.forEach((button) => {
       button.addEventListener("click", function () {
         toast.classList.add("show");
@@ -199,11 +225,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 3000);
       });
     });
-
+  
     const thumbsUpButtons = document.querySelectorAll(".thumbs-up");
     const thumbsDownButtons = document.querySelectorAll(".thumbs-down");
-    
-
+  
     thumbsUpButtons.forEach((button) => {
       button.addEventListener("click", function () {
         if (this.disabled) return;
@@ -221,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
       });
     });
-
+  
     thumbsDownButtons.forEach((button) => {
       button.addEventListener("click", function () {
         if (this.disabled) return;
@@ -239,8 +264,8 @@ document.addEventListener("DOMContentLoaded", function () {
           });
       });
     });
-
-    // Réinitialiser l'observateur pour marquer les avis comme vus
+  
+    // Marquer les avis comme vus
     const avisElements = document.querySelectorAll(".avi.non-vu");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -249,18 +274,18 @@ document.addEventListener("DOMContentLoaded", function () {
           fetch(`markAsSeen.php?idAvis=${idAvis}`, {
             method: 'POST'
           }).then(response => {
-            // ...existing code...
+            // Ajoute ici ton code si tu veux un retour visuel
           });
         }
       });
     });
-
+  
     avisElements.forEach(avi => {
       observer.observe(avi);
     });
   }
-
-  initButtons(); // Initialiser les écouteurs d'événements au chargement de la page
+  
+  initButtons();
 });
 
 

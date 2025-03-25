@@ -14,15 +14,19 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 
 session_start();
-$idCompte = $_SESSION['idCompte'];
+$idCompte = 1; //$_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
 $idOffre = $_POST['idOffre'] ?? '1';
 $idOffre = $_GET['idOffre'] ?? $idOffre;
 
 try {
+    $host = 'localhost';
+    $dbname = 'postgres';
+    $user = 'postgres';
+    $password = '13phenix';
     // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+    $dbh = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $user, $password);
     
     // Ajout des filtres pour trier les avis
     $sortBy = $_GET['sortBy'] ?? 'date_desc';
@@ -207,7 +211,7 @@ try {
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
-<?php Header::render(HeaderType::Pro); ?>
+<?php //    Header::render(HeaderType::Pro); ?>
 <button class="retour" title="fleche gauche"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
@@ -532,19 +536,29 @@ try {
             ?>
         </div>
         <div class="popup" id="popup-reponse-pro">
-            <div class="popup-content-reponse-pro">
-                <span class="close">&times;</span>
-                <form action="envoyerReponse.php" method="POST">
-                    <input type="hidden" name="idAvisReponse" id="popup-idAvis">
-                    <h4>Reponse</h4>
-                    <br><br>
-                    <textarea name="texteReponse"></textarea>
-                    <div id="reponse-buttons">
-                        <button id="reponse-confirm" type="submit" title="Confirmation de reponse">Oui</button>
-                        <button id="reponse-decline" type="button" id="btn-close-popup" title="Retour en arrière">Non</button>
-                    </div>
-                </form>
+        <div class="popup-content-reponse-pro">
+            <span class="close">&times;</span>
+            
+            <!-- Zone pour afficher l'avis sélectionné -->
+            <div class="avis-selectionne">
+            <h4 id="popup-avis-titre"></h4>
+            <p id="popup-avis-contenu"></p>
             </div>
+
+            <!-- Formulaire de réponse -->
+            <form action="envoyerReponse.php" method="POST">
+            <input type="hidden" name="idAvisReponse" id="popup-idAvis">
+
+            <h4>Répondre à cet avis :</h4>
+            <br>
+            <textarea name="texteReponse" required placeholder="Votre réponse ici..."></textarea>
+
+            <div id="reponse-buttons">
+                <button id="reponse-confirm" type="submit" title="Confirmation de réponse">Valider</button>
+                <button id="reponse-decline" type="button" title="Retour en arrière">Annuler</button>
+            </div>
+            </form>
+        </div>
         </div>
         <div class="popup" id="popup-blacklist">    
             <div class="popup-content-blacklist">
