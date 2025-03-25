@@ -480,14 +480,75 @@ main {
 }
 
 .carousel-text-overlay p {
-  margin: 5px 0;
+  margin: 5px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.carousel-text-overlay p:first-child {
+.carousel-text-overlay div:first-child p {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 10px;
+}
+
+.carousel-text-overlay div {
+  display: flex;
+  align-items: center;
+}
+.carousel-text-overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* Adding a semi-transparent black background */
+}
+
+.carousel-text-overlay svg {
+  width: 24px;
+  height: 24px;
+}
+
+.svgetoile {
+  width: 30px !important;
+  height: 30px !important;
+  fill: yellow;
+}
+
+.notes{
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .carousel-images {
+    height: 400px;
+  }
+
+  .carousel-text-overlay {
+    padding: 20px 15px;
+  }
+
+  .carousel-text-overlay div:first-child p {
+    font-size: 1.2rem;
+  }
+
+  .carousel-button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .carousel-dots span {
+    width: 10px;
+    height: 10px;
+  }
+
+  .carousel-dots .active {
+    width: 12px;
+    height: 12px;
+  }
+
+  
+}
+@media screen and (max-width: 500px) {
+
+.notes{
+  flex-direction: column;
+  align-items: flex-start !important;
+}
 }
 
 /* Amélioration des boutons de navigation */
@@ -611,3 +672,5 @@ main {
 .blanc {
   color: white;
 }
+
+ 

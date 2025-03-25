@@ -123,39 +123,41 @@ STRING
     );
 
     $offresNoteSql = $dbh->query(<<<STRING
-select
-   distinct pact.vue_offres.titre AS nom,
-   nomcategorie AS type,
-   vue_offres.ville,
-   nomimage as idimage,
-   idoffre,
-   COALESCE(ppv.denominationsociale,ppu.denominationsociale) AS nomProprio,
-   tempsenminutes AS duree,
-   nomoption,
-   AVG(note) AS note,
-   heureouverture AS ouverture,
-   heurefermeture AS fermeture,
-   nomgamme,
-   valprix
-from pact.vue_offres
-   LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
-   LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-   JOIN pact.vue_avis USING (idOffre)
-GROUP BY nom,
-   type,
-   vue_offres.ville,
-   idimage,
-   idOffre,
-   nomProprio,
-   duree,
-   nomoption,
-   ouverture,
-   fermeture,
-   nomgamme,
-   valprix
-ORDER BY 9 DESC
-STRING
+    SELECT
+       DISTINCT pact.vue_offres.titre AS nom,
+       nomcategorie AS type,
+       vue_offres.ville,
+       nomimage AS idimage,
+       idoffre,
+       COALESCE(ppv.denominationsociale, ppu.denominationsociale) AS nomProprio,
+       tempsenminutes AS duree,
+       nomoption,
+       AVG(note) AS note,
+       heureouverture AS ouverture,
+       heurefermeture AS fermeture,
+       nomgamme,
+       valprix
+    FROM pact.vue_offres
+       LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
+       LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
+       JOIN pact.vue_avis USING (idOffre)
+    GROUP BY nom,
+       type,
+       vue_offres.ville,
+       idimage,
+       idOffre,
+       nomProprio,
+       duree,
+       nomoption,
+       ouverture,
+       fermeture,
+       nomgamme,
+       valprix
+    HAVING AVG(note) > 3.5
+    ORDER BY note DESC
+    STRING
     );
+    
 
     if (isset($_COOKIE["offresRecentes"])) {
         $ofr = unserialize($_COOKIE["offresRecentes"]);
@@ -234,6 +236,14 @@ foreach ($offresRecentesSql as $item) {
     $offresRecentes[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
         $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
 }
+
+
+$svgNote = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/note.svg");
+$svgProprio = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/user.svg");
+$svgClock = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/clock.svg");
+$svgPin = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/mapPin.svg");
+$svgArgent = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/argent.svg");
+
 ?>
 <body>
 <?php isset($_SESSION["idCompte"])?Header::render(type: HeaderType::Member):Header::render(); ?>
@@ -255,21 +265,79 @@ foreach ($offresRecentesSql as $item) {
         $resultats = $offresUnesSql->fetchAll(PDO::FETCH_ASSOC);
         // Affichage des images de l'offre
         foreach ($resultats as $offre):
+            if($offre["type"]=="Parc d'attractions"){
+                $svgIcon = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/parc_attractions.svg");
+            }else{
+                $svgIcon = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/" . strtolower($offre['type']) . ".svg");
+            }
             ?>
-            <div class="carousel-item">
+            <div class="carousel-item" onclick="window.location.href='/pages/visiteur/detailsOffre/detailsOffre.php?id=<?php echo $offre['idoffre']; ?>'">
                 <img src="../../../ressources/<?php echo $offre["idoffre"]; ?>/images/<?php echo $offre['idimage']; ?>"
                 class="carousel-image" alt="imgOffre">
-                <div class="carousel-text-overlay">
-                    <p class="blanc"><?php echo($offre["nom"]) ?></p>
-                    <p class="blanc">Type: <?php echo($offre["type"]) ?></p>
-                    <p class="blanc">Ville: <?php echo($offre["ville"]) ?></p>
-                    <p class="blanc">Propriétaire: <?php echo($offre["nomProprio"]) ?></p>
-                    <p class="blanc">Durée: <?php echo($offre["duree"]) ?> minutes</p>
-                    <p class="blanc">Note: <?php echo($offre["note"]) ?>/5</p>
-                    <p class="blanc">Ouverture: <?php echo($offre["ouverture"]) ?></p>
-                    <p class="blanc">Fermeture: <?php echo($offre["fermeture"]) ?></p>
-                    <p class="blanc">Gamme: <?php echo($offre["nomgamme"]) ?></p>
-                    <p class="blanc">Prix: <?php echo($offre["valprix"]) ?> €</p>
+                <div class="carousel-text-overlay" >
+                    <div class="notes"">
+                    <div>
+                        <?php echo($svgIcon) ?>
+                        <p class="blanc"><?php echo($offre["nom"]) ?></p>
+                    </div>
+                    <div>
+                        <p class="blanc">
+
+                            <?php
+                            $note = $offre["note"];
+                            $fullStars = floor($note);
+                            $halfStar = ($note - $fullStars) >= 0.5 ? 1 : 0;
+                            $emptyStars = 5 - $fullStars - $halfStar;
+                            for ($i = 0; $i < $fullStars; $i++) {
+                                echo str_replace('<svg', '<svg class="svgetoile"', file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg"));
+                            }
+                            if ($halfStar) {
+                                echo str_replace('<svg', '<svg class="svgetoile"', file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_mid.svg"));
+                            }
+                            for ($i = 0; $i < $emptyStars; $i++) {
+                                echo str_replace('<svg', '<svg class="svgetoile"', file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_vide.svg"));
+                            }
+                            ?>
+                            
+
+
+                        </p>
+                        <?php echo number_format($note, 1); ?>
+                    </div>
+                    </div>
+                    <div>
+                    <?php echo($svgPin) ?>
+                    <p class="blanc"><?php echo($offre["ville"]) ?></p>
+                    </div>
+                    <div>
+
+                    </div>
+                    <?php
+                    if($offre["duree"] != null){
+                        echo "<div>";
+                        echo($svgClock);
+                        echo "<p class='blanc'>" . $offre['duree'] . " minutes</p>";
+                        echo"</div>";
+                    }
+                    ?>
+                    
+                    <div>
+                    <?php
+                    echo($svgClock);
+                    ?>
+                    <p class="blanc"> <?php echo date("H:i", strtotime($offre["ouverture"]))."-".date("H:i", strtotime($offre["fermeture"])) ?></p>
+                    </div>
+                    <div>
+                    <?php 
+                    if($offre["valprix"] === null){
+                        echo str_replace('<svg', '<svg fill="var(--primaire-visiteur)"', $svgArgent);
+                        echo "<p class='blanc'>".$offre["nomgamme"]."</p>";
+                    }else{
+                        echo str_replace('<svg', '<svg fill="var(--primaire-visiteur)"', $svgArgent);
+                        echo "<p class='blanc'>".$offre["valprix"]." €</p>";
+                    }
+                    ?>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>
