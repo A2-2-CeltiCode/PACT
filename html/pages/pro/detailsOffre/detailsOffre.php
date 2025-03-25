@@ -21,6 +21,7 @@ $idOffre = $_POST['idOffre'] ?? '1';
 $idOffre = $_GET['idOffre'] ?? $idOffre;
 
 try {
+
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     
