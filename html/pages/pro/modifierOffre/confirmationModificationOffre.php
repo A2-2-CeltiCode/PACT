@@ -469,3 +469,14 @@ if($ancienLigne!=$enLigne){
         }
     }
 }
+
+
+
+    
+    
+$sql = "REFRESH MATERIALIZED VIEW pact.vue_offres;"; 
+$dbh->exec($sql);
+    
+
+
+?>

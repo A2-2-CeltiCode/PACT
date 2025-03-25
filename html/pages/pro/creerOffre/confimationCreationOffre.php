@@ -425,3 +425,8 @@ $stmt->bindValue(':jourdebut', date("Y-m-d"), PDO::PARAM_INT);
 $stmt->execute();
 
     echo("gg bro");
+
+        
+$sql = "REFRESH MATERIALIZED VIEW pact.vue_offres;"; 
+$dbh->exec($sql);
+    
