@@ -135,55 +135,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-let keydownHandler;
+
 document.addEventListener("DOMContentLoaded", function () {
-  const repondreButtons = document.querySelectorAll(".btn-repondre");
-  const popupRepondre = document.getElementById("popup-repondre");
-  const closeBtn = popupRepondre.querySelector(".close");
-  const idAvisInput = document.getElementById("popup-idAvis");
-
-  repondreButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const idAvis = this.closest(".avi").dataset.idavis;
-      idAvisInput.value = idAvis;
-      popupRepondre.style.display = "block";
-    });
-    keydownHandler = function(event) {
-      if (event.key === "Enter") {
-          document.getElementById("submit-avis").click();
-      } else if (event.key === "Escape") {
-          document.querySelector(".close").click();
-      }};
-  
-    document.addEventListener("keydown", keydownHandler);
-  });
-
-  closeBtn.addEventListener("click", function () {
-    popupRepondre.style.display = "none";
-  });
-
-  window.addEventListener("click", function (event) {
-    if (event.target === popupRepondre) {
-      popupRepondre.style.display = "none";
-    } else {
-      document.querySelectorAll(".avi.prioritaire").forEach((element) => {
-        element.classList.remove("prioritaire");
-      });
-    }
-  });
-
-  const signalerButtons = document.querySelectorAll(".btn-signaler");
-  const toast = document.getElementById("toast");
-
-  signalerButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      toast.classList.add("show");
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 3000);
-    });
-  });
-
   const sortBySelect = document.getElementById("sortBy");
   const filterBySelect = document.getElementById("filterBy");
 
@@ -208,30 +161,62 @@ document.addEventListener("DOMContentLoaded", function () {
   filterBySelect.addEventListener("change", fetchAvis);
 
   function initButtons() {
-    const repondreButtons = document.querySelectorAll(".btn-repondre");
+    const repondreButtons = document.querySelectorAll(".btn-reponse");
+    const popupReponse = document.getElementById("popup-reponse-pro");
+    const closePopupReponse = popupReponse.querySelector(".close");
+    const closePopupButtonReponse = document.getElementById("reponse-decline");
+    const validPopUpRep = document.getElementById("rep-conf")
+  
     const signalerButtons = document.querySelectorAll(".btn-signaler");
     const idAvisInput = document.getElementById("popup-idAvis");
-    const popupRepondre = document.getElementById("popup-repondre");
-    const closeBtn = popupRepondre.querySelector(".close");
-
+  
+    const popupAvisTitre = document.getElementById("popup-avis-titre");
+    const popupAvisContenu = document.getElementById("popup-avis-contenu");
+  
     repondreButtons.forEach(button => {
       button.addEventListener("click", function () {
-        const idAvis = this.closest(".avi").dataset.idavis;
+        const aviElement = this.closest(".avi");
+        const idAvis = aviElement.dataset.idavis;
+  
+        const titre = aviElement.querySelector(".avi-title")?.textContent.trim();
+        const contenu = aviElement.querySelector(".avi-content")?.textContent.trim();
+  
+        // Remplir les champs du popup
         idAvisInput.value = idAvis;
-        popupRepondre.style.display = "block";
+        popupAvisTitre.textContent = titre || "Titre non disponible";
+        popupAvisContenu.textContent = contenu || "Contenu non disponible";
+  
+        popupReponse.style.display = "block";
       });
     });
 
-    closeBtn.addEventListener("click", function () {
-      popupRepondre.style.display = "none";
+      // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
+      window.addEventListener("keydown", function (event) {
+        if (popupReponse.style.display === "block") {
+            if (event.key === "Escape") {
+                popupReponse.style.display = "none";
+            } else if (event.key === "Enter") {
+                if (formReponse.checkValidity()) {
+                  validPopUpRep.click();
+                }
+            }
+        }
     });
-
+  
+    closePopupReponse.addEventListener("click", function () {
+      popupReponse.style.display = "none";
+    });
+  
+    closePopupButtonReponse.addEventListener("click", function () {
+      popupReponse.style.display = "none";
+    });
+  
     window.addEventListener("click", function (event) {
-      if (event.target === popupRepondre) {
-        popupRepondre.style.display = "none";
+      if (event.target === popupReponse) {
+        popupReponse.style.display = "none";
       }
     });
-
+  
     signalerButtons.forEach((button) => {
       button.addEventListener("click", function () {
         toast.classList.add("show");
@@ -240,10 +225,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 3000);
       });
     });
-
+  
     const thumbsUpButtons = document.querySelectorAll(".thumbs-up");
     const thumbsDownButtons = document.querySelectorAll(".thumbs-down");
-
+  
     thumbsUpButtons.forEach((button) => {
       button.addEventListener("click", function () {
         if (this.disabled) return;
@@ -261,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
       });
     });
-
+  
     thumbsDownButtons.forEach((button) => {
       button.addEventListener("click", function () {
         if (this.disabled) return;
@@ -279,8 +264,8 @@ document.addEventListener("DOMContentLoaded", function () {
           });
       });
     });
-
-    // Réinitialiser l'observateur pour marquer les avis comme vus
+  
+    // Marquer les avis comme vus
     const avisElements = document.querySelectorAll(".avi.non-vu");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -289,18 +274,18 @@ document.addEventListener("DOMContentLoaded", function () {
           fetch(`markAsSeen.php?idAvis=${idAvis}`, {
             method: 'POST'
           }).then(response => {
-            // ...existing code...
+            // Ajoute ici ton code si tu veux un retour visuel
           });
         }
       });
     });
-
+  
     avisElements.forEach(avi => {
       observer.observe(avi);
     });
   }
-
-  initButtons(); // Initialiser les écouteurs d'événements au chargement de la page
+  
+  initButtons();
 });
 
 
@@ -328,6 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const popupBlacklist = document.getElementById("popup-blacklist");
     const closePopupBlacklist = popupBlacklist.querySelector(".close");
     const closePopupButton = document.getElementById("blacklist-decline");
+    const validPopUpButton = document.getElementById("btn-conf-black")
 
     blacklistButtons.forEach((button) => {
         button.addEventListener("click", function (event) {
@@ -343,6 +329,19 @@ document.addEventListener("DOMContentLoaded", function () {
             // Afficher le popup
             popupBlacklist.style.display = "block";
         });
+    });
+
+      // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
+      window.addEventListener("keydown", function (event) {
+        if (popupReponse.style.display === "block") {
+            if (event.key === "Escape") {
+              popupBlacklist.style.display = "none";
+            } else if (event.key === "Enter") {
+                if (formReponse.checkValidity()) {
+                  validPopUpButton.click();
+                }
+            }
+        }
     });
 
     closePopupBlacklist.addEventListener("click", function () {
