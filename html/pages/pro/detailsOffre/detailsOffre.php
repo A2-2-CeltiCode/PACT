@@ -543,7 +543,7 @@ try {
 
             <!-- Formulaire de réponse -->
             <form action="envoyerReponse.php" method="POST">
-            <input type="hidden" name="idAvisReponse" id="popup-idAvis">
+            <input type="hidden" name="idAvis" id="popup-idAvis">
 
             <h4>Répondre à cet avis :</h4>
             <br>
