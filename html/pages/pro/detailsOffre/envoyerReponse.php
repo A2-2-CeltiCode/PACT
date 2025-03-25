@@ -4,9 +4,9 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $idAvis = $_POST['idAvis'];
+    print_r($_POST);
     $idCompte = $_SESSION['idCompte'];
-    $commentaire = $_POST['reponse'];
-    $idOffre = $_POST['idOffre']; // Ajout de l'identifiant de l'offre
+    $commentaire = $_POST['texteReponse'];
 
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);

@@ -481,7 +481,7 @@ try {
                         <div class="option-user">
                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php Button::render("btn-repondre", "btn-repondre","bouton repondre", "Répondre", ButtonType::Pro, "", false); ?>
+                                <?php Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", false); ?>
                             <?php endif; ?>
                             <form action="blacklisterAvis.php" method="POST" class="form-blacklist">
                                 <input type="hidden" name="idAvis" value="<?= $avi["idavis"] ?>">
@@ -531,24 +531,26 @@ try {
             }
             ?>
         </div>
-
-        <div class="popup" id="popup-repondre">
-            <div class="popup-content">
+        <div class="popup" id="popup-reponse-pro">
+            <div class="popup-content-reponse-pro">
                 <span class="close">&times;</span>
                 <form action="envoyerReponse.php" method="POST">
-                    <input type="hidden" name="idAvis" id="popup-idAvis">
-                    <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                    <textarea name="reponse" placeholder="Votre réponse..."></textarea>
-                    <?php Button::render("btn-reponse", "btn-reponse","bouton envoyer", "Envoyer", ButtonType::Pro, "", true); ?>
+                    <input type="hidden" name="idAvisReponse" id="popup-idAvis">
+                    <h4>Reponse</h4>
+                    <br><br>
+                    <textarea name="texteReponse"></textarea>
+                    <div id="reponse-buttons">
+                        <button id="reponse-confirm" type="submit" title="Confirmation de reponse">Oui</button>
+                        <button id="reponse-decline" type="button" id="btn-close-popup" title="Retour en arrière">Non</button>
+                    </div>
                 </form>
             </div>
         </div>
-
-        <div class="popup" id="popup-blacklist">
+        <div class="popup" id="popup-blacklist">    
             <div class="popup-content-blacklist">
                 <span class="close">&times;</span>
                 <form action="blacklisterAvis.php" method="POST">
-                    <input type="hidden" name="idAvis" id="popup-idAvis">
+                    <input type="hidden" name="idAvis">
                     <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
                     <h4>Êtes-vous sûr de vouloir blacklister cet avis ?</h4>
                     <br><br>
@@ -561,7 +563,6 @@ try {
                 </form>
             </div>
         </div>
-
     </section>
 
     <script>
