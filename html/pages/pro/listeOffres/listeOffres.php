@@ -60,7 +60,11 @@ $nomcategories = isset($_GET['nomcategorie']) ? explode(',', $_GET['nomcategorie
 $gamme = isset($_GET['option']) ? explode(',', $_GET['option']) : null;
 
 // Récupération des résultats
-$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation,$etat,$status,$idCompte,$note,$gamme);
+$resultats = getOffres($pdo, $trie, $minPrix, $maxPrix, $titre, $nomcategories, $ouverture, $fermeture, $localisation, $etat, $status, $idCompte, $note, $gamme);
+
+foreach ($resultats as &$offre) {
+    $offre['status'] = $status; // Ajoutez le statut à chaque offre
+}
 
 // Vérifiez si la requête est une requête AJAX
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
