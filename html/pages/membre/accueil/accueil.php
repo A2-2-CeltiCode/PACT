@@ -369,21 +369,8 @@ $svgArgent = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/ar
     <?php
     }
     ?>
-        <!-- Section "À la une" -->
-        <section>
-            <h2>À la une!</h2>
-            <div class="carrousel">
-                <?php
-                foreach ($offreUnes as $item) {
-                    echo $item;
-                }
-                ?>
-            </div>
-            <nav>
-                <button title="fleche arriere"><span class="material-symbols-outlined">arrow_back_ios_new</span></button>
-                <button title="fleche avant"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
-            </nav>
-        </section>
+ 
+
         <section>
             <!-- affichage des nouvelles offres -->
             <h2>Nouveautés</h2>
