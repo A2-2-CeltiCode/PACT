@@ -325,7 +325,6 @@ try {
                     <option value="note_asc">Note croissante</option>
                 </select>
             </aside>
-            salut les gars
             <article class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
