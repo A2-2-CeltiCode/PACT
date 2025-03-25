@@ -165,11 +165,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const popupReponse = document.getElementById("popup-reponse-pro");
     const closePopupReponse = popupReponse.querySelector(".close");
     const closePopupButtonReponse = document.getElementById("reponse-decline");
+    const validPopUpRep = document.getElementById("rep-conf")
   
     const signalerButtons = document.querySelectorAll(".btn-signaler");
     const idAvisInput = document.getElementById("popup-idAvis");
   
-    // 🆕 Nouveaux éléments pour afficher l'avis sélectionné
     const popupAvisTitre = document.getElementById("popup-avis-titre");
     const popupAvisContenu = document.getElementById("popup-avis-contenu");
   
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 popupReponse.style.display = "none";
             } else if (event.key === "Enter") {
                 if (formReponse.checkValidity()) {
-                    formReponse.submit(); 
+                  validPopUpRep.click();
                 }
             }
         }
@@ -313,6 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const popupBlacklist = document.getElementById("popup-blacklist");
     const closePopupBlacklist = popupBlacklist.querySelector(".close");
     const closePopupButton = document.getElementById("blacklist-decline");
+    const validPopUpButton = document.getElementById("btn-conf-black")
 
     blacklistButtons.forEach((button) => {
         button.addEventListener("click", function (event) {
@@ -328,6 +329,19 @@ document.addEventListener("DOMContentLoaded", function () {
             // Afficher le popup
             popupBlacklist.style.display = "block";
         });
+    });
+
+      // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
+      window.addEventListener("keydown", function (event) {
+        if (popupReponse.style.display === "block") {
+            if (event.key === "Escape") {
+              popupBlacklist.style.display = "none";
+            } else if (event.key === "Enter") {
+                if (formReponse.checkValidity()) {
+                  validPopUpButton.click();
+                }
+            }
+        }
     });
 
     closePopupBlacklist.addEventListener("click", function () {

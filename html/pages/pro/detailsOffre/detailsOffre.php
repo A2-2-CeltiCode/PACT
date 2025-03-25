@@ -550,7 +550,7 @@ try {
             <textarea name="texteReponse" required placeholder="Votre réponse ici..."></textarea>
 
             <div id="reponse-buttons">
-                <button id="reponse-confirm" type="submit" title="Confirmation de réponse">Valider</button>
+                <button id="reponse-confirm" type="submit" id="rep-conf" title="Confirmation de réponse">Valider</button>
                 <button id="reponse-decline" type="button" title="Retour en arrière">Annuler</button>
             </div>
             </form>
@@ -567,7 +567,7 @@ try {
                     <p>Vous avez actuellement <?php echo $nbJetons ?> jetons de blacklistage pour cette offre.</p>
                     <p>Après avoir blacklisté cet avis, il vous restera <?php echo $nbJetons - 1?> jetons de blacklistage pour cette offre.</p>
                     <div id="blacklist-buttons">
-                        <button id="blacklist-confirm" type="submit" title="Confirmation du blacklistage">Oui</button>
+                        <button id="blacklist-confirm" type="submit" id="btn-conf-black" title="Confirmation du blacklistage">Oui</button>
                         <button id="blacklist-decline" type="button" id="btn-close-popup" title="Retour en arrière">Non</button>
                     </div>
                 </form>
