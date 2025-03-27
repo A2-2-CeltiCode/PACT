@@ -359,7 +359,9 @@ function initializeEvents() {
   initializeThumbButtons();
   initializeAvisPopup();
   initializeSupprimerButtons();
-  initializeSignalerButtons(); // Ajouter l'initialisation des boutons de signalement
+  initializeSignalerButtons(); 
+  initializeImagePopup()
+
 }
 
 // Initialisation lors du chargement

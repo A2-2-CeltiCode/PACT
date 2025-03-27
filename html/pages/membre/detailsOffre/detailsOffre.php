@@ -590,8 +590,8 @@ try {
     <script>
         const dejaPublieAvis = <?= json_encode($dejaPublieAvis) ?>;
     </script>
-    <script src="detailsOffre.js"></script>
-    <script>
+     <script src="detailsOffre.js"></script>
+     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const avisElements = document.querySelectorAll(".avi.non-vu");
 

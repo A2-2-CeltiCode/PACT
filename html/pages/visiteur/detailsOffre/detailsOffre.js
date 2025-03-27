@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const items = document.querySelectorAll(".carousel-image");
   const dotsContainer = document.querySelector(".carousel-dots");
 
-
-
   // création des dots
   items.forEach((item, index) => {
     if (images.length !== 1) {
@@ -215,17 +213,41 @@ document.addEventListener("DOMContentLoaded", function () {
         popupCreerAvis.style.display = "none";
       }
     });
+
+    const imagePopup = document.getElementById("image-popup");
+    const imagePopupContent = document.getElementById("image-popup-content");
+    const closeImagePopup = document.querySelector(".image-popup .close");
+
+    document.querySelectorAll(".avi img").forEach((img) => {
+      img.addEventListener("click", function () {
+        imagePopupContent.src = this.src;
+        imagePopup.style.display = "block";
+      });
+    });
+
+    closeImagePopup.addEventListener("click", function () {
+      imagePopup.style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+      if (event.target === imagePopup) {
+        imagePopup.style.display = "none";
+      }
+    });
   }
 
   function fetchAvis() {
     const sortBy = sortBySelect.value;
-    fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}`)
+    const idOffre = document.getElementById("idOffre").value;
+    fetch(`detailsOffre.php?id=${idOffre}&sortBy=${sortBy}`, {
+      method: "POST",
+    })
       .then((response) => response.text())
       .then((data) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, "text/html");
-        const avisList = doc.querySelector("#avis-list > div:last-child");
-        document.querySelector("#avis-list > div:last-child").innerHTML =
+        const avisList = doc.querySelector(".container-avis");
+        document.querySelector(".container-avis").innerHTML =
           avisList.innerHTML;
         initializeEvents(); // Réinitialiser les événements après le tri
       });
