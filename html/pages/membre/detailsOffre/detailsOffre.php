@@ -382,7 +382,7 @@ try {
                         <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64'>";
                                 
                             }
                             ?>

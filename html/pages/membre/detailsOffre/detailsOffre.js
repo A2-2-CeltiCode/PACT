@@ -353,6 +353,29 @@ function initializeSupprimerButtons() {
   });
 }
 
+function initializeImagePopup() {
+  const imagePopup = document.getElementById("image-popup");
+  const imagePopupContent = document.getElementById("image-popup-content");
+  const closeImagePopup = document.querySelector(".image-popup .close");
+
+  document.querySelectorAll(".avi img").forEach(img => {
+      img.addEventListener("click", function () {
+          imagePopupContent.src = this.src;
+          imagePopup.style.display = "block";
+      });
+  });
+
+  closeImagePopup.addEventListener("click", function () {
+      imagePopup.style.display = "none";
+  });
+
+  window.addEventListener("click", function (event) {
+      if (event.target === imagePopup) {
+          imagePopup.style.display = "none";
+      }
+  });
+}
+
 // Fonction d'initialisation globale des événements
 function initializeEvents() {
   initializeRepondreButtons();
