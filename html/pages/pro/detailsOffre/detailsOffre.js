@@ -4,35 +4,37 @@ document.addEventListener("DOMContentLoaded", function () {
   const images = document.querySelectorAll(".carousel-image");
   let currentIndex = 0;
   const items = document.querySelectorAll(".carousel-image");
-  const dotsContainer = document.querySelector('.carousel-dots');
+  const dotsContainer = document.querySelector(".carousel-dots");
 
-// création des dots
-items.forEach((item, index) => {
-  const dot = document.createElement('span');
-  dot.addEventListener('click', () => goToSlide(index));
-  dotsContainer.appendChild(dot);
-});
-
-// Mise a jour des Dots (point de déplacement en bas des imgs)
-function updateDots() {
-  const dots = dotsContainer.querySelectorAll('span');
-  dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentIndex);
+  // création des dots
+  items.forEach((item, index) => {
+    const dot = document.createElement("span");
+    dot.addEventListener("click", () => goToSlide(index));
+    dotsContainer.appendChild(dot);
   });
-}
 
-// déplacement entre les slide
-function goToSlide(index) {
-  items[currentIndex].classList.remove('active');
-  items[currentIndex].style.display = index === currentIndex ? "block" : "none";
-  currentIndex = (index + items.length) % items.length;
-  items[currentIndex].style.display = index === currentIndex ? "block" : "none";
-  items[currentIndex].classList.add('active');
+  // Mise a jour des Dots (point de déplacement en bas des imgs)
+  function updateDots() {
+    const dots = dotsContainer.querySelectorAll("span");
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("active", index === currentIndex);
+    });
+  }
+
+  // déplacement entre les slide
+  function goToSlide(index) {
+    items[currentIndex].classList.remove("active");
+    items[currentIndex].style.display =
+      index === currentIndex ? "block" : "none";
+    currentIndex = (index + items.length) % items.length;
+    items[currentIndex].style.display =
+      index === currentIndex ? "block" : "none";
+    items[currentIndex].classList.add("active");
+    updateDots();
+  }
+
+  // Initialize
   updateDots();
-}
-
-// Initialize
-updateDots();
 
   function updateCarousel() {
     images.forEach((img, index) => {
@@ -46,7 +48,7 @@ updateDots();
       nextButton.style.display =
         currentIndex === images.length - 1 ? "flex" : "flex";
     }
-        updateDots();
+    updateDots();
   }
 
   prevButton.addEventListener("click", function () {
@@ -56,7 +58,7 @@ updateDots();
 
   nextButton.addEventListener("click", function () {
     currentIndex = (currentIndex + 1) % images.length;
-        updateCarousel();
+    updateCarousel();
   });
 
   // Fonctionnalité de swipe
@@ -70,18 +72,18 @@ updateDots();
   function handleTouchEnd(event) {
     touchEndX = event.changedTouches[0].screenX;
     if (touchStartX - touchEndX > 50) {
-      // Swipe à gauche 
+      // Swipe à gauche
       currentIndex = (currentIndex + 1) % images.length;
       updateCarousel();
     } else if (touchEndX - touchStartX > 50) {
-      // Swipe à droite 
+      // Swipe à droite
       currentIndex = (currentIndex - 1 + images.length) % images.length;
       updateCarousel();
     }
   }
 
   // Attacher les événements de swipe
-  const carousel = document.querySelector(".carousel"); 
+  const carousel = document.querySelector(".carousel");
   carousel.addEventListener("touchstart", handleTouchStart);
   carousel.addEventListener("touchend", handleTouchEnd);
 
@@ -122,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Gérere le clic sur le text 
+  // Gérere le clic sur le text
   voirplusother.addEventListener("click", function () {
     if (detailElement.classList.contains("collapsed")) {
       detailElement.style.maxHeight = detailElement.scrollHeight + "px";
@@ -137,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  
   const repondreButtons = document.querySelectorAll(".btn-repondre");
   const popupRepondre = document.getElementById("popup-repondre");
   const closeBtn = popupRepondre.querySelector(".close");
@@ -149,13 +150,14 @@ document.addEventListener("DOMContentLoaded", function () {
       idAvisInput.value = idAvis;
       popupRepondre.style.display = "block";
     });
-    keydownHandler = function(event) {
+    keydownHandler = function (event) {
       if (event.key === "Enter") {
-          document.getElementById("submit-avis").click();
+        document.getElementById("submit-avis").click();
       } else if (event.key === "Escape") {
-          document.querySelector(".close").click();
-      }};
-  
+        document.querySelector(".close").click();
+      }
+    };
+
     document.addEventListener("keydown", keydownHandler);
   });
 
@@ -191,17 +193,24 @@ document.addEventListener("DOMContentLoaded", function () {
   function fetchAvis() {
     const sortBy = sortBySelect.value;
     const idOffre = document.getElementById("idOffre").value;
-    fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBySelect.value}&filterBy=${filterBySelect.value}`, {
-      method: "POST",
-      
-    })
+    fetch(
+      `detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBySelect.value}&filterBy=${filterBySelect.value}`,
+      {
+        method: "POST",
+      }
+    )
       .then((response) => response.text())
       .then((data) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, "text/html");
         const avisList = doc.querySelector(".container-avis");
-        document.querySelector(".container-avis").innerHTML =
-          avisList.innerHTML;
+        if (avisList == null) {
+          document.querySelector(".container-avis").innerHTML =
+            "<p>Aucun avis trouvé</p>";
+        } else {
+          document.querySelector(".container-avis").innerHTML =
+            avisList.innerHTML;
+        }
         initializeEvents(); // Réinitialiser les événements après le tri
       });
   }
@@ -211,8 +220,6 @@ document.addEventListener("DOMContentLoaded", function () {
   sortBySelect.addEventListener("change", fetchAvis);
   filterBySelect.addEventListener("change", fetchAvis);
 
-  
-
   initButtons(); // Initialiser les écouteurs d'événements au chargement de la page
 });
 
@@ -221,7 +228,7 @@ function initButtons() {
   const popupReponse = document.getElementById("popup-reponse-pro");
   const closePopupReponse = popupReponse.querySelector(".close");
   const closePopupButtonReponse = document.getElementById("reponse-decline");
-  const validPopUpRep = document.getElementById("rep-conf")
+  const validPopUpRep = document.getElementById("rep-conf");
 
   const signalerButtons = document.querySelectorAll(".btn-signaler");
 
@@ -229,12 +236,16 @@ function initButtons() {
   const popupAvisTitre = document.getElementById("popup-avis-titre");
   const popupAvisContenu = document.getElementById("popup-avis-contenu");
 
-  repondreButtons.forEach(button => {
+  repondreButtons.forEach((button) => {
     button.addEventListener("click", function () {
       const aviElement = this.closest(".avi");
-      const compte = aviElement.querySelector(".container-infos-avis > p")?.textContent.trim();
+      const compte = aviElement
+        .querySelector(".container-infos-avis > p")
+        ?.textContent.trim();
       const titre = aviElement.querySelector(".avi-title")?.textContent.trim();
-      const contenu = aviElement.querySelector(".avi-content")?.textContent.trim();
+      const contenu = aviElement
+        .querySelector(".avi-content")
+        ?.textContent.trim();
 
       // Remplir les champs du popup
       popupAvisCompte.value = compte || "Titre non disponible";
@@ -245,17 +256,17 @@ function initButtons() {
     });
   });
 
-    // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
-    window.addEventListener("keydown", function (event) {
-      if (popupReponse.style.display === "block") {
-          if (event.key === "Escape") {
-              popupReponse.style.display = "none";
-          } else if (event.key === "Enter") {
-              if (formBlacklist.checkValidity()) {
-                validPopUpRep.click();
-              }
-          }
+  // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
+  window.addEventListener("keydown", function (event) {
+    if (popupReponse.style.display === "block") {
+      if (event.key === "Escape") {
+        popupReponse.style.display = "none";
+      } else if (event.key === "Enter") {
+        if (formBlacklist.checkValidity()) {
+          validPopUpRep.click();
+        }
       }
+    }
   });
 
   closePopupReponse.addEventListener("click", function () {
@@ -314,19 +325,19 @@ function initButtons() {
   // Réinitialiser l'observateur pour marquer les avis comme vus
   const avisElements = document.querySelectorAll(".avi.non-vu");
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const idAvis = entry.target.dataset.idavis;
         fetch(`markAsSeen.php?idAvis=${idAvis}`, {
-          method: 'POST'
-        }).then(response => {
+          method: "POST",
+        }).then((response) => {
           // ...existing code...
         });
       }
     });
   });
 
-  avisElements.forEach(avi => {
+  avisElements.forEach((avi) => {
     observer.observe(avi);
   });
 }
@@ -334,75 +345,71 @@ document.addEventListener("DOMContentLoaded", function () {
   const avisElements = document.querySelectorAll(".avi.non-vu");
 
   const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-          if (entry.isIntersecting) {
-              const idAvis = entry.target.dataset.idavis;
-              fetch(`markAsSeen.php?idAvis=${idAvis}`, {
-                  method: 'POST'
-              }).then(response => {
-
-              });
-          }
-      });
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const idAvis = entry.target.dataset.idavis;
+        fetch(`markAsSeen.php?idAvis=${idAvis}`, {
+          method: "POST",
+        }).then((response) => {});
+      }
+    });
   });
 
-  avisElements.forEach(avi => {
-      observer.observe(avi);
+  avisElements.forEach((avi) => {
+    observer.observe(avi);
   });
-
-  
 });
 
-function initBlacklist(){
+function initBlacklist() {
   const blacklistButtons = document.querySelectorAll(".btn-blacklister");
-    const popupBlacklist = document.getElementById("popup-blacklist");
-    const closePopupBlacklist = popupBlacklist.querySelector(".close");
-    const closePopupButton = document.getElementById("blacklist-decline");
-    const validPopUpButton = document.getElementById("btn-conf-black")
+  const popupBlacklist = document.getElementById("popup-blacklist");
+  const closePopupBlacklist = popupBlacklist.querySelector(".close");
+  const closePopupButton = document.getElementById("blacklist-decline");
+  const validPopUpButton = document.getElementById("btn-conf-black");
 
-    blacklistButtons.forEach((button) => {
-        button.addEventListener("click", function (event) {
-            event.preventDefault(); // Empêche le formulaire de se soumettre immédiatement
-            const form = this.closest("form");
-            const idAvis = form.querySelector("input[name='idAvis']").value;
-            const idOffre = form.querySelector("input[name='idOffre']").value;
+  blacklistButtons.forEach((button) => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault(); // Empêche le formulaire de se soumettre immédiatement
+      const form = this.closest("form");
+      const idAvis = form.querySelector("input[name='idAvis']").value;
+      const idOffre = form.querySelector("input[name='idOffre']").value;
 
-            // Mettre à jour les champs cachés du popup avec les valeurs actuelles
-            popupBlacklist.querySelector("input[name='idAvis']").value = idAvis;
-            popupBlacklist.querySelector("input[name='idOffre']").value = idOffre;
+      // Mettre à jour les champs cachés du popup avec les valeurs actuelles
+      popupBlacklist.querySelector("input[name='idAvis']").value = idAvis;
+      popupBlacklist.querySelector("input[name='idOffre']").value = idOffre;
 
-            // Afficher le popup
-            popupBlacklist.style.display = "block";
-        });
+      // Afficher le popup
+      popupBlacklist.style.display = "block";
     });
+  });
 
-      // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
-      window.addEventListener("keydown", function (event) {
-        if (popupBlacklist.style.display === "block") {
-            if (event.key === "Escape") {
-              popupBlacklist.style.display = "none";
-            } else if (event.key === "Enter") {
-                if (formReponse.checkValidity()) {
-                  validPopUpButton.click();
-                }
-            }
-        }
-    });
-
-    closePopupBlacklist.addEventListener("click", function () {
+  // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
+  window.addEventListener("keydown", function (event) {
+    if (popupBlacklist.style.display === "block") {
+      if (event.key === "Escape") {
         popupBlacklist.style.display = "none";
-    });
-
-    closePopupButton.addEventListener("click", function () {
-        popupBlacklist.style.display = "none";
-    });
-
-    window.addEventListener("click", function (event) {
-        if (event.target === popupBlacklist) {
-            popupBlacklist.style.display = "none";
+      } else if (event.key === "Enter") {
+        if (formReponse.checkValidity()) {
+          validPopUpButton.click();
         }
-    });
-  }
+      }
+    }
+  });
+
+  closePopupBlacklist.addEventListener("click", function () {
+    popupBlacklist.style.display = "none";
+  });
+
+  closePopupButton.addEventListener("click", function () {
+    popupBlacklist.style.display = "none";
+  });
+
+  window.addEventListener("click", function (event) {
+    if (event.target === popupBlacklist) {
+      popupBlacklist.style.display = "none";
+    }
+  });
+}
 
 // Fonction d'initialisation globale des événements
 function initializeEvents() {
@@ -410,26 +417,24 @@ function initializeEvents() {
   const imagePopupContent = document.getElementById("image-popup-content");
   const closeImagePopup = document.querySelector(".image-popup .close");
 
-  document.querySelectorAll(".avi img").forEach(img => {
-      img.addEventListener("click", function () {
-          imagePopupContent.src = this.src;
-          imagePopup.style.display = "block";
-      });
+  document.querySelectorAll(".avi img").forEach((img) => {
+    img.addEventListener("click", function () {
+      imagePopupContent.src = this.src;
+      imagePopup.style.display = "block";
+    });
   });
 
   closeImagePopup.addEventListener("click", function () {
-      imagePopup.style.display = "none";
+    imagePopup.style.display = "none";
   });
 
   window.addEventListener("click", function (event) {
-      if (event.target === imagePopup) {
-          imagePopup.style.display = "none";
-      }
+    if (event.target === imagePopup) {
+      imagePopup.style.display = "none";
+    }
   });
-  initButtons()
-  initBlacklist()
-  
-
+  initButtons();
+  initBlacklist();
 }
 
 // Initialisation lors du chargement

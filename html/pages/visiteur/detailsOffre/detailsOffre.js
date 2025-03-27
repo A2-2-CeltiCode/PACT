@@ -247,8 +247,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, "text/html");
         const avisList = doc.querySelector(".container-avis");
-        document.querySelector(".container-avis").innerHTML =
-          avisList.innerHTML;
+        if (avisList == null) {
+          document.querySelector(".container-avis").innerHTML =
+            "<p>Aucun avis trouvé</p>";
+        } else {
+          document.querySelector(".container-avis").innerHTML =
+            avisList.innerHTML;
+        }
         initializeEvents(); // Réinitialiser les événements après le tri
       });
   }
