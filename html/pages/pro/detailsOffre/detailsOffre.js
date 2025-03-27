@@ -217,37 +217,59 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function initButtons() {
-  const repondreButtons = document.querySelectorAll(".btn-repondre");
+  const repondreButtons = document.querySelectorAll(".btn-reponse");
+  const popupReponse = document.getElementById("popup-reponse-pro");
+  const closePopupReponse = popupReponse.querySelector(".close");
+  const closePopupButtonReponse = document.getElementById("reponse-decline");
+  const validPopUpRep = document.getElementById("rep-conf")
+
   const signalerButtons = document.querySelectorAll(".btn-signaler");
-  const idAvisInput = document.getElementById("popup-idAvis");
-  const popupRepondre = document.getElementById("popup-repondre");
-  const closeBtn = popupRepondre.querySelector(".close");
+
+  const popupAvisCompte = document.getElementById("popup-avis-compte");
+  const popupAvisTitre = document.getElementById("popup-avis-titre");
+  const popupAvisContenu = document.getElementById("popup-avis-contenu");
 
   repondreButtons.forEach(button => {
     button.addEventListener("click", function () {
-      const idAvis = this.closest(".avi").dataset.idavis;
-      idAvisInput.value = idAvis;
-      popupRepondre.style.display = "block";
+      const aviElement = this.closest(".avi");
+      const compte = aviElement.querySelector(".container-infos-avis > p")?.textContent.trim();
+      const titre = aviElement.querySelector(".avi-title")?.textContent.trim();
+      const contenu = aviElement.querySelector(".avi-content")?.textContent.trim();
+
+      // Remplir les champs du popup
+      popupAvisCompte.value = compte || "Titre non disponible";
+      popupAvisTitre.textContent = titre || "Titre non disponible";
+      popupAvisContenu.textContent = contenu || "Contenu non disponible";
+
+      popupReponse.style.display = "block";
     });
   });
 
-  closeBtn.addEventListener("click", function () {
-    popupRepondre.style.display = "none";
+    // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
+    window.addEventListener("keydown", function (event) {
+      if (popupReponse.style.display === "block") {
+          if (event.key === "Escape") {
+              popupReponse.style.display = "none";
+          } else if (event.key === "Enter") {
+              if (formBlacklist.checkValidity()) {
+                validPopUpRep.click();
+              }
+          }
+      }
+  });
+
+  closePopupReponse.addEventListener("click", function () {
+    popupReponse.style.display = "none";
+  });
+
+  closePopupButtonReponse.addEventListener("click", function () {
+    popupReponse.style.display = "none";
   });
 
   window.addEventListener("click", function (event) {
-    if (event.target === popupRepondre) {
-      popupRepondre.style.display = "none";
+    if (event.target === popupReponse) {
+      popupReponse.style.display = "none";
     }
-  });
-
-  signalerButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      toast.classList.add("show");
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 3000);
-    });
   });
 
   const thumbsUpButtons = document.querySelectorAll(".thumbs-up");
