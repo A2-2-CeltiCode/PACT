@@ -168,21 +168,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const validPopUpRep = document.getElementById("rep-conf")
   
     const signalerButtons = document.querySelectorAll(".btn-signaler");
-    const idAvisInput = document.getElementById("popup-idAvis");
   
+    const popupAvisCompte = document.getElementById("popup-avis-compte");
     const popupAvisTitre = document.getElementById("popup-avis-titre");
     const popupAvisContenu = document.getElementById("popup-avis-contenu");
   
     repondreButtons.forEach(button => {
       button.addEventListener("click", function () {
         const aviElement = this.closest(".avi");
-        const idAvis = aviElement.dataset.idavis;
-  
+        const compte = aviElement.querySelector(".container-infos-avis > p")?.textContent.trim();
         const titre = aviElement.querySelector(".avi-title")?.textContent.trim();
         const contenu = aviElement.querySelector(".avi-content")?.textContent.trim();
   
         // Remplir les champs du popup
-        idAvisInput.value = idAvis;
+        popupAvisCompte.value = compte || "Titre non disponible";
         popupAvisTitre.textContent = titre || "Titre non disponible";
         popupAvisContenu.textContent = contenu || "Contenu non disponible";
   
@@ -196,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (event.key === "Escape") {
                 popupReponse.style.display = "none";
             } else if (event.key === "Enter") {
-                if (formReponse.checkValidity()) {
+                if (formBlacklist.checkValidity()) {
                   validPopUpRep.click();
                 }
             }
@@ -333,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
       window.addEventListener("keydown", function (event) {
-        if (popupReponse.style.display === "block") {
+        if (popupBlacklist.style.display === "block") {
             if (event.key === "Escape") {
               popupBlacklist.style.display = "none";
             } else if (event.key === "Enter") {

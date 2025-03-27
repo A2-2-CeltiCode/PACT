@@ -461,13 +461,7 @@ try {
                         <div class="container-bottom-avis">
                             <div class="container-infos-avis">
                                 <p>
-                                    <?php 
-                                      if ($avi["idcompte"] == $idCompte) {
-                                          echo $avi["pseudo"]." (vous)"; 
-                                      }
-                                      else {
-                                          echo $avi["pseudo"];
-                                    }?>
+                                    <?= $avi["pseudo"]; ?>
                                 </p>
                                 <p>
                                     le <?= $avi["datevisite"] ?>
@@ -533,36 +527,37 @@ try {
             ?>
         </div>
         <div class="popup" id="popup-reponse-pro">
-        <div class="popup-content-reponse-pro">
-            <span class="close">&times;</span>
+            <div class="popup-content-reponse-pro">
+                <span class="close">&times;</span>
             
-            <!-- Zone pour afficher l'avis sélectionné -->
-            <div class="avis-selectionne">
-            <h4 id="popup-avis-titre"></h4>
-            <p id="popup-avis-contenu"></p>
+                <!-- Zone pour afficher l'avis sélectionné -->
+                <div class="avis-selectionne">
+                    <h4 id="popup-avis-titre"></h4>
+                    <p id="popup-avis-contenu"></p>
+                </div>
+
+                <!-- Formulaire de réponse -->
+                <form action="envoyerReponse.php" method="POST">
+                    <input type="hidden" name="compte" id="popup-avis-compte" value="">
+                    <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+
+                    <h4>Répondre à cet avis :</h4>
+                    <br>
+                    <textarea name="texteReponse" required placeholder="Votre réponse ici..."></textarea>
+
+                    <div id="reponse-buttons">
+                        <button id="reponse-confirm" type="submit" id="rep-conf" title="Confirmation de réponse">Valider</button>
+                        <button id="reponse-decline" type="button" title="Retour en arrière">Annuler</button>
+                    </div>
+                </form>
             </div>
-
-            <!-- Formulaire de réponse -->
-            <form action="envoyerReponse.php" method="POST">
-            <input type="hidden" name="idAvis" id="popup-idAvis">
-
-            <h4>Répondre à cet avis :</h4>
-            <br>
-            <textarea name="texteReponse" required placeholder="Votre réponse ici..."></textarea>
-
-            <div id="reponse-buttons">
-                <button id="reponse-confirm" type="submit" id="rep-conf" title="Confirmation de réponse">Valider</button>
-                <button id="reponse-decline" type="button" title="Retour en arrière">Annuler</button>
-            </div>
-            </form>
-        </div>
         </div>
         <div class="popup" id="popup-blacklist">    
             <div class="popup-content-blacklist">
                 <span class="close">&times;</span>
                 <form action="blacklisterAvis.php" method="POST">
                     <input type="hidden" name="idAvis">
-                    <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+                    <input type="hidden" name="idOffre" value="">
                     <h4>Êtes-vous sûr de vouloir blacklister cet avis ?</h4>
                     <br><br>
                     <p>Vous avez actuellement <?php echo $nbJetons ?> jetons de blacklistage pour cette offre.</p>
