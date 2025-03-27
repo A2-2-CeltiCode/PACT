@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-let keydownHandler;
+
 document.addEventListener("DOMContentLoaded", function () {
   
   const repondreButtons = document.querySelectorAll(".btn-repondre");
@@ -336,6 +336,7 @@ function initBlacklist(){
     const popupBlacklist = document.getElementById("popup-blacklist");
     const closePopupBlacklist = popupBlacklist.querySelector(".close");
     const closePopupButton = document.getElementById("blacklist-decline");
+    const validPopUpButton = document.getElementById("btn-conf-black")
 
     blacklistButtons.forEach((button) => {
         button.addEventListener("click", function (event) {
@@ -351,6 +352,19 @@ function initBlacklist(){
             // Afficher le popup
             popupBlacklist.style.display = "block";
         });
+    });
+
+      // Gestion des touches ESC (fermeture) et Enter (envoi du formulaire)
+      window.addEventListener("keydown", function (event) {
+        if (popupBlacklist.style.display === "block") {
+            if (event.key === "Escape") {
+              popupBlacklist.style.display = "none";
+            } else if (event.key === "Enter") {
+                if (formReponse.checkValidity()) {
+                  validPopUpButton.click();
+                }
+            }
+        }
     });
 
     closePopupBlacklist.addEventListener("click", function () {
