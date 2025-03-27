@@ -135,10 +135,10 @@ STRING;
         }
 
         return <<<STRING
+        <link rel="stylesheet" href="/controlleurs/Offre/offre.css">
 <div class="offre $class">
     <a href="../detailsOffre/detailsOffre.php?id=$this->idoffre">
-        <div class="image-container">
-            <img class="offre-image" alt="imgOffre" src="$image">
+        <div class="image-container" style="background-image: url('$image'); background-size: cover; background-position: center;">
             $star
         </div>
         <div $gold>
