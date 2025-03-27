@@ -108,9 +108,10 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de l'offre</title>
-    <link rel="stylesheet" href="detailsOffre.css">
+    <title>Vos Avis - PACT</title>
+    <link rel="stylesheet" href="listeAvis.css">
     <link rel="stylesheet" href="../../../ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
 </head>
 <?php Header::render(HeaderType::Member); ?>
 
@@ -248,7 +249,7 @@ try {
     <script>
         const idOffre = <?= json_encode($idOffre) ?>;
     </script>
-    <script src="detailsOffre.js"></script>
+    <script src="listeAvis.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const avisElements = document.querySelectorAll(".avi.non-vu");

@@ -9,7 +9,7 @@ if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
 <!doctype html>
 <html lang="fr-FR">
 <head>
-    <title>PACT</title>
+    <title>Accueil - PACT</title>
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
