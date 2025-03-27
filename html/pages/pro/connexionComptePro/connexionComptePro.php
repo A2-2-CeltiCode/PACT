@@ -53,9 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="fr">
 <head>
     <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
-    <title>Page de Connexion</title>
+    <title>Connexion - PACT</title>
     <link rel="stylesheet" href="./connexionComptePro.css">
     <link rel="stylesheet" href="/ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
     <script>
         document.addEventListener("keydown", function(event) {
             if (event.key === "Enter") {

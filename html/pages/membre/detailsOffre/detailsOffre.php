@@ -146,9 +146,10 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de l'offre</title>
+    <title>Détails de l'offre - PACT</title>
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
 </head>
 <?php Header::render(HeaderType::Member);?>
 <button class="retour" title="Revenir à la page des offres"><a href="../listeOffres/listeOffres.php"><img

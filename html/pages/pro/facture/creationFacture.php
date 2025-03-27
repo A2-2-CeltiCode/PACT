@@ -131,7 +131,8 @@ class Facture
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel="stylesheet" href="/pages/pro/facture/creationFacture.css">
             <link rel="stylesheet" href="../../../ui.css">
-            <title>Facturation</title>
+            <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
+            <title>Facture - PACT</title>
         </head>
 
         <body>

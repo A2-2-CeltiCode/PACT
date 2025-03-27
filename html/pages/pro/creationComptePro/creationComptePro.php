@@ -102,9 +102,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Créez un Compte Professionnel PACT</title>
+        <title>Inscription - PACT</title>
         <link rel="stylesheet" href="./creationComptePro.css">
         <script src="creationComptePro.js"></script>
+        <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
     </head>
     <body>
         <section>
