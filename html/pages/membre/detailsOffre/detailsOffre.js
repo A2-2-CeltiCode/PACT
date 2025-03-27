@@ -173,14 +173,17 @@ const sortBySelect = document.getElementById("sortBy");
 if (sortBySelect) {
   function fetchAvis() {
     const sortBy = sortBySelect.value;
-    const idOffre = new URLSearchParams(window.location.search).get("id");
-    fetch(`detailsOffre.php?idOffre=${idOffre}&sortBy=${sortBy}`)
+    const idOffre = document.getElementById("idOffre").value;
+    fetch(`detailsOffre.php?id=${idOffre}&sortBy=${sortBy}`, {
+      method: "POST",
+      
+    })
       .then((response) => response.text())
       .then((data) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, "text/html");
-        const avisList = doc.querySelector(".liste-avis > div:last-child");
-        document.querySelector(".liste-avis > div:last-child").innerHTML =
+        const avisList = doc.querySelector(".container-avis");
+        document.querySelector(".container-avis").innerHTML =
           avisList.innerHTML;
         initializeEvents(); // Réinitialiser les événements après le tri
       });
