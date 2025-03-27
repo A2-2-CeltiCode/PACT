@@ -213,6 +213,7 @@ try {
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
+    <input type="text" id="idOffre" value="<?= $idOffre ?>" hidden>
     <?php $typeOption["nomoption"] = str_replace(" ","",$typeOption["nomoption"])?>
     <div id="toast" class="toast">Avis bien signalé</div>
     <div class="titre-page">
@@ -453,7 +454,7 @@ try {
                         <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' >";
                                 
                             }
                             ?>
@@ -570,7 +571,17 @@ try {
             </div>
         </div>
     </section>
+    <div class="image-popup" id="image-popup">
+        <span class="close">&times;</span>
+        <img class="image-popup-content" id="image-popup-content">
+    </div>
 
+    <div class="popup" id="popup-deja-avis">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <p>Vous avez déjà posté un avis sur cette offre.</p>
+        </div>
+    </div>
     <script>
         const idOffre = <?= json_encode($idOffre) ?>;
     </script>
