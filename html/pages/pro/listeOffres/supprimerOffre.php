@@ -9,6 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
         $dbh->beginTransaction();
 
+        // Récupérer les idImage associés à l'offre avant suppression
+        $stmt = $dbh->prepare("SELECT idImage FROM pact._representeOffre WHERE idOffre = :idOffre");
+        $stmt->bindParam(':idOffre', $idOffre);
+        $stmt->execute();
+        $idImages = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
         $queries = [
             "DELETE FROM pact._possedeactivite WHERE idoffre = :idOffre",
             "DELETE FROM pact._possedevisite WHERE idoffre = :idOffre",
@@ -37,7 +43,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->execute();
         }
 
-        // Recreate the materialized view
+        // Fonction pour supprimer un dossier d'un offre
+        /*
+        function deleteFolder($folderPath) {
+            if (!is_dir($folderPath)) {
+                return false;
+            }
+
+            $files = array_diff(scandir($folderPath), ['.', '..']);
+            foreach ($files as $file) {
+                $filePath = $folderPath . DIRECTORY_SEPARATOR . $file;
+                if (is_dir($filePath)) {
+                    deleteFolder($filePath); // Suppression récursive
+                } else {
+                    unlink($filePath); // Suppression des fichiers
+                }
+            }
+            
+            return rmdir($folderPath); // Supprime le dossier une fois vide
+        }
+
+        
+        $offerDirectory = $_SERVER["DOCUMENT_ROOT"] . "/ressources/" . $idOffre;
+        if (is_dir($offerDirectory)) {
+            deleteFolder($offerDirectory);
+        }
+        */
+
+
+        // Supprimer les images associées dans _image
+        if (!empty($idImages)) {
+            $placeholders = implode(',', array_fill(0, count($idImages), '?'));
+            $stmt = $dbh->prepare("DELETE FROM pact._image WHERE idImage IN ($placeholders)");
+            $stmt->execute($idImages);
+        }
+
+
+        // recrée la vue vue_offres
         $dbh->exec("
             SET SCHEMA 'pact';
             DROP MATERIALIZED VIEW IF EXISTS vue_offres;
