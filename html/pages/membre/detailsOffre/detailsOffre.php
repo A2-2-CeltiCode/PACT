@@ -25,10 +25,7 @@ $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
 $idOffre = $_GET['id'];
-$offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
-$offresRecentesArray = unserialize($offresRecentesTxt);
-$offresRecentesArray[$idOffre] = time();
-setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time()+60*60*24*15, "/");
+
 
 try {
     // Connexion à la base de données
@@ -152,6 +149,7 @@ try {
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
+    <input type="text" id="idOffre" value="<?= $idOffre ?>" hidden>
     <?php $typeOption["nomoption"] = str_replace(" ","",$typeOption["nomoption"])?>
     <div id="toast" class="toast">Avis bien signalé</div>
     <div class="titre-page">
