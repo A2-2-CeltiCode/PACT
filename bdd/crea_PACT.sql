@@ -172,6 +172,7 @@ CREATE TABLE _offre(
     heureOuverture          TIME NOT NULL,
     heureFermeture          TIME NOT NULL,
     nbJetons                INTEGER DEFAULT 3 CHECK (nbJetons > -1 AND nbJetons < 4),
+    nbJetonsReponse         INTEGER DEFAULT 3 CHECK (nbJetonsReponse > -1 AND nbJetonsReponse < 4),
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),
