@@ -858,6 +858,11 @@ label{
   cursor: not-allowed;
   transform: scale(1);
 }
+#btn-reponse-disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  transform: scale(1);
+}
 
 /* Toast de confirmation */
 .toast {

@@ -106,6 +106,8 @@ try {
         $stmt->bindParam(':idOffre', $idOffre);
         $stmt->execute();
 
+
+
         // Afficher le prochain jeton disponible
         if ($nextCooldownEnd && $nextCooldownEnd <= new DateTime('now', new DateTimeZone('UTC'))) {
             $dateProchainBlacklist = "Jeton disponible maintenant !";
@@ -118,9 +120,6 @@ try {
             }
         }
     }
-
-
-    
     // Calcul de la moyenne des notes
     $totalNotes = 0;
     $nombreAvis = count($avis);
@@ -187,6 +186,19 @@ try {
     foreach ($avis as $avi) {
         $thumbsUpMap[$avi['idavis']] = $avi['poucehaut'];
         $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
+    }
+
+    $query = "SELECT nbJetonsReponse FROM pact._offre WHERE idOffre = :idOffre";
+    $stmt = $dbh->prepare($query);
+    $stmt->bindParam(':idOffre', $_GET['idOffre']);
+    $stmt->execute();
+    $nbJetonsReponse = $stmt->fetchColumn();
+
+    $reponseJ = true;
+    if($nbJetonsReponse > 0){
+        $reponseJ = true;
+    }else{
+        $reponseJ = false;
     }
     
 } catch (PDOException $e) {
@@ -481,9 +493,10 @@ try {
                         <br>
                         <div class="option-user">
                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
-                            <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", false); ?>
-                            <?php endif; ?>
+                            <?php if ($reponseJ == true) { ?>
+                                <?php Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", true); ?>
+                            <?php } else { ?>
+                                <?php Button::render("btn-reponse-disabled", "btn-reponse-disabled","Pas de jetons disponibles", "Répondre", ButtonType::Pro, "", false); }?>
                             <form action="blacklisterAvis.php" method="POST" class="form-blacklist">
                                 <input type="hidden" name="idAvis" value="<?= $avi["idavis"] ?>">
                                 <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
@@ -552,7 +565,8 @@ try {
                     <textarea name="texteReponse" required placeholder="Votre réponse ici..."></textarea>
 
                     <div id="reponse-buttons">
-                        <button id="reponse-confirm" type="submit" id="rep-conf" title="Confirmation de réponse">Valider</button>
+                        <button id="reponse-confirm" type="submit" id="rep-conf" title="Confirmation de réponse" >Valider</button>
+        
                         <button id="reponse-decline" type="button" title="Retour en arrière">Annuler</button>
                     </div>
                 </form>
