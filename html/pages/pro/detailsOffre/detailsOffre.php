@@ -371,11 +371,15 @@ try {
             }
             */ ?>
         </div>
-
     <section>
         <div class="liste-avis">
-            <div>
+            <div class="mes_er_avis">
                 <h1>Avis</h1>
+                <?php
+                    if (isset($_GET['error']) && $_GET['error'] == 'plus_de_reponses') {
+                        echo "<div class='mes_er' style='color: red; font-weight: bold;'>Nombre maximum de réponses atteint.</div>";
+                    }
+                ?>
             </div>
             <?php
             if ($nombreAvis > 0){
