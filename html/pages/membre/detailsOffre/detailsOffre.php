@@ -146,9 +146,10 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de l'offre</title>
+    <title>Détails de l'offre - PACT</title>
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
 </head>
 <?php Header::render(HeaderType::Member);?>
 <button class="retour" title="Revenir à la page des offres"><a href="../listeOffres/listeOffres.php"><img
@@ -382,7 +383,7 @@ try {
                         <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64'>";
                                 
                             }
                             ?>
@@ -590,8 +591,8 @@ try {
     <script>
         const dejaPublieAvis = <?= json_encode($dejaPublieAvis) ?>;
     </script>
-    <script src="detailsOffre.js"></script>
-    <script>
+     <script src="detailsOffre.js"></script>
+     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const avisElements = document.querySelectorAll(".avi.non-vu");
 

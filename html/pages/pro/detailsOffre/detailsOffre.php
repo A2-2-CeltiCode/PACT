@@ -204,15 +204,17 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de l'offre</title>
+    <title>Détails de l'offre - PACT</title>
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
 </head>
 <?php Header::render(HeaderType::Pro); ?>
 <button class="retour" title="fleche gauche"><a href="../listeOffres/listeOffres.php"><img
             src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
+    <input type="text" id="idOffre" value="<?= $idOffre ?>" hidden>
     <?php $typeOption["nomoption"] = str_replace(" ","",$typeOption["nomoption"])?>
     <div id="toast" class="toast">Avis bien signalé</div>
     <div class="titre-page">
@@ -453,7 +455,7 @@ try {
                         <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' >";
                                 
                             }
                             ?>
@@ -570,7 +572,17 @@ try {
             </div>
         </div>
     </section>
+    <div class="image-popup" id="image-popup">
+        <span class="close">&times;</span>
+        <img class="image-popup-content" id="image-popup-content">
+    </div>
 
+    <div class="popup" id="popup-deja-avis">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <p>Vous avez déjà posté un avis sur cette offre.</p>
+        </div>
+    </div>
     <script>
         const idOffre = <?= json_encode($idOffre) ?>;
     </script>

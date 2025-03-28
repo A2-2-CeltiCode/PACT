@@ -44,7 +44,7 @@ $rib = $stmt->fetchColumn();
 <html>
 
 <head>
-    <title>Création d'une offre</title>
+    <title>Créer votre Offre - PACT</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
@@ -53,6 +53,7 @@ $rib = $stmt->fetchColumn();
     <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
     <link rel="stylesheet" href="creerOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
     
 </head>
 
