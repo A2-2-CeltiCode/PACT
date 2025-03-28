@@ -21,7 +21,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barreTrieMembre.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/carte/carte.php';
-
+require_once $_SERVER['DOCUMENT_ROOT'] . '/composants/CarteVisiteur/offre.php';
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
 
@@ -110,27 +110,13 @@ $renderer = new Carte();
 <div id="resultats" class="offres-container">
 
     <!-- Affichage des résultats -->
-    <?php
     
-    foreach ($resultats as $item) {
-        $sql = 'SELECT denominationsociale FROM pact._comptepro WHERE idcompte = :idcompte';
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':idcompte', $item['idcompte'], PDO::PARAM_INT);
-        $stmt->execute();
-        $proDetails = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($item['moynotes'] == null) {
-            $item['moynotes'] = 0;
-        }
-        $item['nomgamme'] = $item['nomgamme'] ?? 'test';
-        $item['valprix'] = $item['valprix'] ?? 'test';
-
-        $offre = new Offre($item['titre'], $item['nomcategorie'], $item['ville'], $item['nomimage'], $proDetails['denominationsociale'], $item['idoffre'], $item['tempsenminutes'], $item['moynotes'], $item['nomoption'], $item['heureouverture'], $item['heurefermeture'], $item['valprix'], $item['nomgamme']);
-        echo $offre;
-    }
-    ?>
 </div>
+<?php
+    $offreHandler = new OffreHandler($pdo, $resultats, $offresMessage);
+    $offreHandler->displayOffres();
 
+    ?>
 
 <script src="listeOffre.js"></script>
 </body>
