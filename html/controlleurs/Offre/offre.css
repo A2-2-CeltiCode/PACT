@@ -23,6 +23,7 @@
   
     a {
       text-decoration: none;
+      
       > div:nth-child(2) {
         border-radius: 15px 15px 0 0;
 
@@ -86,18 +87,7 @@
 
 /* 🔥 Styles pour les cartes spéciales */
 
-.une {
 
-  
-    .star-overlay {
-      background-color: white;
-      border-bottom-left-radius: 15px;
-    }
-    .star-overlay {
-      display: none;
-    }
-
-  }
   
   .relief {
 
@@ -117,71 +107,54 @@
     width: 300px;
     height: 335px;
     overflow: hidden;
+    
   }
   
 
+
+
   
-  .star-overlay {
+.relief {
+  border-radius: 20px 20px 10px 10px;
+  >a{>.image-container {
+    border: 2.5px solid #4CAF50;
+  }
+
+}
+}
+
+.une{
+  border-radius: 22px 22px 10px 10px;
+  >a{>.image-container {
+    border: 2.5px solid #4CAF50;
+  }
+
+}
+}
+
+.relief::before {
+    content: "En Relief";
     position: absolute;
-    top: 0px;
-    right: 0px;
-    z-index: 2;
-    width: 15%;
-    height: 15%;
-    padding: 5px;
-    border-top-right-radius: 0 !important;
-    border-top-left-radius: 0 !important;
-  }
+    top: 10px;
+    right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    
+    font-size: 0.8em;
+}
 
+.une::before {
+  content: "En Relief";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  
+  font-size: 0.8em;
+}
 
-  
-  /* Gestion de la hiérarchie des offres */
-  .mixed {
-    .relief,
-    .une {
-      border: 4px #ffd700 solid;
-      filter: drop-shadow(5px 5px 5px rgba(255, 187, 0, 0.5));
-  
-      &:hover {
-        filter: drop-shadow(15px 15px 15px rgba(255, 208, 0, 0.747));
-      }
-    }
-  
-    .star-overlay {
-      position: absolute;
-    }
-  
-    .une {
-      border: 4px solid gold;
-      background: rgba(255, 215, 0, 0.1);
-      box-shadow: 0px 4px 10px rgba(255, 217, 0, 0.912);
-      order: -1;
-  
-      &:hover {
-        filter: drop-shadow(15px 15px 15px rgba(255, 208, 0, 0.747));
-      }
-  
-      .star-overlay {
-        background-color: white;
-        border-bottom-left-radius: 15px;
-      }
-    }
-  
-    .relief {
-      border: 4px solid #f39c12;
-      background: rgba(243, 156, 18, 0.1);
-      box-shadow: 0px 3px 8px rgba(243, 156, 18, 0.2);
-  
-      &:hover {
-        filter: drop-shadow(15px 15px 15px rgba(243, 156, 18, 0.2)) !important;
-      }
-  
-      .star-overlay {
-        display: none;
-      }
-  
-      .gold {
-        background: rgba(243, 156, 18, 0.5);
-      }
-    }
-  }

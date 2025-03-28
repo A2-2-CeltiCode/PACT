@@ -137,9 +137,10 @@ STRING;
         return <<<STRING
         <link rel="stylesheet" href="/controlleurs/Offre/offre.css">
 <div class="offre $class">
+    
     <a href="../detailsOffre/detailsOffre.php?id=$this->idoffre">
+        
         <div class="image-container" style="background-image: url('$image'); background-size: cover; background-position: center;">
-            $star
         </div>
         <div $gold>
             <div>
@@ -172,8 +173,11 @@ STRING;
                 <p id=$id>$texte</p>
             </div>
             <p>$argent</p>
+            
         </div>
+        
     </a>
+    
 </div>
 STRING;
     }
