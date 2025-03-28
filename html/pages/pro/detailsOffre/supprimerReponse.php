@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
 
         // Restaurer un jeton de réponse
-        $stmt = $dbh->prepare("UPDATE pact._offre SET nbJetonsReponse = nbJetonsReponse + 1 WHERE idOffre = :idOffre AND nbJetonsReponse < 0");
+        $stmt = $dbh->prepare("UPDATE pact._offre SET nbJetonsReponse = nbJetonsReponse + 1 WHERE idOffre = :idOffre");
         $stmt->bindParam(':idOffre', $idOffre);
         $stmt->execute();
 

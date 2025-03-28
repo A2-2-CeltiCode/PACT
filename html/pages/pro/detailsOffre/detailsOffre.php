@@ -106,11 +106,7 @@ try {
         $stmt->bindParam(':idOffre', $idOffre);
         $stmt->execute();
 
-        $query = "SELECT nbJetonsReponse FROM pact._offre WHERE idOffre = :idOffre";
-        $stmt = $dbh->prepare($query);
-        $stmt->bindParam(':idOffre', $_GET['idOffre']);
-        $stmt->execute();
-        $nbJetonsReponse = $stmt->fetchColumn();
+
 
         // Afficher le prochain jeton disponible
         if ($nextCooldownEnd && $nextCooldownEnd <= new DateTime('now', new DateTimeZone('UTC'))) {
@@ -124,9 +120,6 @@ try {
             }
         }
     }
-
-
-    
     // Calcul de la moyenne des notes
     $totalNotes = 0;
     $nombreAvis = count($avis);
@@ -193,6 +186,19 @@ try {
     foreach ($avis as $avi) {
         $thumbsUpMap[$avi['idavis']] = $avi['poucehaut'];
         $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
+    }
+
+    $query = "SELECT nbJetonsReponse FROM pact._offre WHERE idOffre = :idOffre";
+    $stmt = $dbh->prepare($query);
+    $stmt->bindParam(':idOffre', $_GET['idOffre']);
+    $stmt->execute();
+    $nbJetonsReponse = $stmt->fetchColumn();
+
+    $reponseJ = true;
+    if($nbJetonsReponse > 0){
+        $reponseJ = true;
+    }else{
+        $reponseJ = false;
     }
     
 } catch (PDOException $e) {
@@ -487,11 +493,10 @@ try {
                         <br>
                         <div class="option-user">
                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
-                            <?php if ($nbJetonsReponse > 0) { ?>
+                            <?php if ($reponseJ == true) { ?>
                                 <?php Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", true); ?>
                             <?php } else { ?>
                                 <?php Button::render("btn-reponse-disabled", "btn-reponse-disabled","Pas de jetons disponibles", "Répondre", ButtonType::Pro, "", false); }?>
-                            
                             <form action="blacklisterAvis.php" method="POST" class="form-blacklist">
                                 <input type="hidden" name="idAvis" value="<?= $avi["idavis"] ?>">
                                 <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
