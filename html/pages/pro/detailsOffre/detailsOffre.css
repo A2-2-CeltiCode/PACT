@@ -1135,3 +1135,13 @@ label{
   }
   
 }
+
+.mes_er_avis{
+display: flex;
+
+}
+
+.mes_er{
+  margin-left: 63%;
+  margin-top: 8px;
+}

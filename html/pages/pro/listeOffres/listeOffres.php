@@ -90,10 +90,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Recherche d'Offres</title>
+    <title>Vos Offres - PACT</title>
     <link rel="stylesheet" href="listeOffres.css">
     <link rel="stylesheet" href="../../../ui.css">
     <link rel="stylesheet" href="../../../composants/Label/Label.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
     <script src="../../../trie/trieGeneral.js"></script>
     <script src="listeOffres.js"></script>
 </head>

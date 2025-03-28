@@ -21,9 +21,7 @@ class Carte {
 
   
   <style>
-    #map {
-    height: 600px;
-    }
+    
   </style>
   </head>
   <body>

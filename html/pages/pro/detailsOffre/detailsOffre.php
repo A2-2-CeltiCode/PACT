@@ -204,9 +204,10 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de l'offre</title>
+    <title>Détails de l'offre - PACT</title>
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
 </head>
 <?php Header::render(HeaderType::Pro); ?>
 <button class="retour" title="fleche gauche"><a href="../listeOffres/listeOffres.php"><img
@@ -370,11 +371,15 @@ try {
             }
             */ ?>
         </div>
-
     <section>
         <div class="liste-avis">
-            <div>
+            <div class="mes_er_avis">
                 <h1>Avis</h1>
+                <?php
+                    if (isset($_GET['error']) && $_GET['error'] == 'plus_de_reponses') {
+                        echo "<div class='mes_er' style='color: red; font-weight: bold;'>Nombre maximum de réponses atteint.</div>";
+                    }
+                ?>
             </div>
             <?php
             if ($nombreAvis > 0){
