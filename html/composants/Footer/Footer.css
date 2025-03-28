@@ -114,3 +114,16 @@ footer {
 .footer-relative {
     position: relative;
 }
+
+
+.icones-reseaux-sociaux{
+    display: flex;
+    gap: 15px;
+}
+
+.icones-reseaux-sociaux{
+    > a:hover .icon{
+    transform: rotateY(360deg) !important;
+    transition: .5s;
+    }
+}
