@@ -48,6 +48,11 @@
     gap: 10px;
 }
 
+.input-wrapper{
+    width: 300px !important;
+    border-radius: 15px !important;
+}
+
 .select-wrapper{
     display: flex !important;
     width: 220px !important;
@@ -71,10 +76,12 @@
 
 #styleShadow{
     height: fit-content;
-    padding: 20px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--gris1);
     border-radius: 1em;
+    max-width: 250px;
+    width: 200px;
     
 }
 
@@ -133,9 +140,9 @@ input[type="number"]{
 }
 
 .input{
-    display: none ;
+    display: block ;
     justify-content: space-evenly !important;
-    max-width: 0;
+    max-width: fit-content;
     overflow: hidden;
     transition: max-width 0.5s ease-in-out;
     position: fixed; /* Position fixe pour superposer */
@@ -151,12 +158,17 @@ input[type="number"]{
 .input.open{
     max-width: 1000px !important;
     z-index: 1000 !important;
+    height: auto;
     /* position: relative !important; */
 
 }
 
 #nombreOffres{
-    padding-left: 35px !important;
+    display: flex;
+    padding-left: 6.8em !important;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
 }
 
 .toggleBarretrieButton{
@@ -205,9 +217,15 @@ input[type="number"]{
 .agencement {
     max-height: 90vh; /* Ajustez la hauteur maximale selon vos besoins */
     overflow-y: auto; /* Ajoute une barre de défilement verticale */
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
 }
 
-
+::-webkit-scrollbar {
+    display: none;
+}
 
  .star-overlay {
     position: absolut;
@@ -229,5 +247,66 @@ input[type="number"]{
     width: 105%;
     height: 105%;
     object-fit: cover; /* Assure que l'image remplit le conteneur */
+}
+
+.btnfiltres:hover{
+    cursor: pointer;
+    background-color: white !important;
+}
+
+#map{
+    height: 400px;
+    width: 900px;
+}
+
+#barretrie{
+    display: flex ;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styles pour la barre de filtre */
+#filterMenu {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease-in-out;
+    padding: 20px 30px 20px 20px;
+    /* overflow-y: auto; */
+    z-index: 1000;
+    margin-top: 60px;
+}
+
+#filterIcon {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: auto;
+    height: 30px;
+    background: #acacac70;
+    border-radius: 0.7em;
+    padding: 4px;
+}
+
+
+
+/* Lorsque le menu est hover, il s'affiche */
+#filterMenu:hover {
+    left: 0;
+}
+
+.leaflet-top {
+    z-index: 999 !important;
+}
+
+
+.leaflet-bottom{
+    z-index: 999 !important;
 }
 

@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 session_start();
 use composants\Button\ButtonType;
 use \composants\Select\Select;
@@ -96,7 +98,14 @@ $renderer = new Carte();
 <br>
 
 <div id="nombreOffres">
+    <div id="nombreFiltresActifs">Nombre de filtres actifs : 0</div> 
+    
     <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
+    <?php
+    
+    Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
+    ?>
+
 </div>
 <div id="resultats" class="offres-container">
 
@@ -121,6 +130,7 @@ $renderer = new Carte();
     }
     ?>
 </div>
+
 
 <script src="listeOffre.js"></script>
 </body>
