@@ -565,6 +565,26 @@
   }
   
   .btn-supprimer {
+    background-color: rgb(214, 20, 20);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 16px;
+    margin-left: 10px;
+}
+  
+  .btn-supprimer:hover {
+    background-color: rgb(185, 18, 18);
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+
+  .btn-modifier {
     background-color: var(--primary-color);
     color: var(--white);
     border: none;
@@ -577,7 +597,7 @@
     margin-top: 16px;
 }
   
-  .btn-supprimer:hover {
+  .btn-modifier:hover {
     background-color: var(--primary-hover);
     color: var(--white);
     transform: translateY(-1px);

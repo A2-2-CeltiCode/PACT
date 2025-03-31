@@ -33,6 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 }
 
+//if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'getAvis') {
+//    require_once $_SERVER['DOCUMENT_ROOT'] . '/connect_params.php';
+//    $idAvis = intval($_POST['idAvis']);
+//    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+//
+//    $stmt = $dbh->prepare("SELECT titre, commentaire, note, contextevisite FROM pact._avis WHERE idavis = :idAvis");
+//    $stmt->bindParam(':idAvis', $idAvis, PDO::PARAM_INT);
+//    $stmt->execute();
+//    $avis = $stmt->fetch(PDO::FETCH_ASSOC);
+//
+//    echo json_encode($avis);
+//    exit;
+//}
+
 try {
     // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
@@ -409,6 +423,7 @@ try {
                             </div>
                         </div>   
                         <?php if ($avi['idcompte'] == $idCompte): ?>
+                            //<button class="btn-modifier" title="Modifier un avis" data-idavis="<?= $avi["idavis"] ?>">Modifier</button>
                             <button class="btn-supprimer" title="Supprimer un avis" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
                         <?php endif; ?>
                         <?php if (!empty($reponses)): ?>
