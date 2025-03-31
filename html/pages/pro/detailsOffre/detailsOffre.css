@@ -750,6 +750,13 @@ label{
   border-color: #4a90e2;
   outline: none;
 }
+.offre-details{
+  margin-left: 15%;
+  margin-right: 15%;
+}
+.margin{
+margin: 10px;
+}
 
 /* Boutons */
 #reponse-buttons {
