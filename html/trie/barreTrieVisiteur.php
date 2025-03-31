@@ -63,6 +63,7 @@ class Trie {
         Input::render(name:"localisation",class:'styletitre', type:"text", placeholder:'localisation', value: htmlspecialchars($localisation));
         Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
         echo '<div id="nombreFiltresActifs">Nombre de filtres actifs : 0</div>';
+        echo '<div id="nombreOffres">Nombre de filtres actifs : 0</div>';
         echo '</div>';
         
         echo '</div>';
