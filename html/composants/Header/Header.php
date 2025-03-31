@@ -85,7 +85,7 @@ class Header
 
         echo '
         <header class="' . $type . '">
-            <a href="https://celticode.ventsdouest.dev">
+            <a href="/pages/visiteur/accueil/accueil.php">
                 <img src="/ressources/icone/logo.svg" alt="Logo PACT">
                 <span class="' . $spanClass . '">PACT</span>
             </a>';

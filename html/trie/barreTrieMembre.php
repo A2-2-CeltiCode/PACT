@@ -55,18 +55,21 @@ class Trie {
         echo '<form id="searchForm" method="GET" action="">';
         echo '<div class="triviennois">';
         echo '<div class="tri-somie">';
-        echo '<img class="btnfiltres" id="toggleBarretrieButton" src="/ressources/icone/filteron.svg" alt="filtre"  />';
+        
         Input::render(name:"titre",class:'styletitre', type:"text", placeholder:'Titre*', value: htmlspecialchars($titre));
         
-        Input::render(name:"localisation",class:'styletitre', type:"text", placeholder:'localisation', value: htmlspecialchars($localisation));
         Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
-        echo '<div id="nombreFiltresActifs">Nombre de filtres actifs : 0</div>'; // Ajouter cet élément
+        
         echo '</div>';
         
         echo '</div>';
 
         echo '<input type="hidden" id="sortInput" name="sort" value="' . htmlspecialchars($sort) . '">';
-        echo '<div id="barretrieContainer" class="input">'; // Ajoutez un ID ici
+        
+
+        echo '<div id="filterMenu">';
+        echo '<img src="\ressources\icone\filtre.svg" alt="Filtre" id="filterIcon">';
+        
         echo '<div style="display: grid; gap: 1px;">';
         
         echo '</div>';
@@ -74,6 +77,7 @@ class Trie {
         
      
         echo '<div class="agencement">';
+        
         echo '<div class="categorie" id="styleShadow">';
         foreach ($optionsCategorie as $value => $label) {
             Checkbox::render(
@@ -135,8 +139,10 @@ class Trie {
         Input::render(name:"fermeture", type:"time", placeholder:'Heure de fermeture', value: htmlspecialchars($fermeture));
         echo '</div>';
         Select::render('custom-class', 'select-etat', 'etat', false, $optionsEtat, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
+        
         echo '</div>';
         echo  '</div>';
+        
 
 
         if($status !== null){

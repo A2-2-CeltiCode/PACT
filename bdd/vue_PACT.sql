@@ -64,7 +64,7 @@ SELECT DISTINCT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomopt
        COALESCE(_spectacle.valprix, _activite.valprix, _visite.valprix, _parcattractions.valprix, NULL::numeric) AS valprix,
        COALESCE(_spectacle.tempsenminutes, _activite.tempsenminutes, _visite.tempsenminutes, NULL::integer) AS tempsenminutes,
        _spectacle.capacite, COALESCE(_activite.agemin,_parcattractions.agemin) AS ageMin, _activite.prestation,
-       _visite.estguidee, _restaurant.nomgamme, _parcattractions.nbattractions,_offre.estenligne,AVG(note) AS moyNotes, _offre.nbJetons,
+       _visite.estguidee, _restaurant.nomgamme, _parcattractions.nbattractions,_offre.estenligne,AVG(note) AS moyNotes, _offre.nbJetons, _offre.nbJetonsReponse,
         CASE
             WHEN _spectacle.idoffre IS NOT NULL THEN 'Spectacle'::text
             WHEN _restaurant.idoffre IS NOT NULL THEN 'Restaurant'::text

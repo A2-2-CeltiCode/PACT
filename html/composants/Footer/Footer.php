@@ -92,10 +92,11 @@ EOF;
 
         // Icônes réseaux sociaux
         echo <<<EOF
+        
             <div class="icones-reseaux-sociaux">
-                <a href="#"><img src="/ressources/icone/facebook.svg" alt="Icon facebook"></a>
-                <a href="https://x.com/TripEnArvorPACT"><img src="/ressources/icone/twitter.svg" alt="Icon X"></a>
-                <a href="https://www.instagram.com/pactlannion/"><img src="/ressources/icone/instagram.svg" alt="Icon instagram"></a>
+                <a href="#"><img src="/ressources/icone/facebook.svg" alt="Icon facebook" class="icon"></a>
+                <a href="https://x.com/TripEnArvorPACT"><img src="/ressources/icone/twitter.svg" alt="Icon X" class="icon"></a>
+                <a href="https://www.instagram.com/pactlannion/"><img src="/ressources/icone/instagram.svg" class="icon" alt="Icon instagram"></a>
             </div>
 EOF;
 
