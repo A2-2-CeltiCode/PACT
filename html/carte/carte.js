@@ -160,3 +160,5 @@ function generateStars(rating) {
 
   return "★".repeat(fullStars) + "☆".repeat(emptyStars);
 }
+
+map.addControl(new L.Control.Fullscreen());
