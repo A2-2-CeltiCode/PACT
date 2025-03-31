@@ -70,6 +70,7 @@ class Offre
     }
 
     public function __toString(): string {
+        $compte=$_SESSION["typeUtilisateur"];
         $texte=null;
         $argent=null;
         $currentTime = new DateTime('now', new \DateTimeZone('Europe/Paris'));
@@ -136,11 +137,11 @@ STRING;
 
         return <<<STRING
         <link rel="stylesheet" href="/controlleurs/Offre/offre.css">
-<div class="offre $class">
+<div class="offre $class$compte ">
     
     <a href="../detailsOffre/detailsOffre.php?id=$this->idoffre">
         
-        <div class="image-container" style="background-image: url('$image'); background-size: cover; background-position: center;">
+        <div class="image-container $compte" style="background-image: url('$image'); background-size: cover; background-position: center;">
         </div>
         <div $gold>
             <div>

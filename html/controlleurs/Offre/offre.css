@@ -132,6 +132,25 @@
 }
 }
 
+.unemembre {
+  border-radius: 20px 20px 10px 10px;
+  >a{>.membre {
+    border: 2.5px solid #086DBA;
+  }
+
+}
+}
+
+.reliefmembre{
+  border-radius: 22px 22px 10px 10px;
+  >a{>.membre {
+    border: 2.5px solid #086DBA;
+  }
+
+}
+}
+
+
 .relief::before {
     content: "En Relief";
     position: absolute;
@@ -158,3 +177,29 @@
   font-size: 0.8em;
 }
 
+
+.reliefmembre::before {
+  content: "En Relief";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #086DBA;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  
+  font-size: 0.8em;
+}
+
+.unemembre::before {
+content: "A La Une";
+position: absolute;
+top: 10px;
+right: 10px;
+background-color: #086DBA;
+color: white;
+padding: 5px 10px;
+border-radius: 15px;
+
+font-size: 0.8em;
+}
