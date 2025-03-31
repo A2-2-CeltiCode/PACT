@@ -493,7 +493,7 @@ try {
                         <br>
                         <div class="option-user">
                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false);
-                            if ($reponseJ) {
+                            if ($reponseJ  && empty($reponses)) {
                                 Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", true); 
                             } else { 
                                 Button::render("btn-reponse-disabled", "btn-reponse-disabled","Pas de jetons disponibles", "Répondre", ButtonType::Pro, "", false); }?>
