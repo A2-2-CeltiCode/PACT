@@ -163,7 +163,7 @@ CREATE TABLE _offre(
     titre                   VARCHAR(50) NOT NULL,
     description             VARCHAR(511) NOT NULL,
     descriptionDetaillee    VARCHAR(1023),
-    siteInternet            VARCHAR(50),
+    siteInternet            VARCHAR(100),
     nomOption               VARCHAR(50) NOT NULL,
     nomForfait              VARCHAR(50) NOT NULL,
     estEnLigne              BOOLEAN NOT NULL,

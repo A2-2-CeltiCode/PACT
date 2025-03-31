@@ -36,7 +36,32 @@ INSERT INTO _adresse (codePostal, ville, rue, numTel, coordonneesX, coordonneesY
 (35000, 'Rennes', 'Rue Gurvand', '02 95 21 46 91', 48.1041366, -1.6753072),
 (56000, 'Vannes', 'Rue des Luscanen', '09 24 78 24 36', 47.6582, -2.7608),
 (35000, 'Rennes', 'Rue Hippolyte Lucas', '01 75 62 38 04', 48.0670467, -1.7053024),
-(22000, 'Saint-Brieuc', '2 Rue nominoë', '01 23 45 67 89', 48.5146, -2.7653);
+(22000, 'Saint-Brieuc', '2 Rue nominoë', '01 23 45 67 89', 48.5146, -2.7653),
+(49100, 'Angers', 'Rue du Lutin','0987543526', 47.4772524, -0.5379233),
+(56100, 'Lorient', '65 Boulevard Eugène Cosmao-Dumanoir','0610456321',47.75394969078935, -3.3711788355324646),
+(29000, 'Quimper', '3 Rue Saint-Yves','0614056321',48.0001691026248, -4.1055293508185535),
+(35400, 'Saint-Malo', '11 Avenue des Cottages','0614406321',48.6479450058491, -1.9948423324582776),
+(35720, 'Tournebride', 'Cobac Parc','0614450321',48.4381384, -1.8317578),
+(56890, 'Plescop', 'Voie Verte Vannes - Sainte-Anne-d''Auray','0614456021',47.6862306, -2.8271076),
+(35300, 'Fougeres', 'Château de Fougères, Place Pierre Symon','0614450301',48.3538568, -1.2096123),
+(22100, 'Dinan', '20 Rue Porcon de la Barbinais','0614450320',48.44762016075499, -2.0504299023899475),
+(29120, 'Plomeur', 'Pointe de la Torche','0604450001',47.8366583, -4.3543511),
+(35720, 'Paimpol', '7 Rue du Marais','071234567',48.776151747260116, -3.044595007005404),
+(35720, 'Bréal-sous-Montfort', 'Les Jardins de Brocéliande','0722345678',48.0565199,-1.8886088),
+(22730, 'Trégastel', '7 Avenue d''Ys','0732345678',48.829096, -3.52047),
+(29000, 'Quimper', '34 Rue de Benodet','0742345678',47.987366294098614, -4.10797246525515),
+(35720, 'Plogoff', 'Pointe du Raz (Sentier Côtier)','0752345678',48.03970632103842, -4.735934825072996),
+(35400, 'Saint-Malo', '7 Grand Rue','0762345678',48.6491517, -2.0244625),
+(29270, 'Carhaix-Plouguer', 'Rue du Dépôt','0772345678',48.2779955, -3.5621984),
+(56700, 'Hennebont', '2 Rue du Docteur Paul Carpentier','0782345678',47.80560439888673, -3.2748070197146406),
+(56800, 'Ploërmel', '8 Rue Porte d''en Haut','0763345678',47.9323714, -2.396429),
+(56100, 'Groix', '27 Rue du Port','0764345678',47.6285114, -3.4347729),
+(56100, 'Lorient', '1 Rue Rodin','0765445678',47.7531213436896, -3.371938281580813),
+(56000, 'Vannes', '2 Rue de Campen','0765545678',47.6490469, -2.7972478),
+(35170, 'Bruz', '2 La Haie Gautrais','0765645678',48.058804, -1.7338466),
+(29200, 'Brest', '27 Rue Branda','0765745678',48.39149692073627, -4.481820291028322),
+(56190, 'Le Guerno', 'Parc animalier et botanique de Branféré','0765845678',47.5957547, -2.3976637),
+(35260, 'Cancale', '37 Rue de Saint-Malo','0765945678',48.677987674909744,-1.8541956436319107);
 
 -- Peupler la table _compte
 INSERT INTO _compte (mdp, email, idAdresse) VALUES
@@ -60,7 +85,9 @@ INSERT INTO _compte (mdp, email, idAdresse) VALUES
 ('3e78f1c32984ed554b602f052a6ee1dccf5e37b59fa0dac6d2712cf119d214dd', 'user13@gmail.com', 22),
 ('9011963039465470c0036871db381adacb92ced945356958c58f5054cca0ac2d', 'user14@gmail.com', 23),
 ('822b343fb9eecc852f4fe6b4ebd27b35f6dcca6e1a19cc7453c2626d98641389', 'user15@gmail.com', 24),
-('2907a88109b26939d31308d4dec243389125d28355a494428ef1f4db9ee87eb6','user16@gmail.com', 25);
+('2907a88109b26939d31308d4dec243389125d28355a494428ef1f4db9ee87eb6','user16@gmail.com', 25), 
+('75ec50dbb6e5bf6ff1a5c3eb5e58c3e50aa0d5f436c4dcbafd6198c8911098ff', 'test4@gmail.com', 36),
+('b4ab252fbedda633352510371ee50ee620ab0445dac27957c1481d8a7a99f878', 'test5@gmail.com', 37);
 
 -- Peupler la table _compteMembre
 INSERT INTO _compteMembre (idCompte, pseudo, prenom, nom) VALUES
@@ -87,14 +114,17 @@ INSERT INTO _comptePro (idCompte, denominationSociale, raisonSocialePro, banqueR
 (2, 'Société A', 'Entreprise A', 'FR7612345678901234567890123'),
 (3, 'Société B', 'Entreprise B', 'FR7612345678901234567890124'),
 (4, 'Société C', 'Entreprise C', 'FR7612345678901234567890125'),
-(21,'Société D', 'Entreprise D', 'FR7612345678901234567890126');
+(21,'Société D', 'Entreprise D', 'FR7612345678901234567890126'),
+(22,'Société E', 'Entreprise E', 'FR7612345678901234567890127'),
+(23,'Société F', 'Entreprise F', 'FR7612345678901234567890128');
 
 INSERT INTO _compteProPrive (idCompte,numSiren) VALUES
 (2, '987 654 321'),
-(21,'123 456 789');
+(21,'123 456 789'),
+(22,'103 406 709');
 
 INSERT INTO _compteProPublic (idCompte) VALUES
-(3),(4);
+(3),(4),(23);
 
 INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
 (2, 'En relief', 'Premium', 'Visite de Saint-Brieuc', 'Plongez dans l''histoire et la culture de Saint-Brieuc à travers une visite guidée immersive, où chaque ruelle, chaque monument a une histoire à raconter. Un voyage fascinant pour les passionnés de patrimoine et de paysages bretons.', 'Cette visite guidée de 2 heures vous permettra de découvrir les joyaux cachés de Saint-Brieuc. Vous parcourrez les rues historiques de la ville, en passant devant des bâtiments emblématiques et en admirant les vues spectaculaires sur la baie. Votre guide passionné vous racontera l''histoire locale, des temps anciens aux événements marquants de la ville. Profitez également de moments de calme dans les jardins publics et sur les quais, tout en admirant la beauté naturelle de cette région du nord de la Bretagne.', 'http://example.com/saintbrieuc', TRUE, 36,'2024-09-13','06:00','17:00'),
@@ -111,12 +141,37 @@ INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descrip
 (4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire de la pêche et de la mer en visitant le Musée de la mer à Paimpol, un lieu incontournable pour les passionnés d''histoire maritime.', 'Le Musée de la mer à Paimpol vous propose une immersion fascinante dans l''histoire de la mer, à travers des expositions captivantes sur la pêche, la navigation et la vie maritime. Vous découvrirez des objets anciens, des maquettes de bateaux, ainsi que des témoignages émouvants sur la vie des marins et des pêcheurs bretons. Ce musée est l''occasion idéale de mieux comprendre l''importance de la mer dans l’histoire de la région, tout en explorant des collections exceptionnelles qui retracent l''évolution des métiers maritimes au fil des siècles.', 'http://example.com/paimpol', TRUE, 32, '2024-10-20', '09:00', '19:00'),
 (21, 'A la une', 'Standard', 'Restaurant à Rennes', 'Venez goûter aux spécialités bretonnes à Rennes, dans un restaurant où la tradition et l''innovation se rencontrent pour un repas inoubliable.', 'Ce restaurant à Rennes vous invite à découvrir les saveurs de la Bretagne à travers une cuisine locale savoureuse et authentique. Vous pourrez déguster des crêpes, des galettes bretonnes préparées avec des ingrédients frais et locaux, ainsi que du cidre de qualité. Le cadre chaleureux et accueillant du restaurant vous permettra de passer un moment agréable en famille ou entre amis, tout en savourant des plats traditionnels qui mettent en valeur les produits du terroir breton. Une expérience culinaire à ne pas manquer lors de votre séjour à Rennes.', 'http://example.com/rennes', FALSE, 33, '2024-11-10', '11:00', '16:00'),
 (21, 'A la une', 'Standard', 'Visite de Vannes', 'Explorez la beauté de Vannes, une ville pleine de charme, avec ses ruelles médiévales et son port pittoresque. Une visite incontournable pour les amoureux de l’histoire et de la nature.', 'Lors de cette visite guidée de Vannes, vous découvrirez l’âme de la ville à travers ses rues pavées, ses remparts et ses monuments historiques. Vous admirerez la cathédrale Saint-Pierre, un chef-d’œuvre de l’architecture gothique, et explorerez le vieux quartier de la ville avec ses maisons à colombages. Vous en apprendrez également davantage sur l''histoire de Vannes, depuis son époque médiévale jusqu’à aujourd’hui, en découvrant des lieux emblématiques comme le château de l''Hermine et le port de plaisance. Cette visite vous offrira un aperçu complet de cette ville au charme intemporel.', 'http://example.com/cotesarmor', TRUE, 34, '2024-12-01', '08:00', '18:00'),
-(21, 'A la une', 'Standard', 'Restaurant exotique de Rennes', 'Laissez-vous emporter par les saveurs exotiques au restaurant de Rennes, un lieu unique qui marie subtilement la cuisine tropicale et les influences bretonnes.', 'Le restaurant exotique de Rennes vous invite à découvrir une cuisine originale où les épices et les fruits tropicaux se mêlent aux produits locaux pour créer des plats savoureux et surprenants. Vous pourrez savourer des plats inspirés des îles et des cuisines du monde entier, le tout dans un cadre coloré et chaleureux. Le restaurant met un accent particulier sur la fraîcheur des ingrédients et la qualité des produits, pour offrir une expérience culinaire inoubliable. Une excellente opportunité de découvrir des saveurs nouvelles et de s''évader le temps d’un repas.', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00');
+(21, 'A la une', 'Standard', 'Restaurant exotique de Rennes', 'Laissez-vous emporter par les saveurs exotiques au restaurant de Rennes, un lieu unique qui marie subtilement la cuisine tropicale et les influences bretonnes.', 'Le restaurant exotique de Rennes vous invite à découvrir une cuisine originale où les épices et les fruits tropicaux se mêlent aux produits locaux pour créer des plats savoureux et surprenants. Vous pourrez savourer des plats inspirés des îles et des cuisines du monde entier, le tout dans un cadre coloré et chaleureux. Le restaurant met un accent particulier sur la fraîcheur des ingrédients et la qualité des produits, pour offrir une expérience culinaire inoubliable. Une excellente opportunité de découvrir des saveurs nouvelles et de s''évader le temps d’un repas.', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00'),
+
+(22, 'En relief', 'Standard', 'Festival Interceltique de Lorient', 'Participez à une célébration de la culture celtique lors du Festival Interceltique de Lorient, un événement incontournable pour les amateurs de musique et de danse.', 'Ce festival annuel, qui se déroule en août, attire des milliers de visiteurs du monde entier. Vous pourrez profiter de concerts, de spectacles de danse et d''animations autour de la culture celtique, le tout dans une ambiance festive et conviviale.', 'http://example.com/lorient-festival', TRUE, 38, '2024-08-04', '10:00', '23:00'),
+(22, 'En relief', 'Premium', 'Journées du Patrimoine à Quimper', 'Découvrez le patrimoine breton lors des Journées du Patrimoine à Quimper, avec des visites guidées de monuments et des ateliers.', 'Cet événement annuel se tient en septembre et permet d''explorer des sites historiques habituellement fermés au public. Profitez de visites guidées et d''ateliers pour toute la famille, tout en apprenant davantage sur l''histoire de la Bretagne.', 'http://example.com/quimper-patrimoine', TRUE, 39, '2024-09-14', '09:00', '18:00'),
+(22, 'A la une', 'Standard', 'Concerts au Jardin de la Paix à Saint-Malo', 'Assistez à une série de concerts gratuits au Jardin de la Paix à Saint-Malo, un cadre idyllique pour profiter de la musique.', 'Chaque été, le Jardin de la Paix accueille des concerts en plein air avec des artistes locaux et nationaux. C''est l''occasion idéale de se détendre en écoutant de la bonne musique dans un cadre naturel.', 'http://example.com/saintmalo-concerts', TRUE, 40, '2024-07-15', '18:00', '22:00'),
+(22, 'A la une', 'Premium', 'Cobac Parc à Ille-et-Vilaine', 'Parc d''attractions familial qui propose une variété d''activités ludiques et aquatiques.', 'Avec des manèges adaptés à tous les âges, des spectacles, et une piscine à vagues, c''est une destination idéale pour les sorties en famille.', 'http://example.com/rennes-marche-noel', TRUE, 41, '2024-12-01', '10:00', '20:00'),
+(22, 'A la une', 'Premium', 'Balade à vélo sur la Voie Verte de Vannes', 'Explorez la beauté de la région de Vannes à vélo sur la Voie Verte, une piste cyclable sécurisée et pittoresque.', 'Cette balade à vélo vous fera découvrir des paysages variés, entre champs, forêts et rivières. Idéal pour les familles et les amateurs de nature, cet itinéraire est accessible à tous.', 'http://example.com/vannes-velo', TRUE, 42, '2024-05-20', '08:00', '20:00'),
+(22, 'A la une', 'Standard', 'Visite guidée du Château de Fougères', 'Plongez dans l''histoire médiévale en visitant le Château de Fougères, l''un des plus grands châteaux forts de France.', 'Cette visite guidée vous permettra d''explorer les tours, les remparts et les jardins de ce site historique tout en découvrant son riche passé.', 'http://example.com/fougeres-chateau', TRUE, 43, '2024-04-10', '09:00', '17:00'),
+(22, 'Aucune', 'Standard', 'Ateliers de poterie à Dinan', 'Participez à des ateliers de poterie à Dinan et laissez libre cours à votre créativité.', 'Ces ateliers sont ouverts à tous, quel que soit votre niveau. Vous apprendrez les bases de la poterie tout en découvrant l''ambiance charmante de Dinan.', 'http://example.com/dinan-poterie', TRUE, 44, '2024-03-15', '14:00', '18:00'),
+(22, 'A la une', 'Standard', 'Excursion en kayak à la Pointe de la Torche', 'Découvrez la beauté des côtes bretonnes lors d''une excursion en kayak à la Pointe de la Torche.', 'Accessible aux débutants, cette activité vous permettra d''explorer des paysages marins spectaculaires tout en profitant d''une expérience sportive et conviviale.', 'http://example.com/torche-kayak', TRUE, 45, '2024-07-25', '09:00', '15:00'),
+(22, 'Aucune', 'Premium', 'Festival du Chant de Marin à Paimpol', 'Venez célébrer la culture maritime lors du Festival du Chant de Marin à Paimpol, un événement riche en musique et en émotions.', 'Ce festival, qui a lieu tous les deux ans, rassemble des chanteurs de mer et des groupes musicaux du monde entier pour un événement inoubliable.', 'http://example.com/paimpol-festival', TRUE, 46, '2024-08-09', '10:00', '23:00'),
+(2,  'Aucune', 'Standard', 'Visite des Jardins de Brocéliande', 'Explorez les Jardins de Brocéliande, un lieu magique inspiré des légendes arthuriennes.', 'Ces jardins offrent un voyage enchanteur à travers la nature et la mythologie bretonne, avec des créations florales et artistiques.', 'http://example.com/broceliande-jardins', TRUE, 47, '2024-05-10', '09:00', '18:00'),
+(2,  'En relief', 'Standard', 'Découverte des Côtes de Granit Rose', 'Partez à la découverte des paysages uniques des Côtes de Granit Rose lors d''une randonnée guidée.', 'Cette randonnée vous fera traverser des formations rocheuses spectaculaires et des plages de sable fin, tout en profitant de la beauté naturelle de la Bretagne.', 'http://example.com/granit-rose', TRUE, 48, '2024-09-12', '09:00', '17:00'),
+(3,  'Aucune', 'Gratuit', 'Visite du Musée des Beaux-Arts à Quimper', 'Découvrez des chefs-d''œuvre de l''art breton au Musée des Beaux-Arts de Quimper, avec des expositions variées.', 'Le musée propose des collections permanentes et des expositions temporaires qui raviront les amateurs d''art.', 'http://example.com/quimper-musee', FALSE, 49, '2024-10-05', '10:00', '18:00'),
+(3,  'Aucune', 'Gratuit', 'Balade à pied à la Pointe du Raz', 'Profitez d''une balade à pied à la Pointe du Raz, l''un des sites les plus spectaculaires de Bretagne.', 'Cette balade vous permettra d''admirer des paysages à couper le souffle, entre falaises et océan, tout en découvrant la faune locale.', 'http://example.com/pointe-raz', TRUE, 50, '2024-07-20', '09:00', '18:00'),
+(3,  'Aucune', 'Gratuit', 'Festival des Vieilles Charrues à Carhaix', 'Venez vivre un des plus grands festivals de musique de France à Carhaix, avec une programmation éclectique.', 'Ce festival attire des artistes renommés et offre une scène pour les talents locaux, le tout dans une ambiance festive.', 'http://example.com/vieilles-charrues', FALSE, 51, '2024-07-20', '10:00', '01:00'),
+(4,  'Aucune', 'Gratuit', 'Creperie Les Lutins de Saint-Malo', 'Participez à un atelier de cuisine bretonne et apprenez à préparer des plats traditionnels.', 'Cet atelier est l''occasion idéale pour découvrir les secrets de la cuisine bretonne tout en passant un moment convivial.', 'http://example.com/saintmalo-cuisine', TRUE, 52, '2024-04-15', '14:00', '17:00'),
+(4,  'Aucune', 'Gratuit', 'Atelier de sculpture sur bois à Hennebont', 'Découvrez l''art de la sculpture sur bois lors d''un atelier à Hennebont.', 'Cet atelier vous permettra d''apprendre les techniques de base de la sculpture sur bois, tout en créant votre propre œuvre d''art.', 'http://example.com/hennebont-sculpture', TRUE, 53, '2024-05-30', '14:00', '17:00'),
+(21, 'En relief', 'Premium', 'Marché artisanal de Ploërmel', 'Venez explorer le marché artisanal de Ploërmel, où vous trouverez des produits locaux et artisanaux.', 'Ce marché, qui se tient tous les samedis, met en avant le savoir-faire des artisans bretons avec une variété de produits allant de l''alimentaire aux objets d''art.', 'http://example.com/ploermel-marche', FALSE, 54, '2024-04-20', '09:00', '13:00'),
+(23, 'Aucune', 'Gratuit', 'Exposition d''art contemporain à Lorient', 'Découvrez une exposition d''art contemporain à Lorient, mettant en avant des artistes émergents.', 'Cette exposition est l''occasion de découvrir de nouvelles œuvres et de rencontrer les artistes lors de visites guidées.', 'http://example.com/lorient-exposition', TRUE, 55, '2024-09-01', '10:00', '18:00'),
+(23, 'Aucune', 'Gratuit', 'Le Riverside - Vannes', 'Participez à une balade gourmande à Vannes, à la découverte des spécialités locales.', 'Cette balade vous fera goûter aux délices de la cuisine bretonne tout en explorant les rues historiques de la ville.', 'http://example.com/vannes-gourmande', TRUE, 56, '2024-07-15', '10:00', '14:00'),
+(23, 'Aucune', 'Gratuit', 'Concert au Parc des Expositions de Rennes', 'Assistez à un concert gratuit au Parc des Expositions de Rennes, avec des artistes locaux et nationaux.', 'Cet événement est une excellente occasion de profiter de la musique en plein air tout en découvrant de nouveaux talents.', 'http://example.com/rennes-concert', FALSE, 57, '2024-06-25', '19:00', '23:00'),
+(23, 'Aucune', 'Gratuit', 'Festival de Danse de Brest', 'Venez assister au Festival de Danse de Brest, qui présente des compagnies de danse contemporaine.', 'Ce festival est l''occasion de découvrir des performances captivantes et d''assister à des ateliers ouverts au public.', 'http://example.com/brest-festival-danse', TRUE, 58, '2024-05-05', '14:00', '22:00'),
+(23, 'Aucune', 'Gratuit', 'Visite du Parc Animalier de Branféré', 'Découvrez la faune locale au Parc Animalier de Branféré, un parc qui allie nature et conservation.', 'Cette visite est une expérience enrichissante pour toute la famille, avec des animaux en semi-liberté et des activités éducatives.', 'http://example.com/branfere-parc', TRUE, 59, '2024-07-01', '09:30', '18:00'),
+(23, 'Aucune', 'Gratuit', 'JPO au Conservatoire de Musique de Brest', 'Venez découvrir les activités du Conservatoire de Musique de Brest lors de sa journée portes ouvertes.', 'Cette journée vous permettra d''assister à des concerts, des démonstrations et de rencontrer des professeurs de musique.', 'http://example.com/brest-conservatoire', FALSE, 60, '2024-04-30', '10:00', '17:00'),
+(23, 'Aucune', 'Gratuit', 'Exposition de peintures à Ploemeur', 'Participez à une exposition de peintures contemporaines à Ploemeur, mettant en avant des artistes locaux.', 'Cette exposition est l''occasion de découvrir des œuvres variées et de rencontrer les artistes.', 'http://example.com/ploemeur-exposition', FALSE, 61, '2024-03-12', '10:00', '18:00'),
+(23, 'Aucune', 'Gratuit', 'Atelier de peinture en plein air à Cancale', 'Rejoignez un atelier de peinture en plein air à Cancale, inspiré par la beauté des paysages bretons.', 'Cet atelier est ouvert à tous les niveaux et vous permettra de développer votre créativité dans un cadre naturel.', 'http://example.com/cancale-peinture', TRUE, 62, '2024-08-20', '14:00', '17:00');
 
 -- Peupler la table _image
 INSERT INTO _image (nomImage) VALUES
-('saintbrieuc1.jpg'),
-('visitesaintbrieuc.jpg'),
+('saintbrieuc1.jpg'), ('visitesaintbrieuc.jpg'),
 ('morlaix.jpg'),
 ('parcBrest.jpg'),
 ('saintmalo.jpg'),
@@ -134,7 +189,32 @@ INSERT INTO _image (nomImage) VALUES
 ('restau.jpg'),
 ('parc.jpg'),
 ('bat saint brieuc.jpg'),
-('gare-de-saint-brieuc.jpg');
+('gare-de-saint-brieuc.jpg'),
+('festival-lorient.jpg'),
+('patrimoine-quimper.jpg'),
+('concert-saint-malo.jpg'),
+('cobac-parc.jpg'),
+('velo.jpg'),
+('chateau-fougeres.jpg'),
+('poterie.jpg'),
+('kayak.jpg'),
+('festival-paimpol.jpg'),
+('jardin-broceliande.jpg'),
+('granit-rose.jpg'),
+('musee-quimper.jpg'),
+('pointe-du-raz.jpg'),
+('festival-carhaix.jpg'),
+('creperie-les-lutins.jpg'),
+('atelier-sculpture.jpg'),
+('marche-ploermel.jpg'),
+('exposition-lorient.jpg'),
+('riverside-vannes.jpg'),
+('festival-rennes.jpg'),
+('festival-brest.jpg'),
+('parc-animalier.jpg'),
+('JPO-brest.jpg'),
+('exposition-ploemeur.jpg'),
+('atelier-cancale.jpg');
 
 INSERT INTO _representeOffre (idOffre, idImage) VALUES
 (1, 1),
@@ -153,17 +233,45 @@ INSERT INTO _representeOffre (idOffre, idImage) VALUES
 (12, 14),
 (13, 15),
 (14, 16),
-(15, 17);
+(15, 17),
+(16, 21),
+(17, 22),
+(18, 23),
+(19, 24),
+(20, 25),
+(21, 26),
+(22, 27),
+(23, 28),
+(24, 29),
+(25, 30),
+(26, 31),
+(27, 32),
+(28, 33),
+(29, 34),
+(30, 35),
+(31, 36),
+(32, 37),
+(33, 38),
+(34, 39),
+(35, 40),
+(36, 41),
+(37, 42),
+(38, 43),
+(39, 44),
+(40, 45);
 
 -- Peupler la table _spectacle
 INSERT INTO _spectacle (idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite, dateEvenement) VALUES
 (2, 'Spectacle', 120, 40, 20, '2025-06-21'),
-(8, 'Spectacle', 60, 10, 50, '2024-12-15');
+(8, 'Spectacle', 60, 50, 50, '2025-12-15'),
+(18, 'Spectacle', 90, 30, 80, '2025-09-04'),
+(35, 'Spectacle', 30, 20, 200, '2025-07-20');
 
 -- Peupler la table _parcAttractions
 INSERT INTO _parcAttractions (idOffre, nomCategorie, valPrix, carteParc, nbAttractions, ageMin) VALUES
 (3, 'Parc d''attractions', 60, NULL , 10, 6),
-(9, 'Parc d''attractions', 30, NULL, 15, 4);
+(9, 'Parc d''attractions', 30, NULL, 15, 4),
+(19, 'Parc d''attractions', 70, NULL, 24, 2);
 
 -- Peupler la table _visite
 INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee, dateEvenement) VALUES
@@ -171,25 +279,48 @@ INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee, 
 (6, 10, 90, 'Visite', FALSE, '2025-03-04'),
 (7, 0, 120, 'Visite', TRUE, '2025-02-18'),
 (12, 30, 45, 'Visite', FALSE, '2025-07-02'),
-(14, 40, 75, 'Visite', FALSE, '2025-09-08');
+(14, 40, 75, 'Visite', FALSE, '2025-09-08'),
+(17, 30, 85, 'Visite', FALSE, '2025-09-06'),
+(21, 45, 75, 'Visite', TRUE, '2025-10-08'),
+(25, 90, 65, 'Visite', FALSE, '2025-06-14'),
+(26, 45, 35, 'Visite', FALSE, '2025-11-13'),
+(27, 15, 15, 'Visite', FALSE, '2025-12-18'),
+(28, 75, 25, 'Visite', FALSE, '2025-10-13'),
+(33, 90, 45, 'Visite', FALSE, '2025-07-27'),
+(37, 90, 95, 'Visite', FALSE, '2025-05-26'),
+(38, 15, 5, 'Visite', FALSE, '2025-05-23');
 
 -- Peupler la table _activite
 INSERT INTO _activite (idOffre, nomCategorie, tempsEnMinutes, valPrix, ageMin, prestation) VALUES
 (5, 'Activite', 120, 40, 8, 'kit de plongée'),
 (10, 'Activite', 90, 20, 5, ''),
-(11, 'Activite', 45, 30, 2, 'kit de sauvetage, repas');
+(11, 'Activite', 45, 30, 2, 'kit de sauvetage, repas'),
+(16, 'Activite', 30, 50, 2, ''),
+(20, 'Activite', 45, 90, 2, 'velo'),
+(22, 'Activite', 90, 20, 2, 'argile'),
+(23, 'Activite', 45, 15, 2, 'kayak'),
+(24, 'Activite', 120, 34, 2, ''),
+(29, 'Activite', 45, 28, 2, ''),
+(31, 'Activite', 45, 40, 2, 'bois et outils'),
+(32, 'Activite', 30, 56, 2, ''),
+(36, 'Activite', 45, 34, 2, ''),
+(39, 'Activite', 120, 79, 2, ''),
+(40, 'Activite', 45, 21, 2, '');
 
 -- Peupler la table _restaurant
 INSERT INTO _restaurant (idOffre, nomCategorie, nomGamme, menuRestaurant) VALUES
 (4, 'Restaurant', '€€ (25-40€)', NULL),
 (13, 'Restaurant', '€€€ (+40€)', NULL),
-(15, 'Restaurant', '€ (-25€)', NULL);
+(15, 'Restaurant', '€ (-25€)', NULL),
+(30, 'Restaurant', '€€€ (+40€)', NULL),
+(34, 'Restaurant', '€ (-25€)', NULL);
 
 INSERT INTO _guideeVisite (IdOffre,nomLangage) VALUES
 (1,'Français'),
 (1,'Espagnol'),
 (7,'Français'),
-(7,'Anglais');
+(7,'Anglais'),
+(21,'Français');
 
 -- Peupler la table _possedeSpectacle
 INSERT INTO _possedeSpectacle (idOffre, nomTag) VALUES
@@ -269,7 +400,8 @@ INSERT INTO _avis (idOffre, idCompte, commentaire, note, titre, contexteVisite, 
 (12, 7, 'Le musée de la mer à Paimpol est une excellente visite pour les passionnés d’histoire maritime. Les expositions étaient très intéressantes et bien présentées.', 5.0, 'Visite fascinante', 'Solo', '2024-10-21', FALSE, FALSE),
 (13, 6, 'Le restaurant à Rennes offre une très bonne expérience gastronomique bretonne. Les crêpes et le cidre étaient délicieux, mais le service était un peu lent.', 4.0, 'Bonne expérience mais service lent', 'Couple', '2024-11-11', FALSE, FALSE),
 (14, 18, 'Une belle visite de Vannes, mais il y avait trop de monde ce jour-là. Le guide était sympathique, mais nous avons eu du mal à entendre les explications.', 3.0, 'Sympa mais trop fréquenté', 'Amis', '2024-12-02', FALSE, FALSE),
-(15, 15, 'Le restaurant exotique à Rennes est une expérience culinaire unique. Les plats étaient délicieux et originaux, mais l’ambiance était un peu trop bruyante pour profiter pleinement.', 4.0, 'Bonne expérience mais bruyant', 'Famille', '2024-12-03', FALSE, FALSE);
+(15, 15, 'Le restaurant exotique à Rennes est une expérience culinaire unique. Les plats étaient délicieux et originaux, mais l’ambiance était un peu trop bruyante pour profiter pleinement.', 4.0, 'Bonne expérience mais bruyant', 'Famille', '2024-12-03', FALSE, FALSE),
+(16, 1, 'Trop bien', 5.0, 'Incroyable visite', 'Famille', '2024-12-10', FALSE, FALSE);
 
 -- Peupler la table _reponseAvis
 INSERT INTO _reponseAvis (idAvis, idCompte, commentaire) VALUES
