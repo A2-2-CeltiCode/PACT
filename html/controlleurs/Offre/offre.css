@@ -25,7 +25,7 @@
       text-decoration: none;
       
       > div:nth-child(2) {
-        border-radius: 15px 15px 0 0;
+        border-radius: 10px 10px 0 0;
 
       }
       > div:nth-child(4) {
@@ -146,7 +146,7 @@
 }
 
 .une::before {
-  content: "En Relief";
+  content: "A La Une";
   position: absolute;
   top: 10px;
   right: 10px;
