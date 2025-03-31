@@ -381,77 +381,89 @@ function initializeImagePopup() {
   });
 }
 
-//function initializeModifierButtons() {
-//  const modifierButtons = document.querySelectorAll(".btn-modifier");
-//  console.log("Boutons Modifier détectés :", modifierButtons.length);
-//
-//  const popupCreerAvis = document.getElementById("popup-creer-avis");
-//  const form = popupCreerAvis.querySelector("form");
-//
-//  modifierButtons.forEach((button) => {
-//    button.addEventListener("click", function () {
-//      const idAvis = this.dataset.idavis;
-//      console.log("ID Avis :", idAvis);
-//
-//      if (!idAvis) {
-//        console.error("ID Avis manquant !");
-//        return;
-//      }
-//
-//      fetch("detailsOffre.php", {
-//        method: "POST",
-//        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-//        body: `action=getAvis&idAvis=${idAvis}`,
-//      })
-//        .then((response) => {
-//          console.log("Réponse brute :", response);
-//          if (!response.ok) {
-//            throw new Error("Erreur réseau");
-//          }
-//          return response.json();
-//        })
-//        .then((data) => {
-//          console.log("Données reçues :", data);
-//          if (data) {
-//            form.querySelector('input[name="titre"]').value = data.titre;
-//            form.querySelector('textarea[name="commentaire"]').value = data.commentaire;
-//
-//            // Gestion des étoiles (note)
-//            const note = parseFloat(data.note); // Convertir la note en nombre décimal
-//            const fullStars = Math.floor(note); // Partie entière de la note
-//            const halfStar = note % 1 >= 0.5; // Vérifie si une demi-étoile est nécessaire
-//
-//            // Sélectionner les étoiles pleines
-//            for (let i = 1; i <= fullStars; i++) {
-//                const starInput = form.querySelector(`input[name="note"][value="${i}"]`);
-//                if (starInput) {
-//                    starInput.checked = true;
-//                }
-//            }
-//
-//            // Appliquer un style pour la demi-étoile
-//            if (halfStar) {
-//                const halfStarInput = form.querySelector(`input[name="note"][value="${fullStars + 1}"]`);
-//                if (halfStarInput) {
-//                    halfStarInput.parentElement.classList.add("half-selected");
-//                }
-//            }
-//
-//            console.log("Valeur de la note :", data.note);
-//
-//            form.querySelector('select[name="contexteVisite"]').value = data.contextevisite;
-//
-//            popupCreerAvis.style.display = "block";
-//            document.body.style.overflow = "hidden";
-//            console.log("Popup affichée avec succès");
-//          } else {
-//            console.error("Données manquantes pour l'avis");
-//          }
-//        })
-//        .catch((error) => console.error("Erreur lors de la requête :", error));
-//    });
-//  });
-//}
+function initializeModifierButtons() {
+  const modifierButtons = document.querySelectorAll(".btn-modifier");
+  console.log("Boutons Modifier détectés :", modifierButtons.length);
+
+  const popupCreerAvis = document.getElementById("popup-creer-avis");
+  const form = popupCreerAvis.querySelector("form");
+  const popupTitle = document.getElementById("popup-title");
+  const btnSubmit = document.getElementById("submit-avis");
+  const idAvisInput = document.getElementById("idAvis");
+
+  if (!popupTitle) {
+    console.error("L'élément avec l'ID 'popup-title' est introuvable.");
+    return;
+  }
+
+  if (!btnSubmit) {
+    console.error("L'élément avec l'ID 'submit-avis' est introuvable.");
+    return;
+  }
+
+  popupTitle.textContent = "Modifier votre avis";
+  btnSubmit.textContent = "Confirmer";
+
+  modifierButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const idAvis = this.dataset.idavis;
+      console.log("ID Avis :", idAvis);
+
+      if (!idAvis) {
+        console.error("ID Avis manquant !");
+        return;
+      }
+
+      // Modifier le titre et le bouton du popup
+      //popupTitle.textContent = "Modifier votre avis";
+      //btnSubmit.textContent = "Confirmer";
+      form.action = "modifierAvis.php"; // Redirige le formulaire vers modifierAvis.php
+      idAvisInput.value = idAvis; // Remplit le champ caché avec l'ID de l'avis
+
+      // Récupérer les données de l'avis via AJAX
+      fetch("detailsOffre.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `action=getAvis&idAvis=${idAvis}`,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            form.querySelector('input[name="titre"]').value = data.titre;
+            form.querySelector('textarea[name="commentaire"]').value = data.commentaire;
+
+            // Gestion des étoiles (note)
+            const note = parseFloat(data.note);
+            const fullStars = Math.floor(note);
+            const halfStar = note % 1 >= 0.5;
+
+            for (let i = 1; i <= fullStars; i++) {
+              const starInput = form.querySelector(`input[name="note"][value="${i}"]`);
+              if (starInput) {
+                starInput.checked = true;
+              }
+            }
+
+            if (halfStar) {
+              const halfStarInput = form.querySelector(`input[name="note"][value="${fullStars + 1}"]`);
+              if (halfStarInput) {
+                halfStarInput.parentElement.classList.add("half-selected");
+              }
+            }
+
+            form.querySelector('select[name="contexteVisite"]').value = data.contextevisite;
+
+            popupCreerAvis.style.display = "block";
+            document.body.style.overflow = "hidden";
+            console.log("Popup affichée avec succès");
+          } else {
+            console.error("Données manquantes pour l'avis");
+          }
+        })
+        .catch((error) => console.error("Erreur lors de la requête :", error));
+    });
+  });
+}
 
 // Fonction d'initialisation globale des événements
 function initializeEvents() {
@@ -460,8 +472,8 @@ function initializeEvents() {
   initializeAvisPopup();
   initializeSupprimerButtons();
   initializeSignalerButtons(); 
-  //initializeImagePopup();
-  //initializeModifierButtons(); // Nouvelle fonction
+  initializeImagePopup();
+  initializeModifierButtons(); // Nouvelle fonction
 }
 
 // Initialisation lors du chargement
