@@ -188,9 +188,9 @@ try {
         $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
     }
 
-    $query = "SELECT nbJetonsReponse FROM pact._offre WHERE idOffre = :idOffre";
+    $query = "SELECT nbjetonsreponse FROM pact._offre WHERE idOffre = :idOffre";
     $stmt = $dbh->prepare($query);
-    $stmt->bindParam(':idOffre', $_GET['idOffre']);
+    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
     $stmt->execute();
     $nbJetonsReponse = $stmt->fetchColumn();
 
@@ -492,11 +492,11 @@ try {
                         </div>
                         <br>
                         <div class="option-user">
-                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
-                            <?php if ($reponseJ == true) { ?>
-                                <?php Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", true); ?>
-                            <?php } else { ?>
-                                <?php Button::render("btn-reponse-disabled", "btn-reponse-disabled","Pas de jetons disponibles", "Répondre", ButtonType::Pro, "", false); }?>
+                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false);
+                            if ($reponseJ) {
+                                Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", true); 
+                            } else { 
+                                Button::render("btn-reponse-disabled", "btn-reponse-disabled","Pas de jetons disponibles", "Répondre", ButtonType::Pro, "", false); }?>
                             <form action="blacklisterAvis.php" method="POST" class="form-blacklist">
                                 <input type="hidden" name="idAvis" value="<?= $avi["idavis"] ?>">
                                 <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
