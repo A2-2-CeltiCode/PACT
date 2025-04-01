@@ -47,66 +47,79 @@
 <?php
 // Connexion à la base de données
 try {
-
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
-    $offresUnesSql = $dbh->query(<<<STRING
-    SELECT DISTINCT vue_offres.titre AS nom,
-        nomcategorie AS type,
-        vue_offres.ville,
-        nomimage AS idimage,
-        idoffre,
-        COALESCE(ppv.denominationsociale, ppu.denominationsociale) AS nomProprio,
-        tempsenminutes AS duree,
-        nomoption,
-        AVG(note) AS note,
-        heureouverture AS ouverture,
-        heurefermeture AS fermeture,
-        nomgamme,
-        valprix
-    FROM pact.vue_offres
-    LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
-    LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-    JOIN pact.vue_avis USING (idOffre)
-    WHERE nomoption = 'A la une'
-    GROUP BY nom, type, vue_offres.ville, idimage, idOffre, nomProprio, duree, nomoption, ouverture, fermeture, nomgamme, valprix
-    STRING);
+//    $offresProchesSql = $dbh->query("select distinct vue_offres.titre AS nom, nomcategorie AS type, vue_offres.ville, nomimage as idimage, idoffre, COALESCE(ppv.denominationsociale, ppu.denominationsociale) AS nomProprio, tempsenminutes AS duree, avg(note) AS note from pact.vue_offres LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte JOIN pact.vue_avis USING (idOffre) GROUP BY nom, type, vue_offres.ville, idimage, idOffre, nomProprio, duree, nomoption");
 
-    $offresNouveautésSql = $dbh->query(<<<STRING
-    select distinct vue_offres.titre                                                                       AS nom,
-        nomcategorie                                    AS type,
-        vue_offres.ville,
-        nomimage as idimage,
-        idoffre,
-        COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
-        tempsenminutes                                                              AS duree,
-        nomoption,
-        AVG(note) AS note,
-        heureouverture AS ouverture,
-        heurefermeture AS fermeture,
-        nomgamme,
-        valprix
-    from pact.vue_offres
-    LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
-          LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-    JOIN pact.vue_avis USING (idOffre)
-    GROUP BY nom,
-       type,
-       vue_offres.ville,
-       idimage,
-       idOffre,
-       nomProprio,
-       duree,
-       nomoption,
-       ouverture,
-       fermeture,
-       nomgamme,
-       valprix
-    ORDER BY idOffre DESC
-    LIMIT 10
-    STRING
+    $offresUnesSql = $dbh->query(<<<STRING
+select distinct vue_offres.titre                                                                       AS nom,
+    nomcategorie                                    AS type,
+    vue_offres.ville,
+    nomimage as idimage,
+    idoffre,
+    COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
+    tempsenminutes                                                              AS duree,
+    nomoption,
+    COALESCE(AVG(note), 0) AS note,
+    heureouverture AS ouverture,
+    heurefermeture AS fermeture,
+    nomgamme,
+    valprix
+from pact.vue_offres
+LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
+      LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
+LEFT JOIN pact.vue_avis USING (idOffre)
+WHERE nomoption = 'A la une'
+GROUP BY nom,
+   type,
+   vue_offres.ville,
+   idimage,
+   idOffre,
+   nomProprio,
+   duree,
+   nomoption,
+   ouverture,
+   fermeture,
+   nomgamme,
+   valprix
+STRING
     );
 
-    // Requête pour récupérer les offres les mieux notées
+    $offresNouveautésSql = $dbh->query(<<<STRING
+select distinct vue_offres.titre                                                                       AS nom,
+    nomcategorie                                    AS type,
+    vue_offres.ville,
+    nomimage as idimage,
+    idoffre,
+    COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
+    tempsenminutes                                                              AS duree,
+    nomoption,
+    COALESCE(AVG(note), 0) AS note,
+    heureouverture AS ouverture,
+    heurefermeture AS fermeture,
+    nomgamme,
+    valprix
+from pact.vue_offres
+LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
+      LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
+LEFT JOIN pact.vue_avis USING (idOffre)
+GROUP BY nom,
+   type,
+   vue_offres.ville,
+   idimage,
+   idOffre,
+   nomProprio,
+   duree,
+   nomoption,
+   ouverture,
+   fermeture,
+   nomgamme,
+   valprix
+ORDER BY idOffre DESC
+LIMIT 10
+
+STRING
+    );
+
     $offresNoteSql = $dbh->query(<<<STRING
     SELECT
        DISTINCT pact.vue_offres.titre AS nom,
@@ -117,7 +130,7 @@ try {
        COALESCE(ppv.denominationsociale, ppu.denominationsociale) AS nomProprio,
        tempsenminutes AS duree,
        nomoption,
-       AVG(note) AS note,
+       COALESCE(AVG(note), 0) AS note,
        heureouverture AS ouverture,
        heurefermeture AS fermeture,
        nomgamme,
@@ -125,7 +138,7 @@ try {
     FROM pact.vue_offres
        LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
        LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-       JOIN pact.vue_avis USING (idOffre)
+       LEFT JOIN pact.vue_avis USING (idOffre)
     GROUP BY nom,
        type,
        vue_offres.ville,
@@ -138,10 +151,11 @@ try {
        fermeture,
        nomgamme,
        valprix
-    HAVING AVG(note) > 3.5
+    HAVING COALESCE(AVG(note), 0) >= 0
     ORDER BY note DESC
     STRING
     );
+    
 
     if (isset($_COOKIE["offresRecentes"])) {
         $ofr = unserialize($_COOKIE["offresRecentes"]);
@@ -157,7 +171,7 @@ select
    COALESCE(ppv.denominationsociale,ppu.denominationsociale) AS nomProprio,
    tempsenminutes AS duree,
    nomoption,
-   AVG(note) AS note,
+   COALESCE(AVG(note), 0) AS note,
    heureouverture AS ouverture,
    heurefermeture AS fermeture,
    nomgamme,
@@ -165,7 +179,7 @@ select
 from pact.vue_offres
    LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
    LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-   JOIN pact.vue_avis USING (idOffre)
+   LEFT JOIN pact.vue_avis USING (idOffre)
 WHERE idoffre IN ($l)
 GROUP BY nom,
    type,
@@ -179,7 +193,7 @@ GROUP BY nom,
    fermeture,
    nomgamme,
    valprix
-LIMIT 10
+LIMIT 100
 STRING
         );
     } else {
@@ -192,18 +206,18 @@ STRING
     die();
 }
 
-// Traitement des données récupérées pour les sections "À la une" et "Les mieux notées"
 $offreUnes = [];
 foreach ($offresUnesSql as $item) {
     $item['nomgamme'] = $item['nomgamme'] ?? 'test';
     $item['valprix'] = $item['valprix'] ?? 'test';
     $offreUnes[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
-        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'], $item['valprix'], $item['nomgamme']);
+        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
 }
 $offresNouveautés = [];
 foreach ($offresNouveautésSql as $item) {
     $item['nomgamme'] = $item['nomgamme'] ?? 'test';
     $item['valprix'] = $item['valprix'] ?? 'test';
+    
     $offresNouveautés[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
         $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
 }
@@ -212,7 +226,7 @@ foreach ($offresNoteSql as $item) {
     $item['nomgamme'] = $item['nomgamme'] ?? 'test';
     $item['valprix'] = $item['valprix'] ?? 'test';
     $offresNote[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
-        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'], $item['valprix'], $item['nomgamme']);
+        $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
 }
 $offresRecentes = [];
 foreach ($offresRecentesSql as $item) {
@@ -221,6 +235,7 @@ foreach ($offresRecentesSql as $item) {
     $offresRecentes[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
         $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
 }
+
 
 
 $svgNote = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/note.svg");

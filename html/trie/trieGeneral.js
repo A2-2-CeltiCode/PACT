@@ -96,6 +96,7 @@ function rechercher(page = 1) {
         }
         document.getElementById("resultats").innerHTML = response.offres.join("");
         document.getElementById("nombreOffres").innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
+        document.getElementById("nombreFiltresActifs").innerHTML = `Nombre d'offres affichées : ${response.nombreOffres}`;
         
         
       } catch (e) {

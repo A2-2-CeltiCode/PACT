@@ -25,12 +25,12 @@ $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
 $idOffre = $_GET['id'];
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
-    $offresRecentesArray = unserialize($offresRecentesTxt);
-    $offresRecentesArray[$idOffre] = time();
-    setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time()+60*60*24*15, "/");
+$offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
+$offresRecentesArray = unserialize($offresRecentesTxt);
 
+if (!array_key_exists($idOffre, $offresRecentesArray)) {
+    $offresRecentesArray[$idOffre] = time();
+    setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time() + 60 * 60 * 24 * 15, "/");
 }
 
 try {
