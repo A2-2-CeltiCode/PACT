@@ -51,16 +51,17 @@ INSERT INTO _adresse (codePostal, ville, rue, numTel, coordonneesX, coordonneesY
 (22730, 'Trégastel', '7 Avenue d''Ys','0732345678',48.829096, -3.52047),
 (29000, 'Quimper', '34 Rue de Benodet','0742345678',47.987366294098614, -4.10797246525515),
 (35720, 'Plogoff', 'Pointe du Raz (Sentier Côtier)','0752345678',48.03970632103842, -4.735934825072996),
+(35720, 'Carhaix-Plouguer', 'Rue de Calac','0752345678',48.300000, -3.600000),
 (35400, 'Saint-Malo', '7 Grand Rue','0762345678',48.6491517, -2.0244625),
-(29270, 'Carhaix-Plouguer', 'Rue du Dépôt','0772345678',48.2779955, -3.5621984),
 (56700, 'Hennebont', '2 Rue du Docteur Paul Carpentier','0782345678',47.80560439888673, -3.2748070197146406),
 (56800, 'Ploërmel', '8 Rue Porte d''en Haut','0763345678',47.9323714, -2.396429),
-(56100, 'Groix', '27 Rue du Port','0764345678',47.6285114, -3.4347729),
 (56100, 'Lorient', '1 Rue Rodin','0765445678',47.7531213436896, -3.371938281580813),
 (56000, 'Vannes', '2 Rue de Campen','0765545678',47.6490469, -2.7972478),
 (35170, 'Bruz', '2 La Haie Gautrais','0765645678',48.058804, -1.7338466),
 (29200, 'Brest', '27 Rue Branda','0765745678',48.39149692073627, -4.481820291028322),
 (56190, 'Le Guerno', 'Parc animalier et botanique de Branféré','0765845678',47.5957547, -2.3976637),
+(29200, 'Brest', '', '0123498765', 48.3905283, -4.4860088),
+(56270, 'Plœmeu', '3 Rue Neuve', '0765428931', 47.736321412312044,-3.4263479097024296),
 (35260, 'Cancale', '37 Rue de Saint-Malo','0765945678',48.677987674909744,-1.8541956436319107);
 
 -- Peupler la table _compte
