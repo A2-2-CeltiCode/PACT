@@ -104,6 +104,9 @@ main table {
     border-collapse: collapse;
     margin-top: 20px;
 }
+.red{
+    color: var(--erreur);
+}
 
 main table th, main table td {
     padding: 10px;
@@ -306,7 +309,7 @@ main button:hover {
 #popupMotDePasse{
     display: none; 
     position: fixed; 
-    top: 50%; 
+    top: 40%; 
     left: 50%; 
     transform: translate(-50%, -50%); 
     width: 400px; 
@@ -314,6 +317,8 @@ main button:hover {
     background: white; 
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; 
     border-radius: 10px; 
+    overflow: scroll;
+    height: 400px;
     z-index: 1000;
 }
 
@@ -355,7 +360,7 @@ footer {
 
     /* Ajuster le conteneur principal */
     main {
-        width: 95%; /* Réduit la largeur sur mobile */
+        width: fit-content; /* Réduit la largeur sur mobile */
         padding: 20px;
         box-shadow: none; /* Supprime l'ombre pour un style plus épuré */
         margin-bottom: 20px;
@@ -380,7 +385,6 @@ footer {
 
     /* Ajustement des boutons */
     main button, .modifier button {
-        width: 40%; /* Les boutons occupent toute la largeur */
         font-size: 1em;
         margin: 10px 0;
     }
@@ -482,18 +486,18 @@ main table {
     display: none;
     background-color: white;
     position: fixed;
-    top: 50%;
+    top: 40%;
     left: 50%;
     margin-right: -50%;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 1em;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; 
     transform: translate(-50%, -50%);
     #deleteConfirm {
-        background-color: var(--erreur);
+        background-color: var(--valide);
     }
     #deleteCancel {
-        background-color: var(--valide);
+        background-color: var(--erreur);
     }
     p {
         padding-bottom: 20px;

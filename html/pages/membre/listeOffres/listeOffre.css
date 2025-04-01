@@ -309,6 +309,10 @@ input[type="number"]{
     z-index: 999 !important;
 }
 
+svg {
+    stroke: var(--primaire-membre)        
+}
+
 @media (max-width:400px) {
     #map{
         width: 340px !important;
