@@ -309,7 +309,7 @@ try {
             }
             Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg","icone info complémentaire");
             ?>
-            <ul>
+            <ul class="offre-details">
                 <?php
                 // Affichage des informations spécifiques en fonction du type d'offre
                switch ($typeOffre) {
@@ -319,27 +319,27 @@ try {
                         $end = strpos($string, ')');
 
                         $gamme = substr($string, $start, $end - $start);
-                        Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg","icon game restaurant");
+                        Label::render("margin", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg","icon game restaurant");
                         break;
                     case 'spectacle':
-                        Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée spectacle");
-                        Label::render("", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg","icone capacité de la salle pour spectacle");
+                        Label::render("margin", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée spectacle");
+                        Label::render("margin", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg","icone capacité de la salle pour spectacle");
                         break;
                     case 'parc_attractions':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini pour parc");
-                        Label::render("", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg","icone nombre attractions parc");
+                        Label::render("margin", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini pour parc");
+                        Label::render("margin", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg","icone nombre attractions parc");
                         break;
                     case 'activite':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini Activité");
-                        Label::render("", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée activité");
-                        Label::render("", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg","icone prestation Activité");
+                        Label::render("margin", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini Activité");
+                        Label::render("margin", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée activité");
+                        Label::render("margin", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg","icone prestation Activité");
                         break;
                     case 'visite':
-                        Label::render("", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée visite");
-                        Label::render("", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg","icone si viste guidée ou non");
+                        Label::render("margin", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée visite");
+                        Label::render("margin", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg","icone si viste guidée ou non");
                         echo "<br>";
                         if($guidee['estguidee'] == 'Oui'){
-                            echo "Langue : ";
+                            Label::render("margin", "", "", "Langue : ", "");
                             for ($i=0; $i < count($langueGuidee)  ; $i++) { 
                                 if( $i < count($langueGuidee)-1){
                                     Label::render("","","",$langueGuidee[$i]["nomlangage"].",");
