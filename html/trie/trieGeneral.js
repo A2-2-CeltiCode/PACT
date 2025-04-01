@@ -13,10 +13,6 @@ function rechercher(page = 1) {
       value: document.querySelector('input[name="status"]').value,
     },
     {
-      name: "localisation",
-      value: document.querySelector('input[name="localisation"]').value,
-    },
-    {
       name: "minPrix",
       value: document.querySelector('input[name="minPrix"]').value,
       default: 0,
@@ -78,12 +74,7 @@ function rechercher(page = 1) {
     return count;
   }, 0);
 
-  document.getElementById(
-    "nombreFiltresActifs"
-  ).innerText = `Nombre de filtres actifs : ${Math.max(
-    filtreActifCount - 3,
-    0
-  )}`;
+
 
   const xhr = new XMLHttpRequest();
   lastRequest = xhr;

@@ -63,6 +63,7 @@ fetch("/trie/getOffre.php")
   .then((points) => {
     // Ajout des points sur la carte
     addMapMarkers(map, points);
+    console.log(points);
   })
   .catch((error) => console.error("Erreur:", error));
 
@@ -82,6 +83,7 @@ function addMapMarkers(map, points) {
   var markers = L.markerClusterGroup();
 
   points.forEach(function (point) {
+    if(!(point.coordonneesx == null || point.coordonneesy == null)){
     var iconType;
     switch (point.nomcategorie) {
       case "Spectacle":
@@ -149,6 +151,7 @@ function addMapMarkers(map, points) {
       `
     );
     markers.addLayer(marker);
+  }
   });
   map.addLayer(markers);
 }
