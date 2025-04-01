@@ -41,7 +41,7 @@ try {
     $sortBy = $_GET['sortBy']?? 'date_desc';
     $filterBy = $_GET['filterBy']?? 'all';
 
-    $query = "SELECT titre, note, commentaire, CASE WHEN pseudo IS NULL THEN '<em><i>Utilisateur Supprimé</i></em>' ELSE pseudo END AS pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas, pact.vue_compte_membre.idcompte FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, CASE WHEN pseudo IS NULL THEN '<em><i>Utilisateur Supprimé</i></em>' ELSE pseudo END AS pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas, pact.vue_compte_membre.idcompte, pact._avis.estblacklist FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
 
     if ($sortBy === 'date_asc') {
@@ -63,6 +63,8 @@ try {
         $totalNotes += $avi['note'];
     }
     $moyenneNotes = $nombreAvis > 0 ? $totalNotes / $nombreAvis : 0;
+
+    
 
     $imagesAvis = [];
     foreach ($avis as $avi) {
@@ -345,6 +347,9 @@ try {
                     if (!isset($avi["idavis"])) {
                         continue;
                     }
+                    if ($avi['estblacklist']){
+
+                    }else{
                     
                     $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
                     $stmt->execute([':idAvis' => $avi['idavis']]);  
@@ -434,7 +439,7 @@ try {
                             </div>
                         <?php endif; ?>
                     </div>
-                    <?php
+                    <?php }
                 }
                 ?>
             </article>
