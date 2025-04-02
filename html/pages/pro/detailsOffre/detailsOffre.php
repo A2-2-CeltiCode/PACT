@@ -164,6 +164,7 @@ try {
     $gammeRestaurant = $dbh->query('SELECT nomgamme FROM pact.vue_restaurant WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $minutesSpectacle = $dbh->query('SELECT tempsenminutes FROM pact.vue_spectacle WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $adresse = $dbh->query('SELECT codepostal, ville, rue FROM pact._offre NATURAL JOIN pact._adresse WHERE idoffre =' . $idOffre, PDO::FETCH_ASSOC)->fetch();
+    $nomForfait = $dbh->query('SELECT nomforfait FROM pact.vue_offres WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $tags = $dbh->query('SELECT * FROM pact.vue_tags_' . $typeOffre . ' WHERE idoffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetchAll();
     $images = $dbh->query('SELECT pact._representeoffre.idImage, pact._image.nomImage FROM pact._representeoffre JOIN pact._image ON pact._representeoffre.idImage = pact._image.idImage WHERE pact._representeoffre.idOffre = ' . "'$idOffre'", PDO::FETCH_ASSOC)->fetchAll();    $carte = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._parcAttractions JOIN pact._image ON pact._parcAttractions.carteParc = pact._image.idImage WHERE pact._parcAttractions.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
     $menu = $dbh->query('SELECT pact._image.idImage, pact._image.nomImage FROM pact._restaurant JOIN pact._image ON pact._restaurant.menuRestaurant = pact._image.idImage WHERE pact._restaurant.idOffre = ' . $idOffre, PDO::FETCH_ASSOC)->fetch();
@@ -186,19 +187,6 @@ try {
     foreach ($avis as $avi) {
         $thumbsUpMap[$avi['idavis']] = $avi['poucehaut'];
         $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
-    }
-
-    $query = "SELECT nbjetonsreponse FROM pact._offre WHERE idOffre = :idOffre";
-    $stmt = $dbh->prepare($query);
-    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
-    $stmt->execute();
-    $nbJetonsReponse = $stmt->fetchColumn();
-
-    $reponseJ = true;
-    if($nbJetonsReponse > 0){
-        $reponseJ = true;
-    }else{
-        $reponseJ = false;
     }
     
 } catch (PDOException $e) {
@@ -387,11 +375,6 @@ try {
         <div class="liste-avis">
             <div class="mes_er_avis">
                 <h1>Avis</h1>
-                <?php
-                    if (isset($_GET['error']) && $_GET['error'] == 'plus_de_reponses') {
-                        echo "<div class='mes_er' style='color: red; font-weight: bold;'>Nombre maximum de réponses atteint.</div>";
-                    }
-                ?>
             </div>
             <?php
             if ($nombreAvis > 0){
@@ -411,6 +394,7 @@ try {
                         <option value="viewed">Vus</option>
                         <option value="not_viewed">Non vus</option>
                     </select>
+                <?php if($nomForfait['nomforfait'] == "Premium"){ ?>
                     <div id="labelBlacklistage">
                         <?php if ($nbJetons <= 1) { ?>
                             <h4>Jetons de Blacklistage : <?php echo $nbJetons?> disponible</h4>
@@ -421,12 +405,13 @@ try {
                             <p>Prochain jeton de blacklistage : <?php echo $dateProchainBlacklist ?></p>
                         <?php } ?>
                     </div>
+                <?php } ?>
                     
                 </aside>
             <article class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
-                    if (!isset($avi["idavis"]) || $avi["estblacklist"]) {
+                    if (!isset($avi["idavis"]))  {
                         continue;
                     }
                     
@@ -492,24 +477,30 @@ try {
                         </div>
                         <br>
                         <div class="option-user">
-                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false);
-                            if ($reponseJ  && empty($reponses)) {
-                                Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", true); 
-                            } else { 
-                                Button::render("btn-reponse-disabled", "btn-reponse-disabled","Pas de jetons disponibles", "Répondre", ButtonType::Pro, "", false); }?>
-                            <form action="blacklisterAvis.php" method="POST" class="form-blacklist">
-                                <input type="hidden" name="idAvis" value="<?= $avi["idavis"] ?>">
-                                <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
-                                <?php if ($nbJetons > 0) { ?>
-                                    <?php Button::render("btn-blacklister", "btn-blacklister","Blacklister l'avis", "Blacklister", ButtonType::Pro, "", true); ?>
-                                <?php } else { ?>
-                                    <?php Button::render("btn-blackliste-disabled", "btn-blackliste-disabled","Pas de jetons disponibles", "Blacklister", ButtonType::Pro, "", false); }?>
-                            </form>
+                            <?php if($avi["estblacklist"]){ ?>
+                                <h3><em>Blacklisté</em></h3>
+                            <?php } else{
+                                Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false);
+                                if (empty($reponses)) {
+                                    Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", true); 
+                                }
+                                if($nomForfait['nomforfait'] == "Premium"){ ?>
+                                <form action="blacklisterAvis.php" method="POST" class="form-blacklist">
+                                    <input type="hidden" name="idAvis" value="<?= $avi["idavis"] ?>">
+                                    <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
+                                    <?php if ($nbJetons > 0) {
+                                        Button::render("btn-blacklister", "btn-blacklister","Blacklister l'avis", "Blacklister", ButtonType::Pro, "", true);
+                                    } else {
+                                        Button::render("btn-blackliste-disabled", "btn-blackliste-disabled","Pas de jetons disponibles", "Blacklister", ButtonType::Pro, "", false); }?>
+                                </form>
+                                <?php } ?>
+                            <?php } ?>                             
                         </div>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
                                     <div class="reponse">
+                                        <br>
                                         <p class="avis-title">Réponse:</p>
                                         <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>

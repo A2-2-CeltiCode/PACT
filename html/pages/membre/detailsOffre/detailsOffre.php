@@ -423,10 +423,17 @@ try {
                                 <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                             </div>
                         </div>   
-                        <?php if ($avi['idcompte'] == $idCompte): ?>
-                            <button class="btn-modifier" title="Modifier un avis" data-idavis="<?= $avi["idavis"] ?>">Modifier</button>
+                        <div class="option-user">
+                        <?php if($avi['idcompte'] == $idCompte){
+                            if($avi["estblacklist"]){ ?>
+                                <h3><em>Blacklisté</em></h3>
+                            <?php } ?>
                             <button class="btn-supprimer" title="Supprimer un avis" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
-                        <?php endif; ?>
+                        <?php } else{
+                            Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false);
+                            
+                            } ?>                     
+                        </div>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
@@ -443,7 +450,9 @@ try {
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
                                             </p>
-                                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false); ?>
+                                            <?php if($avi["estblacklist"] == false){
+                                                Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false);
+                                            } ?>
                                             </div>
                                 </div>
 
@@ -453,7 +462,7 @@ try {
                         <?php endif; ?>
                     </div>
                     <?php
-                }else{}
+                }
             }
                 ?>
             </article>

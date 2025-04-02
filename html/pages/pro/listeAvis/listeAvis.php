@@ -161,9 +161,7 @@ try {
                     if (!isset($avi["idavis"])) {
                         continue;
                     }
-                    if ($avi["estblacklist"]){
-
-                    }else{
+                    else{
                     
                     $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
                     $stmt->execute([':idAvis' => $avi['idavis']]);  
@@ -228,11 +226,14 @@ try {
                                 <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
                             </div>
                         </div>
-                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
-                            <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php //Button::render("btn-repondre", "btn-repondre","bouton de reponse","Répondre", ButtonType::Pro, "", false); ?>
-                            <?php endif; ?>
-                        
+                        <br>
+                        <div class="option-user">
+                            <?php if($avi["estblacklist"]){ ?>
+                                <h3><em>Blacklisté</em></h3>
+                            <?php } else{
+                                Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false);
+                            } ?>                             
+                        </div>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>

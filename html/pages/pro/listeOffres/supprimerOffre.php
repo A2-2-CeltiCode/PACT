@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $idImages = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
         $queries = [
+            "DELETE FROM pact._representeavis WHERE idavis IN (SELECT idavis FROM pact._avis WHERE idoffre = :idOffre)",
             "DELETE FROM pact._possedeactivite WHERE idoffre = :idOffre",
             "DELETE FROM pact._possedevisite WHERE idoffre = :idOffre",
             "DELETE FROM pact._possederestaurant WHERE idoffre = :idOffre",

@@ -14,11 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':idReponse', $idReponse);
         $stmt->execute();
 
-        // Restaurer un jeton de réponse
-        $stmt = $dbh->prepare("UPDATE pact._offre SET nbJetonsReponse = nbJetonsReponse + 1 WHERE idOffre = :idOffre");
-        $stmt->bindParam(':idOffre', $idOffre);
-        $stmt->execute();
-
         // Rediriger avec un message de succès
         header("Location: detailsOffre.php?idOffre=" . $idOffre . "&message=reponse_supprimee");
         exit;
