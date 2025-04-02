@@ -2,10 +2,12 @@
 error_reporting(E_ALL ^ E_WARNING);
 // Récupération de l'identifiant de l'offre
 $idOffre = $_GET['id'];
-$offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
-$offresRecentesArray = unserialize($offresRecentesTxt);
-$offresRecentesArray[$idOffre] = time();
-setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time()+60*60*24*15, "/");
+if (isset($_GET['id'])) {
+    $offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
+    $offresRecentesArray = unserialize($offresRecentesTxt);
+    $offresRecentesArray[$idOffre] = time();
+    setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time()+60*60*24*15, "/");
+}
 
 
 // Inclusion des fichiers nécessaires pour les composants de l'interface
