@@ -559,15 +559,16 @@ body > header {
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        height: 50vh;
+        height: fit-content;
         transform: translateX(200%);
         transition: transform 0.2s;
         top: 0;
         right: 0;
         z-index: 99;
-        padding: 4rem 2rem 1rem;
+        padding: 2rem 2rem 1rem;
         background-color: var(--blanc);
         border-radius: 5px;
+        gap: 20px;
 
         > a {
             margin: 0 10px;

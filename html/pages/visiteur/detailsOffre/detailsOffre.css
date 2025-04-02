@@ -746,6 +746,13 @@ label{
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
+.offre-details{
+    margin-left: 15%;
+    margin-right: 15%;
+}
+.margin{
+  margin-left: 10px;
+}
 
 @-webkit-keyframes fadein {
   from {
@@ -842,7 +849,6 @@ label{
   }
 }
 
-/* ...existing code... */
 
 .rating {
   display: flex;

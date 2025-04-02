@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 session_start();
 use composants\Button\ButtonType;
 use \composants\Select\Select;
@@ -96,31 +98,43 @@ $renderer = new Carte();
 <br>
 
 <div id="nombreOffres">
+    
+    
     <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
+    <?php
+    
+    Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
+    ?>
+    
 </div>
+
 <div id="resultats" class="offres-container">
 
     <!-- Affichage des résultats -->
     <?php
     
     foreach ($resultats as $item) {
+        
         $sql = 'SELECT denominationsociale FROM pact._comptepro WHERE idcompte = :idcompte';
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':idcompte', $item['idcompte'], PDO::PARAM_INT);
         $stmt->execute();
         $proDetails = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        
         if ($item['moynotes'] == null) {
             $item['moynotes'] = 0;
         }
+        
         $item['nomgamme'] = $item['nomgamme'] ?? 'test';
         $item['valprix'] = $item['valprix'] ?? 'test';
-
+        
         $offre = new Offre($item['titre'], $item['nomcategorie'], $item['ville'], $item['nomimage'], $proDetails['denominationsociale'], $item['idoffre'], $item['tempsenminutes'], $item['moynotes'], $item['nomoption'], $item['heureouverture'], $item['heurefermeture'], $item['valprix'], $item['nomgamme']);
         echo $offre;
+        
     }
     ?>
 </div>
+
 
 <script src="listeOffre.js"></script>
 </body>

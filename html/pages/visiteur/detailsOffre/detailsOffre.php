@@ -25,13 +25,15 @@ $idCompte = $_SESSION['idCompte'];
 
 // Récupération de l'identifiant de l'offre
 $idOffre = $_GET['id'];
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
-    $offresRecentesArray = unserialize($offresRecentesTxt);
-    $offresRecentesArray[$idOffre] = time();
-    setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time()+60*60*24*15, "/");
 
+$offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
+$offresRecentesArray = unserialize($offresRecentesTxt);
+
+if (!array_key_exists($idOffre, $offresRecentesArray)) {
+    $offresRecentesArray[$idOffre] = time();
+    setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time() + 60 * 60 * 24 * 15, "/");
 }
+
 
 try {
     // Connexion à la base de données
@@ -41,7 +43,7 @@ try {
     $sortBy = $_GET['sortBy']?? 'date_desc';
     $filterBy = $_GET['filterBy']?? 'all';
 
-    $query = "SELECT titre, note, commentaire, CASE WHEN pseudo IS NULL THEN '<em><i>Utilisateur Supprimé</i></em>' ELSE pseudo END AS pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas, pact.vue_compte_membre.idcompte FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
+    $query = "SELECT titre, note, commentaire, CASE WHEN pseudo IS NULL THEN '<em><i>Utilisateur Supprimé</i></em>' ELSE pseudo END AS pseudo, to_char(datevisite,'DD/MM/YY') as datevisite, contextevisite, idavis,poucehaut,poucebas, pact.vue_compte_membre.idcompte, pact._avis.estblacklist FROM pact._avis JOIN pact.vue_compte_membre ON pact._avis.idCompte = pact.vue_compte_membre.idCompte WHERE idOffre = $idOffre";
 
 
     if ($sortBy === 'date_asc') {
@@ -63,6 +65,8 @@ try {
         $totalNotes += $avi['note'];
     }
     $moyenneNotes = $nombreAvis > 0 ? $totalNotes / $nombreAvis : 0;
+
+    
 
     $imagesAvis = [];
     foreach ($avis as $avi) {
@@ -239,7 +243,7 @@ try {
             }
             Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg","icone pour les info complémentaires");
             ?>
-            <ul>
+            <ul class="offre-details">
                 <?php
                 // Affichage des informations spécifiques en fonction du type d'offre
                 switch ($typeOffre) {
@@ -249,27 +253,28 @@ try {
                         $end = strpos($string, ')');
 
                         $gamme = substr($string, $start, $end - $start);
-                        Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg","icon game restaurant");
+                        Label::render("margin", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg","icon game restaurant");
                         break;
                     case 'spectacle':
-                        Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée spectacle");
-                        Label::render("", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg","icone capacité de la salle pour spectacle");
+                        Label::render("margin", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée spectacle");
+                        Label::render("margin", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg","icone capacité de la salle pour spectacle");
                         break;
                     case 'parc_attractions':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini pour parc");
-                        Label::render("", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg","icone nombre attractions parc");
+                        Label::render( "margin", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini pour parc");
+                        Label::render("margin", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg","icone nombre attractions parc");
                         break;
                     case 'activite':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini Activité");
-                        Label::render("", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée activité");
-                        Label::render("", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg","icone prestation Activité");
+                        Label::render("margin", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini Activité");
+                        Label::render("margin", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée activité");
+                        Label::render("margin", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg","icone prestation Activité");
                         break;
                     case 'visite':
-                        Label::render("", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée visite");
-                        Label::render("", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg","icone si viste guidée ou non");
+                        Label::render("margin", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée visite");
+                        Label::render("margin", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg","icone si viste guidée ou non");
                         echo "<br>";
                         if($guidee['estguidee'] == 'Oui'){
-                            echo "Langue : ";
+                            Label::render("margin", "", "", "Langue : ", "");
+                           // echo "Langue : ";
                             for ($i=0; $i < count($langueGuidee)  ; $i++) { 
                                 if( $i < count($langueGuidee)-1){
                                     Label::render("","","",$langueGuidee[$i]["nomlangage"].",");
@@ -344,6 +349,9 @@ try {
                     if (!isset($avi["idavis"])) {
                         continue;
                     }
+                    if ($avi['estblacklist']){
+
+                    }else{
                     
                     $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
                     $stmt->execute([':idAvis' => $avi['idavis']]);  
@@ -433,7 +441,7 @@ try {
                             </div>
                         <?php endif; ?>
                     </div>
-                    <?php
+                    <?php }
                 }
                 ?>
             </article>

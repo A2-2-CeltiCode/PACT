@@ -161,6 +161,9 @@ try {
                     if (!isset($avi["idavis"])) {
                         continue;
                     }
+                    if ($avi["estblacklist"]){
+
+                    }else{
                     
                     $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
                     $stmt->execute([':idAvis' => $avi['idavis']]);  
@@ -227,7 +230,7 @@ try {
                         </div>
                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php Button::render("btn-repondre", "btn-repondre","bouton de reponse","Répondre", ButtonType::Pro, "", false); ?>
+                                <?php //Button::render("btn-repondre", "btn-repondre","bouton de reponse","Répondre", ButtonType::Pro, "", false); ?>
                             <?php endif; ?>
                         
                         <?php if (!empty($reponses)): ?>
@@ -257,7 +260,7 @@ try {
                         <?php endif; ?>
                     </div>
                     <?php
-                }
+                }}
                 ?>
             </article>
             <?php

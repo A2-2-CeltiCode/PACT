@@ -163,7 +163,7 @@ CREATE TABLE _offre(
     titre                   VARCHAR(50) NOT NULL,
     description             VARCHAR(511) NOT NULL,
     descriptionDetaillee    VARCHAR(1023),
-    siteInternet            VARCHAR(50),
+    siteInternet            VARCHAR(100),
     nomOption               VARCHAR(50) NOT NULL,
     nomForfait              VARCHAR(50) NOT NULL,
     estEnLigne              BOOLEAN NOT NULL,
@@ -172,6 +172,7 @@ CREATE TABLE _offre(
     heureOuverture          TIME NOT NULL,
     heureFermeture          TIME NOT NULL,
     nbJetons                INTEGER DEFAULT 3 CHECK (nbJetons > -1 AND nbJetons < 4),
+    nbJetonsReponse         INTEGER DEFAULT 3 CHECK (nbJetonsReponse > -1 AND nbJetonsReponse < 4),
     CONSTRAINT offre_pk PRIMARY KEY(idOffre),
     CONSTRAINT offre_fk_comptePro FOREIGN KEY (idCompte) 
         REFERENCES _comptePro(idCompte),

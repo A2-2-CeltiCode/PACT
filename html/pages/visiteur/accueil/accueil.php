@@ -61,7 +61,7 @@ select distinct vue_offres.titre                                                
     COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
     tempsenminutes                                                              AS duree,
     nomoption,
-    AVG(note) AS note,
+    COALESCE(AVG(note), 0) AS note,
     heureouverture AS ouverture,
     heurefermeture AS fermeture,
     nomgamme,
@@ -69,7 +69,7 @@ select distinct vue_offres.titre                                                
 from pact.vue_offres
 LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
       LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-JOIN pact.vue_avis USING (idOffre)
+LEFT JOIN pact.vue_avis USING (idOffre)
 WHERE nomoption = 'A la une'
 GROUP BY nom,
    type,
@@ -95,7 +95,7 @@ select distinct vue_offres.titre                                                
     COALESCE(ppv.denominationsociale, ppu.denominationsociale)                  AS nomProprio,
     tempsenminutes                                                              AS duree,
     nomoption,
-    AVG(note) AS note,
+    COALESCE(AVG(note), 0) AS note,
     heureouverture AS ouverture,
     heurefermeture AS fermeture,
     nomgamme,
@@ -103,7 +103,7 @@ select distinct vue_offres.titre                                                
 from pact.vue_offres
 LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
       LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-JOIN pact.vue_avis USING (idOffre)
+LEFT JOIN pact.vue_avis USING (idOffre)
 GROUP BY nom,
    type,
    vue_offres.ville,
@@ -132,7 +132,7 @@ STRING
        COALESCE(ppv.denominationsociale, ppu.denominationsociale) AS nomProprio,
        tempsenminutes AS duree,
        nomoption,
-       AVG(note) AS note,
+       COALESCE(AVG(note), 0) AS note,
        heureouverture AS ouverture,
        heurefermeture AS fermeture,
        nomgamme,
@@ -140,7 +140,7 @@ STRING
     FROM pact.vue_offres
        LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
        LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-       JOIN pact.vue_avis USING (idOffre)
+       LEFT JOIN pact.vue_avis USING (idOffre)
     GROUP BY nom,
        type,
        vue_offres.ville,
@@ -153,7 +153,7 @@ STRING
        fermeture,
        nomgamme,
        valprix
-    HAVING AVG(note) > 3.5
+    HAVING COALESCE(AVG(note), 0) >= 0
     ORDER BY note DESC
     STRING
     );
@@ -173,7 +173,7 @@ select
    COALESCE(ppv.denominationsociale,ppu.denominationsociale) AS nomProprio,
    tempsenminutes AS duree,
    nomoption,
-   AVG(note) AS note,
+   COALESCE(AVG(note), 0) AS note,
    heureouverture AS ouverture,
    heurefermeture AS fermeture,
    nomgamme,
@@ -181,7 +181,7 @@ select
 from pact.vue_offres
    LEFT JOIN pact.vue_compte_pro_prive ppv ON vue_offres.idcompte = ppv.idcompte
    LEFT JOIN pact.vue_compte_pro_public ppu ON vue_offres.idcompte = ppu.idcompte
-   JOIN pact.vue_avis USING (idOffre)
+   LEFT JOIN pact.vue_avis USING (idOffre)
 WHERE idoffre IN ($l)
 GROUP BY nom,
    type,
@@ -195,7 +195,7 @@ GROUP BY nom,
    fermeture,
    nomgamme,
    valprix
-LIMIT 10
+LIMIT 100
 STRING
         );
     } else {
@@ -219,6 +219,7 @@ $offresNouveautés = [];
 foreach ($offresNouveautésSql as $item) {
     $item['nomgamme'] = $item['nomgamme'] ?? 'test';
     $item['valprix'] = $item['valprix'] ?? 'test';
+    
     $offresNouveautés[] = new Offre($item['nom'], $item['type'], $item['ville'], $item['idimage'], $item['nomproprio'],
         $item['idoffre'], $item['duree'], $item['note'], $item['nomoption'], $item['ouverture'], $item['fermeture'],$item['valprix'],$item['nomgamme']);
 }

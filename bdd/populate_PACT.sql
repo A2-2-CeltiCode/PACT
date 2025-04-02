@@ -36,7 +36,33 @@ INSERT INTO _adresse (codePostal, ville, rue, numTel, coordonneesX, coordonneesY
 (35000, 'Rennes', 'Rue Gurvand', '02 95 21 46 91', 48.1041366, -1.6753072),
 (56000, 'Vannes', 'Rue des Luscanen', '09 24 78 24 36', 47.6582, -2.7608),
 (35000, 'Rennes', 'Rue Hippolyte Lucas', '01 75 62 38 04', 48.0670467, -1.7053024),
-(22000, 'Saint-Brieuc', '2 Rue nominoë', '01 23 45 67 89', 48.5146, -2.7653);
+(22000, 'Saint-Brieuc', '2 Rue nominoë', '01 23 45 67 89', 48.5146, -2.7653),
+(49100, 'Angers', 'Rue du Lutin','0987543526', 47.4772524, -0.5379233),
+(56100, 'Lorient', '65 Boulevard Eugène Cosmao-Dumanoir','0610456321',47.75394969078935, -3.3711788355324646),
+(29000, 'Quimper', '3 Rue Saint-Yves','0614056321',48.0001691026248, -4.1055293508185535),
+(35400, 'Saint-Malo', '11 Avenue des Cottages','0614406321',48.6479450058491, -1.9948423324582776),
+(35720, 'Tournebride', 'Cobac Parc','0614450321',48.4381384, -1.8317578),
+(56890, 'Plescop', 'Voie Verte Vannes - Sainte-Anne-d''Auray','0614456021',47.6862306, -2.8271076),
+(35300, 'Fougeres', 'Château de Fougères, Place Pierre Symon','0614450301',48.3538568, -1.2096123),
+(22100, 'Dinan', '20 Rue Porcon de la Barbinais','0614450320',48.44762016075499, -2.0504299023899475),
+(29120, 'Plomeur', 'Pointe de la Torche','0604450001',47.8366583, -4.3543511),
+(35720, 'Paimpol', '7 Rue du Marais','071234567',48.776151747260116, -3.044595007005404),
+(35720, 'Bréal-sous-Montfort', 'Les Jardins de Brocéliande','0722345678',48.0565199,-1.8886088),
+(22730, 'Trégastel', '7 Avenue d''Ys','0732345678',48.829096, -3.52047),
+(29000, 'Quimper', '34 Rue de Benodet','0742345678',47.987366294098614, -4.10797246525515),
+(35720, 'Plogoff', 'Pointe du Raz (Sentier Côtier)','0752345678',48.03970632103842, -4.735934825072996),
+(35720, 'Carhaix-Plouguer', 'Rue de Calac','0752345678',48.300000, -3.600000),
+(35400, 'Saint-Malo', '7 Grand Rue','0762345678',48.6491517, -2.0244625),
+(56700, 'Hennebont', '2 Rue du Docteur Paul Carpentier','0782345678',47.80560439888673, -3.2748070197146406),
+(56800, 'Ploërmel', '8 Rue Porte d''en Haut','0763345678',47.9323714, -2.396429),
+(56100, 'Lorient', '1 Rue Rodin','0765445678',47.7531213436896, -3.371938281580813),
+(56000, 'Vannes', '2 Rue de Campen','0765545678',47.6490469, -2.7972478),
+(35170, 'Bruz', '2 La Haie Gautrais','0765645678',48.058804, -1.7338466),
+(29200, 'Brest', '27 Rue Branda','0765745678',48.39149692073627, -4.481820291028322),
+(56190, 'Le Guerno', 'Parc animalier et botanique de Branféré','0765845678',47.5957547, -2.3976637),
+(29200, 'Brest', '', '0123498765', 48.3905283, -4.4860088),
+(56270, 'Plœmeu', '3 Rue Neuve', '0765428931', 47.736321412312044,-3.4263479097024296),
+(35260, 'Cancale', '37 Rue de Saint-Malo','0765945678',48.677987674909744,-1.8541956436319107);
 
 -- Peupler la table _compte
 INSERT INTO _compte (mdp, email, idAdresse) VALUES
@@ -60,7 +86,9 @@ INSERT INTO _compte (mdp, email, idAdresse) VALUES
 ('3e78f1c32984ed554b602f052a6ee1dccf5e37b59fa0dac6d2712cf119d214dd', 'user13@gmail.com', 22),
 ('9011963039465470c0036871db381adacb92ced945356958c58f5054cca0ac2d', 'user14@gmail.com', 23),
 ('822b343fb9eecc852f4fe6b4ebd27b35f6dcca6e1a19cc7453c2626d98641389', 'user15@gmail.com', 24),
-('2907a88109b26939d31308d4dec243389125d28355a494428ef1f4db9ee87eb6','user16@gmail.com', 25);
+('2907a88109b26939d31308d4dec243389125d28355a494428ef1f4db9ee87eb6','user16@gmail.com', 25), 
+('75ec50dbb6e5bf6ff1a5c3eb5e58c3e50aa0d5f436c4dcbafd6198c8911098ff', 'test4@gmail.com', 36),
+('b4ab252fbedda633352510371ee50ee620ab0445dac27957c1481d8a7a99f878', 'test5@gmail.com', 37);
 
 -- Peupler la table _compteMembre
 INSERT INTO _compteMembre (idCompte, pseudo, prenom, nom) VALUES
@@ -87,14 +115,17 @@ INSERT INTO _comptePro (idCompte, denominationSociale, raisonSocialePro, banqueR
 (2, 'Société A', 'Entreprise A', 'FR7612345678901234567890123'),
 (3, 'Société B', 'Entreprise B', 'FR7612345678901234567890124'),
 (4, 'Société C', 'Entreprise C', 'FR7612345678901234567890125'),
-(21,'Société D', 'Entreprise D', 'FR7612345678901234567890126');
+(21,'Société D', 'Entreprise D', 'FR7612345678901234567890126'),
+(22,'Société E', 'Entreprise E', 'FR7612345678901234567890127'),
+(23,'Société F', 'Entreprise F', 'FR7612345678901234567890128');
 
 INSERT INTO _compteProPrive (idCompte,numSiren) VALUES
 (2, '987 654 321'),
-(21,'123 456 789');
+(21,'123 456 789'),
+(22,'103 406 709');
 
 INSERT INTO _compteProPublic (idCompte) VALUES
-(3),(4);
+(3),(4),(23);
 
 INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descriptionDetaillee, siteInternet, estEnLigne, idAdresse, creaDate, heureOuverture, heureFermeture) VALUES
 (2, 'En relief', 'Premium', 'Visite de Saint-Brieuc', 'Plongez dans l''histoire et la culture de Saint-Brieuc à travers une visite guidée immersive, où chaque ruelle, chaque monument a une histoire à raconter. Un voyage fascinant pour les passionnés de patrimoine et de paysages bretons.', 'Cette visite guidée de 2 heures vous permettra de découvrir les joyaux cachés de Saint-Brieuc. Vous parcourrez les rues historiques de la ville, en passant devant des bâtiments emblématiques et en admirant les vues spectaculaires sur la baie. Votre guide passionné vous racontera l''histoire locale, des temps anciens aux événements marquants de la ville. Profitez également de moments de calme dans les jardins publics et sur les quais, tout en admirant la beauté naturelle de cette région du nord de la Bretagne.', 'http://example.com/saintbrieuc', TRUE, 36,'2024-09-13','06:00','17:00'),
@@ -111,12 +142,37 @@ INSERT INTO _offre (idCompte, nomOption, nomForfait, titre, description, descrip
 (4, 'Aucune', 'Gratuit', 'Visite du Musée de la mer à Paimpol', 'Plongez dans l''histoire de la pêche et de la mer en visitant le Musée de la mer à Paimpol, un lieu incontournable pour les passionnés d''histoire maritime.', 'Le Musée de la mer à Paimpol vous propose une immersion fascinante dans l''histoire de la mer, à travers des expositions captivantes sur la pêche, la navigation et la vie maritime. Vous découvrirez des objets anciens, des maquettes de bateaux, ainsi que des témoignages émouvants sur la vie des marins et des pêcheurs bretons. Ce musée est l''occasion idéale de mieux comprendre l''importance de la mer dans l’histoire de la région, tout en explorant des collections exceptionnelles qui retracent l''évolution des métiers maritimes au fil des siècles.', 'http://example.com/paimpol', TRUE, 32, '2024-10-20', '09:00', '19:00'),
 (21, 'A la une', 'Standard', 'Restaurant à Rennes', 'Venez goûter aux spécialités bretonnes à Rennes, dans un restaurant où la tradition et l''innovation se rencontrent pour un repas inoubliable.', 'Ce restaurant à Rennes vous invite à découvrir les saveurs de la Bretagne à travers une cuisine locale savoureuse et authentique. Vous pourrez déguster des crêpes, des galettes bretonnes préparées avec des ingrédients frais et locaux, ainsi que du cidre de qualité. Le cadre chaleureux et accueillant du restaurant vous permettra de passer un moment agréable en famille ou entre amis, tout en savourant des plats traditionnels qui mettent en valeur les produits du terroir breton. Une expérience culinaire à ne pas manquer lors de votre séjour à Rennes.', 'http://example.com/rennes', FALSE, 33, '2024-11-10', '11:00', '16:00'),
 (21, 'A la une', 'Standard', 'Visite de Vannes', 'Explorez la beauté de Vannes, une ville pleine de charme, avec ses ruelles médiévales et son port pittoresque. Une visite incontournable pour les amoureux de l’histoire et de la nature.', 'Lors de cette visite guidée de Vannes, vous découvrirez l’âme de la ville à travers ses rues pavées, ses remparts et ses monuments historiques. Vous admirerez la cathédrale Saint-Pierre, un chef-d’œuvre de l’architecture gothique, et explorerez le vieux quartier de la ville avec ses maisons à colombages. Vous en apprendrez également davantage sur l''histoire de Vannes, depuis son époque médiévale jusqu’à aujourd’hui, en découvrant des lieux emblématiques comme le château de l''Hermine et le port de plaisance. Cette visite vous offrira un aperçu complet de cette ville au charme intemporel.', 'http://example.com/cotesarmor', TRUE, 34, '2024-12-01', '08:00', '18:00'),
-(21, 'A la une', 'Standard', 'Restaurant exotique de Rennes', 'Laissez-vous emporter par les saveurs exotiques au restaurant de Rennes, un lieu unique qui marie subtilement la cuisine tropicale et les influences bretonnes.', 'Le restaurant exotique de Rennes vous invite à découvrir une cuisine originale où les épices et les fruits tropicaux se mêlent aux produits locaux pour créer des plats savoureux et surprenants. Vous pourrez savourer des plats inspirés des îles et des cuisines du monde entier, le tout dans un cadre coloré et chaleureux. Le restaurant met un accent particulier sur la fraîcheur des ingrédients et la qualité des produits, pour offrir une expérience culinaire inoubliable. Une excellente opportunité de découvrir des saveurs nouvelles et de s''évader le temps d’un repas.', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00');
+(21, 'A la une', 'Standard', 'Restaurant exotique de Rennes', 'Laissez-vous emporter par les saveurs exotiques au restaurant de Rennes, un lieu unique qui marie subtilement la cuisine tropicale et les influences bretonnes.', 'Le restaurant exotique de Rennes vous invite à découvrir une cuisine originale où les épices et les fruits tropicaux se mêlent aux produits locaux pour créer des plats savoureux et surprenants. Vous pourrez savourer des plats inspirés des îles et des cuisines du monde entier, le tout dans un cadre coloré et chaleureux. Le restaurant met un accent particulier sur la fraîcheur des ingrédients et la qualité des produits, pour offrir une expérience culinaire inoubliable. Une excellente opportunité de découvrir des saveurs nouvelles et de s''évader le temps d’un repas.', 'http://example.com/delices', TRUE, 35, '2024-12-02', '05:00', '23:00'),
+
+(22, 'En relief', 'Standard', 'Festival Interceltique de Lorient', 'Participez à une célébration de la culture celtique lors du Festival Interceltique de Lorient, un événement incontournable pour les amateurs de musique et de danse.', 'Ce festival annuel, qui se déroule en août, attire des milliers de visiteurs du monde entier. Vous pourrez profiter de concerts, de spectacles de danse et d''animations autour de la culture celtique, le tout dans une ambiance festive et conviviale.', 'http://example.com/lorient-festival', TRUE, 38, '2024-08-04', '10:00', '23:00'),
+(22, 'En relief', 'Premium', 'Journées du Patrimoine à Quimper', 'Découvrez le patrimoine breton lors des Journées du Patrimoine à Quimper, avec des visites guidées de monuments et des ateliers.', 'Cet événement annuel se tient en septembre et permet d''explorer des sites historiques habituellement fermés au public. Profitez de visites guidées et d''ateliers pour toute la famille, tout en apprenant davantage sur l''histoire de la Bretagne.', 'http://example.com/quimper-patrimoine', TRUE, 39, '2024-09-14', '09:00', '18:00'),
+(22, 'A la une', 'Standard', 'Concerts au Jardin de la Paix à Saint-Malo', 'Assistez à une série de concerts gratuits au Jardin de la Paix à Saint-Malo, un cadre idyllique pour profiter de la musique.', 'Chaque été, le Jardin de la Paix accueille des concerts en plein air avec des artistes locaux et nationaux. C''est l''occasion idéale de se détendre en écoutant de la bonne musique dans un cadre naturel.', 'http://example.com/saintmalo-concerts', TRUE, 40, '2024-07-15', '18:00', '22:00'),
+(22, 'A la une', 'Premium', 'Cobac Parc à Ille-et-Vilaine', 'Parc d''attractions familial qui propose une variété d''activités ludiques et aquatiques.', 'Avec des manèges adaptés à tous les âges, des spectacles, et une piscine à vagues, c''est une destination idéale pour les sorties en famille.', 'http://example.com/rennes-marche-noel', TRUE, 41, '2024-12-01', '10:00', '20:00'),
+(22, 'A la une', 'Premium', 'Balade à vélo sur la Voie Verte de Vannes', 'Explorez la beauté de la région de Vannes à vélo sur la Voie Verte, une piste cyclable sécurisée et pittoresque.', 'Cette balade à vélo vous fera découvrir des paysages variés, entre champs, forêts et rivières. Idéal pour les familles et les amateurs de nature, cet itinéraire est accessible à tous.', 'http://example.com/vannes-velo', TRUE, 42, '2024-05-20', '08:00', '20:00'),
+(22, 'A la une', 'Standard', 'Visite guidée du Château de Fougères', 'Plongez dans l''histoire médiévale en visitant le Château de Fougères, l''un des plus grands châteaux forts de France.', 'Cette visite guidée vous permettra d''explorer les tours, les remparts et les jardins de ce site historique tout en découvrant son riche passé.', 'http://example.com/fougeres-chateau', TRUE, 43, '2024-04-10', '09:00', '17:00'),
+(22, 'Aucune', 'Standard', 'Ateliers de poterie à Dinan', 'Participez à des ateliers de poterie à Dinan et laissez libre cours à votre créativité.', 'Ces ateliers sont ouverts à tous, quel que soit votre niveau. Vous apprendrez les bases de la poterie tout en découvrant l''ambiance charmante de Dinan.', 'http://example.com/dinan-poterie', TRUE, 44, '2024-03-15', '14:00', '18:00'),
+(22, 'A la une', 'Standard', 'Excursion en kayak à la Pointe de la Torche', 'Découvrez la beauté des côtes bretonnes lors d''une excursion en kayak à la Pointe de la Torche.', 'Accessible aux débutants, cette activité vous permettra d''explorer des paysages marins spectaculaires tout en profitant d''une expérience sportive et conviviale.', 'http://example.com/torche-kayak', TRUE, 45, '2024-07-25', '09:00', '15:00'),
+(22, 'Aucune', 'Premium', 'Festival du Chant de Marin à Paimpol', 'Venez célébrer la culture maritime lors du Festival du Chant de Marin à Paimpol, un événement riche en musique et en émotions.', 'Ce festival, qui a lieu tous les deux ans, rassemble des chanteurs de mer et des groupes musicaux du monde entier pour un événement inoubliable.', 'http://example.com/paimpol-festival', TRUE, 46, '2024-08-09', '10:00', '23:00'),
+(2,  'Aucune', 'Standard', 'Visite des Jardins de Brocéliande', 'Explorez les Jardins de Brocéliande, un lieu magique inspiré des légendes arthuriennes.', 'Ces jardins offrent un voyage enchanteur à travers la nature et la mythologie bretonne, avec des créations florales et artistiques.', 'http://example.com/broceliande-jardins', TRUE, 47, '2024-05-10', '09:00', '18:00'),
+(2,  'En relief', 'Standard', 'Découverte des Côtes de Granit Rose', 'Partez à la découverte des paysages uniques des Côtes de Granit Rose lors d''une randonnée guidée.', 'Cette randonnée vous fera traverser des formations rocheuses spectaculaires et des plages de sable fin, tout en profitant de la beauté naturelle de la Bretagne.', 'http://example.com/granit-rose', TRUE, 48, '2024-09-12', '09:00', '17:00'),
+(3,  'Aucune', 'Gratuit', 'Visite du Musée des Beaux-Arts à Quimper', 'Découvrez des chefs-d''œuvre de l''art breton au Musée des Beaux-Arts de Quimper, avec des expositions variées.', 'Le musée propose des collections permanentes et des expositions temporaires qui raviront les amateurs d''art.', 'http://example.com/quimper-musee', FALSE, 49, '2024-10-05', '10:00', '18:00'),
+(3,  'Aucune', 'Gratuit', 'Balade à pied à la Pointe du Raz', 'Profitez d''une balade à pied à la Pointe du Raz, l''un des sites les plus spectaculaires de Bretagne.', 'Cette balade vous permettra d''admirer des paysages à couper le souffle, entre falaises et océan, tout en découvrant la faune locale.', 'http://example.com/pointe-raz', TRUE, 50, '2024-07-20', '09:00', '18:00'),
+(3,  'Aucune', 'Gratuit', 'Festival des Vieilles Charrues à Carhaix', 'Venez vivre un des plus grands festivals de musique de France à Carhaix, avec une programmation éclectique.', 'Ce festival attire des artistes renommés et offre une scène pour les talents locaux, le tout dans une ambiance festive.', 'http://example.com/vieilles-charrues', FALSE, 51, '2024-07-20', '10:00', '01:00'),
+(4,  'Aucune', 'Gratuit', 'Creperie Les Lutins de Saint-Malo', 'Participez à un atelier de cuisine bretonne et apprenez à préparer des plats traditionnels.', 'Cet atelier est l''occasion idéale pour découvrir les secrets de la cuisine bretonne tout en passant un moment convivial.', 'http://example.com/saintmalo-cuisine', TRUE, 52, '2024-04-15', '14:00', '17:00'),
+(4,  'Aucune', 'Gratuit', 'Atelier de sculpture sur bois à Hennebont', 'Découvrez l''art de la sculpture sur bois lors d''un atelier à Hennebont.', 'Cet atelier vous permettra d''apprendre les techniques de base de la sculpture sur bois, tout en créant votre propre œuvre d''art.', 'http://example.com/hennebont-sculpture', TRUE, 53, '2024-05-30', '14:00', '17:00'),
+(21, 'En relief', 'Premium', 'Marché artisanal de Ploërmel', 'Venez explorer le marché artisanal de Ploërmel, où vous trouverez des produits locaux et artisanaux.', 'Ce marché, qui se tient tous les samedis, met en avant le savoir-faire des artisans bretons avec une variété de produits allant de l''alimentaire aux objets d''art.', 'http://example.com/ploermel-marche', FALSE, 54, '2024-04-20', '09:00', '13:00'),
+(23, 'Aucune', 'Gratuit', 'Exposition d''art contemporain à Lorient', 'Découvrez une exposition d''art contemporain à Lorient, mettant en avant des artistes émergents.', 'Cette exposition est l''occasion de découvrir de nouvelles œuvres et de rencontrer les artistes lors de visites guidées.', 'http://example.com/lorient-exposition', TRUE, 55, '2024-09-01', '10:00', '18:00'),
+(23, 'Aucune', 'Gratuit', 'Le Riverside - Vannes', 'Participez à une balade gourmande à Vannes, à la découverte des spécialités locales.', 'Cette balade vous fera goûter aux délices de la cuisine bretonne tout en explorant les rues historiques de la ville.', 'http://example.com/vannes-gourmande', TRUE, 56, '2024-07-15', '10:00', '14:00'),
+(23, 'Aucune', 'Gratuit', 'Concert au Parc des Expositions de Rennes', 'Assistez à un concert gratuit au Parc des Expositions de Rennes, avec des artistes locaux et nationaux.', 'Cet événement est une excellente occasion de profiter de la musique en plein air tout en découvrant de nouveaux talents.', 'http://example.com/rennes-concert', FALSE, 57, '2024-06-25', '19:00', '23:00'),
+(23, 'Aucune', 'Gratuit', 'Festival de Danse de Brest', 'Venez assister au Festival de Danse de Brest, qui présente des compagnies de danse contemporaine.', 'Ce festival est l''occasion de découvrir des performances captivantes et d''assister à des ateliers ouverts au public.', 'http://example.com/brest-festival-danse', TRUE, 58, '2024-05-05', '14:00', '22:00'),
+(23, 'Aucune', 'Gratuit', 'Visite du Parc Animalier de Branféré', 'Découvrez la faune locale au Parc Animalier de Branféré, un parc qui allie nature et conservation.', 'Cette visite est une expérience enrichissante pour toute la famille, avec des animaux en semi-liberté et des activités éducatives.', 'http://example.com/branfere-parc', TRUE, 59, '2024-07-01', '09:30', '18:00'),
+(23, 'Aucune', 'Gratuit', 'JPO au Conservatoire de Musique de Brest', 'Venez découvrir les activités du Conservatoire de Musique de Brest lors de sa journée portes ouvertes.', 'Cette journée vous permettra d''assister à des concerts, des démonstrations et de rencontrer des professeurs de musique.', 'http://example.com/brest-conservatoire', FALSE, 60, '2024-04-30', '10:00', '17:00'),
+(23, 'Aucune', 'Gratuit', 'Exposition de peintures à Ploemeur', 'Participez à une exposition de peintures contemporaines à Ploemeur, mettant en avant des artistes locaux.', 'Cette exposition est l''occasion de découvrir des œuvres variées et de rencontrer les artistes.', 'http://example.com/ploemeur-exposition', FALSE, 61, '2024-03-12', '10:00', '18:00'),
+(23, 'Aucune', 'Gratuit', 'Atelier de peinture en plein air à Cancale', 'Rejoignez un atelier de peinture en plein air à Cancale, inspiré par la beauté des paysages bretons.', 'Cet atelier est ouvert à tous les niveaux et vous permettra de développer votre créativité dans un cadre naturel.', 'http://example.com/cancale-peinture', TRUE, 62, '2024-08-20', '14:00', '17:00');
 
 -- Peupler la table _image
 INSERT INTO _image (nomImage) VALUES
-('saintbrieuc1.jpg'),
-('visitesaintbrieuc.jpg'),
+('saintbrieuc1.jpg'), ('visitesaintbrieuc.jpg'),
 ('morlaix.jpg'),
 ('parcBrest.jpg'),
 ('saintmalo.jpg'),
@@ -134,7 +190,32 @@ INSERT INTO _image (nomImage) VALUES
 ('restau.jpg'),
 ('parc.jpg'),
 ('bat saint brieuc.jpg'),
-('gare-de-saint-brieuc.jpg');
+('gare-de-saint-brieuc.jpg'),
+('festival-lorient.jpg'),
+('patrimoine-quimper.jpg'),
+('concert-saint-malo.jpg'),
+('cobac-parc.jpg'),
+('velo.jpg'),
+('chateau-fougeres.jpg'),
+('poterie.jpg'),
+('kayak.jpg'),
+('festival-paimpol.jpg'),
+('jardin-broceliande.jpg'),
+('granit-rose.jpg'),
+('musee-quimper.jpg'),
+('pointe-du-raz.jpg'),
+('festival-carhaix.jpg'),
+('creperie-les-lutins.jpg'),
+('atelier-sculpture.jpg'),
+('marche-ploermel.jpg'),
+('exposition-lorient.jpg'),
+('riverside-vannes.jpg'),
+('festival-rennes.jpg'),
+('festival-brest.jpg'),
+('parc-animalier.jpg'),
+('JPO-brest.jpg'),
+('exposition-ploemeur.jpg'),
+('atelier-cancale.jpg');
 
 INSERT INTO _representeOffre (idOffre, idImage) VALUES
 (1, 1),
@@ -153,17 +234,45 @@ INSERT INTO _representeOffre (idOffre, idImage) VALUES
 (12, 14),
 (13, 15),
 (14, 16),
-(15, 17);
+(15, 17),
+(16, 21),
+(17, 22),
+(18, 23),
+(19, 24),
+(20, 25),
+(21, 26),
+(22, 27),
+(23, 28),
+(24, 29),
+(25, 30),
+(26, 31),
+(27, 32),
+(28, 33),
+(29, 34),
+(30, 35),
+(31, 36),
+(32, 37),
+(33, 38),
+(34, 39),
+(35, 40),
+(36, 41),
+(37, 42),
+(38, 43),
+(39, 44),
+(40, 45);
 
 -- Peupler la table _spectacle
 INSERT INTO _spectacle (idOffre, nomCategorie, tempsEnMinutes, valPrix, capacite, dateEvenement) VALUES
 (2, 'Spectacle', 120, 40, 20, '2025-06-21'),
-(8, 'Spectacle', 60, 10, 50, '2024-12-15');
+(8, 'Spectacle', 60, 50, 50, '2025-12-15'),
+(18, 'Spectacle', 90, 30, 80, '2025-09-04'),
+(35, 'Spectacle', 30, 20, 200, '2025-07-20');
 
 -- Peupler la table _parcAttractions
 INSERT INTO _parcAttractions (idOffre, nomCategorie, valPrix, carteParc, nbAttractions, ageMin) VALUES
 (3, 'Parc d''attractions', 60, NULL , 10, 6),
-(9, 'Parc d''attractions', 30, NULL, 15, 4);
+(9, 'Parc d''attractions', 30, NULL, 15, 4),
+(19, 'Parc d''attractions', 70, NULL, 24, 2);
 
 -- Peupler la table _visite
 INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee, dateEvenement) VALUES
@@ -171,25 +280,48 @@ INSERT INTO _visite (idOffre, valPrix, tempsEnMinutes, nomCategorie, estGuidee, 
 (6, 10, 90, 'Visite', FALSE, '2025-03-04'),
 (7, 0, 120, 'Visite', TRUE, '2025-02-18'),
 (12, 30, 45, 'Visite', FALSE, '2025-07-02'),
-(14, 40, 75, 'Visite', FALSE, '2025-09-08');
+(14, 40, 75, 'Visite', FALSE, '2025-09-08'),
+(17, 30, 85, 'Visite', FALSE, '2025-09-06'),
+(21, 45, 75, 'Visite', TRUE, '2025-10-08'),
+(25, 90, 65, 'Visite', FALSE, '2025-06-14'),
+(26, 45, 35, 'Visite', FALSE, '2025-11-13'),
+(27, 15, 15, 'Visite', FALSE, '2025-12-18'),
+(28, 75, 25, 'Visite', FALSE, '2025-10-13'),
+(33, 90, 45, 'Visite', FALSE, '2025-07-27'),
+(37, 90, 95, 'Visite', FALSE, '2025-05-26'),
+(38, 15, 5, 'Visite', FALSE, '2025-05-23');
 
 -- Peupler la table _activite
 INSERT INTO _activite (idOffre, nomCategorie, tempsEnMinutes, valPrix, ageMin, prestation) VALUES
 (5, 'Activite', 120, 40, 8, 'kit de plongée'),
 (10, 'Activite', 90, 20, 5, ''),
-(11, 'Activite', 45, 30, 2, 'kit de sauvetage, repas');
+(11, 'Activite', 45, 30, 2, 'kit de sauvetage, repas'),
+(16, 'Activite', 30, 50, 2, ''),
+(20, 'Activite', 45, 90, 2, 'velo'),
+(22, 'Activite', 90, 20, 2, 'argile'),
+(23, 'Activite', 45, 15, 2, 'kayak'),
+(24, 'Activite', 120, 34, 2, ''),
+(29, 'Activite', 45, 28, 2, ''),
+(31, 'Activite', 45, 40, 2, 'bois et outils'),
+(32, 'Activite', 30, 56, 2, ''),
+(36, 'Activite', 45, 34, 2, ''),
+(39, 'Activite', 120, 79, 2, ''),
+(40, 'Activite', 45, 21, 2, '');
 
 -- Peupler la table _restaurant
 INSERT INTO _restaurant (idOffre, nomCategorie, nomGamme, menuRestaurant) VALUES
 (4, 'Restaurant', '€€ (25-40€)', NULL),
 (13, 'Restaurant', '€€€ (+40€)', NULL),
-(15, 'Restaurant', '€ (-25€)', NULL);
+(15, 'Restaurant', '€ (-25€)', NULL),
+(30, 'Restaurant', '€€€ (+40€)', NULL),
+(34, 'Restaurant', '€ (-25€)', NULL);
 
 INSERT INTO _guideeVisite (IdOffre,nomLangage) VALUES
 (1,'Français'),
 (1,'Espagnol'),
 (7,'Français'),
-(7,'Anglais');
+(7,'Anglais'),
+(21,'Français');
 
 -- Peupler la table _possedeSpectacle
 INSERT INTO _possedeSpectacle (idOffre, nomTag) VALUES
@@ -228,7 +360,7 @@ INSERT INTO _proposeRestaurant (idOffre, nomRepas) VALUES
 
 -- Peupler la table _avis
 INSERT INTO _avis (idOffre, idCompte, commentaire, note, titre, contexteVisite, dateVisite, estVu, estBlacklist) VALUES
-(1, 1, 'Une visite magnifique avec des guides passionnants et une vue incroyable sur Saint-Brieuc.', 5.0, 'Incroyable visite', 'Famille', '2024-09-10', FALSE, TRUE),
+(1, 1, 'Une visite magnifique avec des guides passionnants et une vue incroyable sur Saint-Brieuc.', 5.0, 'Incroyable visite', 'Famille', '2024-09-10', FALSE, FALSE),
 (2, 1, 'Le spectacle était décevant, les marionnettes manquaient de finesse et les tours de cartes étaient trop répétitifs.', 2.5, 'Deception...', 'Amis', '2024-10-15', FALSE, FALSE),
 (3, 1, 'Super parc d’attractions, les enfants ont adoré ! Il y a beaucoup d’attractions adaptées pour tous les âges.', 4.5, 'Je recommande pour la famille', 'Famille', '2024-11-18', FALSE, FALSE),
 (4, 1, 'Le restaurant était incroyable, une expérience culinaire de haute qualité. Un peu cher, mais ça en valait la peine.', 5.0, 'Délicieux repas', 'Couple', '2024-11-20', FALSE, FALSE),
@@ -269,7 +401,84 @@ INSERT INTO _avis (idOffre, idCompte, commentaire, note, titre, contexteVisite, 
 (12, 7, 'Le musée de la mer à Paimpol est une excellente visite pour les passionnés d’histoire maritime. Les expositions étaient très intéressantes et bien présentées.', 5.0, 'Visite fascinante', 'Solo', '2024-10-21', FALSE, FALSE),
 (13, 6, 'Le restaurant à Rennes offre une très bonne expérience gastronomique bretonne. Les crêpes et le cidre étaient délicieux, mais le service était un peu lent.', 4.0, 'Bonne expérience mais service lent', 'Couple', '2024-11-11', FALSE, FALSE),
 (14, 18, 'Une belle visite de Vannes, mais il y avait trop de monde ce jour-là. Le guide était sympathique, mais nous avons eu du mal à entendre les explications.', 3.0, 'Sympa mais trop fréquenté', 'Amis', '2024-12-02', FALSE, FALSE),
-(15, 15, 'Le restaurant exotique à Rennes est une expérience culinaire unique. Les plats étaient délicieux et originaux, mais l’ambiance était un peu trop bruyante pour profiter pleinement.', 4.0, 'Bonne expérience mais bruyant', 'Famille', '2024-12-03', FALSE, FALSE);
+(15, 15, 'Le restaurant exotique à Rennes est une expérience culinaire unique. Les plats étaient délicieux et originaux, mais l’ambiance était un peu trop bruyante pour profiter pleinement.', 4.0, 'Bonne expérience mais bruyant', 'Famille', '2024-12-03', FALSE, FALSE),
+(16, 1, 'Un festival incroyable, plein de musique et de danse ! J''ai adoré découvrir les différentes cultures celtiques.', 5.0, 'Festival Interceltique', 'Amis', '2024-08-03', FALSE, FALSE),
+(16, 5, 'L''ambiance était festive, mais certaines performances manquaient de dynamisme.', 3.5, 'Ambiance agréable', 'Famille', '2024-08-04', FALSE, FALSE),
+(16, 6, 'Une expérience inoubliable, les spectacles étaient de très haute qualité.', 4.5, 'Spectacles magnifiques', 'Couple', '2024-08-05', FALSE, FALSE),
+(17, 1, 'Une belle occasion de découvrir des lieux habituellement fermés au public. Très enrichissant !', 5.0, 'Journées du Patrimoine', 'Famille', '2024-09-21', FALSE, FALSE),
+(17, 5, 'Les visites étaient intéressantes, mais certaines étaient trop courtes.', 4.0, 'Visites enrichissantes', 'Amis', '2024-09-22', FALSE, FALSE),
+(17, 6, 'J''ai beaucoup apprécié les ateliers proposés, c''était interactif et amusant.', 4.5, 'Ateliers ludiques', 'Solo', '2024-09-23', FALSE, FALSE),
+(18, 1, 'Un cadre magnifique pour des concerts en plein air, l''ambiance était magique.', 5.0, 'Concerts au Jardin de la Paix', 'Couple', '2024-07-10', FALSE, FALSE),
+(18, 8, 'Les artistes étaient talentueux, mais le son était parfois déséquilibré.', 4.0, 'Son à améliorer', 'Amis', '2024-07-11', FALSE, FALSE),
+(18, 9, 'Un moment agréable, idéal pour profiter de la musique avec un bon verre.', 4.5, 'Moment relaxant', 'Famille', '2024-07-12', FALSE, FALSE),
+(19, 1, 'Un parc d''attractions très sympa, parfait pour les enfants ! Beaucoup d''attractions.', 4.5, 'Cobac Parc', 'Famille', '2024-08-01', FALSE, FALSE),
+(19, 11, 'Les manèges étaient amusants, mais la nourriture sur place était assez chère.', 3.5, 'Nourriture à revoir', 'Amis', '2024-08-02', FALSE, FALSE),
+(19, 12, 'Une journée pleine de rires, les enfants se sont bien amusés !', 5.0, 'Journée réussie', 'Couple', '2024-08-03', FALSE, FALSE),
+(20, 1, 'Une magnifique balade, les paysages sont à couper le souffle. Très agréable.', 5.0, 'Balade à vélo', 'Solo', '2024-06-15', FALSE, FALSE),
+(20, 5, 'C''était relaxant, mais quelques sections étaient encombrées.', 4.0, 'Balade relaxante', 'Amis', '2024-06-16', FALSE, FALSE),
+(20, 15, 'Idéal pour passer une journée en famille, même avec des enfants.', 4.5, 'Activité familiale', 'Famille', '2024-06-17', FALSE, FALSE),
+(21, 1, 'Une visite fascinante avec un guide passionné. Le château est magnifique.', 5.0, 'Visite du Château de Fougères', 'Couple', '2024-10-05', FALSE, FALSE),
+(21, 17, 'Très belle expérience, mais la visite était un peu rapide.', 4.0, 'Visite rapide', 'Amis', '2024-10-06', FALSE, FALSE),
+(21, 18, 'Un lieu riche en histoire, j''ai adoré chaque minute.', 4.5, 'Histoire captivante', 'Famille', '2024-10-07', FALSE, FALSE),
+(22, 1, 'Une expérience créative incroyable, j''ai adoré apprendre à travailler l''argile.', 5.0, 'Ateliers de poterie', 'Solo', '2024-05-12', FALSE, FALSE),
+(22, 11, 'Atelier amusant, mais il aurait été bien d''avoir plus de temps.', 4.0, 'Poterie amusante', 'Amis', '2024-05-13', FALSE, FALSE),
+(22, 12, 'Un excellent moyen de se détendre et de créer quelque chose de personnel.', 4.5, 'Créativité relaxante', 'Famille', '2024-05-14', FALSE, FALSE),
+(23, 1, 'Une aventure inoubliable, les paysages étaient époustouflants.', 5.0, 'Excursion en kayak', 'Amis', '2024-07-20', FALSE, FALSE),
+(23, 5, 'Bien organisé, mais il fallait être en forme pour pagayer.', 4.0, 'Kayak sportif', 'Couple', '2024-07-21', FALSE, FALSE),
+(23, 17, 'Une belle activité à faire en groupe, beaucoup de fun !', 4.5, 'Fun en groupe', 'Famille', '2024-07-22', FALSE, FALSE),
+(24, 1, 'Un festival vibrant, rempli de musique et de convivialité.', 5.0, 'Festival du Chant de Marin', 'Couple', '2024-08-12', FALSE, FALSE),
+(24, 5, 'Les concerts étaient super, mais le site était un peu trop bondé.', 4.0, 'Site bondé', 'Amis', '2024-08-13', FALSE, FALSE),
+(24, 6, 'Une belle célébration de la culture maritime, à ne pas manquer !', 4.5, 'Culture maritime', 'Famille', '2024-08-14', FALSE, FALSE),
+(25, 1, 'Des jardins enchanteurs, parfaits pour une journée tranquille.', 5.0, 'Visite des Jardins de Brocéliande', 'Famille', '2024-05-20', FALSE, FALSE),
+(25, 5, 'Belle expérience, mais j''aurais aimé plus d''explications sur les plantes.', 4.0, 'Explications manquantes', 'Amis', '2024-05-21', FALSE, FALSE),
+(25, 8, 'Un lieu magique, idéal pour se ressourcer au milieu de la nature.', 4.5, 'Nature ressourçante', 'Couple', '2024-05-22', FALSE, FALSE),
+(26, 1, 'Un paysage à couper le souffle, idéal pour les amoureux de la nature !', 5.0, 'Découverte des Côtes de Granit Rose', 'Solo', '2024-09-15', FALSE, FALSE),
+(26, 5, 'Les sentiers étaient bien balisés, mais il y avait beaucoup de touristes.', 4.0, 'Sentiers agréables', 'Amis', '2024-09-16', FALSE, FALSE),
+(26, 6, 'Une belle excursion, mais j''aurais aimé plus de temps pour explorer.', 4.5, 'Excursion enrichissante', 'Famille', '2024-09-17', FALSE, FALSE),
+(27, 1, 'Une collection impressionnante d''œuvres d''art, très bien présentée. Les audioguides étaient très utiles !', 4.5, 'Un régal pour les yeux', 'Solo', '2024-12-01', FALSE, FALSE),
+(27, 8, 'Le musée est magnifique, mais un peu trop petit à mon goût. J''aurais aimé plus d''expositions temporaires.', 3.5, 'Belle expérience mais trop court', 'Couple', '2024-12-03', FALSE, FALSE),
+(27, 9, 'Un endroit calme et inspirant, parfait pour les amateurs d''art. Les visites guidées sont très bien.', 5.0, 'Incontournable pour les passionnés', 'Famille', '2024-12-05', FALSE, FALSE),
+(28, 1, 'Des paysages à couper le souffle ! La balade est accessible et très bien balisée.', 5.0, 'Nature à l''état pur', 'Amis', '2024-12-07', FALSE, FALSE),
+(28, 6, 'Une belle promenade, mais un peu trop fréquentée. Essayez d''y aller tôt le matin.', 4.0, 'Superbe vue mais trop de monde', 'Couple', '2024-12-08', FALSE, FALSE),
+(28, 8, 'Très agréable, le bruit des vagues et le vent ajoutent à l''ambiance. Parfait pour une journée en plein air.', 4.5, 'À refaire sans hésiter', 'Famille', '2024-12-09', FALSE, FALSE),
+(29, 1, 'Un festival exceptionnel avec une programmation variée. L''ambiance était incroyable !', 5.0, 'Un must pour les amoureux de la musique', 'Amis', '2024-12-10', FALSE, FALSE),
+(29, 5, 'Beaucoup d''artistes talentueux, mais l’organisation pourrait être améliorée. Quelques files d''attente trop longues.', 4.0, 'Musique au top, logistique à revoir', 'Couple', '2024-12-11', FALSE, FALSE),
+(29, 9, 'Une expérience mémorable, mais il faut prévoir de bonnes chaussures pour marcher sur le site !', 4.5, 'Un festival à ne pas manquer', 'Famille', '2024-12-12', FALSE, FALSE),
+(30, 1, 'Les crêpes sont délicieuses et très généreuses. Un vrai régal pour les papilles !', 5.0, 'Un délice breton', 'Couple', '2024-12-13', FALSE, FALSE),
+(30, 8, 'L''ambiance est chaleureuse, mais le service était un peu lent lors de notre visite.', 3.5, 'Très bonnes crêpes, mais attente à améliorer', 'Amis', '2024-12-14', FALSE, FALSE),
+(30, 15, 'Un endroit charmant avec des crêpes sucrées et salées savoureuses. Nous y retournerons !', 4.5, 'À recommander', 'Famille', '2024-12-15', FALSE, FALSE),
+(31, 1, 'Une expérience enrichissante ! J''ai beaucoup appris sur la sculpture et le travail du bois.', 5.0, 'À faire absolument', 'Solo', '2024-12-16', FALSE, FALSE),
+(31, 5, 'Le formateur était très compétent, mais j''aurais aimé un peu plus de temps pour pratiquer.', 4.0, 'Formidable mais rapide', 'Couple', '2024-12-17', FALSE, FALSE),
+(31, 15, 'Un atelier créatif et amusant. Parfait pour les familles qui veulent passer un bon moment ensemble.', 4.5, 'Super moment en famille', 'Famille', '2024-12-18', FALSE, FALSE),
+(32, 6, 'Un marché vibrant avec des artisans passionnés. J''ai trouvé de superbes produits locaux !', 5.0, 'Un vrai plaisir', 'Amis', '2024-12-19', FALSE, FALSE),
+(32, 8, 'Beaucoup de choix, mais un peu trop de monde. Prenez votre temps pour explorer.', 4.0, 'Très bon marché', 'Couple', '2024-12-20', FALSE, FALSE),
+(32, 1, 'Une belle découverte des talents locaux, à refaire chaque année !', 4.5, 'À ne pas manquer', 'Famille', '2024-12-21', FALSE, FALSE),
+(33, 9, 'Une exposition captivante avec des artistes innovants. J''ai été agréablement surpris !', 5.0, 'Expérience enrichissante', 'Solo', '2024-12-22', FALSE, FALSE),
+(33, 1, 'Certaines œuvres étaient fascinantes, d''autres moins accessibles. Une visite intéressante.', 4.0, 'Art contemporain à découvrir', 'Couple', '2024-12-23', FALSE, FALSE),
+(33, 5, 'Un lieu agréable pour apprécier l''art moderne. Le personnel était accueillant et passionné.', 4.5, 'Un bon moment', 'Famille', '2024-12-24', FALSE, FALSE),
+(34, 8, 'Un cadre magnifique au bord de l''eau. Les plats étaient délicieux et bien présentés.', 5.0, 'Un incontournable à Vannes', 'Couple', '2024-12-25', FALSE, FALSE),
+(34, 1, 'Service un peu lent, mais la vue compense largement. Je recommande le menu dégustation.', 4.0, 'Belle expérience', 'Amis', '2024-12-26', FALSE, FALSE),
+(34, 9, 'Une ambiance chaleureuse et conviviale, parfait pour un repas en famille.', 4.5, 'À refaire', 'Famille', '2024-12-27', FALSE, FALSE),
+(35, 1, 'Une super ambiance, des artistes de qualité. J''ai passé une excellente soirée !', 5.0, 'Concert inoubliable', 'Amis', '2024-12-28', FALSE, FALSE),
+(35, 11, 'Bien organisé mais le son était parfois trop fort. Des artistes de talent !', 4.0, 'Bon concert', 'Couple', '2024-12-29', FALSE, FALSE),
+(35, 13, 'Une soirée agréable, j''y retournerais sans hésiter. Prévoyez des bouchons d''oreilles.', 4.5, 'Très bonne expérience', 'Famille', '2024-12-30', FALSE, FALSE),
+(36, 14, 'Des performances époustouflantes et une diversité de styles. Un vrai régal !', 5.0, 'Festival incontournable', 'Amis', '2024-12-31', FALSE, FALSE),
+(36, 1, 'Très bon festival, mais certains spectacles manquaient de dynamisme. Globalement positif.', 4.0, 'Bon moment', 'Couple', '2025-01-01', FALSE, FALSE),
+(36, 10, 'Une belle vitrine de la danse contemporaine. J''ai adoré les interactions avec le public.', 4.5, 'À recommander', 'Famille', '2025-01-02', FALSE, FALSE),
+(37, 1, 'Un parc magnifique avec des animaux bien soignés. Idéal pour les familles !', 5.0, 'À faire absolument', 'Famille', '2025-01-03', FALSE, FALSE),
+(37, 7, 'Belle expérience, mais certains enclos manquaient d''ombre. Globalement agréable.', 4.0, 'Visite plaisante', 'Couple', '2025-01-04', FALSE, FALSE),
+(37, 6, 'Un lieu apaisant et instructif, parfait pour passer une journée en plein air.', 4.5, 'Superbe journée', 'Amis', '2025-01-05', FALSE, FALSE),
+(38, 1, 'Une journée porte ouverte très enrichissante. Les professeurs étaient passionnés et accueillants.', 5.0, 'Une découverte musicale', 'Solo', '2025-01-06', FALSE, FALSE),
+(38, 8, 'Beaucoup d''activités intéressantes, mais j''aurais aimé plus de démonstrations en direct.', 4.0, 'JPO sympathique', 'Couple', '2025-01-07', FALSE, FALSE),
+(38, 9, 'Un excellent moyen de découvrir les différentes disciplines musicales. Mon fils a adoré !', 4.5, 'À recommander aux familles', 'Famille', '2025-01-08', FALSE, FALSE),
+(39, 6, 'Des œuvres captivantes et une atmosphère agréable. J''ai passé un très bon moment.', 5.0, 'Incontournable pour les amateurs', 'Solo', '2025-01-09', FALSE, FALSE),
+(39, 1, 'Une exposition variée, mais certaines œuvres manquaient de clarté. Globalement, c''était intéressant.', 4.0, 'Belle expérience', 'Couple', '2025-01-10', FALSE, FALSE),
+(39, 5, 'Un lieu agréable et des artistes talentueux. J''ai découvert de nouvelles inspirations.', 4.5, 'Un bon moment artistique', 'Famille', '2025-01-11', FALSE, FALSE),
+(40, 7, 'Un atelier très relaxant au bord de la mer. Les conseils de l''animateur étaient précieux.', 5.0, 'Une expérience apaisante', 'Solo', '2025-01-12', FALSE, FALSE),
+(40, 11, 'Super ambiance et paysages magnifiques. J''aurais aimé plus de temps pour peindre.', 4.0, 'Atelier agréable', 'Couple', '2025-01-13', FALSE, FALSE),
+(40, 1, 'Une activité originale et ludique, parfaite pour passer du temps en famille. À refaire !', 4.5, 'Moment créatif', 'Famille', '2025-01-14', FALSE, FALSE);
+
+
 
 -- Peupler la table _reponseAvis
 INSERT INTO _reponseAvis (idAvis, idCompte, commentaire) VALUES

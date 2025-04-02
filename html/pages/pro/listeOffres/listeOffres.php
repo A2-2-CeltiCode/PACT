@@ -1,10 +1,15 @@
 <?php
-
+error_reporting(0);
 session_start();
 if (isset($_SESSION['idCompte']) && $_SESSION['typeUtilisateur'] == "membre") {
     header("Location: /pages/membre/accueil/accueil.php");
 } elseif (!isset($_SESSION['idCompte'])) {
     header("Location: /pages/visiteur/accueil/accueil.php");
+}
+
+if (!empty($_SESSION['toast_message'])) {
+    echo 'showToast("' . addslashes($_SESSION['toast_message']) . '");';
+    unset($_SESSION['toast_message']); // Supprime le message après affichage
 }
 
 // Importation des composants
@@ -36,6 +41,8 @@ require_once "./verifFindemois.php";
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
 $idCompte = $_SESSION['idCompte'];
 $status = $_GET['status'] ?? 'enligne';
+$_SESSION['toast_message_supprimer'] = "Offre supprimé avec succés";
+
 
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 $pdo = new PDO("$driver:host=$server;port=5432;dbname=$dbname", $dbuser, $dbpass);
@@ -102,10 +109,32 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 
 ?>
+<style>
+        /* Style du toast */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(-10px);
+        }
+    </style>
 
 <body>
-
-
+    <div id="toast"></div>
 
     <div class="titre-page">
         <h1>Mes Offres</h1>

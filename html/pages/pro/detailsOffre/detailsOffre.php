@@ -106,6 +106,8 @@ try {
         $stmt->bindParam(':idOffre', $idOffre);
         $stmt->execute();
 
+
+
         // Afficher le prochain jeton disponible
         if ($nextCooldownEnd && $nextCooldownEnd <= new DateTime('now', new DateTimeZone('UTC'))) {
             $dateProchainBlacklist = "Jeton disponible maintenant !";
@@ -118,9 +120,6 @@ try {
             }
         }
     }
-
-
-    
     // Calcul de la moyenne des notes
     $totalNotes = 0;
     $nombreAvis = count($avis);
@@ -187,6 +186,19 @@ try {
     foreach ($avis as $avi) {
         $thumbsUpMap[$avi['idavis']] = $avi['poucehaut'];
         $thumbsDownMap[$avi['idavis']] = $avi['poucebas'];
+    }
+
+    $query = "SELECT nbjetonsreponse FROM pact._offre WHERE idOffre = :idOffre";
+    $stmt = $dbh->prepare($query);
+    $stmt->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+    $stmt->execute();
+    $nbJetonsReponse = $stmt->fetchColumn();
+
+    $reponseJ = true;
+    if($nbJetonsReponse > 0){
+        $reponseJ = true;
+    }else{
+        $reponseJ = false;
     }
     
 } catch (PDOException $e) {
@@ -297,7 +309,7 @@ try {
             }
             Label::render("offre-option", "", "", "Informations complémentaires: ", "../../../ressources/icone/info.svg","icone info complémentaire");
             ?>
-            <ul>
+            <ul class="offre-details">
                 <?php
                 // Affichage des informations spécifiques en fonction du type d'offre
                switch ($typeOffre) {
@@ -307,27 +319,27 @@ try {
                         $end = strpos($string, ')');
 
                         $gamme = substr($string, $start, $end - $start);
-                        Label::render("", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg","icon game restaurant");
+                        Label::render("margin", "", "", "Gamme Restaurant: " . $gamme, "../../../ressources/icone/gamme.svg","icon game restaurant");
                         break;
                     case 'spectacle':
-                        Label::render("", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée spectacle");
-                        Label::render("", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg","icone capacité de la salle pour spectacle");
+                        Label::render("margin", "", "", "Durée: " . $minutesSpectacle['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée spectacle");
+                        Label::render("margin", "", "", "Capacité: " . $capacite['capacite'] . ' personnes', "../../../ressources/icone/timer.svg","icone capacité de la salle pour spectacle");
                         break;
                     case 'parc_attractions':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini pour parc");
-                        Label::render("", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg","icone nombre attractions parc");
+                        Label::render("margin", "", "", "Age minimum: " . $ageMinimumParc['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini pour parc");
+                        Label::render("margin", "", "", "Nombre d'attractions: " . $nbAttraction['nbattractions'], "../../../ressources/icone/timer.svg","icone nombre attractions parc");
                         break;
                     case 'activite':
-                        Label::render("", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini Activité");
-                        Label::render("", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée activité");
-                        Label::render("", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg","icone prestation Activité");
+                        Label::render("margin", "", "", "Age minimum: " . $ageMinimumActivite['agemin'] . ' ans', "../../../ressources/icone/timer.svg","icone age mini Activité");
+                        Label::render("margin", "", "", "Durée: " . $minutesActivite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée activité");
+                        Label::render("margin", "", "", "Prestation: " . $prestation['prestation'], "../../../ressources/icone/timer.svg","icone prestation Activité");
                         break;
                     case 'visite':
-                        Label::render("", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée visite");
-                        Label::render("", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg","icone si viste guidée ou non");
+                        Label::render("margin", "", "", "Durée: " . $minutesVisite['tempsenminutes'] . 'min', "../../../ressources/icone/timer.svg","icone durée visite");
+                        Label::render("margin", "", "", "Guidée: " . ($guidee['estguidee'] ? 'Oui' : 'Non'), "../../../ressources/icone/timer.svg","icone si viste guidée ou non");
                         echo "<br>";
                         if($guidee['estguidee'] == 'Oui'){
-                            echo "Langue : ";
+                            Label::render("margin", "", "", "Langue : ", "");
                             for ($i=0; $i < count($langueGuidee)  ; $i++) { 
                                 if( $i < count($langueGuidee)-1){
                                     Label::render("","","",$langueGuidee[$i]["nomlangage"].",");
@@ -371,11 +383,15 @@ try {
             }
             */ ?>
         </div>
-
     <section>
         <div class="liste-avis">
-            <div>
+            <div class="mes_er_avis">
                 <h1>Avis</h1>
+                <?php
+                    if (isset($_GET['error']) && $_GET['error'] == 'plus_de_reponses') {
+                        echo "<div class='mes_er' style='color: red; font-weight: bold;'>Nombre maximum de réponses atteint.</div>";
+                    }
+                ?>
             </div>
             <?php
             if ($nombreAvis > 0){
@@ -476,10 +492,11 @@ try {
                         </div>
                         <br>
                         <div class="option-user">
-                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
-                            <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", false); ?>
-                            <?php endif; ?>
+                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false);
+                            if ($reponseJ  && empty($reponses)) {
+                                Button::render("btn-reponse", "btn-reponse","bouton reponse", "Répondre", ButtonType::Pro, "", true); 
+                            } else { 
+                                Button::render("btn-reponse-disabled", "btn-reponse-disabled","Pas de jetons disponibles", "Répondre", ButtonType::Pro, "", false); }?>
                             <form action="blacklisterAvis.php" method="POST" class="form-blacklist">
                                 <input type="hidden" name="idAvis" value="<?= $avi["idavis"] ?>">
                                 <input type="hidden" name="idOffre" value="<?= $idOffre ?>">
@@ -548,7 +565,8 @@ try {
                     <textarea name="texteReponse" required placeholder="Votre réponse ici..."></textarea>
 
                     <div id="reponse-buttons">
-                        <button id="reponse-confirm" type="submit" id="rep-conf" title="Confirmation de réponse">Valider</button>
+                        <button id="reponse-confirm" type="submit" id="rep-conf" title="Confirmation de réponse" >Valider</button>
+        
                         <button id="reponse-decline" type="button" title="Retour en arrière">Annuler</button>
                     </div>
                 </form>

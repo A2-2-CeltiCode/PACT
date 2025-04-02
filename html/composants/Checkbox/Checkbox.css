@@ -2,19 +2,23 @@
     display: flex;
     align-items: center;
     margin: 10px 0;
+    cursor: pointer;
 }
 
 
 .checkbox-wrapper input[type="checkbox"] {
     width: 20px; /* Largeur de la case à cocher */
     height: 20px; /* Hauteur de la case à cocher */
+    cursor: pointer;
 }
 
 .checkbox-wrapper label {
     font-size: 16px;
     color: #333;
+    cursor: pointer;
 }
 
 .checkbox-wrapper input[type="checkbox"] {
     flex-grow: 0 !important;
+    cursor: pointer;
 }

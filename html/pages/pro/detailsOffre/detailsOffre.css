@@ -750,6 +750,13 @@ label{
   border-color: #4a90e2;
   outline: none;
 }
+.offre-details{
+  margin-left: 15%;
+  margin-right: 15%;
+}
+.margin{
+margin-left: 10px;
+}
 
 /* Boutons */
 #reponse-buttons {
@@ -854,6 +861,11 @@ label{
 }
 
 #btn-blackliste-disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+#btn-reponse-disabled {
   background-color: gray;
   cursor: not-allowed;
   transform: scale(1);
@@ -1134,4 +1146,14 @@ label{
     grid-gap: 40px;
   }
   
+}
+
+.mes_er_avis{
+display: flex;
+
+}
+
+.mes_er{
+  margin-left: 63%;
+  margin-top: 8px;
 }
