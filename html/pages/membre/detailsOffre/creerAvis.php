@@ -24,8 +24,12 @@ $avis_dir = $_SERVER['DOCUMENT_ROOT'] . "/ressources/avis/$idavis";
 if (!file_exists($avis_dir)) {
     mkdir($avis_dir, 0777, true);
 }
+if ($_FILES['drop-zone']['name'][0][0]) {
+
+
 if (is_array($_FILES['drop-zone']['name'])) {
     foreach ($_FILES['drop-zone']['name'] as $key => $val) {
+
         $nomImage = $_FILES['drop-zone']['name'][$key];
         $tmp_name = $_FILES['drop-zone']['tmp_name'][$key];
         $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/avis/" . $idavis . '/';
@@ -85,6 +89,6 @@ if (is_array($_FILES['drop-zone']['name'])) {
     $stmt->bindValue(':idImage', $idImage, PDO::PARAM_INT);
     $stmt->execute();
 }
-
+}
 header("Location: /pages/membre/detailsOffre/detailsOffre.php?id=" . $_POST['idOffre']);
 ?>
