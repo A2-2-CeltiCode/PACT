@@ -20,6 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':idOffre', $idOffre);
         $stmt->bindParam(':idAvis', $idAvis);
         $stmt->execute();
+
+        // Restaurer un jeton de réponse
+        $stmt = $dbh->prepare("UPDATE pact._offre SET nbJetonsReponse = nbJetonsReponse + 1 WHERE idOffre = :idOffre");
+        $stmt->bindParam(':idOffre', $idOffre);
+        $stmt->execute();
         
         echo "Avis blacklisté";
         header("Location: detailsOffre.php?idOffre=" . $idOffre);
