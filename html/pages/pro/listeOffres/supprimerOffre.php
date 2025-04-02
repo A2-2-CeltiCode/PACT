@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 require_once $_SERVER["DOCUMENT_ROOT"] . "/connect_params.php";
 session_start();
 

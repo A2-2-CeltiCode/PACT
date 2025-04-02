@@ -267,6 +267,25 @@ signalerButtons.forEach((button) => {
   });
 });
 
+const params = new URLSearchParams(window.location.search);
+if (params.has("toast")) {
+  const message = params.get("toast");
+  showToast(message);
+
+  // Nettoyer l'URL (empêche de réafficher le message si on actualise la page)
+  history.replaceState(null, "", window.location.pathname);
+}
+
+function showToast(message) {
+  let toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+      toast.classList.remove("show");
+  }, 3000); // Cache le toast après 3 secondes
+}
+
 let keydownHandler;
 
 // Gestion de la popup de création d'avis

@@ -207,7 +207,7 @@ try {
             </form>
         </div>
         <div id="deleteConfirmationPopup">
-            <p>Êtes-vous sûr de vouloir supprimer votre compte ?<br>Cette action est irréversible.</p>
+            <p>Êtes-vous sûr de vouloir <p class="red">supprimer</p> votre compte ?<br>Cette action est irréversible.</p>
             <div>
                 <button id="deleteConfirm" onClick="deleteAccount()">
                     Confirmer
