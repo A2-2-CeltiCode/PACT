@@ -89,6 +89,6 @@ if (is_array($_FILES['drop-zone']['name'])) {
     $stmt->bindValue(':idImage', $idImage, PDO::PARAM_INT);
     $stmt->execute();
 }
-}
+
 header("Location: /pages/membre/detailsOffre/detailsOffre.php?id=" . $_POST['idOffre']);
 ?>
