@@ -230,7 +230,7 @@ try {
                         </div>
                             <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
                             <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php Button::render("btn-repondre", "btn-repondre","bouton de reponse","Répondre", ButtonType::Pro, "", false); ?>
+                                <?php //Button::render("btn-repondre", "btn-repondre","bouton de reponse","Répondre", ButtonType::Pro, "", false); ?>
                             <?php endif; ?>
                         
                         <?php if (!empty($reponses)): ?>
