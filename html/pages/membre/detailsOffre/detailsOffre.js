@@ -401,8 +401,12 @@ function initializeModifierButtons() {
     return;
   }
 
-  popupTitle.textContent = "Modifier votre avis";
-  btnSubmit.textContent = "Confirmer";
+  modifierButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      popupTitle.textContent = "Modifier votre avis";
+      btnSubmit.textContent = "Confirmer";
+    });
+  });
 
   modifierButtons.forEach((button) => {
     button.addEventListener("click", function () {

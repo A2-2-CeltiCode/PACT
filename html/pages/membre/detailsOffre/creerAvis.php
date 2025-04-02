@@ -29,7 +29,7 @@ if (is_array($_FILES['drop-zone']['name'])) {
         $tmp_name = $_FILES['drop-zone']['tmp_name'][$key];
         $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/avis/" . $idavis . '/';
 
-        $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
+        $extension = pathinfo($nomImage[0], PATHINFO_EXTENSION);
 
         $nouveauNomImage = uniqid() . '.' . $extension;
 
@@ -37,7 +37,7 @@ if (is_array($_FILES['drop-zone']['name'])) {
             mkdir($location, 0777, true);
         }
 
-        move_uploaded_file($tmp_name, $location . $nouveauNomImage);
+        move_uploaded_file($tmp_name[0], $location . $nouveauNomImage);
         $stmt = $dbh->prepare(
             "INSERT INTO pact._image(nomImage) 
             VALUES(:nomImage)"
@@ -85,5 +85,5 @@ if (is_array($_FILES['drop-zone']['name'])) {
     $stmt->execute();
 }
 
-header("Location: /pages/membre/detailsOffre/detailsOffre.php?idOffre=" . $_POST['idOffre']);
+header("Location: /pages/membre/detailsOffre/detailsOffre.php?id=" . $_POST['idOffre']);
 ?>
