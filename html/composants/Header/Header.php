@@ -139,6 +139,7 @@ class Header
         } elseif ($type == HeaderType::Member) {
             echo '<ul>
                     <li class="membre-header"><a href="/pages/membre/accueil/accueil.php">Accueil</a></li>
+                    <li class="membre-header"><a href="/pages/membre/listeAvis/listeAvis.php">Voir mes Avis</a></li>
                     <li class="membre-header"><a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a></li>
                 </ul>';
         } elseif ($type == HeaderType::Pro) {
@@ -182,9 +183,6 @@ class Header
             <select class="selecteur-profil ' . $profileClass . '" id="selecteur-profil" onchange="window.location.href =this.value;" onclick="toggleArrow()">
                 <option value="default" hidden id="profile-option">Mon compte ▼</option>
                 <option value="' . $chemin . '">Accéder à mon Espace</option>';
-        if($profileClass == "profil-member"){
-            $profile = $profile . '<option value="' . "/pages/membre/listeAvis/listeAvis.php" . '">Voir mes Avis</option>';
-        } 
         $profile = $profile . '<option value="/deconnexion.php">Déconnexion</option>
             </select>
         </div>';
@@ -238,7 +236,6 @@ class Header
                 echo '<div class="review" data-id="' . $review['idavis'] . '" onclick="redirectToAvis(' . $review['idavis'] . ')">';
                 echo '<strong>' . $review['titre'] . '</strong>';
                 echo '<p>' . $review['commentaire'] . '</p>';
-                echo '<button class="btn-repondre" title="Repondre" onclick="openReplyPopup(' . $review['idavis'] . '); event.stopPropagation();">Répondre</button>';
                 echo '<button class="btn-mark-seen" title="Marque vue" data-id="' . $review['idavis'] . '">Marqué comme vu</button>';
                 echo '</div>';
             }

@@ -366,7 +366,7 @@ function initializeSupprimerButtons() {
       const idAvis = this.dataset.idavis;
       if (confirm("Êtes-vous sûr de vouloir supprimer cet avis ?")) {
         fetch(`supprimerAvis.php?idAvis=${idAvis}`, {
-          method: "POST",
+          method: "GET",
         }).then((response) => {
           if (response.ok) {
             location.reload();

@@ -360,7 +360,7 @@ try {
                     if (!isset($avi["idavis"])) {
                         continue;
                     }
-                    if ($avi["estblacklist"] && $avi['idcompte'] == $idCompte || !$avi["estblacklist"]){
+                    if (($avi["estblacklist"] && $avi['idcompte'] == $idCompte) || !$avi["estblacklist"]){
   
                     $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
                     $stmt->execute([':idAvis' => $avi['idavis']]);  
