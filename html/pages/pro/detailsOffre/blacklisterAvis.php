@@ -22,9 +22,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
 
         // Restaurer un jeton de réponse
-        $stmt = $dbh->prepare("UPDATE pact._offre SET nbJetonsReponse = nbJetonsReponse + 1 WHERE idOffre = :idOffre");
-        $stmt->bindParam(':idOffre', $idOffre);
-        $stmt->execute();
+        $stmt = $dbh->prepare("SELECT * FROM pact.vue_reponse WHERE idavis = :idAvis");
+        $stmt->bindParam(':idAvis', $idAvis);
+        $repons =  $stmt->execute();
+        
+        if( $repons == null){
+
+        }else{
+            $stmt = $dbh->prepare("UPDATE pact._offre SET nbJetonsReponse = nbJetonsReponse + 1 WHERE idOffre = :idOffre");
+            $stmt->bindParam(':idOffre', $idOffre);
+            $stmt->execute();
+        }
+
         
         echo "Avis blacklisté";
         header("Location: detailsOffre.php?idOffre=" . $idOffre);
