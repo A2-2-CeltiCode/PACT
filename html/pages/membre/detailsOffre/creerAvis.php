@@ -90,5 +90,7 @@ if (is_array($_FILES['drop-zone']['name'])) {
     $stmt->execute();
 }
 
+}
+
 header("Location: /pages/membre/detailsOffre/detailsOffre.php?id=" . $_POST['idOffre']);
 ?>
