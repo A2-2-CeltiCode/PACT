@@ -160,7 +160,9 @@ STRING
     if (isset($_COOKIE["offresRecentes"])) {
         $ofr = unserialize($_COOKIE["offresRecentes"]);
         $l = implode(', ', array_keys($ofr));
-
+        if(substr($l, -2) == ", "){
+            $l = substr($l,0,-2);
+        }
         $offresRecentesSql = $dbh->query(<<<STRING
 select
    distinct pact.vue_offres.titre AS nom,

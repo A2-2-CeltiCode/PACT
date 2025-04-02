@@ -4,19 +4,19 @@ ini_set('display_errors', 0);
 require_once $_SERVER['DOCUMENT_ROOT'] . '/connect_params.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     $idAvis = intval($_POST['idAvis']);
     $titre = htmlspecialchars($_POST['titre']);
     $commentaire = htmlspecialchars($_POST['commentaire']);
     $note = intval($_POST['note']);
     $contexteVisite = htmlspecialchars($_POST['contexteVisite']);
-    $idOffre = intval($_POST['idOffre']); // Assurez-vous que ce champ est transmis dans le formulaire
+    $stmt = $dbh->prepare("SELECT idoffre FROM pact._avis WHERE idavis = :idAvis");
+    $stmt->bindParam(':idAvis', $idAvis, PDO::PARAM_INT);
+    $idOffre = $stmt->execute();
 
-    if ($idOffre === 0) {
-        die("Erreur : idOffre manquant ou invalide.");
-    }
+    print_r($idOffre);
 
     try {
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
 
         // Mettre à jour les informations de l'avis
         $stmt = $dbh->prepare("UPDATE pact._avis SET titre = :titre, commentaire = :commentaire, note = :note, contextevisite = :contexteVisite WHERE idavis = :idAvis");
