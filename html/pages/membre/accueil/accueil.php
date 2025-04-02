@@ -360,7 +360,7 @@ $svgArgent = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/ar
             <section>
 
         <!-- affichage des offres a la une -->
-            <h2>Offres consultées récement</h2>
+            <h2>Offres consultées récemment</h2>
             <div class="carrousel">
                 <?php
                 foreach ($tmp as $item) {
