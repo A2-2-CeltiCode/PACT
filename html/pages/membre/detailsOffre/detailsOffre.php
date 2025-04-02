@@ -427,11 +427,12 @@ try {
                         <?php if($avi['idcompte'] == $idCompte){
                             if($avi["estblacklist"]){ ?>
                                 <h3><em>Blacklisté</em></h3>
+                            <?php } else{ ?>
+                                <button class="btn-modifier" title="Modifier un avis" data-idavis="<?= $avi["idavis"] ?>">Modifier</button>
                             <?php } ?>
                             <button class="btn-supprimer" title="Supprimer un avis" data-idavis="<?= $avi["idavis"] ?>">Supprimer</button>
                         <?php } else{
-                            Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false);
-                            
+                                Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Member, "", false);
                             } ?>                     
                         </div>
                         <?php if (!empty($reponses)): ?>

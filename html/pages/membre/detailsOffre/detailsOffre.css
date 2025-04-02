@@ -603,7 +603,6 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    margin-top: 16px;
 }
   
   .btn-modifier:hover {

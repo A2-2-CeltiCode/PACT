@@ -76,7 +76,7 @@ try {
             $date->setTimezone(new DateTimeZone('UTC'));
 
             // Ajouter 30 secondes de cooldown
-            $date->modify('+30 seconds');
+            $date->modify('+180 seconds');
 
             // Vérifier si cet avis est toujours sous cooldown
             if ($date > new DateTime('now', new DateTimeZone('UTC'))) {
