@@ -40,6 +40,26 @@ function setSessionId() {
         });
 }
 
+function setTotpId() {
+    let id = document.getElementById("code").value;
+    let url = window.location.protocol + "//" + window.location.host + "/totp/panel.php"
+    let request = new Request(url, {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        method: "POST",
+        body: `totpid=${id}`
+    })
+    fetch(request)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Unable");
+            }
+        }).then((response) => {
+            console.log(response);
+        });
+}
+
 function generateTOTP() {
     let url = window.location.protocol + "//" + window.location.host + "/totp/generate.php"
     let request = new Request(url)

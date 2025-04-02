@@ -41,6 +41,9 @@ if (isset($_POST["code"])) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
+        echo json_encode(array(
+            "valid" => true
+        ));
     } else {
         echo json_encode(array(
             "valid" => false,
@@ -48,11 +51,29 @@ if (isset($_POST["code"])) {
         ));
     }
 } else {
+    $id = $_SESSION["idCompte"];
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
+
+        $stmt = $dbh->prepare("SELECT COALESCE(pseudo, denominationsociale) AS name FROM pact._compte LEFT JOIN pact._comptepro USING (idCompte) LEFT JOIN pact._comptemembre USING (idCompte) WHERE idCompte = ?");
+        $dbh = null;
+
+        $stmt->execute([$id]);
+
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $name = $result[0]->name;
+
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage() . "<br>";
+        die();
+    }
     $otp = TOTP::generate(null);
 
-    $otp->setLabel('Celticode PACT');
+    $otp->setLabel($name);
+    $otp->setIssuer('Celticode PACT');
     $grCodeUri = $otp->getQrCodeUri(
-        'https://api.qrserver.com/v1/create-qr-code/?data=[DATA]&size=300x300&ecc=M',
+        'https://api.qrserver.com/v1/create-qr-code/?data=[DATA]&size=200x200&ecc=M',
         '[DATA]'
     );
     echo json_encode(array(

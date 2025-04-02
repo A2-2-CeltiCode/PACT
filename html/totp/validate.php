@@ -9,7 +9,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/../vendor/autoload.php";
 
 use OTPHP\TOTP;
 
-if (!isset($_SESSION["idCompte"])) {
+if (!isset($_SESSION["idCompte"]) && !isset($_SESSION["totpid"])) {
     http_response_code(403);
     ?>
     <h1>FORBIDDEN</h1>
@@ -29,7 +29,7 @@ if (isset($_SESSION["timeout"]) && unserialize($_SESSION["timeout"])["until"] > 
     die();
 }
 
-$id = $_SESSION["idCompte"];
+$id = $_SESSION["idCompte"] ?? $_SESSION["totpid"];
 try {
 
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
@@ -55,6 +55,9 @@ $valid = $otp->verify($_POST["code"], leeway: 10);
 
 if ($valid) {
     unset($_SESSION["timeout"]);
+    if (!isset($_SESSION["idCompte"])) {
+        $_SESSION["idCompte"] = $_SESSION["totpid"];
+    }
     echo json_encode(array(
         "valid" => true
     ));

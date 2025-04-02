@@ -5,25 +5,26 @@ SET SCHEMA 'pact';
 --
 -- COMPTE MEMBRE
 CREATE OR REPLACE VIEW vue_compte_membre AS
-SELECT idCompte, pseudo, mdp, email, numTel, nom, prenom, idAdresse, codePostal, ville, rue
-FROM _compte NATURAL JOIN _compteMembre NATURAL JOIN _adresse;
+SELECT idCompte, pseudo, mdp, email, numTel, nom, prenom, idAdresse, codePostal, ville, rue, secret as totp
+FROM _compte NATURAL JOIN _compteMembre NATURAL JOIN _adresse LEFT JOIN _totpsecret USING (idcompte);
 
 -- COMPTE PRO PRIVE
 CREATE OR REPLACE VIEW vue_compte_pro_prive AS
 SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, idAdresse, codePostal, ville, rue
-FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPrive NATURAL JOIN _adresse;
+FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPrive NATURAL JOIN _adresse LEFT JOIN _totpsecret USING (idcompte);
 
 -- COMPTE PRO PUBLIC
 CREATE OR REPLACE VIEW vue_compte_pro_public AS
 SELECT idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, idAdresse, codePostal, ville, rue
-FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN _adresse;
+FROM _compte NATURAL JOIN _comptePro NATURAL JOIN _compteProPublic NATURAL JOIN _adresse LEFT JOIN _totpsecret USING (idcompte);
 
 -- COMPTE PRO
 CREATE OR REPLACE VIEW vue_compte_pro AS
-SELECT c.idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, c.idAdresse, codePostal, ville, rue
+SELECT c.idCompte, mdp, email, numTel, denominationSociale, raisonSocialePro, banqueRib, numSiren, c.idAdresse, codePostal, ville, rue, secret as totp
 FROM _compte c LEFT JOIN _comptePro cp ON c.idCompte = cp.idCompte
-			         LEFT JOIN _compteProPrive cppr ON c.idCompte = cppr.idCompte 
+			         LEFT JOIN _compteProPrive cppr ON c.idCompte = cppr.idCompte
 			         LEFT JOIN _adresse a ON c.idAdresse = a.idAdresse
+                     LEFT JOIN _totpsecret s ON c.idCompte = s.idCompte
 WHERE denominationSociale IS NOT NULL;
 
 --
@@ -73,9 +74,9 @@ SELECT DISTINCT _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomopt
             WHEN _visite.idoffre IS NOT NULL THEN 'Visite'::text
             ELSE 'Inconnu'::text
         END AS type_offre,
-      (SELECT nomImage 
-        FROM _representeOffre JOIN _image ON _representeOffre.idImage = _image.idImage 
-        WHERE _representeOffre.idOffre = _offre.idoffre 
+      (SELECT nomImage
+        FROM _representeOffre JOIN _image ON _representeOffre.idImage = _image.idImage
+        WHERE _representeOffre.idOffre = _offre.idoffre
         FETCH FIRST 1 ROW ONLY) AS nomimage
 FROM _offre LEFT JOIN _spectacle ON _offre.idoffre = _spectacle.idoffre
             LEFT JOIN _activite ON _offre.idoffre = _activite.idoffre
@@ -96,8 +97,8 @@ GROUP BY _offre.idcompte, _offre.idoffre, _offre.idadresse, _offre.nomoption, _o
 
 -- VISITE
 CREATE OR REPLACE VIEW vue_visite AS
-SELECT o.idCompte, o.idOffre, a.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, 
-       o.descriptionDetaillee, o.siteInternet, c.nomCategorie, a.codePostal, a.ville, a.rue, 
+SELECT o.idCompte, o.idOffre, a.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description,
+       o.descriptionDetaillee, o.siteInternet, c.nomCategorie, a.codePostal, a.ville, a.rue,
        a.numTel, valPrix, tempsEnMinutes, v.estGuidee, o.estEnLigne, v.dateEvenement
 FROM _offre o LEFT JOIN _visite v ON o.idOffre = v.idOffre
               LEFT JOIN _categorie c ON v.nomCategorie = c.nomCategorie
@@ -130,8 +131,8 @@ FROM _possedeSpectacle;
 
 -- ACTIVITE
 CREATE OR REPLACE VIEW vue_activite AS
-SELECT o.idCompte, o.idOffre, o.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, o.descriptionDetaillee, 
-       o.siteInternet, o.creaDate, c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, valPrix, tempsEnMinutes, 
+SELECT o.idCompte, o.idOffre, o.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, o.descriptionDetaillee,
+       o.siteInternet, o.creaDate, c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, valPrix, tempsEnMinutes,
        ac.ageMin, ac.prestation, o.estEnLigne, o.heureOuverture, o.heureFermeture
 FROM _offre o INNER JOIN _option op ON o.nomOption = op.nomOption
               INNER JOIN _forfait f ON o.nomForfait = f.nomForfait
@@ -145,8 +146,8 @@ FROM _possedeActivite;
 
 -- PARC D'ATTRACTIONS
 CREATE OR REPLACE VIEW vue_parc_attractions AS
-SELECT o.idCompte, o.idOffre, a.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description, 
-       o.descriptionDetaillee, o.siteInternet, c.nomCategorie, a.codePostal, a.ville, a.rue, 
+SELECT o.idCompte, o.idOffre, a.idAdresse, op.nomOption, f.nomForfait, o.titre, o.description,
+       o.descriptionDetaillee, o.siteInternet, c.nomCategorie, a.codePostal, a.ville, a.rue,
        a.numTel, valPrix, pa.ageMin, pa.nbAttractions, i.idImage, i.nomImage, o.estEnLigne
 FROM _offre o LEFT JOIN _parcAttractions pa ON o.idOffre = pa.idOffre
               LEFT JOIN _categorie c ON pa.nomCategorie = c.nomCategorie
@@ -163,7 +164,7 @@ FROM _possedeParcAttractions;
 
 -- RESTAURANT
 CREATE OR REPLACE VIEW vue_restaurant AS
-SELECT o.idCompte, o.idOffre, o.idAdresse, o.nomOption, o.nomForfait, o.titre, o.description, o.descriptionDetaillee, 
+SELECT o.idCompte, o.idOffre, o.idAdresse, o.nomOption, o.nomForfait, o.titre, o.description, o.descriptionDetaillee,
        o.siteInternet, c.nomCategorie, a.codePostal, a.ville, a.rue, a.numTel, g.nomGamme, o.estEnLigne, i.idImage, i.nomImage
 FROM _offre o LEFT JOIN _restaurant r ON r.idOffre = o.idOffre
               LEFT JOIN _categorie c ON c.nomCategorie = r.nomCategorie
@@ -174,7 +175,7 @@ FROM _offre o LEFT JOIN _restaurant r ON r.idOffre = o.idOffre
               LEFT JOIN _image i ON ro.idImage = i.idImage
               LEFT JOIN _gamme g ON g.nomGamme = r.nomGamme
 WHERE c.nomCategorie = 'Restaurant';
-            
+
 CREATE OR REPLACE VIEW vue_menu_restaurant AS
 SELECT idOffre, nomRepas
 FROM _proposeRestaurant;

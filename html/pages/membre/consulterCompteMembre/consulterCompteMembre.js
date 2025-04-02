@@ -259,3 +259,74 @@ function hideDeletePopup() {
     let popup = document.getElementById("deleteConfirmationPopup")
     popup.style.display = "none"
 }
+
+function generateTOTP() {
+    let url = window.location.protocol + "//" + window.location.host + "/totp/generate.php"
+    let request = new Request(url)
+    fetch(request)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Unable");
+            }
+        }).then((response) => {
+            document.getElementById("TotpQrCode").src = response.qrcode;
+            document.getElementById("secret").textContent = response.code;
+            document.getElementById("activationTOTPpopup").style.display = 'block'
+        });
+}
+
+function hideTOTPpopup() {
+    document.getElementById("activationTOTPpopup").style.display = 'none'
+}
+
+function acceptTOTP() {
+    hideTOTPpopup()
+    let text = document.getElementById("totpactive")
+    text.value = "Activé"
+    text.nextSibling.remove()
+    text.nextSibling.remove()
+}
+
+function toggleSecret() {
+    let secret = document.getElementById("secret")
+    if (secret.style.display == 'none') {
+        secret.style.display = 'block'
+    } else {
+        secret.style.display = 'none'
+    }
+}
+
+function activateTOTP(event) {
+    event.target.innerHTML = "<span class=\"loader\"></span>"
+    let code = document.getElementById("validationTOTP").value;
+    let url = window.location.protocol + "//" + window.location.host + "/totp/generate.php"
+    let request = new Request(url,  {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        method: "POST",
+        body: `code=${code}`
+    })
+    fetch(request)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Unable");
+            }
+        }).then((response) => {
+            if (response.valid) {
+                event.target.innerHTML = "Valider"
+                let popup = document.getElementById("activationTOTPpopup")
+                popup.innerHTML = '<p>La double authentification à bien été activé</p><button type="button" onclick="acceptTOTP()">OK</button>'
+            } else {
+                event.target.innerHTML = "Valider"
+                let field = document.getElementById("validationTOTP")
+                field.placeholder = "erreur code incorrect"
+                field.value = ''
+                field.parentElement.classList.add("shakebar")
+                field.parentElement.classList.add("input-error")
+            }
+
+        });
+}
