@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $dbh->prepare("SELECT idoffre FROM pact._avis WHERE idavis = :idAvis");
     $stmt->bindParam(':idAvis', $idAvis, PDO::PARAM_INT);
     $idOffre = $stmt->execute();
-
+    $idOffre = $_POST['idOffre'];
     print_r($idOffre);
 
     try {
