@@ -1,3 +1,5 @@
+initializeSearchForm("listeOffres");
+
 document.addEventListener('DOMContentLoaded', function () {
     const toggleButton = document.getElementById('toggleBarretrieButton');
     const filterContainer = document.getElementById('barretrieContainer'); // Utilisez l'ID ici
