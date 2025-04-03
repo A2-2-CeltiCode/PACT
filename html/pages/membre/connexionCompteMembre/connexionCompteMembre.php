@@ -25,6 +25,8 @@ try {
     die();
 }
 
+$requireTotp = false;
+
 // Vérifie si le formulaire de connexion a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $identifiant_utilisateur = $_POST['username'];
@@ -38,13 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérifie si un compte correspondant a été trouvé
     if ($compte = $requete_preparee->fetch(PDO::FETCH_ASSOC)) {
         if ($mot_de_passe_utilisateur === $compte['mdp']) {
-            $_SESSION['utilisateur_connecte'] = true;
-            $_SESSION['identifiant_utilisateur'] = $compte['email'];
-            $_SESSION['idCompte'] = $compte['idcompte'];
-            $_SESSION['typeUtilisateur'] = "membre";
+            if ($compte['totp'] == null) {
+                $_SESSION['utilisateur_connecte'] = true;
+                $_SESSION['identifiant_utilisateur'] = $compte['email'];
+                $_SESSION['idCompte'] = $compte['idcompte'];
+                $_SESSION['typeUtilisateur'] = "membre";
 
-            header("Location: ../" . ($_GET["context"] ?? "accueil/accueil.php"));
-            exit();
+                header("Location: ../" . ($_GET["context"] ?? "accueil/accueil.php"));
+                exit();
+            } else {
+                $message_erreur_connexion = "Entrez le code de double authentification";
+                $_SESSION["totpid"] = $compte['idcompte'];
+                $_SESSION['typeUtilisateur'] = "membre";
+                $requireTotp = true;
+            }
         } else {
             // Mot de passe incorrect
             $message_erreur_connexion = 'Nom d\'utilisateur ou mot de passe incorrect';
@@ -85,11 +94,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Afficher le message d'erreur s'il y en a un -->
         <?php if (isset($message_erreur_connexion)): ?>
-            <p style="color: red;"><?php echo $message_erreur_connexion; ?></p>
+            <p id="expError" style="color: red;"><?php echo $message_erreur_connexion; ?></p>
         <?php endif; ?>
 
         <!-- Formulaire de connexion -->
-        <form method="post" action="" class="responsive-form">
+        <form method="post" action="" class="responsive-form" onkeydown=<?= $requireTotp ? "validateForm(event)" : "" ?> >
+            <?php
+            if (!$requireTotp) {
+            ?>
             <div class="groupe-champ">
                 <label for="username">Votre identifiant</label>
                 <?php Input::render(class : "conect" , type : "text", name:"username", placeholder:"Adresse e-mail", required : true)  ?>
@@ -103,6 +115,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="connecte">
                 <?php Button::render(class: "bouton-connexion", submit: true, type: "membre", text: "Se connecter", title: "connexion", id:"bouton-connexion"); ?>
             </div>
+            <?php
+            } else {
+            ?>
+            <div class="groupe-champ">
+                <label for="totp">Code de double authentification</label>
+                <?php Input::render(class : "conect" , type : "texte", id: "code", name:"totp", placeholder:"code de validation à 6 chiffres", pattern: "^[0-9]{6}$")  ?>
+            </div>
+            <div class="totpInput">
+                <?php Button::render(class: "bouton-connexion", type: "membre", text: "valider", onClick: "validateTOTP()") ?>
+            </div>
+            <?php
+            }
+            ?>
         </form>
         <!-- Lien pour créer un compte -->
         <div class="inscription">
@@ -112,4 +137,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
 </body>
+<script src="totp.js"></script>
 </html>

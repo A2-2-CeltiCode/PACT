@@ -516,3 +516,9 @@ CREATE TABLE _cleApi (
     cleAPI CHAR(64) UNIQUE,
     FOREIGN KEY (idCompte) REFERENCES _compte(idCompte)
 );
+
+CREATE TABLE _totpSecret (
+    idCompte INT PRIMARY KEY,
+    secret CHAR(152) UNIQUE,
+    FOREIGN KEY (idCompte) REFERENCES _compte(idCompte)
+);

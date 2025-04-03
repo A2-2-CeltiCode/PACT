@@ -26,8 +26,10 @@ try {
 
     // Définir le schéma "pact" pour la session
     $dbh->exec("SET search_path TO pact;");
-    $sql = "SELECT idcompte, pseudo, email, numtel, nom, prenom, codepostal, ville, rue, cleapi
-            FROM vue_compte_membre LEFT JOIN _cleApi USING (idcompte)
+    $sql = "SELECT idcompte, pseudo, email, numtel, nom, prenom, codepostal, ville, rue, cleapi, secret
+            FROM vue_compte_membre
+                LEFT JOIN _cleApi USING (idcompte)
+                LEFT JOIN _totpsecret USING (idcompte)
             WHERE idCompte = $idCompte";
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
@@ -155,6 +157,23 @@ try {
                     value="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>" 
                     readonly data-original="<?= htmlspecialchars($userInfo['ville'] ?? 'Non renseigné') ?>"></td>
                 </tr>
+                <!-- Catégorie TOTP -->
+                <tr>
+                    <th colspan="2" class="thhead"  style="background-color: #075997; color: white; text-align: center;">Double Authentification</th>
+                </tr>
+                <tr>
+                    <th>TOTP</th>
+                    <td>
+                        <input id="totpactive" type="text" readonly="" value="<?= htmlspecialchars(!empty($userInfo['secret']) ? 'Activé' : "Non activé") ?>">
+                        <?php
+                        if (empty($userInfo['secret'])) {
+                            ?>
+                            <button type="button" onclick="generateTOTP()">Activer la double authentification</button>
+                            <?php
+                        }
+                        ?>
+                    </td>
+                </tr>
                 <!-- Catégorie API -->
                 <tr>
                     <th colspan="2" class="thhead"  style="background-color: #075997; color: white; text-align: center;">Tchatator</th>
@@ -216,6 +235,24 @@ try {
                     Annuler
                 </button>
             </div>
+        </div>
+        <div id="activationTOTPpopup">
+            <p>Scannez ce QR code avec votre application de double authentification ou entrez manuellement le secret:</p>
+            <div style="display: flex; flex-direction: row; justify-content: space-around" >
+                <img id="TotpQrCode">
+                <div style="display: flex; align-items: baseline; gap: 10px; flex-direction: column; justify-content: space-around">
+                        <label for="validationTOTP">entrez le code à usage unique pour confirmer</label>
+                        <div style="display: flex; gap: 20px">
+                            <div class="input-wrapper">
+                                <input type="text" id="validationTOTP" placeholder="code à 6 chiffres">
+                            </div>
+                            <button type="button" onclick="activateTOTP(event)">Valider</button>
+                        </div>
+                        <button type="button" onclick="toggleSecret()">afficher le secret</button>
+                </div>
+            </div>
+            <hr>
+            <p id="secret" style="display: none;"></p>
         </div>
         <div>
             <button id="btnDeleteAccount" onClick="showDeletePopup()">
