@@ -103,7 +103,6 @@ $renderer = new Carte();
     <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
     <?php
     
-    Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
     ?>
     
 </div>
