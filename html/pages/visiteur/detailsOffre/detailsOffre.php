@@ -1,14 +1,5 @@
 <?php
 error_reporting(E_ALL ^ E_WARNING);
-// Récupération de l'identifiant de l'offre
-$idOffre = $_GET['id'];
-if (isset($_GET['id'])) {
-    $offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
-    $offresRecentesArray = unserialize($offresRecentesTxt);
-    $offresRecentesArray[$idOffre] = time();
-    setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time()+60*60*24*15, "/");
-}
-
 
 // Inclusion des fichiers nécessaires pour les composants de l'interface
 use \composants\Button\Button;
@@ -197,7 +188,7 @@ try {
                         <?php else: ?>
                             
                             <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>"
-                            class="carousel-image">
+                            class="carousel-image" alt="imgOffre">
                             <?php endif ?>
                             <?php endforeach; ?>
                 </div>
