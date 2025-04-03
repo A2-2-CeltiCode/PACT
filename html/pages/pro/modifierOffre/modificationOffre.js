@@ -251,22 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .join("");
         document.getElementById("suggestions").innerHTML = suggestions;
 
-        // Mettre à jour la carte si une seule ville est trouvée ou si le nom de la ville correspond à l'entrée
-        if (data.features.length === 1 || validCities.includes(input)) {
-          const coordinates = data.features[0].geometry.coordinates;
-          points = [
-            {
-              coordonneesx: coordinates[1].toString(),
-              coordonneesy: coordinates[0].toString(),
-            },
-          ];
-          addMapMarkers(map, points, 10);
-          document.getElementById("postcode").value =
-            data.features[0].properties.postcode;
-        } else {
-          clearMapMarkers(map);
-          document.getElementById("postcode").value =""
-        }
+        
       })
       .catch((error) => console.error("Erreur:", error));
   }
@@ -316,37 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .join("");
         document.getElementById("adresseSuggestions").innerHTML = suggestions;
 
-        // Mettre à jour la carte si une seule adresse est trouvée ou si l'input est égal à une adresse
-        if (
-          data.features.length === 1 ||
-          data.features.some(
-            (feature) => feature.properties.name.toLowerCase() === input
-          )
-        ) {
-          const coordinates = data.features[0].geometry.coordinates;
-          points = [
-            {
-              coordonneesx: coordinates[1].toString(),
-              coordonneesy: coordinates[0].toString(),
-            },
-          ];
-          addMapMarkers(map, points, 15);
-        } else {
-          fetch(
-            `https://api-adresse.data.gouv.fr/search/?q=${ville}&type=municipality&limit=10`
-          )
-            .then((response) => response.json())
-            .then((data) => {
-              const coordinates = data.features[0].geometry.coordinates;
-              points = [
-                {
-                  coordonneesx: coordinates[1].toString(),
-                  coordonneesy: coordinates[0].toString(),
-                },
-              ];
-              addMapMarkers(map, points, 10);
-            });
-        }
+        
       })
       .catch((error) => console.error("Erreur:", error));
   }

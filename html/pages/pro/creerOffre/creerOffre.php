@@ -74,15 +74,20 @@ $rib = $stmt->fetchColumn();
                     </div>
                     <div>
                         <label>Information de l'offre</label>
-                        <div>
+                        <div class="adresse">
                             <?php Input::render(name: "ville", type: "text", id: "ville", required: "true", placeholder: 'Ville*', onkeyup: "suggestVilles()") ?>
                             <div id="suggestions"></div>
                         </div>
+                        <br>
+                        <div class="adresse">
                         <?php Input::render(name: "codePostal", id: "postcode", type: "number", required: 'true', placeholder: "Code Postal*",onkeyup:"suggestPostale") ?>
-                        <div>
+                        </div>
+                        <br>
+                        <div class="adresse">
                             <?php Input::render(name: "adressePostale", id: "adresse", type: "text", placeholder: 'Adresse Postale', onkeyup: "suggestAdresses()") ?>
                             <div id="adresseSuggestions"></div>
                         </div>
+                        <br>
                         <div id="map" style="height: 300px; width: 100%;"></div>
                         <input type="hidden" id="longitude" name="longitude">
                         <input type="hidden" id="latitude" name="latitude">

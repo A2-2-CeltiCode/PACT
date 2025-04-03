@@ -106,6 +106,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <link rel="stylesheet" href="./creationComptePro.css">
         <script src="creationComptePro.js"></script>
         <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
+
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>y
     </head>
     <body>
         <section>
@@ -143,9 +151,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br>
                 <div class="div-adresse">
                     <label for="informations">Votre Adresse Postale</label>
-                    <?php Input::render(class: "input-box", type: "text", name: "rue", placeholder: "Rue*", value: $rue, required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "codePostal", placeholder: "Code Postal*", value: $codePostal, required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "ville", placeholder: "Ville*", value: $ville, required: true); ?>
+                    <?php Input::render(class: "input-box",id: "ville", type: "text", name: "ville", placeholder: "Ville*", value: $ville, required: true,onkeyup: "suggestVilles()"); ?>
+                    <div id="suggestions"></div>
+                    <?php Input::render(class: "input-box",id: "postcode", type: "text", name: "codePostal", placeholder: "Code Postal*", value: $codePostal, required: true); ?>
+                    <?php Input::render(class: "input-box",id: "adresse", type: "text", name: "rue", placeholder: "Rue*", value: $rue, required: true,onkeyup: "suggestAdresses()"); ?>
+                    <div id="adresseSuggestions"></div>
+                    <div id="map" style="height: 300px; width: 100%;"></div>
+                    <input type="hidden" id="longitude" name="longitude">
+                    <input type="hidden" id="latitude" name="latitude">
+
+                    
                 </div>
                 <br>
                 <div>

@@ -97,6 +97,9 @@ h4 {
   margin-bottom: 1.5rem;
   position: relative;
 }
+.adresse > .input-wrapper {
+  margin-bottom: 0;
+}
 
 label {
   display: block;

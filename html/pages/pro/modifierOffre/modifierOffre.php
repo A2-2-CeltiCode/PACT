@@ -249,11 +249,20 @@ $options = $vueOffre["nomoption"];
 
                 <div>
                     <label>Information de l'offre</label>
+                    <div class="adresse">
                     <?php Input::render(name: "ville", type: "text", id: "ville", required: "true", placeholder: 'Ville*', value: $ville,onkeyup: "suggestVilles()") ?>
                     <div id="suggestions"></div>
+                    </div>
+                    <br>
+                    <div class="adresse">
                     <?php Input::render(name: "codePostal", type: "number",id:"postcode", required: 'true', placeholder: "Code Postal*", value: $codePostal) ?>
+                    </div>
+                    <br>
+                    <div class="adresse">
                     <?php Input::render(name: "adressePostale", id: "adresse", type: "text", placeholder: 'Adresse Postale', value: $rue,onkeyup: "suggestAdresses()") ?>
                     <div id="adresseSuggestions"></div>
+                    </div class="adresse">
+                    <br>
                     <div id="map" style="height: 300px; width: 100%;"></div>
                     <input type="hidden" id="longitude" name="longitude">
                     <input type="hidden" id="latitude" name="latitude">
