@@ -65,8 +65,8 @@
     position: relative;
     width: 300px;
     height: 300px;
-    overflow: visible; /* Permet à l'image de dépasser */
-    margin-bottom: -50px; /* Ajustez cette valeur pour contrôler la hauteur du dépassement */
+    overflow: visible; 
+    margin-bottom: -50px;
     z-index: -1;
     border-radius: 20px 20px 0 0;
 }
