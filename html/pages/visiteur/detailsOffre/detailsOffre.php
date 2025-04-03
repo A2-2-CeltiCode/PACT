@@ -29,7 +29,7 @@ $idOffre = $_GET['id'];
 $offresRecentesTxt = $_COOKIE["offresRecentes"] ?? serialize([]);
 $offresRecentesArray = unserialize($offresRecentesTxt);
 
-if (!array_key_exists($idOffre, $offresRecentesArray)) {
+if ($idOffre != null) {
     $offresRecentesArray[$idOffre] = time();
     setcookie("offresRecentes", serialize(array_unique($offresRecentesArray)), time() + 60 * 60 * 24 * 15, "/");
 }

@@ -76,7 +76,7 @@ try {
             $date->setTimezone(new DateTimeZone('UTC'));
 
             // Ajouter 30 secondes de cooldown
-            $date->modify('+180 seconds');
+            $date->modify('+120 seconds');
 
             // Vérifier si cet avis est toujours sous cooldown
             if ($date > new DateTime('now', new DateTimeZone('UTC'))) {
@@ -220,7 +220,6 @@ try {
     <div class="titre-page">
         <?php Label::render("titre-svg", "", "", "", "../../../ressources/icone/{$typeOffre}.svg","icone type offre"); ?>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
-        <img class="etoile-une-svg" id="<?php echo $typeOption['nomoption']; ?>" src="../../../ressources/img/relief.png">
     </div>
     <section class="container">
         <article class="container-gauche">
