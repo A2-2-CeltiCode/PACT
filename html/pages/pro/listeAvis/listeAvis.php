@@ -206,7 +206,7 @@ try {
                         <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
-                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' alt='imgAvis' width='64' height='64' onclick=\"openUp(event)\">";
+                                echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
                             }
                             ?>
                         </div>
@@ -286,7 +286,7 @@ try {
         <!-- Popup pour afficher l'image en grand -->
         <div class="image-popup" id="image-popup">
             <span class="close">&times;</span>
-            <img class="image-popup-content" id="image-popup-content" alt="'imgPopUp">
+            <img class="image-popup-content" id="image-popup-content">
         </div>
 
     </section>

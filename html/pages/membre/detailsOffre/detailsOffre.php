@@ -199,7 +199,7 @@ try {
                         <?php else: ?>
                             
                             <img src="../../../ressources/<?php echo $idOffre; ?>/images/<?php echo $imageArray['nomimage']; ?>"
-                            class="carousel-image" alt="imgOffre">
+                            class="carousel-image">
                             <?php endif ?>
                             <?php endforeach; ?>
                 </div>

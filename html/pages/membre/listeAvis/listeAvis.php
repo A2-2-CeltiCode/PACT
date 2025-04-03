@@ -115,8 +115,8 @@ try {
 </head>
 <?php Header::render(HeaderType::Member); ?>
 
-<button class="retour" title="bouton fleche gauche" ><a href="../listeOffres/listeOffres.php"><img
-            src="../../../ressources/icone/arrow_left.svg" alt="imgAvis"></a></button>
+<button class="retour"><a href="../listeOffres/listeOffres.php"><img
+            src="../../../ressources/icone/arrow_left.svg"></a></button>
 
 <body>
     <!-- Toast de confirmation -->
