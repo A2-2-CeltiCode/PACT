@@ -176,7 +176,6 @@ try {
     <div class="titre-page">
         <?php Label::render(class:"titre-svg",id: "", for:"",text: "", icon:"../../../ressources/icone/{$typeOffre}.svg",title:"icon type Offre"); ?>
         <?php Label::render("titre-offre", "", "", $offre['titre']); ?>
-        <img class="etoile-une-svg" id="<?php echo $typeOption['nomoption']; ?>" src="../../../ressources/img/relief.png">
     </div>
     <section class="container">
         <article class="container-gauche">

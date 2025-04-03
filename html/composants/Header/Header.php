@@ -139,8 +139,8 @@ class Header
         } elseif ($type == HeaderType::Member) {
             echo '<ul>
                     <li class="membre-header"><a href="/pages/membre/accueil/accueil.php">Accueil</a></li>
-                    <li class="membre-header"><a href="/pages/membre/listeAvis/listeAvis.php">Voir mes Avis</a></li>
                     <li class="membre-header"><a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a></li>
+                    <li class="membre-header"><a href="/pages/membre/listeAvis/listeAvis.php">Voir mes Avis</a></li>
                 </ul>';
         } elseif ($type == HeaderType::Pro) {
             echo '<ul>
