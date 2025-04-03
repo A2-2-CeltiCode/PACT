@@ -61,13 +61,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="fr">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
-    <title>Page de Connexion</title>
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
+    <title>Connexion - PACT</title>
     <link rel="stylesheet" href="./connexionCompteMembre.css">
     <link rel="stylesheet" href="/ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
+    <script>
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("bouton-connexion").click();
+            } 
+        });
+    </script>
 </head>
 <body>
-    <div class="conteneur responsive-conteneur">
+    <section class="conteneur responsive-conteneur">
         <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
         <!-- Logo de la page -->
         <img alt="Logo" src="/ressources/icone/logo.svg" />
@@ -93,13 +101,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             </div>
             <div class="connecte">
-                <?php Button::render(class: "bouton-connexion", submit: true, type: "membre", text: "Se connecter", title: "connexion"); ?>
+                <?php Button::render(class: "bouton-connexion", submit: true, type: "membre", text: "Se connecter", title: "connexion", id:"bouton-connexion"); ?>
             </div>
         </form>
         <!-- Lien pour créer un compte -->
         <div class="inscription">
             Vous n'avez pas de compte ? <a href="../creationCompteMembre/creationCompteMembre.php">Créez un compte dès maintenant</a>
+            <br>
+            Vous êtes un professionnel ? <a href="../../pro/connexionComptePro/connexionComptePro.php">Connectez-vous dès maintenant</a>
         </div>
-    </div>
+    </section>
 </body>
 </html>

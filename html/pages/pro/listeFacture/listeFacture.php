@@ -22,7 +22,8 @@ $factures = $sth->fetchAll();
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/pages/pro/listeFacture/listeFacture.css">
     <link rel="stylesheet" href="../../../ui.css">
-    <title>Liste des Factures</title>
+    <title>Factures - PACT</title>
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
 </head>
 <body>
     <?php Header::render(HeaderType::Pro); ?>

@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 session_start();
 use composants\Button\ButtonType;
 use \composants\Select\Select;
@@ -18,6 +19,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/fonctionTrie.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/trie/barreTrieMembre.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Header/Header.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/composants/Footer/Footer.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/carte/carte.php';
+
 
 // Connexion à la base de données
 include $_SERVER["DOCUMENT_ROOT"] . '/connect_params.php';
@@ -71,10 +74,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Recherche d'Offres</title>
+    <title>Recherche d'Offres - PACT</title>
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="listeOffre.css">
     <link rel="stylesheet" href="listeOffre.js">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="../../../trie/trieGeneral.js"></script>
 </head>
@@ -87,13 +91,21 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 <div id="barretrie">
 <?php
 Trie::render($sort, $titre, $localisation, $minPrix, $maxPrix, $ouverture, $fermeture, $nomcategories);
+$renderer = new Carte();
+    $renderer->render();
 ?>
 </div>
 <br>
 
 <div id="nombreOffres">
+    <div id="nombreFiltresActifs">Nombre de filtres actifs : 0</div> 
     <p>Nombre d'offres affichées : <?php echo count($resultats); ?></p>
+    <?php
+    
+    Select::render('custom-class', 'select-trie', 'trie', false, $optionsTrie, isset($_GET['etat']) ? $_GET['etat'] : 'tout');
+    ?>
 </div>
+
 <div id="resultats" class="offres-container">
 
     <!-- Affichage des résultats -->

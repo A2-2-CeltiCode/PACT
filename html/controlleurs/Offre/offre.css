@@ -1,0 +1,210 @@
+.offre {
+    display: inline-block;
+    margin: 16px;
+    transition-duration: 0.2s;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
+    border-radius: 10px 10px 0 0;
+  
+    &:hover {
+      transform: scale(1.08);
+      filter: drop-shadow(15px 15px 5px rgba(0, 0, 0, 0.3));
+    }
+  
+    p {
+      font-size: var(--p-small-font-size);
+      margin-top: 12px;
+      margin-bottom: 12px;
+    }
+  
+
+    .star {
+      display: none;
+    }
+  
+    a {
+      text-decoration: none;
+      
+      > div:nth-child(2) {
+        border-radius: 10px 10px 0 0;
+
+      }
+      > div:nth-child(4) {
+        border-radius: 0 0 10px 10px;
+        padding-right: 5px;
+
+      }
+  
+      > div {
+        display: flex;
+        justify-content: space-between;
+        background-color: #f0f8ff; 
+                
+  
+        > div {
+          display: flex;
+          align-items: center;
+          padding-right: 5px;
+          
+          
+  
+          svg {
+            margin: 5px;
+            stroke: var(black) !important;
+          }
+  
+          div {
+            margin: 5px;
+          }
+        }
+      }
+    }
+  }
+
+
+  .image-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: visible; /* Permet à l'image de dépasser */
+    margin-bottom: -50px; /* Ajustez cette valeur pour contrôler la hauteur du dépassement */
+    z-index: -1;
+    border-radius: 20px 20px 0 0;
+}
+  
+  /* Statut des offres */
+#ouvert {
+    color: #008000;
+  }
+  
+  #ferme {
+    color: #ff0000;
+  }
+  
+  #bientot {
+    color: #ff8000;
+  }
+
+
+
+
+
+/* 🔥 Styles pour les cartes spéciales */
+
+
+  
+  .relief {
+
+  
+    .star-overlay {
+      display: none;
+    }
+  
+
+  }
+  
+
+  
+  /* ✅ Positionnement et apparence des étoiles */
+  .image-container {
+    position: relative;
+    width: 300px;
+    height: 335px;
+    overflow: hidden;
+    
+  }
+  
+
+
+
+  
+.relief {
+  border-radius: 20px 20px 10px 10px;
+  >a{>.image-container {
+    border: 2.5px solid #4CAF50;
+  }
+
+}
+}
+
+.une{
+  border-radius: 22px 22px 10px 10px;
+  >a{>.image-container {
+    border: 2.5px solid #4CAF50;
+  }
+
+}
+}
+
+.unemembre {
+  border-radius: 20px 20px 10px 10px;
+  >a{>.membre {
+    border: 2.5px solid #086DBA;
+  }
+
+}
+}
+
+.reliefmembre{
+  border-radius: 22px 22px 10px 10px;
+  >a{>.membre {
+    border: 2.5px solid #086DBA;
+  }
+
+}
+}
+
+
+.relief::before {
+    content: "En Relief";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    
+    font-size: 0.8em;
+}
+
+.une::before {
+  content: "A La Une";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  
+  font-size: 0.8em;
+}
+
+
+.reliefmembre::before {
+  content: "En Relief";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #086DBA;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  
+  font-size: 0.8em;
+}
+
+.unemembre::before {
+content: "A La Une";
+position: absolute;
+top: 10px;
+right: 10px;
+background-color: #086DBA;
+color: white;
+padding: 5px 10px;
+border-radius: 15px;
+
+font-size: 0.8em;
+}
+
+

@@ -62,7 +62,7 @@ form {
     flex-direction: column;
 }
 
-.info-display {
+section {
     margin: 2% 0;
     background-color: var(--blanc);
     display: flex;
@@ -125,3 +125,33 @@ p {
     color: var(--erreur);
     font-size: var(--p-small-font-size);
 }
+
+
+/* Dropdown and suggestions */
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--secondary-color);
+  }
+  
+  #suggestions div,
+  #adresseSuggestions div {
+      border: 1px solid #ccc;
+      
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  #suggestions div:hover,
+  #adresseSuggestions div:hover {
+    background-color: var(--section-hover);
+  }

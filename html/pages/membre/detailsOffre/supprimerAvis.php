@@ -29,6 +29,10 @@ if ($avis && $avis['idcompte'] == $idCompte) {
         }
     }
 
+    $stmt = $dbh->prepare("DELETE FROM pact._avis_blacklist WHERE idavis = :idavis");
+    $stmt->bindParam(':idavis', $idAvis);
+    $stmt->execute();
+
     // Supprimer les réponses associées à l'avis
     $stmt = $dbh->prepare("DELETE FROM pact._reponseavis WHERE idavis = :idavis");
     $stmt->bindParam(':idavis', $idAvis, PDO::PARAM_INT);

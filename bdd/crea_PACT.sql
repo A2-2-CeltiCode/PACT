@@ -16,6 +16,8 @@ CREATE TABLE _adresse(
     ville         VARCHAR(50),
     rue           VARCHAR(50),
     numTel        VARCHAR(20), -- indicatif international différent selon le pays
+    coordonneesX   FLOAT,
+    coordonneesY   FLOAT,
     CONSTRAINT adresse_pk PRIMARY KEY(idAdresse)
 );
 
@@ -109,8 +111,8 @@ CREATE TABLE _contexte(
 CREATE TABLE _compte (
     idCompte    SERIAL,
     idAdresse   SERIAL,
-    mdp         VARCHAR(255) NOT NULL,
-    email       VARCHAR(255) NOT NULL,
+    mdp         VARCHAR(255),
+    email       VARCHAR(255),
     CONSTRAINT compte_pk PRIMARY KEY(idCompte),
     CONSTRAINT compte_fk_adresse FOREIGN KEY (idAdresse)
         REFERENCES _adresse(idAdresse)
@@ -118,9 +120,9 @@ CREATE TABLE _compte (
 
 CREATE TABLE _compteMembre(
     idCompte  SERIAL,
-    prenom    VARCHAR(50) NOT NULL,
-    nom       VARCHAR(50) NOT NULL,
-    pseudo     VARCHAR(255) NOT NULL UNIQUE,
+    prenom    VARCHAR(50),
+    nom       VARCHAR(50),
+    pseudo     VARCHAR(255) UNIQUE,
     CONSTRAINT compteMembre_pk PRIMARY KEY(idCompte),
     CONSTRAINT compteMembre_fk_compte FOREIGN KEY (idCompte) 
         REFERENCES _compte(idCompte)
@@ -161,7 +163,7 @@ CREATE TABLE _offre(
     titre                   VARCHAR(50) NOT NULL,
     description             VARCHAR(511) NOT NULL,
     descriptionDetaillee    VARCHAR(1023),
-    siteInternet            VARCHAR(50),
+    siteInternet            VARCHAR(100),
     nomOption               VARCHAR(50) NOT NULL,
     nomForfait              VARCHAR(50) NOT NULL,
     estEnLigne              BOOLEAN NOT NULL,

@@ -112,6 +112,7 @@ label{
     letter-spacing: -0.5px;
     max-width: 800px;
   }
+
   
   .titre-svg svg:first-of-type {
     width: 50px;
@@ -121,6 +122,7 @@ label{
     padding: 0;
     margin: 0;
   }
+
 
 /* Container principal */
 .container {
@@ -133,6 +135,9 @@ label{
   background: var(--background);
   position: relative;
 }
+
+
+
 
 /* Container gauche */
 .container-gauche {
@@ -166,10 +171,12 @@ label{
   object-fit: cover;
 }
 
+
+
 .carousel-button {
   position: absolute;
   top: 50%;
-  opacity: 0;
+  opacity: 50%;
   transform: translateY(-50%) scale(0.9);
   transition: all 0.3s ease;
   background: rgba(255, 255, 255, 0.95);
@@ -204,6 +211,27 @@ label{
   right: 16px;
 }
 
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.carousel-dots span {
+  width: 10px;
+  height: 10px;
+  background-color: #6d6d6d;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.carousel-dots .active {
+  background-color: #ececec;
+}
+
 /* Prix */
 .offre-prix {
   display: inline-flex;
@@ -212,12 +240,38 @@ label{
   font-size: 24px;
   font-weight: 700;
   color: var(--text-dark);
-  background: rgba(108, 2, 119, 0.15);
+  background: rgba(255, 255, 255, 0.15);
   padding: 12px 24px;
   border-radius: var(--radius-md);
   margin: 24px 0 8px;
-  box-shadow: 0 2px 8px rgba(108, 2, 119, 0.2);
+  box-shadow: 0 2px 8px rgba(55, 54, 54, 0.799);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  justify-content: space-between;
+}
+.offre-prix label{
+  font-size: medium;
+} 
+.moyenne-notes{
+ margin-right: 0;
+ padding-right: 0;
+}
+.horaire{
+  margin-right: -7%;
+  margin-bottom: -9px;
+}
+
+.note-m {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.note-m svg {
+  width: 29px;
+  height: 29px;
+}
+
+.note-m svg path {
+  fill: var(--primary-color);
 }
 
 /* Bloc d'informations */
@@ -227,6 +281,11 @@ label{
   padding: 24px;
   top: 24px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  height: fit-content;
+}
+
+.note-moyenne{
+  display: flex;
 }
 
 /* Descriptions */
@@ -238,6 +297,7 @@ label{
   margin: 8px 0 16px;
   padding: 0;
 }
+
 
 .offre-detail {
   position: relative;
@@ -258,6 +318,30 @@ label{
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  cursor: pointer;
+}
+
+.Enrelief{
+  border: 4px solid #f39c12;
+  background: rgba(243, 156, 18, 0.1); 
+  box-shadow: 0px 3px 8px rgba(243, 156, 18, 0.2);
+}
+
+.Alaune{
+  border: 4px solid gold;
+  background: rgba(255, 215, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(255, 215, 0, 0.3);
+}
+#Alaune{
+  margin-top: 6px;
+  width: 50px;
+  height: 50px;
+}
+#Enrelief{
+  display: none;
+}
+#Aucune{
+  display: none;
 }
 
 /* Réintégrer l'effet de flou uniquement lorsque le bouton "Voir plus" est présent */
@@ -357,16 +441,67 @@ label{
   background: var(--white);
   border-radius: var(--radius-sm);
   padding: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  max-width: 390px;
+  height: fit-content;
+}
+
+.container-avis{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 40px;
+}
+
+.liste-avis{
+  > p{
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .avi-title {
   font-size: 20px;
   font-weight: 700;
   color: var(--text-dark);
-  margin-bottom: 12px;
+  margin-bottom: 0px !important;
 }
+
+.avis-user{
+  font-weight: 300;
+  font-size: small !important;
+  margin-top: 0px !important;
+}
+
+.container-img-avis{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.container-head-avis{
+  display:flex;
+  justify-content: space-between;
+}
+
+.container-avis-footer{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.container-bottom-avis{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-info-avis > p{
+  font-size: x-small;
+  font-weight: 100;
+}
+
+
 
 .note {
   display: flex;
@@ -423,7 +558,6 @@ label{
   background-color: var(--primary-color);
   color: var(--white);
   border: none;
-  border-radius: var(--radius-full);
   padding: 12px 24px;
   font-size: 16px;
   font-weight: 500;
@@ -547,7 +681,6 @@ label{
   background-color: var(--primary-color);
   color: var(--white);
   border: none;
-  border-radius: var(--radius-full);
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -567,6 +700,12 @@ label{
 .filters label {
   font-weight: 500;
   color: var(--text-dark);
+}
+
+.label-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0px !important;
 }
 
 .filters select {
@@ -606,6 +745,13 @@ label{
   opacity: 1;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+.offre-details{
+    margin-left: 15%;
+    margin-right: 15%;
+}
+.margin{
+  margin-left: 10px;
 }
 
 @-webkit-keyframes fadein {
@@ -703,7 +849,6 @@ label{
   }
 }
 
-/* ...existing code... */
 
 .rating {
   display: flex;
@@ -803,6 +948,7 @@ label{
   }
 }
 
+
 @media (max-width: 480px) {
   .titre {
     padding: 20px 16px 16px;
@@ -823,6 +969,12 @@ label{
   .avi > div:nth-last-child(2) img {
     width: 80px;
     height: 80px;
+  }
+}
+
+@media (max-width: 480px){
+  .carousel-button{
+    display: none !important;
   }
 }
 
@@ -860,4 +1012,15 @@ label{
   display: block;
   width: 80%;
   max-width: 700px;
+}
+
+
+@media (max-width: 360px){
+
+  .container-avis{
+    display: grid;
+    grid-template-columns: repeat(1,1fr) ;
+    grid-gap: 40px;
+  }
+  
 }

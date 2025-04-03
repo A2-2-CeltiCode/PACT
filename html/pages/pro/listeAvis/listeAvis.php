@@ -118,7 +118,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de l'offre</title>
+    <title>Vos Avis - PACT</title>
     <link rel="stylesheet" href="detailsOffre.css">
     <link rel="stylesheet" href="../../../ui.css">
 </head>
@@ -129,13 +129,16 @@ try {
 <body>
     <!-- Toast de confirmation -->
     <div id="toast" class="toast">Avis bien signalé</div>
-    <div>
-    <div>
+    <section>
         <div class="liste-avis">
-            <div>
+            <div class="avis-header">
                 <h1>Avis</h1>
             </div>
-            <div class="filters">
+            <?php
+            if ($nombreAvis > 0){
+                ?>
+
+            <aside class="filters">
                 <label for="sortBy">Trier par:</label>
                 <select id="sortBy">
                     <option value="date_desc" selected>Date décroissante</option>
@@ -150,16 +153,18 @@ try {
                     <option value="viewed">Vus</option>
                     <option value="not_viewed">Non vus</option>
                 </select>
-            </div>
-            <div>
+            </aside>
+
+            <article class="container-avis">
                 <?php
                 foreach ($avis as $avi) {
                     if (!isset($avi["idavis"])) {
                         continue;
                     }
+                    else{
                     
-                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact._reponseavis WHERE idAvis = :idAvis");
-                    $stmt->execute([':idAvis' => $avi['idavis']]);
+                    $stmt = $dbh->prepare("SELECT idreponse, commentaire, denominationsociale, to_char(datereponse,'DD/MM/YY') as datereponse FROM pact.vue_reponse WHERE idAvis = :idAvis");
+                    $stmt->execute([':idAvis' => $avi['idavis']]);  
                     $reponses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     
                     // Ajouter la classe 'non-vu' si l'avis n'a pas été vu
@@ -169,12 +174,18 @@ try {
                         <?php if (!$avi['estvu']): ?>
                             <div class="non-vu">Non vu</div>
                         <?php endif; ?>
-                        <div>
-                            <p class="avi-title">
-                            
-                            <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi['idoffre'] ?>"><?= $avi["titre"] ?></a>
-                            </p>
-                            <div class="note">
+                        <div class="container-head-avis">
+                            <div>
+                                <p class="avi-title">
+                                
+                                <a href="../detailsOffre/detailsOffre.php?idOffre=<?= $avi['idoffre'] ?>"><?= $avi["titre"] ?></a>
+                                </p>
+                                <p>
+                                    en <?= $avi["contextevisite"] ?>
+                                </p>
+                            </div>
+
+                            <div class="note" title="note offre icone">
                                 <?php
                                 for ($i = 0; $i < floor($avi["note"]); $i++) {
                                     echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/ressources/icone/etoile_pleine.svg");
@@ -191,43 +202,49 @@ try {
                         <p class="avi-content">
                             <?= $avi["commentaire"] ?>
                         </p>
-                        <div>
+
+                        <div class="container-img-avis">
                             <?php
                             foreach ($imagesAvis[$avi["idavis"]] as $image) {
                                 echo "<img src='/ressources/avis/{$avi["idavis"]}/$image' width='64' height='64' onclick=\"openUp(event)\">";
                             }
                             ?>
                         </div>
-                        <div>
-                            <p>
-                                <?= $avi["pseudo"] ?>
-                            </p>
-                            <p>
-                                le <?= $avi["datevisite"] ?>  en <?= $avi["contextevisite"] ?>
-                            </p>
 
+                        <div class="container-bottom-avis">
+                            <div class="container-infos-avis">
+                                <p>
+                                    <?= $avi["pseudo"] ?>
+                                </p>
+                                <p>
+                                    le <?= $avi["datevisite"] ?>  
+                                </p>
+
+                            </div>
+                            <div class="thumbs">
+                                <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
+                                <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
+                            </div>
                         </div>
-                        <div class="thumbs">
-                            <button class="thumbs-up" title="like" data-idavis="<?= $avi["idavis"] ?>">👍 <?= $thumbsUpMap[$avi["idavis"]] ?? 0 ?></button>
-                            <button class="thumbs-down" title="dislike" data-idavis="<?= $avi["idavis"] ?>">👎 <?= $thumbsDownMap[$avi["idavis"]] ?? 0 ?></button>
-                        </div>
-                        <div>
-                            <?php Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false); ?>
-                            <?php if (empty($reponses) && $totalReponses < 3): ?>
-                                <?php Button::render("btn-repondre", "btn-repondre","bouton de reponse","Répondre", ButtonType::Pro, "", false); ?>
-                            <?php endif; ?>
+                        <br>
+                        <div class="option-user">
+                            <?php if($avi["estblacklist"]){ ?>
+                                <h3><em>Blacklisté</em></h3>
+                            <?php } else{
+                                Button::render("btn-signaler", "btn-signaler","bouton signaler", "Signaler", ButtonType::Pro, "", false);
+                            } ?>                             
                         </div>
                         <?php if (!empty($reponses)): ?>
                             <div class="reponses">
                                 <?php foreach ($reponses as $reponse): ?>
                                     <div class="reponse">
-                                    <h2>Réponse:</h2>
-                                        <p class="reponse-content">
+                                        <p class="avis-title">Réponse:</p>
+                                        <p class="avi-content">
                                             <?= $reponse["commentaire"] ?>
                                         </p>
-                                        <div>
+                                        <div class="container-infos-avis">
                                             <p>
-                                                <?= $reponse["pseudo"] ?>
+                                                <?= $reponse["denominationsociale"] . " (vous)" ?>
                                             </p>
                                             <p>
                                                 le <?= $reponse["datereponse"] ?>
@@ -244,9 +261,14 @@ try {
                         <?php endif; ?>
                     </div>
                     <?php
-                }
+                }}
                 ?>
-            </div>
+            </article>
+            <?php
+            } else  {
+                echo "<p>Aucun avis n'a été trouvé pour cette offre.</p>";
+            }
+            ?>
         </div>
 
         <div class="popup" id="popup-repondre">
@@ -267,7 +289,7 @@ try {
             <img class="image-popup-content" id="image-popup-content">
         </div>
 
-    </div>
+    </section>
 
     <script>
         const idOffre = <?= json_encode($idOffre) ?>;

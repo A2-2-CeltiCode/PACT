@@ -102,12 +102,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Créez un Compte Professionnel PACT</title>
+        <title>Inscription - PACT</title>
         <link rel="stylesheet" href="./creationComptePro.css">
-        <script src="creationComptePro.js" defer></script>
+        <script src="creationComptePro.js"></script>
+        <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
     </head>
     <body>
-        <div class="info-display">
+        <section>
             <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
             <a href="/pages/visiteur/accueil/accueil.php"><img alt="Logo" src="../../../ressources/icone/logo.svg"></a>
             <h1>Créez votre compte Professionnel</h1>
@@ -160,12 +161,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p class="form-texte small">L'IBAN pourra être renseigné plus tard.</p>
                 </div>
                 
-                <?php Button::render(class: "sign-upButton",title:"bouton pour s'inscrire en temp que pro" ,submit: true, type: "pro", text: "S'inscrire");?>
+                <?php Button::render(class: "sign-upButton",title:"bouton pour s'inscrire en temp que pro" ,submit: true, type: "pro", text: "S'inscrire",id:"btn-val");?>
             </form>
             <hr>
             <p class="small">Vous avez déjà un compte ?</p>
             <p class="small"><a href="../connexionComptePro/connexionComptePro.php">Connectez vous</a> avec votre compte PACT Professionel</p>
             <?php exit();?>
-        </div>
+        </section>
     </body>
 </html>

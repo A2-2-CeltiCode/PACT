@@ -93,13 +93,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créez un Compte PACT</title>
+    <title>Inscription - PACT</title>
     <link rel="stylesheet" href="./creationCompteMembre.css">
+    
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+    <script src="creationCompteMembre.js"></script>
+    <script>
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("btnS").click();
+            } 
+        });
+    </script>
 </head>
 <body>
 <?php if ((empty($_POST)) || $emailUtilise ||$pseudoUtilise ){ ?>
         
-        <div class="info-display">
+        <section>
             <a href="/"><p id="retour-accueil">Retour à l'accueil</p></a>
             <a href="/"><img alt="Logo" src="../../../ressources/icone/logo.svg"></a>
             <h1>Créez votre compte Membre</h1>
@@ -125,9 +141,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br>
                 <div class="div-adresse">
                     <label for="informations">Votre Adresse Postale</label>
-                    <?php Input::render(class: "input-box", type: "text", name: "rue", placeholder: "Rue*", value: $rue, required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "codePostal", placeholder: "Code Postal*", value: $codePostal, required: true); ?>
-                    <?php Input::render(class: "input-box", type: "text", name: "ville", placeholder: "Ville*", value: $ville, required: true); ?>
+                    <?php Input::render(class: "input-box",id: "ville", type: "text", name: "ville", placeholder: "Ville*", value: $ville, required: true,onkeyup: "suggestVilles()"); ?>
+                    <div id="suggestions"></div>
+                    <?php Input::render(class: "input-box",id: "postcode", type: "text", name: "codePostal", placeholder: "Code Postal*", value: $codePostal, required: true); ?>
+                    <?php Input::render(class: "input-box",id: "adresse", type: "text", name: "rue", placeholder: "Rue*", value: $rue, required: true,onkeyup: "suggestAdresses()"); ?>
+                    <div id="adresseSuggestions"></div>
+                    <div id="map" style="height: 300px; width: 100%;"></div>
+                    <input type="hidden" id="longitude" name="longitude">
+                    <input type="hidden" id="latitude" name="latitude">
                 </div>
                 <br>
                 <div>
@@ -137,13 +158,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p class="small">Le mot de passe doit comporter au moins :<br>- 8 caractères<br>- 1 majuscule<br>- 1 minuscule<br>- 1 chiffre<br>- 1 caractère spécial (@$!%*?&).</p>
                 </div>
                 
-                <?php Button::render(class: "sign-upButton",title:"S'inscire en tant que membre" ,submit: true, type: "member", text: "S'inscrire");?>
+                <?php Button::render(class: "sign-upButton",title:"S'inscire en tant que membre" ,submit: true, type: "member", text: "S'inscrire",id:"btnS");?>
             </form>
             <hr>
             <p class="small">Vous avez déjà un compte ?</p>
             <p class="small"><a href="../connexionCompteMembre/connexionCompteMembre.php">Connectez vous</a> avec votre compte PACT</p>
             <?php exit();?>
-        </div>
+        </section>
     </body>
+    
 </html>
+
 <?php } ?>

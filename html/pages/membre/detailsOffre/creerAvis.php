@@ -1,4 +1,5 @@
 <?php
+//header("Location: ./detailsOffre.php?id=" . $_POST['idOffre']);
 session_start();
 $idCompte = $_SESSION['idCompte'];
 
@@ -23,13 +24,17 @@ $avis_dir = $_SERVER['DOCUMENT_ROOT'] . "/ressources/avis/$idavis";
 if (!file_exists($avis_dir)) {
     mkdir($avis_dir, 0777, true);
 }
+if ($_FILES['drop-zone']['name'][0][0]) {
+
+
 if (is_array($_FILES['drop-zone']['name'])) {
     foreach ($_FILES['drop-zone']['name'] as $key => $val) {
+
         $nomImage = $_FILES['drop-zone']['name'][$key];
         $tmp_name = $_FILES['drop-zone']['tmp_name'][$key];
         $location = $_SERVER["DOCUMENT_ROOT"] . "/ressources/avis/" . $idavis . '/';
 
-        $extension = pathinfo($nomImage, PATHINFO_EXTENSION);
+        $extension = pathinfo($nomImage[0], PATHINFO_EXTENSION);
 
         $nouveauNomImage = uniqid() . '.' . $extension;
 
@@ -37,7 +42,7 @@ if (is_array($_FILES['drop-zone']['name'])) {
             mkdir($location, 0777, true);
         }
 
-        move_uploaded_file($tmp_name, $location . $nouveauNomImage);
+        move_uploaded_file($tmp_name[0], $location . $nouveauNomImage);
         $stmt = $dbh->prepare(
             "INSERT INTO pact._image(nomImage) 
             VALUES(:nomImage)"
@@ -85,5 +90,7 @@ if (is_array($_FILES['drop-zone']['name'])) {
     $stmt->execute();
 }
 
-header("Location: /pages/membre/detailsOffre/detailsOffre.php?idOffre=" . $_POST['idOffre']);
+}
+
+header("Location: /pages/membre/detailsOffre/detailsOffre.php?id=" . $_POST['idOffre']);
 ?>

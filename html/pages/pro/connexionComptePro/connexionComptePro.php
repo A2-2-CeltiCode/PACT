@@ -52,16 +52,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml">
-    <title>Page de Connexion</title>
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
+    <title>Connexion - PACT</title>
     <link rel="stylesheet" href="./connexionComptePro.css">
     <link rel="stylesheet" href="/ui.css">
+    <link rel="icon" href="/ressources/icone/logo.svg" type="image/svg+xml" title="logo PACT">
+    <script>
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("bouton-connexion").click();
+            } 
+        });
+    </script>
 </head>
 <body>
-    <div class="conteneur">
+    <section class="conteneur">
         <a href="/pages/visiteur/accueil/accueil.php"><p id="retour-accueil">Retour à l'accueil</p></a>
         <!-- Logo de la page -->
-        <img alt="Logo" src="/ressources/icone/logo.svg" />
+        <img alt="Logo" src="/ressources/icone/logo.svg" title="logo de la page"/>
         
         <!-- Titre de la page -->
         <h1>Connectez-vous à votre compte</h1>
@@ -85,13 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             </div>
             <div class="connecte">
-                <?php Button::render(class: "bouton-connexion",title:"bouton de connexion" ,submit: true, type: "pro", text: "Se connecter"); ?>
+                <?php Button::render(class: "bouton-connexion",id:"bouton-connexion", title:"bouton de connexion" ,submit: true, type: "pro", text: "Se connecter"); ?>
             </div>
         </form>
         <!-- Lien pour créer un compte -->
         <div class="inscription">
             Vous n'avez pas de compte ? <a href="../creationComptePro/creationComptePro.php">Créez un compte dès maintenant</a>
         </div>
-    </div>
+    </section>
 </body>
 </html>

@@ -66,7 +66,7 @@ class Header
         global $driver, $server, $dbname, $dbuser, $dbpass;
         self::$dbh = new PDO("$driver:host=$server;dbname=$dbname", $dbuser, $dbpass);
     }
-
+    
     /**
      * Rend l'en-tête avec les éléments nécessaires (CSS, JavaScript, etc.) pour un utilisateur donné.
      *
@@ -85,7 +85,7 @@ class Header
 
         echo '
         <header class="' . $type . '">
-            <a href="https://celticode.ventsdouest.dev">
+            <a href="/pages/visiteur/accueil/accueil.php">
                 <img src="/ressources/icone/logo.svg" alt="Logo PACT">
                 <span class="' . $spanClass . '">PACT</span>
             </a>';
@@ -100,7 +100,9 @@ class Header
         self::renderNav($type);
         //self::renderLanguageSelector();
         self::renderAccountSection($type);
+
         self::renderBurger($type);
+        
 
         echo '<div class="popup" id="popup-repondre">
                 <div class="popup-content">
@@ -129,15 +131,23 @@ class Header
     private static function renderNav(string $type): void {
         echo '<nav>';
         if ($type == HeaderType::Guest) {
-            echo '<a href="/pages/visiteur/accueil/accueil.php">Accueil</a>';
-            echo '<a href="/pages/visiteur/listeOffres/listeOffres.php">Rechercher</a>';
+            echo '<ul>
+                    <li class="visiteur-header"><a href="/pages/visiteur/accueil/accueil.php">Accueil</a></li>
+                    <li class="visiteur-header"><a href="/pages/visiteur/listeOffres/listeOffres.php">Rechercher</a></li>
+                </ul>';
+
         } elseif ($type == HeaderType::Member) {
-            echo '<a href="/pages/membre/accueil/accueil.php">Accueil</a>';
-            echo '<a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a>';
+            echo '<ul>
+                    <li class="membre-header"><a href="/pages/membre/accueil/accueil.php">Accueil</a></li>
+                    <li class="membre-header"><a href="/pages/membre/listeAvis/listeAvis.php">Voir mes Avis</a></li>
+                    <li class="membre-header"><a href="/pages/membre/listeOffres/listeOffres.php">Rechercher</a></li>
+                </ul>';
         } elseif ($type == HeaderType::Pro) {
-            echo '<a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>';
-            echo '<a href="/pages/pro/listeAvis/listeAvis.php">Liste des avis</a>';
-            echo '<a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>';
+            echo '<ul>
+                    <li class="pro-header"><a href="/pages/pro/listeOffres/listeOffres.php">Mes Offres</a>
+                    <li class="pro-header"><a href="/pages/pro/listeAvis/listeAvis.php">Liste des avis</a>
+                    <li class="pro-header"><a href="/pages/pro/creerOffre/creerOffre.php">Créer une Offre</a>
+                </ul>';
         }
         echo '</nav>';
     }
@@ -173,9 +183,6 @@ class Header
             <select class="selecteur-profil ' . $profileClass . '" id="selecteur-profil" onchange="window.location.href =this.value;" onclick="toggleArrow()">
                 <option value="default" hidden id="profile-option">Mon compte ▼</option>
                 <option value="' . $chemin . '">Accéder à mon Espace</option>';
-        if($profileClass == "profil-member"){
-            $profile = $profile . '<option value="' . "/pages/membre/listeAvis/listeAvis.php" . '">Voir mes Avis</option>';
-        } 
         $profile = $profile . '<option value="/deconnexion.php">Déconnexion</option>
             </select>
         </div>';
@@ -229,7 +236,6 @@ class Header
                 echo '<div class="review" data-id="' . $review['idavis'] . '" onclick="redirectToAvis(' . $review['idavis'] . ')">';
                 echo '<strong>' . $review['titre'] . '</strong>';
                 echo '<p>' . $review['commentaire'] . '</p>';
-                echo '<button class="btn-repondre" title="Repondre" onclick="openReplyPopup(' . $review['idavis'] . '); event.stopPropagation();">Répondre</button>';
                 echo '<button class="btn-mark-seen" title="Marque vue" data-id="' . $review['idavis'] . '">Marqué comme vu</button>';
                 echo '</div>';
             }
@@ -285,9 +291,17 @@ class Header
     <span class="menuIcon material-symbols-outlined">menu</span>
     <span class="closeIcon material-symbols-outlined">close</span>
   </button>
-  <div id="overlay"></div>
 EOF;
 
+    }
+
+    /**
+     * Vérifie si l'écran est de taille mobile.
+     *
+     * @return bool
+     */
+    private static function isMobile(): bool {
+        return preg_match('/Mobile|Android|BlackBerry|IEMobile|Silk/', $_SERVER['HTTP_USER_AGENT']);
     }
 }
 ?>

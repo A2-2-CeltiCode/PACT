@@ -52,9 +52,15 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, "text/html");
-        const avisList = doc.querySelector(".liste-avis > div:last-child");
-        document.querySelector(".liste-avis > div:last-child").innerHTML = avisList.innerHTML;
-        initButtons(); // Réinitialiser les écouteurs d'événements
+        const avisList = doc.querySelector(".container-avis");
+        if (!avisList) {
+          document.querySelector(".container-avis").innerHTML =
+            "<p>Aucun avis trouvé</p>";
+        } else {
+          document.querySelector(".container-avis").innerHTML =
+            avisList.innerHTML;
+          initButtons();
+        }
       });
   }
 
@@ -68,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const popup = document.getElementById("popup-repondre");
     const closeBtn = popup.querySelector(".close");
 
-    repondreButtons.forEach(button => {
+    repondreButtons.forEach((button) => {
       button.addEventListener("click", function () {
         const idAvis = this.closest(".avi").dataset.idavis;
         idAvisInput.value = idAvis;
@@ -135,6 +141,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  
   initButtons(); // Initialiser les écouteurs d'événements au chargement de la page
 });
